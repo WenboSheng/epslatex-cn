@@ -1,0 +1,135 @@
+%preface.tex
+\section*{前言}
+\label{sect:preface}
+
+本文档是 ``Using Imported Graphics in \LaTeX\ and \pdfLaTeX'' 的中文译本，并加入少许译者自己的使用心得所成。
+
+在用 \LaTeX\ 编写论文、书稿时，经常要遇到使用图形的情况。
+本书将讲述如何在 \LaTeX\ 文件中插入图片以及与此有关的一些其它问题。
+如果您想查找某一特定的信息，那么可以查阅第~\pageref{toc}~页的\hyperref[toc]{目录}和第~\pageref{sec:index}~页的\hyperref[sec:index]{索引}。
+
+插图的基本步骤是，首先确认宏包的导入
+\begin{Verbatim}
+\usepackage{graphicx}
+\end{Verbatim}
+然后使用 \verb|\includegraphics| 命令来插图
+\begin{Verbatim}
+\includegraphics{file}
+\end{Verbatim}
+该命令的更多细节将在第~\ref{sect:}~节介绍（\pageref{sect:}）。
+
+本文档分为如下的五个部分。
+
+\paragraph{第一部分：背景介绍}
+在这一部分中，介绍了一些有关的历史资料和基本的 \LaTeX{} 术语。
+此外也包括
+\begin{itemize}
+	\item Encapsulated PostScript (eps) 图形格式，eps 与 ps 文件的区别，
+	以及将其它图形格式转为~EPS~格式的方法。
+	\item 通过 \pdfTeX 引擎可以直接导入的图片格式（jpeg, png, pdf, MetaPost）。
+	\item 一些与图形有关的自由软件和共享软件。
+\end{itemize}
+
+\paragraph{第二部分：\LaTeX{} 图形宏包套件}
+在这一部分中，详细介绍了 \LaTeXe{} 图形宏包套件中用于引入、缩放和旋转图形的命令。
+这部分涵盖了~\LaTeXe{}~图形宏包的文档的大部分内容\cite{grfguide}。
+
+\paragraph{第三部分：\LaTeXe{}~图形命令的使用}
+这一部分介绍了如何使用~\LaTeXe{}~图形宏包套件中的命令来引入、缩放和旋转图形。
+此外还讨论了以下三种情况：
+\begin{itemize}
+	\item 在支持管道（例如 UNIX ）的系统中，使用 \texttt{dvips} 还可以实时地插入压缩的 EPS 图形或其它格式的图形（\prgname{tiff}, \prgname{gif}, \prgname{jpeg}, \prgname{pict} 等）。
+	在其它的系统中，非 \prgname{eps} 格式图形必须先转换为 \prgname{eps} 才行。
+	因为 \LaTeX\ 还是 \texttt{dvips} 都没有内置解压缩和转换图像格式转换的功能，
+	所以相应软件需要使用者提供。
+	\item 由于许多图形应用程序只支持 ascii 文本格式，
+	\pkg{psfrag} 宏包可以将 \prgname{eps} 图形中的文字替换为 \LaTeX{} 符号或数学表达式。
+	\item 当一个\prgname{eps}图形被多次使用时（比如文字后面或页眉上的徽标），最后生成的 \prgname{ps} 文件会包含此\prgname{eps}图形的很多个副本。
+	当所使用的图形不是位图格式时，可以通过定义 \prgname{PostScript} 命令来避免此图形被重复插入，
+	从而减小得到的\prgname{eps}文件体积。
+\end{itemize}
+
+\paragraph{第四部分：\env{figure} 环境}
+将插入的图形放置于\env{figure} 环境中有几个优点。
+在\env{figure}环境中的图形会被自动编号，从而可被引用或加到目录中。
+因为置于该环境中的图形可以通过浮动来很好分页，所以可以很容易的制作出具有专业水准的文稿。
+除了介绍\env{figure}环境的一般信息外，这一部分还讲述了如下一些和图形有关的话题：
+\begin{itemize}
+	\item 怎样自定义\env{figure}环境，例如怎样调整图形的放置位置、图形周围的距离、
+	标题的距离，以及在图形与文本之间加入分隔线等。
+	还可以自定义标题的格式，改变标题的样式、宽度和字体等。
+	\item 怎样创建边注图形和伸入边注位置的宽图形。
+	\item 怎样在纵向页面版式的文档中加入横向图形。
+	\item 怎样将标题放置于图形的两边而不是上下。
+	\item 对于双面排版的文档，怎样确保一幅图形放置于奇数页或偶数页。
+	还有，怎样确保两幅图形都出现在同一对开页面上。
+	\item 怎样得到带框的图形。
+\end{itemize}
+
+\paragraph{第五部分：复杂图形}
+这一部分介绍如何创建较为复杂的图形，以同时包含多个图像。
+\begin{itemize}
+	\item 怎样形成并列的图形、图像和子图。
+	\item 怎样在一个浮动体内将一个表格放置于图形之后。
+	\item 怎样堆叠多行图形。
+	\item 怎样创建跨页的连续图形。
+\end{itemize}
+
+\subsection*{如何得到本文档}
+本书的\prgname{ps}格式和\prgname{pdf}格式的英文原版网络位置为
+\begin{center}
+	\href{ftp://ctan.tug.org/tex-archive/info/epslatex/english/epslatex.ps}{CTAN/info/epslatex/english/epslatex.ps}\\
+	\href{ftp://ctan.tug.org/tex-archive/info/epslatex/english/epslatex.pdf}{CTAN/info/epslatex/english/epslatex.pdf}
+\end{center}
+其中 CTAN (Comprehensive \TeX{} Archive Network) 可以用如下站点或其映像站点中代替：
+\begin{center}
+	\begin{tabular}{ll}
+	England & \url{ftp://ftp.tex.ac.uk/tex-archive/} \\
+	Germany & \url{ftp://ftp.dante.de/tex-archive/} \\
+	Denmark & \url{ftp://tug.org/tex-archive} \\
+	France & \url{ftp://ftp.loria.fr/pub/ctan} \\
+	Russia & \url{ftp://ftp.chg.ru/pub/TeX/CTAN} \\
+	Vermont, USA & \url{ftp://ctan.tug.org/tex-archive/} \\
+	Florida, USA & \url{ftp://ftp.cise.ufl.edu/pub/mirrors/tex-archive/} \\
+	Utah, USA & \url{ftp://ctan.math.utah.edu/tex-archive/} \\
+	Korea & \url{ftp://ftp.ktug.or.kr/tex-archive/} \\
+	Japan & \url{ftp://ftp.riken.go.jp/pub/tex-archive/} \\
+	Hong Kong & \url{ftp://ftp.comp.hkbu.edu.hk/pub/TeX/CTAN/} \\
+	Singapore & \url{ftp://ftp.nus.edu.sg/pub/docs/TeX/} \\
+	New Zealand & \url{ftp://elena.aut.ac.nz/pub/CTAN} \\
+	Australia & \url{ftp://ctan.unsw.edu.au/tex-archive/} \\
+	India & \url{http://mirror.gnowledge.org/ctan/} \\
+	South Africa & \url{ftp://ftp.sun.ac.za/CTAN/} \\
+	Brazil & \url{ftp://ftp.das.ufsc.br/pub/ctan/}
+	\end{tabular}
+\end{center}
+完整的 CTAN 镜像列表可以从任一CTAN站点的 CTAN.sites 获得。
+本文档版本2.0的法文版本由Jean-Pierre Drucbert完成，
+其 \prgname{pdf} 和 \prgname{PostScript} 文件可以从如下位置获得
+\begin{center}
+	\href{ftp://ctan.tug.org/tex-archive/info/epslatex/french/fepslatex.pdf}{CTAN/info/epslatex/french/fepslatex.pdf} \\
+	\href{ftp://ctan.tug.org/tex-archive/info/epslatex/french/fepslatex.ps}{CTAN/info/epslatex/french/fepslatex.ps}
+\end{center}
+
+\subsection*{致谢}
+略。
+
+\subsection*{许可协议}
+版权所有 \copyright{} 1995--2006  Keith Reckdahl.
+可在 \LaTeX\ 项目公共协议（LPPL, \LaTeX\ Project Public License）x下复制和分发。
+
+LPPL 协议的内容可参见 \url{http://www.latex-project.org/lppl/}。
+
+%中文版的~PDF~
+%格式文件和源文件可从~\href{ftp://ftp.ctex.org/pub/tex/documents/latex/graphics/}%
+%{ftp.ctex.org}~下载。
+%
+%\vspace{1cm}
+%\hbox to \textwidth{\hfill
+%	\href{mailto:lwang2002@gmail.com}{%
+%		\Large {\CJKfamily{kai}王~~磊}}}
+%
+%\hbox to \textwidth{\hfill{\CJKfamily{kai}二○○○年四月十三日}}
+
+\clearpage
+\endinput

@@ -1,0 +1,54 @@
+% epslatex-cn
+
+\documentclass[oneside]{ctexart}
+\usepackage{amsmath}
+\usepackage{lmodern}
+\usepackage[utf8]{vntex}
+
+
+\usepackage{makeidx}
+\usepackage{hologo}
+\usepackage{shortvrb}
+\usepackage{hyperref}
+
+\MakeShortVerb|
+\graphicspath{{images/}}
+\def\pdfTeX{\hologo{pdfTeX}}
+\def\pdfLaTeX{\hologo{pdfLaTeX}}
+
+\newcommand{\file}[1]{\texttt{#1}}
+\newcommand{\prgname}[1]{\textsf{#1}}
+\newcommand{\pkg}[1]{\texttt{#1}}
+\newcommand{\env}[1]{\texttt{#1}}
+\newcommand{\cmd}[1]{{\textcolor{blue}{\texttt{\textbackslash#1}}}}
+\newcommand{\pkgi}[1]{\pkg{#1}%
+	\index{#1@{\textsf{#1} 宏包}}}
+\newcommand{\cmdi}[1]{\cmd{#1}%
+	\index{#1@{\texttt{\textbackslash#1} 命令}}}
+\newcommand{\envi}[1]{\env{#1}%
+	\index{#1@{\texttt{#1} 环境}}}
+%\renewcommand{\bs}{\symbol{'134}}%Print backslash
+\newcommand{\emphi}[1]{\emph{#1}\index{#1}}
+
+\makeindex
+\includeonly{preface}
+\begin{document}
+
+\include{preface}
+
+\tableofcontents
+
+\include{part1}
+
+\include{part2}
+
+\include{part3}
+
+\include{part4}
+
+\include{part5}
+
+\include{bib}
+%\makeindex
+\printindex
+\end{document}
