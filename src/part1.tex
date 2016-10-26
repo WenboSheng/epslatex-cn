@@ -139,81 +139,68 @@ $\text{整体高度} = \text{高度} + \text{深度}$。
 	\caption{\LaTeX{}~盒子的旋转示例}\label{fig:rotate-box}
 \end{figure}
 
-
-============================
 \section{Encapsulated PostScript}\label{sec:eps}
+PostScript 语言描述图像和文本。
 
-\PS~语言能够用来描述图形和文本。它既可在传统的~\PS{}(PS)~文件中来描述多页的
-文档，也用于~Encapsulated \PS{}(EPS)~文件中来描述插入文档的图形。
-PS~和~EPS~主要的区别在于：
+PostScript 语言能够用来描述图形和文本。
+它既可在传统的PostScript （\file{ps}）文件中来描述多页文档，也用于 Encapsulated PostScript  （\file{eps}）文件中来描述插入文档的图像。
+\file{ps} 文件和 \file{eps} 文件的主要区别在于：
+\begin{itemize}
+	\item \file{eps} 文件只能使用部分特定的 PostScript 操作符。
+	\item \file{eps} 文件必须含有一个~BoundingBox~行来确定 \file{eps} 图像的大小。
+\end{itemize}
 
-\begin{minipage}{.9\linewidth}
-	\noindent
-	\begin{itemize}
-		\item EPS~文件仅仅使用部分特定的~\PS~操作符。
-		\item EPS~文件必须含有一个~BoundingBox~行来确定~EPS~图形的大小。
-	\end{itemize}
-\end{minipage}
 
-\subsection[禁止使用的~\PS{}~操作符]{禁止使用的~~\PS{}~~操作符}\label{ssec:forbidps}
+\subsection{禁止使用的 PostScript 操作符}\label{ssec:forbidps}
 
-由于~EPS~图形需要和其它对象一起共享页面，所以~EPS~文件中不能使用像
-选择页面大小~(\texttt{a4}~或~\texttt{letter})~和清除整个页
-面~(\texttt{erasepage})~等命令。下面是一些不能在~EPS~文件中使用的~\PS{}~操作符：
+由于 \file{eps} 图形需要和其它对象一起共享页面，
+所以~EPS~文件中不能使用页面操作，
+例如选择页面大小（\texttt{a4}~或~\texttt{letter}）和清除整个页面（\texttt{erasepage}）等命令。
+下面是不能在 \file{eps} 文件中使用的 PostScript 操作符：
 
-\vspace{0.6cm}
+\begin{center}
+\ttfamily
+\begin{tabular}{lllll}
+	a3   &  a4 &  a5 &   banddevice & clear  \\
+	cleardictstack & copypage &  erasepage & exitserver & framedevice \\
+	grestoreall & initclip & initgraphics & initmatrix & letter  \\
+	legal & note & prenderbands & quit & renderbands \\
+	setdevice & setglobal & setpagedevice & setpageparams & setsccbatch \\
+	setshared & startjob & stop & & \\
+\end{tabular}
+\end{center}
 
-\texttt{
-	\begin{tabular}{llll}
-		a3   &  a4 &  a5 &   banddevice  \\
-		clear & cleardictstack & copypage &  erasepage \\
-		exitserver & framedevice & grestoreall & initclip \\
-		initgraphics & initmatrix & letter & legal \\
-		note & prenderbands & quit & renderbands \\
-		setdevice & setglobal & setpagedevice & setpageparams \\
-		setsccbatch & setshared & startjob & stop \\
-\end{tabular}}
+尽管下列 PostScript 操作符可以在 \file{eps} 文件中使用，
+但是不适当地使用它们极易导致错误。
+\begin{center}
+\ttfamily
+\begin{tabular}{llll}
+	nulldevice & setcolortransfer & setgstate & sethalftone \\
+	setmatrix & setscreen & settransfer & undefinedfont \\
+\end{tabular}
+\end{center}
 
-\clearpage
+上面的一些操作符可能会使\file{dvi} 到 \file{ps} 的转换失败，
+另一些则可能导致像图像位置错误、消失或者闪烁等奇怪的问题。
+因为这些操作符绝大部分不会影响到PostScript的堆栈，
+所以在大多数情况下，简单地将这些招致问题的操作符删除就可解决问题。
+其它的情形则需要更为复杂的PostScipt编程知识。
 
-尽管下列~\PS{}~操作符可以在~EPS~文件中使用，但是不适当的使用它们极易
-导致错误。
-
-\texttt{
-	\begin{tabular}{llll}
-		nulldevice & setcolortransfer & setgstate & sethalftone \\
-		setmatrix & setscreen & settransfer & undefinedfont \\
-\end{tabular}}
-
-上面的一些操作符可能会使~DVI~到~PS~的转换失败，另一些则可能导致像
-图形位置错误或图形消失等奇怪的问题。因为这些操作符绝大部分不会影响
-到~\PS{}~的堆栈，所以，在大多数情况下，简单的将这些招致问题的操作符
-删除就可解决问题。其它的情形则需要更为复杂的~\PS{}~的知识。
-
-\subsection[The EPS BoundingBox]{The EPS BoundingBox}\label{ssec:bbox}
+\subsection{The EPS BoundingBox}\label{ssec:bbox}
 \index{EPS BoundingBox}
 
-习惯上，\PS{}~文件的第一行是标明该文件的类型，接下来的几行是
-被称为~\wi{header}~或~preamble~的注释行（~\PS{}~的注释符也是~\%）。
-这些注释中的一行就定义了~BoundingBox~。BoundingBox~这行有四个整数值，
-分别代表:
+习惯上，PostScript 文件的第一行标明了该文件的PostScript类型，
+接下来的几行是被称为 \emph{header} 或\emph{preamble} 的注释行（~PostScript 的注释符也是 \texttt{\%}）。
+其中一行定义了 BoundingBox，包括四个整数值，分别代表:
+\begin{enumerate}
+	\item BoundingBox 的左下角的 $x$ 坐标。
+	\item BoundingBox 的左下角的 $y$ 坐标。
+	\item BoundingBox 的右上角的 $x$ 坐标。
+	\item BoundingBox 的右上角的 $y$ 坐标。
+\end{enumerate}
 
-\begin{minipage}{.9\linewidth}
-	\noindent
-	\addtolength{\itemsep}{-5pt}
-	\begin{enumerate}
-		\item BoundingBox~的左下角的~$x$~坐标。
-		\item BoundingBox~的左下角的~$y$~坐标。
-		\item BoundingBox~的右上角的~$x$~坐标。
-		\item BoundingBox~的右上角的~$y$~坐标。
-	\end{enumerate}
-	\addtolength{\itemsep}{5pt}
-\end{minipage}
-
-\vspace{1cm}
-
-\begin{Verbatim}[frame=single,rulecolor=\color{mygreen},%
-label={\CJKfamily{hei} EPS~文件头示例}]
+例如，一个由 \prgname{gnuplot} 程序生成的 \file{eps} 文件的前五行为
+\begin{Verbatim}[frame=single,rulecolor=\color{mygreen},label={\bfseries \file{eps} 文件头示例}]
 %!PS-Adobe-2.0 EPSF-2.0
 %%Creator: gnuplot
 %%DocumentFonts: Times-Roman
@@ -221,160 +208,239 @@ label={\CJKfamily{hei} EPS~文件头示例}]
 %%EndComments
 \end{Verbatim}
 
-上面的例子是一个由~\texttt{gnuplot}~生成的~EPS~文件的前五行。
-这个~EPS~图形的左下角的坐标是~$(50,50)$，
-右上角的坐标是~$(410,302)$。这里坐标的单位是~\PS{} point，
-等于~$\nicefrac{1}{72}$~英寸。这样上面的这幅图的自然宽度为~$5$~英寸，
-相应的自然高度为~$3.5$~英寸。需要注意的是~\PS{} point~要比
-~\TeX{} point~（等于~$\nicefrac{1}{72.27}$~英寸）稍大，
-在~\TeX{}~和~\LaTeX{}~中，\PS{} points~被称为~``big points''~或简称
-~\texttt{bp}，~\TeX{} point~被称为~``points''~或简称~\texttt{pt}。
+这个\prgname{gnuplot} 生成的 \file{eps} 图像的左下角的坐标是 $(50,50)$，
+右上角的坐标是 $(410,302)$。
+这里坐标的单位是PostScript 点，一点等于 $\nicefrac{1}{72}$ 英寸。
+这样上面的这幅图的自然宽度为 $5$ 英寸，相应的自然高度为 $3.5$ 英寸。
+需要注意的是PostScript 点要比 \TeX{} 点（等于 $\nicefrac{1}{72.27}$ 英寸）稍大。
+在 \TeX{} 和 \LaTeX{} 中，PostScript 点被称为“大点”（``big points''）或简称 \texttt{bp}，
+而 \TeX{} 点被称为``points''或简称 \texttt{pt}。
 
-\subsection[将~PS~转换为~EPS]{将~~PS~~转换为~~EPS}\label{ssec:pstoeps}
+\subsection{将PS转换为EPS}\label{ssec:pstoeps}
 
-单页的~\PS{}~文件，如果没有包含不适当的命令的话，可用下述方法转为
-~EPS~文件并加上~BoundingBox。{\CJKfamily{hei} 由于这些方法
-	都不检查非法的~\PS{}~操作符，所以只有在被转换的~\PS{}~文件本身
-	不含有那些被禁制使用的操作符的情况下，才能得到正确的~EPS~文件。}
+单页的PostScript文件，如果没有包含不适当的命令的话，
+可用下述方法之一加上BoundingBox行并转为\file{eps}文件。
+\textbf{由于这些方法都不检查非法的PostScript操作符，
+	所以只有在被转换的PostScript文件本身不含有那些被禁制使用的操作符的情况下，才能得到正确的\file{eps} 文件。}
+
 \begin{enumerate}
-	\item 最方便的是用~\GS{}~里带的~\texttt{ps2epsi}~（见
-	第~\ref{chap:gs}~章）。它可以读入~\PS{}~文件并
-	计算~BoundingBox~的参数，然后生成一个含有~\PS{}~图形
-	的~EPS~文件。
+	\item 最方便的是用GhostScript里带的\prgname{ps2epsi}工具（见第~\ref{ssec:gs} 节，\pageref{ssec:gs} 页）。
+	它可以读入PostScript文件，计算 BoundingBox 的参数，
+	然后生成一个含有PostScript 图像的\file{eps} 文件。
 	
-	最终得到的~EPS~文件是~EPSI~格式，即它在文件的开始部分
-	带有一个底分辨率的预览位图。因为这个预览位图是~ASCII~编码
-	的，所以不会造成像第~\ref{sec:linebuffer}~节的~\texttt{bufsize}~
-	错误。不过，它却使得文件变大。\index{bufsize@\texttt{buffersize}}
-	\item 另一种方法是计算~BoundingBox~的参数，然后把它加到~\PS{}~文件中
-	或作为插图命令的参数（比如用~\cmd{includegraphics}~的
-	~\texttt{bb}~方式）。计算~BoundingBox~的方法有以下几种:
+	最终得到的 \file{eps} 文件是 \file{epsi} 格式，
+	即它在文件的开始部分带有一个低分辨率的Interchange预览位图。
+	因为这个预览位图是 \textsc{ASCII} 编码的，
+	所以不会造成像第 \ref{ssec:linebuffer} 节的 \texttt{bufsize} 错误。
+	不过，\file{epsi} 预览会增加文件体积。\index{bufsize@\texttt{bufsize}}
+	\item 另外一种通过 Ghostscript 计算 BoundingBox 参数的方法是使用 \prgname{epstool} 工具。
+	该程序适用于Unix、DOS、Windows和OS/2系统，获取链接为
+	\begin{center}
+		\url{http://www.cs.wisc.edu/ ~ ghost/gsview/epstool.htm}
+	\end{center}
+	例如，如下命令
+\begin{verbatim}
+    epstool --copy --bbox file1.eps file2.eps
+\end{verbatim}
+	分析 \file{file1.eps} 的内容来决定正确的 BoundingBox，
+	然后将带有计算后的BoundingBox值的 \file{file1.eps} 内容复制给 \file{file2.eps}。
+	\prgname{epstool} 工具还可以用于在 \file{eps} 文件内添加 \file{tiff}、\file{wmf} 以及 \file{epsi} 预览位图，
+	或者用于从 \file{eps} 文件中提取预览位图。
+	
+	\item 此外，还有一种办法是，计算 BoundingBox 的参数，
+	然后把它加到PostScript文件中或作为插图命令的参数
+	（比如用 \cmd{includegraphics} 的 \texttt{bb} 选项）。
+	计算BoundingBox 参数的方法有以下几种:	
 	\begin{enumerate}
-		\item 用~Ghostview~或~GSview~将~\PS~图形打开，当鼠标在
-		图形上移动时就会显示相应的坐标（以页面的左下角为参照点）。
+		\item 用 Ghostview 或 GSview 将 PostScript 图形打开。
+		当鼠标在图形上移动时就会显示相应的坐标（以页面的左下角为参照点）。
 		记下图形的左下角和右上角的坐标就可确定它的~BoundingBox。
-		\item 将~\PS~图形打印一份，测量它的左下角和右上角到页面的左下角                       的水平和垂直距离（以英寸为单位），然后乘以~$72$~就可得到
-		它的~BoundingBox。
-		\item 使用~\texttt{bbfig}。\texttt{bbfig}~是一个脚本文件，
-		它在~\PS{}~图形文件前面加入一些~\PS{}~命令并送往
-		~\PS{}~打印机。这时加入的命令会计算~BoundingBox，
-		然后将结果打印在~\PS{}~图形上面。
+		\item 将 PostScript 图形打印一份，
+		测量页面的左下角到图像的左下角的水平和竖直距离（以英寸为单位），
+		然后乘以 $72$ 就可以得到 BoundingBox 的左下角坐标。
+		类似地，测量页面左下角到图像右上角的水平和竖直距离就可以得到 BoundingBox 的右上角坐标。
+		\item \pkg{bbfig} 脚本使用 PostScript 打印机来计算 BoundingBox。
+		\pkg{bbfig} 会在PostScript文件开头添加一些 PostScript 命令并送往PostScript打印机。
+		在打印机处，添加的PostScript命令会计算 BoundingBox坐标，
+		然后将结果打印在PostScript图像上面。
+		\pkg{bbfig} 脚本程序的地址为
+		\begin{center}
+			\href{ftp://ctan.tug.org/tex-archive/support/bbfig/}{CTAN/support/bbfig/}
+		\end{center}		
 	\end{enumerate}
 \end{enumerate}
 
-\clearpage
+\subsection{修正非标准的EPS文件}\label{ssec:fixeps}
+一些应用程序（例如 \prgname{Mathematica} 和 \prgname{FrameMaker} ）会生成非标准的 \file{eps} 文件，
+不能在\LaTeX\ 等其它程序上使用。
+有一些应用程序会根据它们自己的偏好给 PostScript 加入了额外特性，
+还有一些应用程序生成非常糟糕的 PostScript 代码。
+通常来说，这些非标准的PostScript可以由软件公司自己或者精通PostScript的用户提供的脚本来修正。
+检索软件供应商的网页或者搜索相关软件的网络新闻组来获取相关信息。
 
-\subsection[修正非标准的~EPS]{修正非标准的~~EPS}\label{ssec:fixeps}
+\section{\LaTeX{} 怎样使用 EPS 图}\label{sec:useeps}
 
-一些应用程序生成的非标准的~EPS~文件，另一些应用程序则根据它们自己
-的喜好来加入一些~\PS~的``增强''功能，还有一些应用程序生成非常糟糕的
-~\PS~代码。而由此得到的~EPS~文件是不能在~\LaTeX{}~中使用的。所幸
-的是有许多有用的工具来修正这些非标准的~EPS~文件。
-
-\begin{description}
-	\item [Mathematica] 由~Mathematica 2.x~生成的~EPS~文件是用~Mathematica~
-	的扩展~\PS~写成的。在非~Mathematica~程序使用这些~EPS~文件时，
-	必须要把那些非标准的扩展代码去掉才行。~DOS~版本的~Mathematica 2.x~
-	带有一个名为~\texttt{printps.exe}~或~\texttt{rasterps}~的工具
-	可以将那些非标准代码去掉。对于~Unix~版本的~Mathematica 2.x~，
-	这个任务可由~\texttt{psfix}~来完成。参考你的~Mathematica~文档
-	或与~Wolfram Research~联系来获取进一步的信息。
-	\item [FrameMaker] 由~FrameMaker~生成的~\PS~文件没有遵循~Adobe~的
-	与纸张无关的声明。~Framemaker 4~和~5~生成的~\PS~文件可分别用
-	下列脚本来修正：\\
-	\href{ftp://ftp.irisa.fr/pub/FrameMaker/Filters/fixfm4-1.3.tar.gz}%
-	{\texttt{ftp://ftp.irisa.fr/pub/FrameMaker/Filters/fixfm4-1.3.tar.gz}}\\
-	\href{ftp://ftp.irisa.fr/pub/FrameMaker/Filters/fixfm5-2.0.tar.gz}%
-	{\texttt{ftp://ftp.irisa.fr/pub/FrameMaker/Filters/fixfm5-2.0.tar.gz}}
-	
-	修正~Framemaker 3~和~4~生成的~\PS~文件的脚本~\texttt{fixfm3ps.sh}~和
-	~\texttt{fixfm4ps.sh}~可从下面的地点得到：
-	
-	\href{ftp://ftp.frame.com/pub/techsup/framers/platform.ind/filters/}{\texttt{ftp://ftp.frame.com/pub/techsup/framers/platform.ind/filters/}}
-	
-\end{description}
-
-\section[怎样在\LaTeX{}中使用~EPS~图]{怎样在~~\LaTeX{}~~中使用~~EPS~~图}\label{sec:useeps}
-
-EPS~文件能被~\LaTeX{}~和~DVI~到~PS~的转换程序使用。
-
+当处理\prgname{dvips} 类型文件时，\LaTeX{} 和 \file{dvi} 到 \file{ps} 的转换程序都会使用 \file{eps} 文件。
 \begin{enumerate}
-	\item \LaTeX{}~通过读取~EPS~文件中的~BoundingBox~行来决定为~EPS~图形
-	保留多大的空间。
-	\item DVI~到~PS~的转换程序读取~EPS~文件并把它插入到生成的~PS~文件中。
+	\item \LaTeX{} 通过读取 \file{eps} 文件中的BoundingBox行来决定为 \file{eps} 图形保留多大的空间。
+	\item \file{dvi} 到\file{ps}的转换程序读取\file{eps}文件并把它插入到生成的\file{ps} 文件中。
 \end{enumerate}
 
 需要说明的几种情形：
-
 \begin{itemize}
-	\item 如果在图形插入命令中给定了~BoundingBox~的值，~\LaTeX{}~将不会从
-	~EPS~文件读取它的~BoundingBox~行。
-	\item 由于~\TeX{}~不能读取非~ASCII~文件，也不能生成其它的程序，所以
-	~\LaTeX{}~不能从压缩的~EPS~文件或其它非~EPS~文件中得到~BoundingBox~
-	的信息。在这种情况下，可以在图形插入命令中给定~BoundingBox~的值
-	或将~BoundingBox~的值放到一个文本文件中（见第~\ref{chap:noneps}~章）
-	\item ~EPS~图形并没有被加到~DVI~文件中，它是在从~DVI~到~PS~转换时才被
-	加到生成的~PS~文件中的。因此，所有用到的~EPS~文件必须和~DVI~文件
-	在一起。
-	\item 大多数旧版本的~DVI~浏览器不支持显示~EPS~图形。这时，~DVI~浏览器
-	一般会将~EPS~图形的~BoundingBoX~用一方框显示出来，以方便使用者
-	对图形进行定位。目前版本的一些~TeX~软件如~Mik\TeX{}~、~fp\TeX{}~和
-	~te\TeX{}~等所带~DVI~浏览器（\texttt{Yap, Windvi, Xdvi}）可以借助
-	于~\texttt{ghostscript}~来显示~EPS~图形。
+	\item 如果在插图命令中给定了BoundingBox的值
+	（例如，使用了 \cmd{includegraphics} 的 \opt{bb} 选项），
+	\LaTeX{} 将不会再读取 \file{eps} 文件。
+	事实上，当运行 \LaTeX{} 时，\file{eps} 文件甚至都不必存在。
+	\item 由于 \TeX{} 不能读取非 \textsc{ascii} 文件，也不能生成其它的程序，
+	所以 \LaTeX{} 不能从压缩的 \file{eps} 文件或其它非 \file{eps} 图像文件中得到BoundingBox的信息。
+	在这种情况下，BoundingBox参数值必须由插图命令给定（例如 \cmd{includegraphics} 命令的 \opt{bb} 选项）
+	或者存放在一个未压缩的文本文件中（见第~\ref{sec:noneps} 节，\pageref{sec:noneps}~页）。
+	\item \file{eps} 图像并没有包含在\file{dvi}文件中。
+	当 \file{dvi} 转换为 \file{ps} 时，\file{eps} 文件必须存在。
+	因此，所有用到的\file{eps}文件必须和 \file{dvi} 文件放在一起。
+	\item 一些 \file{dvi} 浏览器可能不支持显示 \file{eps} 图像。
+	这时，为了方便使用者对图像进行定位，一般会将图形的BoundingBoX用一个方框显示出来。
 \end{itemize}
 
 \subsection[行缓冲区溢出]{行缓冲区溢出}\label{ssec:linebuffer}
 
-\LaTeX{}~在读取~ASCII~文件时是每次从中读取一行，然后把它放到自己
-的行缓冲区里。~\LaTeX{}~的行缓冲区大约有~3000~字节。如果~EPS~文件中
-有一行的长度超过了行缓冲区的长度，就会产生如下的错误讯息：
+\TeX{} 在读取 \textsc{ascii} 文件时是每次从中读取一行，然后把它放到自己的行缓冲区里。
+\TeX{} 的行缓冲区大约有3000个字符长度。
+如果 \file{eps} 文件中有一行的长度超过了行缓冲区的长度，就会产生如下的错误讯息：
 
 \begin{Verbatim}[xleftmargin=22pt]
-Unable to read an entire line--bufsize=3000.
-Please ask a wizard to enlarge me.
+	Unable to read an entire line--bufsize=3000.
+	Please ask a wizard to enlarge me.
 \end{Verbatim}
 
-因为~EPS~很少有一行长度超过~3000~字节的情形，所以产生行缓冲区溢出
-的原因可能有两种：
+因为\file{eps}很少有一行长度超过3000个字符的情形，
+所以产生行缓冲区溢出错误的原因可能有两种：
 
 \begin{enumerate}
-	\item {\CJKfamily{hei} EPS~文件中有一个长的二进制的预览图}
+	\item \textbf{ EPS 文件中有一个长的二进制预览图}
+
+	有些应用程序生成的\file{eps} 文件在开始部分放置了一个二进制的预览图，
+	这样就可使得像\file{dvi} 浏览器等一些不能解释PostScript的软件也可来显示 \file{eps} 图形。
+	目前有少数与\TeX{} 有关的软件使用这种方法。
 	
-	有些应用程序生成的~EPS~文件在开始部分放置了一个二进制的预览图，
-	这样就可使得像~DVI~浏览器等一些不能解释~\PS~的软件也可来显示
-	~EPS~图形。目前有少数与~\TeX{}~有关的软件使用这种方法。
-	
-	如果这个二进制的预览图比行缓冲区小，~\cmd{includegraphics}~将会
-	略过它（像~\cmd{psfig}~等过时的命令则不会这样）。但是，如果这个
-	二进制的预览图比行缓冲区大的话，就会发生行缓冲区溢出的错误。
-	有两种解决办法：
+	如果这个二进制预览图比行缓冲区小，\cmd{includegraphics} 将会略过它
+	\footnote{注意，\cmd{psfig} 和其它一些过时的图像命令则不会忽略二进制预览。}。
+	但是，如果这个二进制的预览图比行缓冲区大的话，就会发生行缓冲区溢出的错误。
+	对于该问题有两种解决办法：
 	
 	\begin{enumerate}
-		\item 如果不需要预览图，可以用文本编辑器将它删掉或在生成~EPS~
-		图形时就选择不要预览图。
-		\item 因为~\LaTeX{}~读取~EPS~文件的唯一目的就是取得~BoundingBox~
-		的大小，故可在插图命令中给出~BoundingBox~
-		的值（如在~\cmd{includegraphics}~中使用~\texttt{bb}~选项）
-		从而使得~\LaTeX{}~不再读取~EPS~文件。
+		\item 如果不需要预览图，可以用文本编辑器将它删掉或在一开始用应用程序生成\file{eps} 图像时就选择不要预览图。
+		\item 因为 \LaTeX{} 读取 \file{eps} 文件的唯一目的就是取得BoundingBox参数值大小，、
+		因此，如果插图命令中给出BoundingBox的值（如在 \cmd{includegraphics} 中使用 \opt{bb} 选项），
+		那么\LaTeX{} 就不会读取 \file{eps} 文件。
 	\end{enumerate}
 	
-	\item {\CJKfamily{hei} ~EPS~文件中的分行符在不适当的传输中被损坏}
+	\item \textbf{\file{eps} 文件中的分行符在不适当的传输中被损坏}
 	
-	（这里所谈到的问题不会在一些最新版本的~\TeX{}~软件中出现，因为这
-	些软件中的~\TeX{}~都会正确的识别所有的分行符。）
+	\emph{这里所谈到的问题不会在大部分最近的\TeX{} 发行版本中出现，
+		因为这些软件中的\TeX{} 程序都会正确的识别所有的分行符。}
 	
-	不同的操作系统平台使用不同分行符。~Unix~使用~\verb+^J+，
-	~Macintosh~使用~\verb+^M+，而~DOS/Windows~则使用~\verb+^M^J+。
-	比如一个~EPS~文件从~Macintosh~机上用二进制方式传输到~Unix~机上，
-	那么~Unix~机上的~\TeX{}~会因找不到分行符~~\verb+^J+~而把整个文件
-	作为一行，导致行缓冲区溢出的错误。
+	不同的操作系统平台使用不同分行符。
+	Unix 使用换行符LF（\verb+^J+），
+	Macintosh 使用回车符CR（ \verb+^M+），
+	而 DOS/Windows 则使用回车符加换行符（ \verb+^M^J+）。
+	比如一个\file{eps} 文件从 Macintosh机上用二进制方式传输到Unix机上，
+	那么Unix机上的\TeX{} 会因找不到分行符 \verb+^J+ 而把整个文件作为一行，导致行缓冲区溢出的错误。
 	
-	如果~EPS~文件中不含有二进制的部分（如预览图和嵌入的图形），以文本
-	方式传输就可以解决这一问题。否则，由于文件必须用二进制方式传输，
-	分行符的问题不可避免，这时就需要用一些工具来转换不同的格式或在
-	在插图命令中给出~BoundingBox~的值来解决。
+	如果\file{eps} 文件中不含有二进制的部分（如预览图和嵌入的图形），
+	以文本方式传输就可以解决这一问题。
+	然而，带有二进制部分的 \file{eps} 文件必须用二进制方式传输，
+	否则文本方式传输会损坏二进制部分。
+	由于二进制传输方式不会翻译分行符，这时就需要在插图命令中给出BoundingBox的值来解决
+	（例如\cmd{includegraphics} 命令的 \opt{bb} 选项）。
 \end{enumerate}
 
+\section{PDF 图像}\label{sec:pdfgraphics}
+正如之前提到的，\pdfTeX{} 可以直接导入 \file{pdf}、\file{png}、\file{jpeg} 和 \file{MetaPost} 图像格式。
+这一节将简要介绍这些格式。
+相关的\pdfTeX{} 插图命令将在第~\ref{sec:graphicsinlusion} 节（\pageref{sec:graphicsinclusion} 页）中介绍。
+
+\subsection{JPEG}\label{ssec:jpeg}
+\file{jpeg} 是由联合图像专家组（Joint Photographic Experts Group , JPEG）委员会
+\begin{center}
+	\url{http://www.jpeg.org/}
+\end{center}
+授权的压缩标准。
+\file{jpeg} 格式是一种位图的压缩标准，它采用了有损压缩格式
+\footnote{有损压缩意味着压缩过程中损失了数据。
+	也就是说，解压缩一个有损压缩过的位图不会得到原始图片。
+	反之，无损压缩过程中不会有数据损失，
+	所以解压一个无损压缩过的位图会生成原始图片。}。
+特别地，压缩过程不会保持线条和锋锐的边缘。
+所以不太适用于线条描绘和带有锋锐元素的图片。
+
+\subsection{PNG}\label{ssec:png}
+过去很多年 \file{gif} 一直是图标和其它线条画的位图压缩标准，
+这是由于它采用的无损LZW压缩不会使得锋锐的边缘失真。
+由于Unisys公司对于其LZW专利的强制执行，加上\file{gif} 的一些技术局限（例如256色的限制），
+这些因素促使了一个小组开发可移植网络图形（ Portable Network Graphics , PNG ）格式。
+该小组后来称为 \file{png} 开发组
+\begin{center}
+\url{http://www.libpng.org/pub/png/}
+\end{center}
+与 GIF 一样，PNG也采用无损压缩，因此适合于线条画。
+尽管 \file{png} 可以用于任何位图文件，
+不过对于摄影照片和其它一些没有锋锐边缘的位图来说，
+\file{jpeg} 有损压缩通常效果更好（ “更好”指的是生成更小的文件体积，同时对于人眼观察没有失真）。
+
+\subsection{PDF}\label{ssec:pdf}
+\href{http://www.adobe.com}{Adobe} 的便携式文档格式（ Portable Document Format, pdf ）与它的Adobe成员 PostScript 有很多相似之处。
+与PostScript一样，\file{pdf} 可以包含文本、矢量图和位图。
+一个 \file{pdf} 文件可以包含整个文档，也可以仅仅包含一个图形（类似于 \file{pdf} ）。
+
+\file{pdf} 不仅仅是 \pdfTeX{} 的主要输出格式，也是\pdfTeX{} 插图的最普遍方法。
+许多图像程序允许它们的图像直接保存为 \file{pdf} 格式。
+没有直接 \file{pdf} 输出的程序可以转而输出 \file{eps} 矢量图，
+后者通过 \prgname{epstopdf} 转换程序可以很容易地转成 \file{pdf} 矢量图。
+\prgname{epstopdf} 可以从 \textsc{ctan} 获得，
+在Windows系统下是一个可执行程序，在Unix/Linux 以及 MaxOSX 等其它系统上则是一个\prgname{perl} 脚本
+\begin{center}
+\href{ftp://ctan.tug.org/tex-archive/support/epstopdf/}{CTAN/support/epstopdf/}
+\end{center}
+
+\subsection{MetaPost}\label{ssec:metapost}
+MetaPost 是由John Hobby编写的绘图语言。
+它基于高德纳的 \prgname{metafont}，但增加了PostScript输出的功能。
+关于MetaPost的信息可以从以下网址获得：
+\begin{center}
+\url{http://www.tug.org/metapost.html}\\
+\url{http://cm.bell-labs.com/who/hobby/MetaPost.html}
+\end{center}
+相关文档可参考~\cite{MetaPost}。
+
+MetaPost 可以用于 \prgname{dvips} 类型的 \LaTeX{} 文档，
+也可以直接用于 \pdfLaTeX{} 文档\footnote{
+	\pdfLaTeX{} 实际上使用Hans Hagen开发的 {Con\TeX t}代码将MetaPost图像实时转成 \file{pdf},
+	不过在用户层面上是很简明的。}。
+
+下面的步骤使用MetaPost（ \prgname{mpost} ）所带的 \prgname{pstoedit} 工具将名为 \file{graphic.eps} 的 \file{eps} 文件转为名为 \file{graphic.mps} 的 MetaPost 文件：
+
+\begin{verbatim}
+	pstoedit -f mpost graphic.eps graphic.mp
+	mpost graphic.mp
+	rename graphic.1 graphic.mps
+\end{verbatim}
+
+\subsection{PurifyEPS}\label{ssec:purifyeps}
+Scott Pakin 的 \prgname{purifyeps} 工具能够将很多（但不是全部） \file{eps} 转成“净化版本”，
+从而可以直接被 \LaTeX{} 和 \pdfLaTeX{} 读取。
+为了运行 \prgname{purifyeps} 你需要下列工具：
+\begin{description}
+	\item[PurifyEPS] 可以从\href{ftp://ctan.tug.org/tex-archive/support/purifyeps/}{CTAN/support/purifyeps/} 获得，
+	其中 \texttt{CTAN/} 使用第~\pageref{ctan-cite} 页中列出的任何\textsc{ctan} 站点替代。
+	\item[Perl] 可以从 \url{http://www.cpan.org} 获得。
+	\item[pstoedit] 可以从 \url{http://www.pstoedit.net/pstoedit} 获得。
+	\item[mpost] 来自于任何包含MetaPost的\LaTeX{} 发行版本。
+\end{description}
+
+
+================================
 \section[下载和安装\GS]{下载和安装~~\GS}\label{sec:gs}
 
 \GS~是一个~\PS~语言解释器，它可以运行在大多数操作系统平台上并由~Aladdin
