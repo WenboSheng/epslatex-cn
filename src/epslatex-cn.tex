@@ -6,22 +6,29 @@
 \usepackage{lmodern}
 \usepackage[utf8]{vntex}
 
-
+\usepackage{xcolor}
+\usepackage{listings}
 \usepackage{makeidx}
 \usepackage{hologo}
-\usepackage{shortvrb}
+\usepackage{fancyvrb}
 \usepackage{hyperref}
 
-\MakeShortVerb|
+\DefineShortVerb{\|}
 \graphicspath{{images/}}
 \def\pdfTeX{\hologo{pdfTeX}}
 \def\pdfLaTeX{\hologo{pdfLaTeX}}
+
+\lstset{
+	basicstyle=\ttfamily,
+	commentstyle=\ttfamily\slshape}
 
 \newcommand{\file}[1]{\texttt{#1}}
 \newcommand{\prgname}[1]{\textsf{#1}}
 \newcommand{\pkg}[1]{\texttt{#1}}
 \newcommand{\env}[1]{\texttt{#1}}
 \newcommand{\cmd}[1]{{\textcolor{blue}{\texttt{\textbackslash#1}}}}
+\newcommand{\cmdonearg}[2]{\cmd{#1}\texttt{\{#2\}}}
+\newcommand{\cmdtwoargs}[3]{\cmd{#1}\texttt{[#2]\{#3\}}}
 \newcommand{\opt}[1]{\texttt{#1}}
 \newcommand{\pkgi}[1]{\pkg{#1}%
 	\index{#1@{\textsf{#1} 宏包}}}

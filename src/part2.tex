@@ -1,27 +1,50 @@
 %part2.tex
-\part{\LaTeX{}图形宏包套件}
+\part{\LaTeX{}图形宏集}\label{part:graphicbundle}
 
-\section{加入 EPS 图像文件}\label{sec:inserteps}
+这一部分简要介绍了 \LaTeX{} 图形宏集。
+更多细节可以参考图形宏集文档 \cite{grfguide} 或者 \emph{\LaTeX{} Graphics Companion}\cite{Goossens1997}。
 
-关于~\pai{graphics}~和~\pai{graphicx}~宏包的最好的参考资料是
-~\textsl{Graphics guide}\cite{grfguide}~和~\textsl{\LaTeX{} Graphics
-	Compannion}\cite{Michel-1}。其它的~\LaTeX{}~参考资料中对~\textsf{graphicx}~
-包只是零星的介绍。~\cite{Helmut}~中对~\textsf{graphics}~和~\textsf{graphicx}~
-都作了介绍，~\cite{Leslie}~中只介绍了~\textsf{graphics}包，而~\cite{Michel}~
-中两者均未提及。
+\section{图像文件加载}\label{sec:graphicsinclusion}
+
+导入图像需要使用 \pkg{graphicx} 宏包的\cmd{includegraphics} 命令，语法为
+\begin{lstlisting}[language=LaTeX,frame=shadowbox]
+\includegraphics[选项]{文件}
+\end{lstlisting}
+这里\emph{选项} 在表~\ref{tab:opt}、\ref{tab:cropopt}、\ref{tab:boolopt} 中列出。
+因为 \cmd{includegraphics} 不会结束当前段落，所以它能够在文本中放置图形如
+ \includegraphics[width=12pt]{recycle} 和 \includegraphics[width=12pt]{illusion}。
+
+\subsection{图形驱动}\label{ssec:driver}
+用户必须指定一个图形驱动以告诉图形宏包如何处理导入的图像。
+目前\LaTeX{} 图形宏集支持18种不同的驱动
+\footnote{
+	到目前（2016年）为止，支持的驱动数已经超过了20种。——译者注
+	}，
+不过，本文档只涉及两种最常用的驱动：
+\prgname{dvips} 类型文档所用的 \prgname{dvips} 驱动
+\footnote{使用 \prgname{latex} 命令将 \LaTeX{} 文件处理成 \file{dvi} 文件后，
+	\prgname{dvips} 随后就将其转成 PostScript 格式。}，
+以及 \pdfLaTeX{} 文档所用的 \prgname{pdftex} 驱动。
+如果用户使用的是这两种驱动之一，一般不用显示地指明，
+因为绝大部分 \LaTeX{} 发行版中的 \file{graphics.cfg} 可以自动识别正确的驱动
+\footnote{\file{graphics.cfg} 文件会检测文件是由 \prgname{latex} 还是 \prgname{pdflatex} 编译，
+	对于 \prgname{latex} 会指定 \opt{dvips} 选项，
+	对于 \prgname{pdflatex} 会指定 \opt{pdftex} 选项。}。
+
+如果用户想要指定一个驱动，可以用以下三种方式
+\marginpar{指定驱动}
+\begin{enumerate}
+	\item 默认值在 \file{graphics.cfg} 文件中指定。
+	\item 任何通过 \cmd{documentclass} 的选项指定的驱动会覆盖由 \file{graphics.cfg} 文件指定的驱动。
+	\item 任何由 \cmdonearg{usepackage}{graphics} 的选项指定的驱动会覆盖前两种方式指定的驱动。
+\end{enumerate}
+
+=============================================
 
 \subsection{includegraphics 命令}\label{ssec:includegraphics}
 
-{\large\hspace{1cm}
-	\color{morelight}{\shadowbox{\textcolor{blue}{\texttt{%
-					\bs includegraphics[\CJKfamily{kai}选项]\{文件\}}}}}}
 
-这里的{\CJKfamily{kai}选项}在表~\ref{tab:opt},
-\ref{tab:cropopt}, \ref{tab:boolopt}~中列出。
-因为~\cmd{includegraphics}~不会结束
-当前段落，所以它能够在文本中放置图形如
-~\includegraphics[width=12pt]{recycle}~和~
-\includegraphics[width=12pt]{illusion}。下面的命令将以~\texttt{file.eps}~
+下面的命令将以~\texttt{file.eps}~
 的自然大小插入到~\LaTeX{}~文档中：
 
 \begin{Verbatim}[xleftmargin=1cm]
@@ -363,14 +386,14 @@
 	\HR 右
 \end{minipage}%
 \hspace{-.5cm}\begin{minipage}[c]{.5\textwidth}
-	\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例十},labelposition=topline]
+\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例十},labelposition=topline]
 	左\HR\fbox{%
 	\includegraphics
 	[angle=-60,totalheight=20mm,%
 	width=30mm,keepaspectratio]%
 	{w.eps}}%
 	\HR 右
-	\end{Verbatim}
+\end{Verbatim}
 \end{minipage}
 
 \section{旋转和缩放对象}\label{sec:scalerotate}
