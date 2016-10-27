@@ -230,7 +230,7 @@ PostScript 语言能够用来描述图形和文本。
 	
 	最终得到的 \file{eps} 文件是 \file{epsi} 格式，
 	即它在文件的开始部分带有一个低分辨率的Interchange预览位图。
-	因为这个预览位图是 \textsc{ASCII} 编码的，
+	因为这个预览位图是 \ascii 编码的，
 	所以不会造成像第 \ref{ssec:linebuffer} 节的 \texttt{bufsize} 错误。
 	不过，\file{epsi} 预览会增加文件体积。\index{bufsize@\texttt{bufsize}}
 	\item 另外一种通过 Ghostscript 计算 BoundingBox 参数的方法是使用 \prgname{epstool} 工具。
@@ -292,7 +292,7 @@ PostScript 语言能够用来描述图形和文本。
 	（例如，使用了 \cmd{includegraphics} 的 \opt{bb} 选项），
 	\LaTeX{} 将不会再读取 \file{eps} 文件。
 	事实上，当运行 \LaTeX{} 时，\file{eps} 文件甚至都不必存在。
-	\item 由于 \TeX{} 不能读取非 \textsc{ascii} 文件，也不能生成其它的程序，
+	\item 由于 \TeX{} 不能读取非 \ascii 文件，也不能生成其它的程序，
 	所以 \LaTeX{} 不能从压缩的 \file{eps} 文件或其它非 \file{eps} 图像文件中得到BoundingBox的信息。
 	在这种情况下，BoundingBox参数值必须由插图命令给定（例如 \cmd{includegraphics} 命令的 \opt{bb} 选项）
 	或者存放在一个未压缩的文本文件中（见第~\ref{sec:noneps} 节，\pageref{sec:noneps}~页）。
@@ -305,7 +305,7 @@ PostScript 语言能够用来描述图形和文本。
 
 \subsection[行缓冲区溢出]{行缓冲区溢出}\label{ssec:linebuffer}
 
-\TeX{} 在读取 \textsc{ascii} 文件时是每次从中读取一行，然后把它放到自己的行缓冲区里。
+\TeX{} 在读取 \ascii 文件时是每次从中读取一行，然后把它放到自己的行缓冲区里。
 \TeX{} 的行缓冲区大约有3000个字符长度。
 如果 \file{eps} 文件中有一行的长度超过了行缓冲区的长度，就会产生如下的错误讯息：
 
@@ -440,183 +440,303 @@ Scott Pakin 的 \prgname{purifyeps} 工具能够将很多（但不是全部） \
 \end{description}
 
 
-================================
-\section[下载和安装\GS]{下载和安装~~\GS}\label{sec:gs}
+\section{图像软件}\label{sec:graphicsoftware}
 
-\GS~是一个~\PS~语言解释器，它可以运行在大多数操作系统平台上并由~Aladdin
-Enterprises~自由\realfootnote{Although Aladdin Ghostscript is distributed for
-	free, it is not in the public domain. It is copyrighted and comes with
-	certain limitations such as no commercial distribution. When versions of
-	Aladdin Ghostscript become approximately one year old, Aladdin releases
-	them as ``GNU Ghostscript'' whose use is governed by the less-restrictive
-	GNU Public License.}发放。通过~\GS~可以在屏幕上显示~\PS~和~EPS~文件，也可
-用非~\PS~打印机来打印。~Aladdin \GS~可从
-~\href{ftp://ftp.ctan.tug/tex-archive/supported/ghostscript/aladdin/}%
-{\texttt{CTAN/supported/ghostscript/aladdin/}}~取得。也可直接访问~\GS~的
-主页：
-\begin{quote}
-	\href{http://www.cs.wisc.edu/~ghost/index.html}{\texttt{http://www.cs.wisc.edu/~ghost/index.html}}
-\end{quote}
-这一~Web~网址提供了比~CTAN FTP~站点更多更好的相关信息。
-这些站点都提供~Windows/DOS/OS{\small /}2~和~Macintosh~的可执行文件，
-~Unix/VMS~下的源代码。同时，还能下载~\GS~的图形用户界面（~Windows/OS/2~下
-的~GSview~和~Unix/VMS~下的~Ghostview），这将使你更容易的观看和打印~\PS~文件。
+\subsection{Ghostscript}\label{ssec:gs}
+Ghostscript 是一个 PostScript/\file{pdf} 解释器，
+它可以运行在大多数操作系统平台上，并且是自由发布的
+\footnote{
+	尽管 AFPL Ghostscript （之前叫做 Aladdin Ghostscript ）是免费发布的，
+	但却不是公有领域。
+	它受版权保护，有一些限制，例如不允许商业发布等。
+	当 Aladdin Ghostscript 的版本停止了大约一年之后，
+	Aladdin 将其以“GNU Ghostscript”发布，使用的是限制性不那么强的 GNU Public License。}。
+通过 Ghostscript，PostScript、\file{eps} 和 \file{pdf} 文件可以在屏幕显示，
+也可以用 Postscript 和 非 PostScript 打印机来打印。
+AFPL Ghostscript 可以从 Ghostscript 官网获得：
+\begin{center}
+	\url{http://www.cs.wisc.edu/~ghost/}
+\end{center}
+其中包含了预编译的Windows、DOS、OS/2 和 Macintosh 可执行文件，
+以及在 Unix/VMS 下可用的源代码。
+此外还有一些Ghostscript的图形界面软件，例如GSview、Ghostview、GV等，
+可以更方便地浏览 PostScript。
 
-Aladdin \GS~目前的正式版本为~6.01，~GNU \GS~的正式版本为~5.50。
-对于~Window/DOS/OS{\small /}2~和~Macintosh~的用户来说，直接下载
-它的已编译好的压缩包，安装使用就行了。而对于~Unix/VMS~的用户，通常
-需要自己编译。编译时，首先将~\texttt{ghostscrip-x.xx.tar.gz}~和
-其它所需的软件包解压缩：
-\begin{Verbatim}[xleftmargin=1cm]
-gzip -dc ghostscrip-x.xx.tar.gz | tar -vxf -
-cd gsx.xx
-gzip -dc ghostscrip-x.xxjpeg.tar.gz | tar -vxf -
-gzip -dc ghostscrip-x.xxlibpng.tar.gz |tar -vxf -
-gzip -dc ghostscrip-x.xxzlib.tar.gz | tar -vxf -
-\end{Verbatim}
-解压后可参考~GS~所带的帮助文件~make.txt~来按照你的要求编辑适当的~.mak~
-文件，然后进行编译（假设使用~\texttt{gcc}~编译）和安装：
-\begin{Verbatim}[xleftmargin=1cm]
-ln -s src/gcc.mak ./Makefile
-make
-make install
-\end{Verbatim}
+%Aladdin \GS~目前的正式版本为~6.01，~GNU \GS~的正式版本为~5.50。
+%对于~Window/DOS/OS{\small /}2~和~Macintosh~的用户来说，直接下载
+%它的已编译好的压缩包，安装使用就行了。而对于~Unix/VMS~的用户，通常
+%需要自己编译。编译时，首先将~\texttt{ghostscrip-x.xx.tar.gz}~和
+%其它所需的软件包解压缩：
+%\begin{Verbatim}[xleftmargin=1cm]
+%gzip -dc ghostscrip-x.xx.tar.gz | tar -vxf -
+%cd gsx.xx
+%gzip -dc ghostscrip-x.xxjpeg.tar.gz | tar -vxf -
+%gzip -dc ghostscrip-x.xxlibpng.tar.gz |tar -vxf -
+%gzip -dc ghostscrip-x.xxzlib.tar.gz | tar -vxf -
+%\end{Verbatim}
+%解压后可参考~GS~所带的帮助文件~make.txt~来按照你的要求编辑适当的~.mak~
+%文件，然后进行编译（假设使用~\texttt{gcc}~编译）和安装：
+%\begin{Verbatim}[xleftmargin=1cm]
+%ln -s src/gcc.mak ./Makefile
+%make
+%make install
+%\end{Verbatim}
 
-\GS~中还带有一些有用的工具，如~\texttt{ps2pdf}~等，可利用~GS~来
-转换图形，打印、预览~\PS~文件。详细的使用说明可参考~GS~所带的
-使用说明文件。
+Ghostscript中还带有一些有用的工具，如 \prgname{ps2pdf} 等，可利用Ghostscript来
+转换图形，打印、预览 PostScript文件。
+详细的使用说明可参考Ghostscript所带的使用说明文件。
 
-\section{图像格式转换工具}\label{sec:convertor}
+\subsection{图像格式转换工具}\label{ssec:convertor}
 
-下面列出的一些免费软件和共享软件可以用来将非~EPS~格式的图形
-转换为~EPS~图形。其中一部分提供命令行方式的软件，在用~\texttt{dvips}~
-将~DVI~转为~PS~的过程中能同时自动转换图形的格式。具体见第~\ref{sec:noneps}~节。
+下面列出的一些免费软件和共享软件可以用来转换图像格式。
+在 \prgname{dvips} 模式文件中，这些程序可以将非\file{eps} 图像转成 \file{eps}。
+在 \pdfLaTeX{} 文档中，这些程序可以将图像转成可以支持的格式（ \file{pdf}、\file{png}、\file{jpeg} ）。
+其中一些程序还提供命令行方式，这样就可以实时转换图像，
+具体见第~\pageref{ssec:nonepsfile} 页的~\ref{ssec:nonepsfiles} 节
 
-\begin{itemize}
-	\item \texttt{ImageMagick}~是一个很好的图形转换工具，可从
-	~\href{ftp://ftp.wizards.dupont.com}{\texttt{ftp.wizards.dupont.com}}~或
-	其它站点自由下载。参见：
+\begin{description}
+	\item[ImageMagick] 
 	
-	\href{http://www.wizards.dupont.com/cristy/ImageMagick.html}%
-	{\texttt{http://www.wizards.dupont.com/cristy/ImageMagick.html}}
+	\prgname{ImageMagick} 是一个开放源代码的自由软件，
+	适用于创建、编辑和合并位图图片。
+	它可以读取、转换和写入各种格式的图片。
+	可以进行的操作包括：剪裁图片、修改颜色或是应用各种效果，旋转和合并图片，
+	添加、拉伸和旋转文字、线条、多边形、椭圆和贝塞尔曲线。
 	
-	除~Unix~和~Linux~外，它也可运行在~Windows NT, Macintosh~和~VMS~下。
+	例如，当 \prgname{ImageMagick} 的 \prgname{convert} 命令添加到系统的环境变量后，
+	如下命令
+\begin{verbatim}
+		convert file.jpg file.eps
+\end{verbatim}
+	会将 \file{file.jpg} 存为 \file{eps} 版本。
 	
-	\item \texttt{xv}~是一个~\$25~的共享软件，运行在~X-Windows~环境下，可
-	用来观看和转换图形。~\texttt{xv}~没有命令行方式，因此无法利用她来
-	实现图形格式的即时转换功能。有关~\texttt{xv}~的信息可参见：
+	使用通配符可以批量转换文件
+\begin{verbatim}
+		convert *.gif image.png
+\end{verbatim}
+	会将当前路径下的所有 \file{gif} 文件转为 \file{png} 版本，并保存为
+\begin{verbatim}
+		images-0.png
+		images-1.png
+		...
+\end{verbatim}
+	将\file{png} 文件的文件名与原始的　\file{gif} 相同则比较复杂，
+	涉及到写一个 shell 脚本或者 Windows 批处理文件。
 	
-	\href{http://www.sun.com/sunsoft/catlink/xv/note.html}%
-	{\texttt{http://www.sun.com/sunsoft/catlink/xv/note.html}}
+	\prgname{ImageMagick} 可以运行在所有主流的操作系统上。
+	可执行程序和相关信息可以从下面的网址下载
+	\begin{center}
+		\url{http://www.imagemagick.org/}
+	\end{center}
 	
-	\texttt{xv}~的在线手册：
+	\item[GraphicsMagick]
+	\prgname{ImageMagick} 的接口不时发生变化，
+	这会导致调用 \prgname{ImageMagick} 的代码发生不兼容性。
+	作为 \prgname{ImageMagick} 5.2.2 的一个分支，
+	\prgname{GraphisMagick} 项目于2002年11月开始开发，
+	旨在提供一套具有稳定接口的图像转换工具，
+	它的侧重点在于修复bugs而不是添加新特性。
 	
-	\href{http://is.rice.edu/~shel/xv-3.10a/}{\texttt{http://is.rice.edu/~shel/xv-3.10a/}}
+	\prgname{GraphicsMagick} 可以在 Unix/Linux、Cygwin、MacOSX和Windows系统上运行。
+	可执行程序和源代码可以从如下网址下载
+	\begin{center}
+		\url{http://www.graphicsmagick.org/}
+	\end{center}
 	
-	\item \texttt{DISPLAY}~是~DOS~下的免费软件，能够转换多种图像格式。
-	可从下面的地点下载~\texttt{disp189a.zip}~和~\texttt{disp189b.zip}~
-	（新的版本可能不是~\texttt{189}~。）
+	\item[NetPBM]
+	\prgname{NetPBM} 是现在已经不维护的 \prgname{PBMPLUS} 程序包的自由开源版本。
+	\prgname{NetPBM} 是一个关于图像操作的工具箱，
+	包括在各种类型的格式之间相互转换。
+	该程序包内有超过220种不同的工具，可以在约100种图像格式之间转换。
+	\prgname{NetPBM} 使用命令行操作，没有图形界面。
 	
-	\href{http://www.simtel.net/simtel.net/msdos/graphics-pre.html}%
-	{\texttt{http://www.simtel.net/simtel.net/msdos/graphics-pre.html}} \\
-	\href{http://www.simtel.net/simtel.net/msdos/graphics-pre.html}%
-	{\texttt{http://www.simtel.net/simtel.net/msdos/graphics-pre.html}}
+	大部分的Linux发行版和Cygwin项目都包含 \prgname{NetPBM}。
+	Windows、MacOSX和其他操作系统上的 \prgname{NetPBM} 程序可以从下面的网址下载
+	\begin{center}
+		\url{http://netpbm.sourceforge.net/}
+	\end{center}
 	
-	\item \texttt{WMF2EPS}~运行在~Windows9.x/NT~下的将~WMF~格式的图像转为~EPS~
-	格式的免费软件。参考以下文件来取得这一软件。
+	\item[Irfanview]
 	
-	\href{ftp://ftp.tug.org/tex-archive/support/wmf2eps/readme.txt}%
-	{\texttt{CTAN/support/wmf2eps/readme.txt}}
+	\prgname{Irfanview} 是Windows上一款出色的图像软件，
+	具有易于安装、简洁、快速等特点。
+	\prgname{Irfanview} 支持各种文件格式的浏览和转换，
+	并提供基本的图片编辑功能，包括裁剪、重采样、颜色和亮度的调整等。
+	\prgname{Irfanview} 同时支持GUI图形界面和命令行操作，包括批处理模式。
 	
-	它需要你的系统中装有~Adobe~兼容的打印机驱动。
+	例如，当\prgname{Irfanview} 的可执行程序 \verb|i_view32.exe| 添加到Windows的环境变量后，
+	如下命令
+\begin{verbatim}
+		i_view32 *.gif /convert=*.png
+\end{verbatim}
+	会为当前目录下所有的 \file{gif} 文件创建 \file{png} 版本，
+	保存的文件名为原 \file{gif} 文件的文件名加上 \file{.png} 后缀。
+	\prgname{Irfanview} 可以从下面的网址下载
+	\begin{center}
+		\url{http://www.irfanview.com/}
+	\end{center}
+	\prgname{Irfanview} 对于个人、学术和非盈利用户是免费的，
+	商业用户则要求捐赠12美元的注册费。
 	
-	\item \texttt{KVEC}~是一个~\$25~的共享软件，能够将位图格式的图形（BMP, GIF,
-	TIFF）等转为~\PS~或其它矢量图形。~\texttt{KVEC}~可运行在~Windows, OS/2,
-	NEXT~和~Unix~下。
+	\item[Graphic Converter]
 	
-	\href{http://ourworld.compuserve.com/homepages/kkuhl/}%
-	{\texttt{http://ourworld.compuserve.com/homepages/kkuhl/}}
+	Graphic Converter 是一个Macintosh上的\$30 共享软件，
+	可以读取约190种图片格式，并输出约75种格式。
+	更多信息可见
+	\begin{center}
+		\url{http://www.lemkesoft.de/}
+	\end{center}
 	
-	\item \texttt{NetPBM}~是旧有的~\texttt{PBMPLUS}~工具包的保留和扩充。
-	目前它可运行在~Windows, Unix, VMS, DOS~等多种平台下。
+	\item[WMF2EPS]
 	
-	\href{http://wuarchive.wustl.edu/graphics/graphics/packages/NetPBM/}%
-	{\texttt{http://wuarchive.wustl.edu/graphics/graphics/packages/NetPBM/}}
+	\prgname{WMF2EPS} 是运行在Windows上的\$20 共享软件，
+	实现可以 \file{wmf} 到 \file{eps} 的转换。
+	获取网址为
+	\begin{center}
+		\href{ftp://ctan.tug.org/tex-archive/nonfree/support/wmf2eps/}{CTAN/nonfree/support/wmf2eps/}
+	\end{center}
+	其中 \texttt{CTAN/} 可以代替为任意列出在第~\pageref{ctan-sites} 页的\textsc{ctan} 站点。
 	
-	\item \texttt{ImageCommander}~（共享软件，~\$19）是~Windows3.1/95/NT~下的
-	图形转换软件，可将~GIF, JPEG, PICT, WMF~等多种图形转换为~EPS~和其它
-	格式的图形。更详细的信息可见：
+	该软件也可以从\texttt{WMF2EPS} 官网下载
+	\begin{center}
+		\url{http://www.wmf2eps.de.vu/}
+	\end{center}
+	官网还提供了一些其它信息，包括Adobe兼容打印机驱动的链接（使用\prgname{WMF2EPS}需要安装）。
 	
-	\href{http://www.jasc.com/}{\texttt{http://www.jasc.com/}}
+	\item[KVEC]
 	
-	JASC~的~Paint Shop Pro 绘图软件（共享软件，~\$69）具有同样的图形转换
-	功能。
-\end{itemize}
+	\prgname{KVEC} 是一个共享软件，非商业使用为 \$25，商业用户为 \$50，
+	能将 \file{bmp}、\file{gif}、\file{tiff} 等位图格式转化为 PostScript和其它的矢量图格式。
+	\prgname{KVEC} 可以运行在 Windows、OS/2、Linux、Unix、Macintosh和BeOS等系统上。
+	更多信息可见
+	\begin{center}
+		\url{http://www.kvec.de}
+	\end{center}
+	
+	\item[xv]
+	
+	\prgname{xv} 是一个交互式图片操作程序，运行在 X Window 系统下。
+	尽管有图像转换的功能，但是 \prgname{xv} 的设计目标是图片操作程序，
+	因此不适用于图像转换。
+	例如，它没有提供命令行功能，所以图像转换必须一个一个做。
+	
+	\prgname{xv} 对于非商业使用是 \$25 的共享软件，
+	对于商业使用要求 \$25 的强制注册。
+	更多信息可见
+	\begin{center}
+		\url{http://www.trilon.com/xv/xv.html}
+	\end{center}
+	
+	\item[GIMP]	
+	
+	\prgname{GIMP}，即 GNU Image Manipulation Program，是一个图片操作的自由软件。
+	它基本上提供了 \prgname{PhotoShop}  的功能。
+	\prgname{GIMP} 可以运行在 Unix/Linux、Windows和MacOSX上。
+	更多信息可见
+	\begin{center}
+		\url{http://www.gimp.org/}
+	\end{center}
 
-\subsection[Level 2 EPS~封装]{Level 2 EPS~封装}\label{ssec:epswrapper}
+\end{description}
 
-与传统的~\PS~不同的是，~Level 2 \PS~支持压缩的二进制图形。
-这使得它能够制作出比传统的~EPS~更小、质量更好的图形。
-如果你有一台~Level 2 \PS~打印机，那么你最好是用下面的
-这些封装程序来替代上节中的那些转换软件。不过由于这样得到的~\PS~文件
-只能在~Level 2 \PS~打印机上打印，会降低文件的通用性。
 
-\begin{itemize}
-	\item \texttt{jpeg2ps}~是一个用~C~语言程序，可将~JPEG~图形转换为~Level 2 \PS~
-	图形。\texttt{jpeg2ps}~可在~Unix, DOS~和其它操作系统下使用。
-	
-	\href{http://www.muc.de/~tm/free/free.html}{\texttt{http://www.muc.de/~tm/free/free.html}}
-	
-	\item TIFF~图形可用~\texttt{tiff2ps}~转换为~LZW--编码的~Level 2 \PS~。
-	\texttt{tiff2ps}~的源代码在：
-	
-	\href{ftp://ftp.sgi.com/graphics/tiff/tiff-v3.4-tar.gz}%
-	{\texttt{ftp://ftp.sgi.com/graphics/tiff/tiff-v3.4-tar.gz}}
-	
-	\texttt{tiff2ps}~能在~Unix, DOS, Mac~和~VMS~下编译成功。尽管
-	~LZW \PS~文件较小，但是它需要~~Level 2 \PS~打印机。
-\end{itemize}
+\subsection{Level 2 EPS 封装}\label{ssec:epswrapper}
+Level 2 PostScript 支持若干种压缩格式，
+包括用于 \file{jpeg} 文件的 DCT 和用于许多 \file{tiff} 文件的 LZW。
+此外，这一二进制数据可以是 \ascii 编码的，
+比如 \ascii85 或者 \ascii Hex，这样生成的\ascii 文件大小分别是原来二进制文件的$125\percent$ 和 $200\percent$。
+由于Level-2 \file{eps}支持这些压缩格式，
+因此可以创建为 \file{jpeg} 或是 \file{tiff} 文件的封装。
+这样生成的 \file{eps} 比起传统的\file{eps}转换来说具有更高的质量和更小的体积。
+如果你有一台 Level 2 PostScript打印机，
+那么你最好是用下面的这些封装程序来替代上节中的那些转换软件。
+不过由于这样得到的PostScript文件只能在 Level 2 PostScript打印机上打印，会降低文件的通用性。
 
-\subsection[编辑\PS]{编辑~~\PS}\label{ssec:editps}
+请注意，默认情况下，\prgname{dvips} 会剥离使用的 \file{eps} 图像的注释行
+（即以 \texttt{\%\%} 开头的行）。
+由于\ascii85编码的 Level 2 图像会包含以 \texttt{\%\%} 开头的行，
+所以，使用 \ascii85编码的 level-2 \file{eps} 文件的用户必须使用\verb|dvips -K0| 选项（\texttt{K} 加上数字 \texttt{0} ），
+以阻止 \prgname{dvips} 剥离注释行。
+不过，\ascii Hex 编码的 level-2 文件则不会有这个问题。
 
-虽然可直接编辑~EPS~文件中的~\PS~命令来改变图形，但这对一些不熟悉
-~\PS~语言的人来说还是很困难的。所幸的是，借助于下面的一些工具软件，
-可以很容易的编辑~EPS~图形。
+\begin{description}
+	\item[jpeg2ps] 
+	
+	\prgname{jpeg2ps} 是一个用 C 语言编写的程序，
+	可将\file{jpeg} 图像转换为 Level 2 PostScript。
+	\prgname{jpeg2ps} 可在 Unix、DOS 和其它操作系统下使用。
+	\prgname{jpeg2ps} 可以从如下网址获得
+	\begin{center}
+		\href{ftp://ctan.tug.org/tex-archive/nonfree/support/jpeg2ps/}{CTAN/nonfree/support/jpeg2ps/}\\
+		\url{http://www.pdflib.com/products/more/jpeg2ps.html}\\
+		\url{http://gnuwin32.sourceforge.net/packages/jpeg2ps.htm}
+	\end{center}
+	其中 \texttt{CTAN/} 可以代替为任意列出在第~\pageref{ctan-sites} 页的\textsc{ctan} 站点。
+	
+	\prgname{jpeg2ps} 支持三种 level-2 编码：
+	\ascii85 （默认值）、8-bit binary （使用 \verb|jpeg2ps -b| 选项）、7-bit \ascii Hex （使用 \verb|jpeg2ps -h| 选项）。
 
-\begin{itemize}
-	\item \texttt{pstoedit} 是~Unix, Windows, DOS~和~OS/2~下的免费软件，
-	借助于~\GS，它能购将~\PS~或~PDF~图形转为其它矢量格式（比如~
-	\texttt{xfig}~的~\texttt{.fig}~格式）。~\texttt{pstoedit}~的
-	C$++$~源码可从下述站点取得。
+	\item[tiff2ps]
 	
-	\href{ftp://ftp.x.org/contrib/applications/pstoedit/pstoedit.html}%
-	{\texttt{ftp://ftp.x.org/contrib/applications/pstoedit/pstoedit.html}}\\
-	\href{http://www.geocities.com/SiliconValley/Network/1958/pstoedit/}%
-	{\texttt{http://www.geocities.com/SiliconValley/Network/1958/pstoedit/}}
+	\prgname{tiff2ps} 可以运行在 Unix、DOS、Mac 和 VMS 系统上。
+	\file{tiff} 图像可用\prgname{tiff2ps} 程序转换为 LZW--编码的 Level 2 PostScript。
+	\texttt{tiff2ps}~的源代码可以从如下站点获得
+	\begin{center}
+		\url{http://www-mipl.jpl.nasa.gov/~ndr/tiff/html/tools.html}\\
+		\url{ftp://ftp.sgi.com/graphics/tiff/}
+	\end{center}
 	
-	\item \texttt{Mayura Draw}~（以前称为~\texttt{PageDraw}）是~Windows3.1/9.x/NT~
-	下的绘图软件。当与~\GS~一起使用时，它可以编辑~\PS~文件。见：
+	\item[ImageMagick 的 level-2 EPS 功能]
 	
+	正如第~\pageref{ssec:convertor} 页的~\ref{ssec:convertor} 节所述，
+	\prgname{ImageMagick} 可以在一大类图像格式之间转换。
+	其中一种格式就是 level-2 \file{eps}，
+	因此，\prgname{ImageMagick} 具有和上述 level-2 封装相同的功能。
+	例如，
+\begin{verbatim}
+		convert file.jpeg file.eps2
+\end{verbatim}
+	会为 \file{file.jpeg} 创建一个 level-2 \file{eps} 版本 \file{file.eps2}
+	
+\end{description}
+
+\subsection{编辑 PostScript}\label{ssec:editps}
+
+虽然可直接编辑 \file{eps} 文件中的PostScript命令来改变图像，
+但这对大多数人来说还是很困难的。
+所幸的是，借助于下面的一些工具软件，可以很容易的编辑 \file{eps} 图像。
+
+\begin{description}
+	\item[pstoedit]
+	
+	\prgname{pstoedit} 是 Unix、Windows、DOS 和 OS/2 下的自由软件，
+	它能够将PostScript或PDF图像转为其它矢量格式
+	（比如\file{Xfig} 的 \file{.fig}格式）。
+	更多信息可参考
+	\begin{center}
+		\url{http://www.pstoedit.com/}
+	\end{center}
+
+	\item[Mayura Draw]
+	
+	\prgname{Mayura Draw} 以前称为\prgname{PageDraw}，
+	是 Windows3.1/95/NT 下的 \$39 共享软件。
+	当与ghostscript一起使用时，它可以编辑PostScript文件。见：
+	\begin{center}
+		\url{http://www.mayura.com/}
+	\end{center}
 	\href{http://www.wix.com/PageDraw}{\texttt{http://www.wix.com/PageDraw}}
 	
-	旧版本的~\texttt{Mayura Draw}~是免费软件，最近的版本则为~\$15~的共享
-	软件。~\texttt{Mayura Draw}~需要~Adobe Type Manager (ATM)~来在图形上
-	放置文本。虽然~ATM~现在是商业软件，但是~Adobe~在~Acrobat Reader 2.0~中
-	提供了一个免费版本。
+	\item[xfig]
 	
-	\href{ftp://ftp.winsite.com/pub/pc/win3/util/acroread.zip}%
-	{\texttt{ftp://ftp.winsite.com/pub/pc/win3/util/acroread.zip}}
+	\prgname{xfig} 是 Unix/Xwindows 下功能强大的自由绘图软件，
+	能够导入 \file{eps} 图形并加上标记。不过目前还不能改变原始的\file{eps} 图像。
+	参见
+	\begin{center}
+		\url{http://www.xfig.org/}
+	\end{center}
 	
-	\item \texttt{xfig}~是~Unix/Xwindows~下功能强大的免费绘图软件，能够
-	引入~EPS~图形并加上标记。不过目前还不能改变原始的~EPS~图形。
-	访问~\texttt{xfig}~的主页获取更进一步的信息。
-	
-	\href{http://www.xfig.org/}{\texttt{http://www.xfig.org/}}
-	
-\end{itemize}
+\end{description}
 
 \clearpage
-\vbox to .5\textheight{\mbox{}}
-\clearpage
-
 \endinput
