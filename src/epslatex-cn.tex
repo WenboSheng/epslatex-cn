@@ -11,6 +11,8 @@
 \usepackage{makeidx}
 \usepackage{hologo}
 \usepackage{fancyvrb}
+\usepackage{array,booktabs}
+
 \usepackage{hyperref}
 
 \DefineShortVerb{\|}
@@ -20,7 +22,11 @@
 
 \lstset{
 	basicstyle=\ttfamily,
-	commentstyle=\ttfamily\slshape}
+	commentstyle=\ttfamily\slshape,
+	language=LaTeX}
+
+% new column type in tabular with fixed width
+\newcolumntype{P}[1]{>{\setlength{\parindent}{2em}}p{#1}}
 
 \newcommand{\file}[1]{\texttt{#1}}
 \newcommand{\prgname}[1]{\textsf{#1}}
@@ -39,6 +45,8 @@
 %\renewcommand{\bs}{\symbol{'134}}%Print backslash
 \newcommand{\emphi}[1]{\emph{#1}\index{#1}}
 \newcommand{\ascii}{\textsc{ascii}}
+
+\newcommand{\HR}{\rule{1em}{0.4pt}}
 
 \makeindex
 \includeonly{preface}

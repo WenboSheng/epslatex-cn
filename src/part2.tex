@@ -39,161 +39,273 @@
 	\item 任何由 \cmdonearg{usepackage}{graphics} 的选项指定的驱动会覆盖前两种方式指定的驱动。
 \end{enumerate}
 
-=============================================
-
-\subsection{includegraphics 命令}\label{ssec:includegraphics}
-
-
-下面的命令将以~\texttt{file.eps}~
-的自然大小插入到~\LaTeX{}~文档中：
-
-\begin{Verbatim}[xleftmargin=1cm]
-\documentclass{article}
-\usepackage{graphicx}
-\begin{document}
+\subsection{DVIPS 模式下图像加载}
+\prgname{dvips} 模式下支持最好的图像格式是 \file{eps}。
+当使用 \prgname{latex} 编译文件时，下面的命令
+\begin{lstlisting}[language=LaTeX]
 \includegraphics{file.eps}
-\end{document}
-\end{Verbatim}
+\end{lstlisting}
+会从 \file{file.eps} 文件中按照自然大小导入图像。
+如果文件名没有扩展名，
+\begin{lstlisting}[language=LaTeX]
+\includegraphics{file}
+\end{lstlisting}
+那么 \cmd{includegraphics} 会按照 \cmd{DeclareGraphicsExtensions} 扩展名列表中自动加上扩展名
+（见~\pageref{ssec:deextension} 的第~\ref{ssec:deextension} 节）。
+
+\subsection[pdfLaTeX 模式下的图像加载]{\pdfLaTeX{} 模式下的图像加载}
+\pdfTeX{} 支持直接导入 \file{pdf}、\file{png}、\file{jpeg} 和 MetaPost 图像。
+当使用 \prgname{pdflatex} 编译时，下面的命令
+\begin{lstlisting}[language=LaTeX]
+\includegraphics{file.pdf}
+\includegraphics{file.png}
+\includegraphics{file.jpg}
+\includegraphics{file.mps}
+\end{lstlisting}
+会按照自然尺寸大小导入 \file{pdf} 文件 \file{file.pdf}、
+\file{png} 文件 \file{file.png}、
+\file{jpeg} 文件 \file{file.jpg}
+以及 MetaPost 文件 \file{file.mps}。
+如果文件名没有扩展名
+\begin{lstlisting}[language=LaTeX]
+\includegraphics{file.eps}
+\end{lstlisting}
+那么 \cmd{includegraphics} 会按照 \cmd{DeclareGraphicsExtensions} 扩展名列表中自动加上扩展名
+（见~\pageref{ssec:deextension} 的第~\ref{ssec:deextension} 节）。
+
+\subsection{同时供 \LaTeX{} 和 \pdfLaTeX{} 编译的文档 }
+很多情况下要求文档同时可以由 \LaTeX{} 或 \pdfLaTeX{} 编译。
+要求 PostScript 输出时使用 \LaTeX{} 编译和 \prgname{dvips} 驱动，
+要求 \file{pdf} 输出时则使用 \pdfLaTeX{} 编译。
+在这两种方式之间切换会改变两件事情。
+\begin{itemize}
+	\item 合适的 \pkg{graphicx} 驱动会改变。
+	\item 可以直接导入的图像类型会改变。
+\end{itemize}
+使用如下步骤会调整这些，这样一份文档可以同时由 \LaTeX{} 和 \pdfLaTeX{} 编译。
+\begin{enumerate}
+	\item 对于每一份要导入的图像都创建两个副本\footnote{
+		有时使用 \prgname{PurifyEPS} （见 \pageref{ssec:purifyeps} 页的第~\ref{ssec:purifyeps} 节） 可以创建一个文件并可以同时供 \LaTeX{} 和 \pdfLaTeX{} 使用。
+		 Sometimes PurifyEPS (see Section 5.5 on Page 17) can be used to create a single file that can
+		 be used by both L
+		 A T E X and pdfL A T E X.}：
+	\begin{enumerate}
+		\item 一份 \file{eps} 版本，当使用 \prgname{latex} 编译时会导入。
+		\item 一份 \file{png}、\file{pdf}、\file{jpeg} 或者 MetaPost 版本，
+		当使用 \prgname{pdflatex} 编译时会导入。
+	\end{enumerate}
+	
+	\item 不要在 \cmd{documentclass} 或者 \cmdonearg{usepackage}{graphicx} 命令中指定 \opt{dvips} 或者 \opt{pdftex} 选项。
+	\file{graphic.cfg} 文件会自动传递合适的选项给 \pkg{graphicx} 宏包。
+	
+	\item 当使用 \cmd{includegraphics} 命令插图时，
+	不要指定扩展名。例如
+\begin{lstlisting}[language=LaTeX]
+\includegraphics{graphic}
+\end{lstlisting}
+	定义在 \file{dvips.def} 中的默认扩展名列表会使得 \LaTeX{} 导入图像 \file{eps} 版本，
+	而定义在 \file{pdftex.def} 中的默认扩展名列表会使得 \pdfLaTeX{} 导入图像的 \file{png}、\file{pdf}、\file{jpeg} 或者 MetaPost 版本
+	（见~\pageref{ssec:deextension} 的第~\ref{ssec:deextension} 节）。
+	
+	\item 不要直接使用 \pkg{psfrag}。如果需要进行 \pkg{psfrag} 替换，
+	使用~\pageref{ssec:psfrag-pdftex} 页的第~\ref{ssec:psfrag-pdftex} 节介绍的方法。
+\end{enumerate}
+
+\subsubsection{使用 \pkg{ifpdf} 宏包的条件代码}
+\pkgi{ifpdf} 宏包的 \cmdi{ifpdf} 命令会检测文档是否由 \prgname{pdflatex} 编译
+\footnote{
+	历史上，有一种检测方法是基于 \cmd{pdfoutput} 仅在使用 \pdfLaTeX{} 时才有定义这一事实。
+	然而，现在绝大部分 \TeX{} 发行版中的 \prgname{latex} 命令实际上是在 \file{dvi} 模式下执行 \pdfLaTeX{}。
+	此时无论用\prgname{latex} 和 \prgname{pdflatex} 中的哪种来编译，\cmd{pdfoutput} 都有定义。
+	\pkg{ifpdf} 宏包则提供了一个鲁棒的条件命令，可以判断文档是否直接处理成 \file{pdf} 文件，
+	从而解决了这一问题。}，
+进而可以在文档中使用条件语句。
+
+例如，为了精简扩展名列表（见第~\ref{ssec:deextension} 节），
+可以用 \cmd{ifpdf} 命令来定制
+\begin{lstlisting}[language=LaTeX]
+\usepackage{ifpdf}
+...
+\ifpdf
+\DeclareGraphicsExtensions{.pdf,.png,.jpg,.mps}
+\else
+\DeclareGraphicsExtensions{.eps}
+\fi
+\end{lstlisting}
+
+如果用户想要基于条件代码来使用不同的 \cmd{documentclass} 选项，
+使用如下代码可以在 \cmd{documentclass} 之前定义 \cmd{ifpdf}
+\begin{lstlisting}[language=LaTeX]
+\RequirePackage{ifpdf}
+\ifpdf
+\documentclass[pdftex]{article}
+\else
+\documentclass[dvips]{article}
+\fi
+\end{lstlisting}
+这段代码当使用 \prgname{pdflatex} 时会传递 \opt{pdftex} 选项，
+而使用 \prgname{latex} 编译时会传递 \opt{dvips} 选项。
+不过，正如~\pageref{ssec:driver} 页的第~\ref{ssec:driver} 节所述，
+这段代码实际上没有必要，因为绝大部分的发行版本会根据 \file{graphics.cfg} 文件自动处理驱动选项。
+
+
+\subsection{指定宽度、高度和角度}\label{ssec:spec-width-height-angle}
+如下命令
+\marginpar{指定宽度}
+\begin{lstlisting}
+\includegraphics[width=3in]{file}
+\end{lstlisting}
+导入指定的图片文件，且宽度为 3英寸
+\footnote{同时高度也会按相应的比例缩放——译者注}。
+不过，为了使图像的页面布局更具通用性，
+图片宽度最好指定为可伸缩的相对长度而不是用像3英寸这样的固定尺寸
+\footnote{
+	预先定义的相对长度包括：\\
+	\cmd{textwidth} 是文档中正文的宽度；\\
+	\cmd{linewidth} 是当前环境中一行的宽度；\\
+	\texttt{em} 是当前字体大写字母M的宽度；\\
+	\texttt{ex} 是当前字体小写字母x的高度。}。
+例如，
+\begin{itemize}
+	\item 如下命令将插入的图片伸缩至和当前一行文本的宽度相同：
+\begin{lstlisting}
+\includegraphics[width=\linewidth]{graphic}
+\end{lstlisting}
+	\item 如下命令使得插入图片的宽度为当前一行文本的 $80\percent$：
+\begin{lstlisting}
+\includegraphics[width=0.80\linewidth]{graphic}
+\end{lstlisting}
+	\item 当与 \pkg{calc} 宏包配合使用时，
+	如下命令可以使得插入图片的宽度比当前一行文本的宽度窄2英寸：
+\begin{lstlisting}
+\includegraphics[width=\linewidth-2.0in]{graphic}
+\end{lstlisting}
+	
+\end{itemize}
+
+类似地，如下命令
+\marginpar{指定高度}
+\begin{lstlisting}
+\includegraphics[height=2cm]{file}
+\end{lstlisting}
+导入指定的图片文件，且高度为2厘米。
+此外，\cmd{includegraphics} 命令还有一个 \opt{totalheight} 选项来指定整体高度
+（关于高度和整体高度的定义可参见第~\pageref{sec:terminology} 页的第~\ref{sec:terminology} 节）。
+
+\cmd{includegraphics} 命令的 \opt{angle} 选项可以指定插入图像的角度：
+\marginpar{指定角度}
+\begin{lstlisting}
+\includegraphics[angle=45]{graphic}
+\end{lstlisting}
+该命令会按照原始尺寸插入图片，并且按逆时针旋转45度。
+
+\subsubsection{同时指定角度和高度/宽度}
+由于 \cmd{includegraphics} 的选项是从左到右依次解释的，
+所以其中指定角度和大小顺序会导致不同的效果。例如
+\begin{lstlisting}
+\begin{center}
+\includegraphics[angle=90,totalheight=1cm]{graphic}
+\includegraphics[totalheight=1cm,angle=90]{graphic}
+\end{center}
+\end{lstlisting}
+会生成如下结果
+\begin{center}
+	\includegraphics[angle=90,totalheight=1cm]{graphic}
+	\includegraphics[totalheight=1cm,angle=90]{graphic}
+\end{center}
+第一个盒子是先旋转了90度，然后缩放使得整体高度为1厘米。
+第二个盒子先缩放使得整体高度为1厘米，然后再旋转90度。
+另外要注意的是，以上图形中两幅图像之间有一个空格，
+因为第一行 \cmd{includegraphics} 的末尾并没有以 \texttt{\%} 结束。
 
 \begin{table}
-	\newcommand{\tbltt}[1]{\textcolor{cyan}{\texttt{#1}}}
-	\renewcommand{\arraystretch}{1.2}
-	\centering
-	\topcaption{\texttt{includegraphics Options}}\label{tab:opt}
-	
-	\begin{tabular}{>{\columncolor{morelight}}l|>{\CJKfamily{kai}}m{11cm}|}
-		
-		\cline{2-2}
-		\tbltt{height} & 图形的高度（可为任何~\TeX{}~度量单位）。 \\
-		\cline{2-2}
-		\tbltt{totalheight} & 图形的全部高度，可为任何~\TeX{}~度量单位（
-		\textsl{6/95~增加}）。 \\
-		\cline{2-2}
-		\tbltt{width} & 图形的宽度（可为任何~\TeX{}~度量单位）。\\
-		\cline{2-2}
-		\tbltt{scale} & 图形的缩放因子，设定~\texttt{scale=2}~会使
-		插入的图形的大小为其自然大小的两倍。\\
-		\cline{2-2}
-		\tbltt{angle} & 设定旋转的角度，以度为单位，顺时钟方向为正。\\
-		\cline{2-2}
-		\tbltt{origin} & \texttt{origin}~指定图形绕那一点旋转，缺省
-		是图形的参考点（\textsl{12/95~增加}）。初始点有可能与
-		第~\ref{sec:rotatebox}节的~\cmd{rotatebox}~命令中的一样。
-		比如~\texttt{origin=c}~将使图形绕它的中心旋转。 \\
-		\cline{2-2}
-		\tbltt{bb} &  设定~BoundingBox~的值。
-		~\texttt{bb=10 20 100 200}~设定~BoundingBox~的左下角在
-		~\texttt{(10,20)}，右上角在~\texttt{(100,200)}。因为
-		~\cmd{includegraphics}~会自动从~EPS~文件中读入~BoundingBox~行
-		所给的值，所以一般不使用~\texttt{bb}~这个选项。但它在~EPS~文件
-		中的~BoundingBox~丢失或出错时还是很有用的。\\
-		\cline{2-2}
-	\end{tabular}
+\centering
+\kaishu
+\caption{\cmd{includegraphics} 选项}\label{tab:opt}
+\begin{tabular}{>{\ttfamily}l P{0.7\textwidth}}
+	\toprule
+	height & 图形的高度（可为任何~\TeX{}~度量单位）。 \\ \hline
+	totalheight & 图形的整体高度，可为任何~\TeX{}~度量单位。 \\ \hline
+	width & 图形的宽度（可为任何~\TeX{}~度量单位）。 \\ \hline
+	scale & 图形的缩放因子，设定 \opt{scale=2} 会使插入图形的大小为其自然大小的两倍。 \\ \hline
+	angle & 设定旋转的角度，以度为单位，逆时针方向为正。 \\ \hline
+	origin & \opt{origin} 指定图形绕那一点旋转，默认是围绕参考点旋转。
+		\opt{origin} 点可以与第~\ref{ssec:rotatebox}节的 \cmd{rotatebox} 命令中的一样。
+	比如 \opt{origin=c} 将使图形绕它的中心旋转。  \\ \hline
+	bb & 设定 BoundingBox 的值。
+	例如，\opt{bb=10 20 100 200} 设定BoundingBox 的左下角在 $(10,20)$，右上角在 $(100,200)$。\par
+	因为 \cmd{includegraphics} 会自动从 \file{eps} 文件中读入BoundingBox值，
+	所以一般不用\opt{bb} 这个选项。
+	但它在 \file{eps} 文件中的 BoundingBox 丢失或不准确时还是很有用的。 \\ 
+	\bottomrule
+\end{tabular}
 \end{table}
 
 \begin{table}
-	\newcommand{\tbltt}[1]{\textcolor{cyan}{\texttt{#1}}}
-	\renewcommand{\arraystretch}{1.2}
-	\centering
-	\topcaption{\texttt{includegraphics Cropping Options}}\label{tab:cropopt}
+\centering
+\caption{\cmd{includegraphics} 裁剪选项}\label{tab:cropopt}
+\kaishu
+\begin{tabular}{>{\ttfamily}l P{0.7\textwidth}}
+	\toprule
+	viewpoint & 指定图像可以被看到的部分。
+	如同 BoundingBox 一样，这个区域由四个数字决定，分别是左下角和右上角的坐标。
+	这里的坐标是以 BoundingBox 左下角为起点的相对坐标。
 	
-	\begin{tabular}{>{\columncolor{morelight}}l|>{\CJKfamily{kai}}m{10cm}|}
-		
-		\cline{2-2}
-		\tbltt{viewpoint} & 指定图形可以被看到的部分。如同~BoundingBox~一样，
-		这是一个由四个数字，左下角和右上角的坐标所确定的区域。
-		这里的坐标是相对于~BoundingBox~的左下角的（
-		\textsl{6/95~增加}）。
-		
-		例如，如果图形的~BoundingBox~的值是~\texttt{50
-			50 410 302}，~\texttt{viewpoint=50 50 122 122}~
-		将显示以图形的左下角为左下角的一英寸大小的区域。
-		而~\texttt{viewpoint=338 230 410 302}~则会显示以图形的
-		右上角为右上角的一英寸大小的区域。
-		
-		必须使用~\texttt{clip}~选项（见表~\ref{tab:boolopt}）
-		来阻止显示视图以外的图形部分 。 \\
-		\cline{2-2}
-		\tbltt{trim} &   指定图形可以被看到的部分的另一选项。所给出的四个数字
-		分别代表了从左、下、右、上被截去的值。正数代表从此方向
-		截去的大小，而负数则代表从此方向加上的大小。 \\
-		\cline{2-2}
-	\end{tabular}
+	例如，如果图像的 BoundingBox 的值是 \texttt{50	50 410 302}，
+	那么 \texttt{viewpoint=50 50 122 122} 将显示以图像左下角为左下角的一英寸大小的正方形区域。
+	而 \texttt{viewpoint=338 230 410 302} 则会显示以图形的右上角为右上角的一英寸大小的正方形区域。
+	
+	必须使用\opt{clip} 选项（见表~\ref{tab:boolopt}）来阻止显示视图以外的图形部分。 \\ \hline
+	trim & 显示部分图像的另一种方法。
+	所给出的四个数字分别代表了从左、下、右、上被截去的值。
+	正数代表从此方向截去的大小，而负数则代表从此方向加上的大小。
+	
+	例如，\opt{trim=1 2 3 4} 代表图像的左边截去1 \texttt{bp}，
+	下边截去2 \texttt{bp}，右边截去3 \texttt{bp}，上边截去4 \texttt{bp}。
+	
+	必须使用\opt{clip} 选项（见表~\ref{tab:boolopt}）来阻止显示被截去的部分。 \\ \bottomrule
+\end{tabular}
 \end{table}
 
 \begin{table}
-	\newcommand{\tbltt}[1]{\textcolor{cyan}{\texttt{#1}}}
-	\renewcommand{\arraystretch}{1.2}
-	\centering
-	\topcaption{\texttt{includegraphics Boolean Options}}\label{tab:boolopt}
+\centering
+\caption{\cmd{includegraphics} 布尔型选项}\label{tab:boolopt}
+\begin{tabular}{>{\ttfamily}l P{0.7\textwidth} }
+	\toprule
+	clip & 指定 \opt{clip=false} 会显示整个的图形，即使有些部分在视图之外。（默认值）
 	
-	\begin{tabular}{>{\columncolor{morelight}}l|>{\CJKfamily{kai}}m{10cm}|}
-		
-		\cline{2-2}
-		\tbltt{noclip} & （缺省选项）显示整个的图形，即使有些部分在视图之外。 \\
-		\cline{2-2}
-		\tbltt{clip} & 当使用~\texttt{clip}~时，将不显示图形在视图之外的部分。 \\
-		\cline{2-2}
-		\tbltt{draft} & 当使用~\texttt{draft}~选项时，将只显示图形的~BoundingBox~
-		和文件名，这使得显示和打印文档的速度加快。如果使用
-		~\texttt{draft}~宏包选项，\verb+\usepackage[draft]{graphicx}+
-		会导致文档中的所有图形都被以草稿（\texttt{draft}）方式插入。\\
-		\cline{2-2}
-		\tbltt{final} & （缺省选项，除非使用\verb+\usepackage[draft]{graphicx}+）
-		~\texttt{final}~选项使得图形被显示，经常用来覆盖~
-		\verb+\usepackage[draft]{graphicx}+ \\
-		\cline{2-2}
-		\tbltt{keepaspectratio} & 在没有设定~\texttt{keepaspectratio}~选项时，
-		给定图形的高度（全部高度）和宽度会导致图形被不对称缩
-		放来满足所设定的高和宽。在设定~\texttt{keepaspectratio}~
-		选项后，给定图形的高度（全部高度）和宽度时，图形会
-		保持原有的宽高比例，尽可能使得图形满足所设定的高和宽，
-		但是图形不会超出其中任一个。 \\
-		\cline{2-2}
-	\end{tabular}
+	指定 \opt{clip=true} 时将不显示图形在视图之外的部分。 \\ \hline
+	draft & 当使用\opt{draft} 或 \opt{draft=true} 选项将阻止图像的导入。
+	此时在插图的位置只显示图像的BoundingBox和文件名，
+	这会加快文档的显示和打印速度。
+	使用 \opt{draft=false} 则会显示图像。
+	
+	如果使用 \opt{draft} 宏包选项 \cmdtwoargs{usepackage}{draft}{graphicx}，
+	那么文档中的所有图像都以\opt{draft} 方式插入。  \\ \hline
+	keepaspectratio & 在没有设定\opt{keepaspectratio} 选项时，
+	如果同时给定图像的宽度和高度/整体高度，
+	那么为了满足所设定的高和宽，图像的缩放可能会失真变形。
+	
+	在设定\opt{keepaspectratio} 选项后，给定图像的宽度和高度/整体高度时，
+	图像会在保持原有的宽高比例下缩放，尽可能使得图像满足所设定的高和宽，
+	但是图像的实际宽高不会超出设置的值。 \\ \bottomrule
+\end{tabular}
 \end{table}
 
-如果加入的图形文件没有指明扩展名，那么~\cmd{includegraphics}~会根据
-~\cmd{DeclareGraphicsExtensions}~的扩展名列表自动为它加上扩展名（见第~
-\ref{sec:deextension}~节）。由于缺省的扩展名列表不包括空的扩展名，
-~\cmd{includegraphics\{file\}}~不会读入~\texttt{file}。除非空的扩展名
-已被加到扩展名列表中。
+==============================================
 
-\noindent{\CJKfamily{hei}命令} \marginpar{\CJKfamily{kai}\bfseries 指定宽度}
-\begin{Verbatim}[xleftmargin=1cm]
-\includegraphics[width=3in]{file.eps}
-\end{Verbatim}
+\subsection{一些例子}
 
-将~\texttt{file.eps}~插入文档并且它的宽度被缩放到~3~英寸，高度也会
-按相应的比例缩放。如果用~\cmd{textwidth}~或~\cmd{em}~等的函数来
-指定宽度，而不是用像~3~英寸这样的固定尺寸，将会使你的~\LaTeX{}~文
-档更具通用性。例如：
-\begin{Verbatim}[xleftmargin=1cm]
-\includegraphics[width=\textwidth]{graphics.eps}
-\end{Verbatim}
-将所插入图形缩放到和文本行的宽度一样宽。而下面的命令
-\begin{Verbatim}[xleftmargin=1cm]
-\includegraphics[width=0.80\textwidth]{graphics.eps}
-\end{Verbatim}
-使得插入图形的宽度为文本行宽的~$80\%$。当与~\pai{calc}~宏包配合使用
-时，下面的命令可令图形的宽度比文本行宽少~2~英寸：
-\begin{Verbatim}[xleftmargin=1cm]
-\includegraphics[width=\textwidth-2.0in]{graphics.eps}
-\end{Verbatim}
-
-\hbox to \textwidth{%
-	\hfill（{\CJKfamily{kai}需要~\textsf{graphicx} \textsl{12/95}~或以后的
-		版本。}）}
-
-下面是一些使用~\cmd{includegraphics}~命令来插入图形的
-例子。这里为方便起见，定义~\ci{HR}~如下：
-\begin{Verbatim}[xleftmargin=1cm]
+下面是一些使用 \cmd{includegraphics} 命令来插入图形的例子。
+\footnote{
+	本小节来自于王磊在旧版本的中译本《\LaTeXe{} 插图指南》中额外补充的内容。——译者注}
+这里为方便起见，定义水平线 \cmd{HR} 为
+\begin{lstlisting}
 \newcommand{\HR}{\rule{1em}{0.4pt}}
-\end{Verbatim}
+\end{lstlisting}
 
 \ifpdf\else %因为使用pdflatex不支持clip.所以省去。
-\noindent 在下面的几个例子中可以看到使用~\texttt{bb,clip,viewport}~
-和~\texttt{trim}~的效果。
+在下面的几个例子中可以看到使用\opt{bb,clip,viewport} 和\opt{trim}的效果。
 
 \hspace{-1cm}\begin{minipage}[c]{.5\textwidth}
 	左\HR%
@@ -249,8 +361,7 @@
 \end{minipage}
 \fi
 
-\noindent 在下面的几个例子中，可以比较以下使用~\texttt{scale,width,height,angle}~
-以及~\texttt{keepaspectratio}~选项及其不同的顺序所得到的不同效果。
+在下面的几个例子中，可以比较以下使用 \opt{scale,width,height,angle} 以及 \opt{keepaspectratio} 选项及其不同的顺序所得到的不同效果。
 
 \begin{minipage}[t]{.45\textwidth}
 	\vspace{0pt}
@@ -397,48 +508,43 @@
 \end{minipage}
 
 \section{旋转和缩放对象}\label{sec:scalerotate}
-
-除了上一章介绍的~\cmd{includegraphics}~命令外，~\textsf{graphicx}~宏包还提供了
-另外四个命令用来旋转和缩放任意的~\LaTeX{}~对象：{\CJKfamily{kai}文本，
-	~EPS~图形等等。}
-
-\begin{Verbatim}[xleftmargin=1cm, formatcom=\CJKfamily{kai}\color{blue}]
+除了 \cmd{includegraphics}命令外，
+\pkg{graphicx} 宏包还提供了另外四个命令用来旋转和缩放任意的 \LaTeX{} 对象，例如文本、图像等。
+\begin{lstlisting}
 \scalebox{水平缩放因子}[垂直缩放因子]{对象}
 \resizebox{宽度}{高度}{对象}
-\resizebox*{宽度}{全部高度}{对象}
+\resizebox*{宽度}{整体高度}{对象}
 \rotatebox[选项]{角度}{对象}
-\end{Verbatim}
+\end{lstlisting}
 
-因为~\textsf{graphicx}~包的~\cmd{includegraphics}~带有支持旋转和缩放的
-~\texttt{angle}~和~\texttt{width}~等选项，所以本章介绍的这几个命令很少
-在插图时使用。例如：
-\begin{Verbatim}[xleftmargin=1cm]
+因为 \pkg{graphicx} 包的 \cmd{includegraphics} 已经带有 \opt{angle}、\opt{width} 等支持旋转和缩放的选项，
+所以本节介绍的这几个命令很少在插图时使用。例如：
+\begin{lstlisting}
 \includegraphics[scale=2]{file.eps}
 \includegraphics[width=4in]{file.eps}
 \includegraphics[angle=45]{file.eps}
-\end{Verbatim}
+\end{lstlisting}
 上述命令和下面的命令等到的结果是相同的。
-\begin{Verbatim}[xleftmargin=1cm]
+\begin{lstlisting}
 \scalebox{2}{\includegraphics{file.eps}}
 \resizebox{4in}{!}{\includegraphics{file.eps}}
 \rotatebox{45}{\includegraphics{file.eps}}
-\end{Verbatim}
+\end{lstlisting}
 
-尽管结果相同，但在实际使用中最好还是用前一种方法，因为它能更迅速的
-生成效率更高的~\PS。
-
-\clearpage
+尽管结果相同，但在最好还是用前一种方法，
+因为它的速度更快，而且生成的 PostScript 和 \file{pdf} 效率更高。
 
 \subsection{scalebox 命令}\label{ssec:scalebox}
+语法：
+\begin{lstlisting}
+\scalebox{水平缩放因子}[垂直缩放因子]{对象}
+\end{lstlisting}
 
-{\large\hspace{1cm}
-	\color{morelight}{\shadowbox{\textcolor{blue}{\texttt{%
-					\bs scalebox\{\CJKfamily{kai}水平缩放因子\}[垂直缩放因子]\{对象\}}}}}}
-
-\ci{scalebox}~命令对其作用的对象进行缩放，使缩放后的对象的宽度为原始
-宽度与水平缩放因子之积，高度为原始高度与垂直缩放因子之积。如果垂直缩放
-因子没有给出，那么将按照给定的水平缩放因子，保持原始宽高的比例进行缩放。
-如果缩放因子为负值，则对对象进行反射。下面是几个例子：
+\cmdi{scalebox} 命令对其作用的对象进行缩放，
+使得缩放后对象的宽度为原始宽度与\texttt{水平缩放因子}之积，高度为原始高度与\texttt{垂直缩放因子}之积。
+如果\texttt{垂直缩放因子}没有给出，那么默认取为\texttt{水平缩放因子}，
+以保持原始的宽高比进行缩放。
+如果缩放因子为负值，则对对象进行翻转。下面是几个例子
 
 \hspace{-1.5cm}\begin{minipage}[b]{.5\textwidth}
 	\begin{center}
@@ -499,23 +605,35 @@
 \end{minipage}
 
 \subsection{resizebox 命令}\label{ssec:resizebox}
+语法：
+\begin{lstlisting}
+\resizebox{宽度}{高度}{对象}
+\resizebox*{宽度}{整体高度}{对象}
+\end{lstlisting}
 
-{\large\hspace{1cm}{\color{morelight}{\shadowbox{\textcolor{blue}{\texttt{%
-						\bs resizebox\{\CJKfamily{kai}宽度\}\{高度\}\{对象\}}}}}}}
+\cmdi{resizebox} 命令将对象的大小改变为给定值。
+如果\texttt{宽度}或\texttt{高度}中的任一项用 \texttt{!} 给出，
+那么缩放时会保持原有的宽高比。
+例如：
+\begin{lstlisting}
+\resizebox{2in}{!}{argument}
+\end{lstlisting}
+将对象的宽度改变为2英寸，同时保持宽高比。
 
-{\large\hspace{1cm}{\color{morelight}{\shadowbox{\textcolor{blue}{\texttt{%
-						\bs resizebox$\ast$\{\CJKfamily{kai}宽度\}\{全部高度\}\{对象\}}}}}}}
+标准的 \LaTeXe{} 长度命令 \cmd{height}、\cmd{width}、\cmd{totalheight}、\cmd{depth} 可用来表示对象的原始尺寸。
+因此，
+\begin{lstlisting}
+\resizebox{2in}{\height}{argument}
+\end{lstlisting}
+使得对象的宽度改变为 2 英寸但保持原有高度不变。 
 
-\ci{resizebox}~命令将对象的大小改变为给定值。如果{\CJKfamily{kai}宽度}
-或{\CJKfamily{kai}高度}中的任一项用~!~给出，则其代表的选项的长度在被改变
-大小时会保持原有的宽高比例不变。例如：
-~\verb+\resizebox{2in}{!}{argument}+~将对象的宽度改变为~2~英寸。
+除了以外，
+命令 \cmdi{reseizebox*} 与 \cmd{resizebox} 几乎是相同的
+不同之处仅在于第二个参数表示对象的全部高度
+（关于高度和整体高度的定义见第~\ref{sec:terminology} 节，
+关于 \opt{height} 和 \opt{totalheight} 选项的比较见第~\ref{ssec:diffheight} 节。）
 
-标准的~\LaTeXe{}~长度~\cmd{height}, \cmd{width}, \cmd{totalheight},
-\cmd{depth}~可用来表示对象的原始尺寸。因此，
-~\verb+\resizebox{2in}{\height}{argument}+~使得对象的宽度改变为~2~英寸
-但保持原有高度不变。 除了第二个参数表示对象的全部高度以外，
-~\ci{reseizebox$\ast$}~与~\cmd{resizebox}~是相同的。下面是几个例子：
+下面是几个例子：
 
 \hspace{-1.5cm}\begin{minipage}[b]{.5\textwidth}
 	\begin{center}
@@ -554,47 +672,43 @@
 \end{minipage}
 
 \subsection{rotatebox 命令}\label{ssec:rotatebox}
-
-{\large\hspace{1cm}
-	\color{morelight}{\shadowbox{\textcolor{blue}{\texttt{%
-					\bs rotatebox[\CJKfamily{kai}选项]\{角度\}\{对象\}}}}}}
-
-\ci{rotatebox}~将对象旋转一给定度数的角度，逆时针方向为正。缺省地，
-对象绕它的参考点旋转。~\cmd{rotatebox}~命令中的~{\CJKfamily{kai}选项}
-允许对象绕给定的点来旋转。
-
+语法：
+\begin{lstlisting}
+\rotatebox[选项]{角度}{对象}
+\end{lstlisting}
+\cmdi{rotatebox} 将对象旋转一给定度数的角度，逆时针方向为正。
+默认\texttt{选项}下对象绕它的参考点旋转。
+\cmd{rotatebox} 命令中\texttt{选项} 允许对象绕给定的点来旋转。
 \begin{enumerate}
-	\item 给定~\verb+[x=xdim,y=ydim]+，则对象旋转所绕的点相对于参考点的
-	坐标为~\verb+(xdim,ydim)+。
-	\item \texttt{origin}~选项指定~12~个特殊点其中之
-	一（见图~\ref{fig:rotatepoint}）。
-	
-	\texttt{origin}~点的水平位置由~\texttt{lcr}~（分别代表左、中、右）其中
-	之一确定，垂直位置则由~\texttt{t,c,B,b}~（分别代表顶部、中部、基线、底部）
-	中的一个来确定。例如：
-	\begin{description}
-		\item [\texttt{[rb]}] 右下角。
-		\item [\texttt{[lt]}] 左上角。
-		\item [\texttt{[cB]}] 图形基线的中点。
-	\end{description}
-	{\CJKfamily{hei}几点说明：}
-	\begin{itemize}
-		\item 标记字母的顺序并不重要，~\texttt{[br]}~就等于~\texttt{[rb]}。
-		\item \texttt{c}~代表水平位置的中点还是垂直位置的中点靠和它一起的
-		标记字母来决定。
-		\item 如果只给出一个标记字母，那么另一个将被假设为~\texttt{c}。
-		即~\texttt{[c]}~等于~\texttt{[cc]}，~\texttt{[l]}~等于
-		~\texttt{[lc]}，~\texttt{[t]}~等于~\texttt{[ct]}~等等。
-	\end{itemize}
+	\item 给定\opt{[x=xdim,y=ydim]}，则对象旋转所绕的点相对于参考点的
+	坐标为 $(\mathtt{xdim}, \mathtt{ydim})$。
+	\item \opt{origin} 选项可以指定12个特殊点其中之一（见图~\ref{fig:rotatepoint}）。
 \end{enumerate}
+
+\opt{origin} 点的水平位置由\opt{lcr} （分别代表左、中、右）三个字母其中之一确定，
+垂直位置则由\opt{t,c,B,b}~（分别代表顶部、中部、基线、底部）四个字母中的一个来确定。
+例如：
+\begin{description}
+	\item [\opt{[rb]}] 右下角。
+	\item [\opt{[lt]}] 左上角。
+	\item [\opt{[cB]}] 图形基线的中点。
+\end{description}
+
+\paragraph{几点说明：}
+\begin{itemize}
+	\item 标记字母的顺序并不重要，\opt{[br]} 等同于 \opt{[rb]}。
+	\item \opt{c}~代表水平位置的中点还是垂直位置的中点由和它一起的标记字母来决定。
+	\item 如果只给出一个标记字母，那么另一个将被假设为 \opt{c}。
+	即，\opt{[c]} 等于\opt{[cc]}，\opt{[l]}等于\opt{[lc]}，\opt{[t]}等于\opt{[ct]}，等等。
+\end{itemize}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=.6\textwidth]{orig-point}
-	\caption{Available Origin Point}\label{fig:rotatepoint}
+	\caption{可用的 \opt{origin} 点}\label{fig:rotatepoint}
 \end{figure}
 
-\noindent 下面是一个例子：
+下面是一个例子：
 
 \hspace{-1.5cm}\begin{minipage}[b]{.5\textwidth}
 	\begin{center}
@@ -618,6 +732,7 @@
 	\par\vspace{0pt}
 \end{minipage}
 
+===============================================
 \section{高级命令}\label{sec:adgraph}
 
 本章描述了一些在下述情形下使用的~\LaTeXe{}~图形宏包套件的高级命令。
