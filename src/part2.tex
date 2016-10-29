@@ -73,7 +73,7 @@
 那么 \cmd{includegraphics} 会按照 \cmd{DeclareGraphicsExtensions} 扩展名列表中自动加上扩展名
 （见~\pageref{ssec:deextension} 的第~\ref{ssec:deextension} 节）。
 
-\subsection{同时供 \LaTeX{} 和 \pdfLaTeX{} 编译的文档 }
+\subsection{同时供 \LaTeX{} 和 \pdfLaTeX{} 编译的文档 }\label{ssec:latexandpdflatex}
 很多情况下要求文档同时可以由 \LaTeX{} 或 \pdfLaTeX{} 编译。
 要求 PostScript 输出时使用 \LaTeX{} 编译和 \prgname{dvips} 驱动，
 要求 \file{pdf} 输出时则使用 \pdfLaTeX{} 编译。
@@ -732,151 +732,169 @@
 	\par\vspace{0pt}
 \end{minipage}
 
-===============================================
-\section{高级命令}\label{sec:adgraph}
 
-本章描述了一些在下述情形下使用的~\LaTeXe{}~图形宏包套件的高级命令。
-
+\section{高级插图命令}\label{sec:adgraphcmd}
+本节描述了一些 \LaTeXe{} 图形宏包套件的高级命令，
+用于下述情形。
 \begin{enumerate}
 	\item 当使用没有扩展名的文件名时。如：
-	\begin{Verbatim}[xleftmargin=1cm]
-	\includegraphics{file}
-	\end{Verbatim}
-	\item 当使用压缩的~EPS~图形文件时。见第~\ref{sec:compresseps}~节。
-	\item 当使用非~EPS~格式的图形文件时。见第~\ref{sec:noneps}~节。
+\begin{lstlisting}
+\includegraphics{file}
+\end{lstlisting}
+
+	\item 当使用压缩的\file{eps} 图形文件时。见第~\ref{ssec:compresseps}~节。
+	\item 当使用非\file{eps} 格式的图形文件时。见第~\ref{ssec:noneps}~节。
 \end{enumerate}
-
-在这些情况下，~\LaTeX{}~如何处理由~\cmd{includegraphics}~所引入的
-文件，就需要用~\ci{DeclareGraphicsRule}~和~\ci{DeclareGraphicsExtensions}~
-命令来控制。
-
+在这些情况下，\LaTeX{} 为了处理由 \cmd{includegraphics} 所引入的文件，
+就需要用 \cmdi{DeclareGraphicsRule} 和 \cmdi{DeclareGraphicsExtensions} 命令来控制。
 \begin{itemize}
-	\item \cmd{DeclareGraphicsExtensions}~命令指定了在没有提供图形文件扩展名的
-	情况下，~\LaTeX{}~将自动为其加上的扩展名列表（如~\texttt{.eps, .ps,
-		.eps.gz}~等）。
-	\item \cmd{DeclareGraphicsRule}~命令指定了对图形文件执行的命令。执行这一
-	命令要求操作系统支持管道功能，比如~Unix~等操作系统，而~DOS~则不行。
+	\item \cmd{DeclareGraphicsExtensions} 命令指定了在没有提供图形文件扩展名的情况下，
+	\LaTeX{} 将自动为其加上的扩展名列表（如~\file{.eps}、\file{.ps}、\file{.eps.gz} 等）。
+	\item \cmd{DeclareGraphicsRule} 命令指定了对图形文件执行的命令。
+	执行这一命令要求操作系统支持管道功能，比如 Unix 等操作系统，而DOS则不行。
 	
-	若将此命令指定为一解压缩命令，那么就可以使用压缩的~EPS~图形文件。
-	若将此命令指定为一图形格式转换命令，那么就可以使用非~EPS~格式的图形文件。
+	若将此命令指定为一解压缩命令，那么就可以使用压缩的 \file{eps} 图形文件。
+	若将此命令指定为一图形格式转换命令，那么就可以使用非\file{eps} 格式的图形文件。
 \end{itemize}
 
-\clearpage
-
 \subsection{DeclareGraphicsExtensions 命令}\label{ssec:deextension}
+\cmd{DeclareGraphicsExtensions} 命令告诉 \LaTeX{}，
+若~\cmd{includegraphics}~命令所引入的文件没有提供扩展名，
+将试图为其自动加上什么样的扩展名。
 
-\cmd{DeclareGraphicsExtensions}~命令告诉~\LaTeX{}，若~\cmd{includegraphics}~命令
-所引入的文件没有提供扩展名，将试图为其自动加上什么样的扩展名。为方便起见，
-在选择图形驱动\realfootnote{指定一个图形驱动选项如
-	~\texttt{\bs usepackage[dvips]\{graphics\}}~将会覆盖掉在~\texttt{graphics.cfg}~中
-	设定的缺省驱动选项}时，就已经有一个相应的预设的扩展名集。举例来说，如果
-选择~\texttt{dvips}~作为图形驱动，那么缺省地会使用下列图形文件扩展名（在
-~\texttt{dvips}~中定义）：
-\begin{Verbatim}[xleftmargin=1cm]
+为方便起见，在选择图形驱动
+\footnote{
+	指定一个图形驱动选项如 \cmdtwoargs{usepackage}{dvips}{graphics} 将会覆盖掉在~\texttt{graphics.cfg} 中设定的缺省驱动选项——旧译本注。}
+时，就已经有一个相应的预设扩展名集。
+举例来说，如果选择 \prgname{dvips} 作为图形驱动，
+那么默认会使用下列图形文件扩展名（在~\file{dvips.def}~中定义）：
+\begin{lstlisting}
 \DeclareGraphicsExtensions{.eps,.ps,.eps.gz,.ps.gz,.eps.Z}
-\end{Verbatim}
-这时，\cmd{includegraphics\{file\}}让~\LaTeX{}~首先寻找~\texttt{file.eps}，
-其次~\texttt{file.ps}，再其次~\texttt{file.eps.gz}，直到找到一个文件。
-相应地，你就可以在~\LaTeX{}~文件中用
-\begin{Verbatim}[xleftmargin=1cm]
+\end{lstlisting}
+
+如果 \pkg{graphicx} 宏包使用 \prgname{pdftex} 驱动，
+那么默认会使用下列图形文件扩展名（在 \file{pdftex.def} 中定义）
+\footnote{
+	实际上在最新版本（2016年）中，\file{dvips.def} 中定义扩展名的方式为
+\begin{lstlisting}
+%\def\Gin@extensions{.eps,.ps,.eps.gz,.ps.gz,.eps.Z,.mps}
+\end{lstlisting}
+	\file{pdftex.def} 中定义扩展名的方式为
+\begin{lstlisting}
+\def\Gin@extensions{.png,.pdf,.jpg,.mps,.jpeg,.PNG,.PDF,.JPG,.JPEG}
+\end{lstlisting}
+	——译者注}：
+\begin{lstlisting}
+\DeclareGraphicsExtensions{.png,.pdf,.jpg,.mps}
+\end{lstlisting}
+
+在 \opt{dvips} 图像扩展名列表中，
+\cmdonearg{includegraphics}{file} 首先寻找 \file{file.eps}，
+其次是 \file{file.ps}，再其次是 \texttt{file.eps.gz}，直到找到一个文件。
+相应地，可以用
+\begin{lstlisting}
 \includegrapincs{file}
-\end{Verbatim}
+\end{lstlisting}
 取代
-\begin{Verbatim}[xleftmargin=1cm]
+\begin{lstlisting}
 \includegrapincs{file.eps}
-\end{Verbatim}
-这样做的好处是如果你以后决定压缩~\texttt{file.eps}，你也无须更改~\LaTeX{}~文件。
+\end{lstlisting}
+这样做的好处是如果以后决定压缩 \file{file.eps}，也无须更改 \LaTeX{} 文件。
+无后缀名的方式使得可以同时使用 \LaTeX{} 和 \pdfLaTeX{} 编译文档，
+见第~\pageref{ssec:latexandpdflatex} 页的~\ref{ssec:latexandpdflatex} 节。
+然而，这种无后缀名的方式可能会加剧内存池空间问题，详见下面的~\ref{sssec:poolspaceproblem} 小节。
 
-\noindent{\CJKfamily{hei}说明：}\marginpar{\CJKfamily{kai}\bfseries无扩展名的
-	\\ 文件}
-\begin{Verbatim}[xleftmargin=1cm]
+\subsubsection{无扩展名的文件}
+需要注意的是，
+\begin{lstlisting}
 \includegrapincs{file}
-\end{Verbatim}
-不会试图寻找~\texttt{file}，除非空的扩展名~\verb+{}+~已被加入到扩展名列表中。
+\end{lstlisting}
+不会试图寻找~\file{file}，
+除非空扩展名列表中包含空的扩展名 \verb+{}+。
 例如：
-\begin{Verbatim}[xleftmargin=1cm]
+\begin{lstlisting}
 \DeclareGraphicsExtensions{.eps,.eps.gz,{}}
-\end{Verbatim}
-将试图在没找到~\texttt{file.eps}~和~\texttt{file.eps.gz}~的情况下
-寻找~\texttt{file}。
+\end{lstlisting}
+将试图在没找到 \file{file.eps} 和 \file{file.eps.gz} 的情况下寻找 \file{file}。
 
-不给出扩展名\marginpar{\CJKfamily{kai}\bfseries Pool Space \\ 问题}
-而靠~\LaTeX~从
-~\cmd{DeclareGraphicsExtensions}~的扩展名列表中选择正确的扩展名可能
-加重~pool space~问题（见第~\ref{sec:poolspace}~节）。如果有
-~pool space~问题的话，应当使扩展名列表中的扩展名数目尽可能小。如：
-\begin{Verbatim}[xleftmargin=1cm]
+由于默认的扩展名列表中不包含空扩展名，
+如果想要使用无扩展名文件的话，
+必须使用 \cmd{DeclareGraphicsExtensions} 命令定义一个包含空扩展名的列表。
+
+\subsubsection{池空间问题}\label{sssec:poolspaceproblem}
+
+不给出扩展名而靠 \LaTeX{} 从 \cmd{DeclareGraphicsExtensions} 的扩展名列表中选择正确的扩展名可能
+加剧池空间问题（见第~\ref{ssec:poolspace}~节）。
+如果有池空间问题的话，应当使用 \cmd{DeclareGraphicsExtensions} 指定的扩展名数目尽可能小。如：
+\begin{lstlisting}
 \DeclareGraphicsExtensions{.eps,.eps.gz}
-\end{Verbatim}
+\end{lstlisting}
 
-\clearpage
 
 \subsection{DeclareGraphicsRule 命令}\label{ssec:derule}
+\cmdi{DeclareGraphicsRule} 命令指定 \cmd{includegraphics} 如何按照扩展名
+来对操作图像文件。语法为
+\begin{lstlisting}
+\DeclareGraphicsRule{ext}{type}{sizefile}{command}
+\end{lstlisting}
+例如，如下命令
+\begin{lstlisting}
+\DeclareGraphicsRule{.eps.gz}{eps}{.eps.bb}{`gunzip -c #1}
+\end{lstlisting}
+指定任何以 \file{.eps.gz} 为扩展名的文件为压缩的\file{eps} 文件，
+该文件的 BoundingBox 信息存放在扩展名为 \file{.eps.bb} 的文件中，
+并用命令 \texttt{gunzip -c} 来解压缩
+（因为 \LaTeX{} 不能从压缩文件中读取 BoundingBox~信息，
+所以 BoundingBox 行必须存放到非压缩文件中）。
 
-\ci{DeclareGraphicsRule}~命令指定~\cmd{includegraphics}~如何按照文件的扩展名
-来对图形文件进行操作。可以允许有多个~\cmd{DeclareGraphicsRule}~命令。
+可以允许有多个 \cmd{DeclareGraphicsRule} 命令。
 
-{\large\hspace{1cm}
-	\color{morelight}{\shadowbox{\textcolor{blue}{\texttt{%
-					\bs DeclareGraphicsRule\{ext\}\{type\}\{sizefile\}\{command\}}}}}}
+\cmd{DeclareGraphicsRule} 命令允许使用 \texttt{*} 代表任何未知扩展名，
+例如：
+\begin{lstlisting}
+\DeclareGraphicsRule{*}{eps}{*}{}
+\end{lstlisting}
+会导致所有未知扩展名的文件都被认为是 \file{eps} 文件，
+比方说 \file{file.EPS} 就被当做\file{eps} 文件。
 
 \begin{table}
-	\newcommand{\tbltt}[1]{\textcolor{cyan}{\texttt{#1}}}
-	\renewcommand{\arraystretch}{1.2}
 	\centering
-	\topcaption{\texttt{DeclareGraphicsRule Arguments}}\label{tab:Declaregrule}
-	
-	\begin{tabular}{>{\columncolor{morelight}}l|>{\CJKfamily{kai}}m{10cm}|}
-		\cline{2-2}
-		\tbltt{ext} & 文件的扩展名。 \\
-		\cline{2-2}
-		\tbltt{type} & 扩展名所对应的图形格式。 \\
-		\cline{2-2}
-		\tbltt{sizefile} & 包含图形的~BoundingBox~的文件的扩展名。如果这一选项为空，
-		那么须要在~\cmd{includegraphics}~命令中给定~\texttt{bb}~项
-		的值。 \\
-		\cline{2-2}
-		\tbltt{command} & 作用于图形文件的命令，此项常为空。命令前必须有一个后向单引号
-		（而不是常使用的前向单引号）。目前为止，只有~\texttt{dvips}~能
-		够使用这样的命令。参见第~\ref{chap:noneps}~章用这样的命令
-		来处理非~EPS~格式图形和压缩~EPS~图形的例子。\\
-		\cline{2-2}
+	\caption{\cmd{DeclareGraphicsRule} 的选项}\label{tab:DeclaregruleArgs}
+	\kaishu 
+	\begin{tabular}{>{\ttfamily}l  P{0.7\textwidth}}
+		\toprule
+		ext & 文件的扩展名。 \\ \hline
+		type & 扩展名所对应的图像类型。 \\ \hline
+		sizefile & 包含图像 BoundingBox 信息的文件的扩展名。
+		如果这一选项为空，
+		那么必须要在 \cmd{includegraphics} 命令中给定 \opt{bb} 选项的值。 \\ \hline
+		command & 作用于图像文件的命令，此项常为空。
+		命令前必须有一个前单引号（键盘上数字键 \texttt{1} 的左侧键——译者注），
+		注意不是常用的后单引号。
+		目前为止，只有 \prgname{dvips} 能够执行这样的命令。
+		参见第~\ref{sec:noneps}~节关于如何用这样的命令来处理非 \file{eps} 格式图像和压缩的 \file{eps} 图像的例子。\\
+		\bottomrule
 	\end{tabular}
 \end{table}
 
-例如：
-\begin{Verbatim}[xleftmargin=1cm]
-\DeclareGraphicsRule{.eps.gz}{eps}{.eps.bb}{`gunzip -c #1}
-\end{Verbatim}
-指定任何以~\texttt{.eps.gz}~为扩展名的文件为压缩~EPS~文件，该文件
-的~BoundingBox~信息存放在扩展名为~\texttt{.eps.bb}~的文件中，并
-用命令~\texttt{gunzip -c}~来解压缩（因为~\LaTeX{}~不能从压缩文件中
-读取~BoundingBox~信息，所以~BoundingBox~行必须存放到一非压缩文件中）。
-
-\cmd{DeclareGraphicsRule}~命令允许使用~$\ast$~代表任何未知扩展名，
-例如：
-\begin{Verbatim}[xleftmargin=1cm]
-\DeclareGraphicsRule{*}{eps}{*}{}
-\end{Verbatim}
-会导致所有未知扩展名的文件都被认为是~EPS~文件，比方说~\texttt{file.EPS}~
-就被当做~EPS~文件。
-
-这里文件名里第一个句点 \marginpar{\CJKfamily{kai}\bfseries 文件名中的 \\ 句点}
-以后的部分都被认为是文件的扩展名，这样做是为了能够
-正确地识别压缩的~EPS~文件（扩展名为~\texttt{.eps.gz}）等。为了避免
-混淆，文件的基本名中不要使用句点。否则~\texttt{file.name.eps.gz}~会让
-~\cmd{includegraphics}~寻找扩展名为~\texttt{.name.eps.gz}~所对应的规则，
+文件的扩展名定义为文件名里第一个句点以后的部分，
+\marginpar{文件名中的句点}
+这样做是为了可以将 \file{.eps.gz} 结尾的文件识别成压缩的\file{eps} 文件。
+为了避免混淆，文件的基本名中不要使用句点。
+例如，指定文件 \file{file.name.eps.gz} 会让 \cmd{includegraphics} 寻找扩展名为 \file{.name.eps.gz} 所对应的图像规则。
 由于这样的规则很有可能不存在，结果导致使用未知扩展名所对应的规则。
-例外的情形是该文件的格式正好是缺省格式，如未知扩展名的文件
-都被认为是~EPS~文件时，那么~\texttt{file.name.eps}~就能被正确地识别。
+例外的情形是该文件的格式正好是缺省格式，
+如果未知扩展名的文件都被认为是 \file{eps} 文件，
+那么 \file{file.name.eps} 就恰巧能被正确地识别。
 
-为方便起见，\marginpar{\CJKfamily{kai}\bfseries 预先定义的 \\ 命令}根据不同的图形驱动选项
-\realfootnote{指定一个图形驱动选项如~\texttt{\bs usepackage[dvips]\{graphics\}}~
-	将会覆盖掉在~\texttt{graphics.cfg}~中设定的缺省驱动选项}
-预定义了不同的缺省图形规则。例如使用~\texttt{dvips}~图形驱动选项
-时，缺省图形规则为：
-
-\begin{Verbatim}[xleftmargin=1cm]
+为方便起见，根据不同的图形驱动选项，
+\marginpar{预定义命令}
+已经预定义了不同的缺省图像规则。
+例如使用 \opt{dvips} 图形驱动选项时，文件 \file{dvips.def} 定义了如下缺省图形规则
+\footnote{
+	实际上 \file{dvips.def} 的代码并没有使用 \cmd{DeclareGraphicsRule}，
+	不过效果是一样。}：
+\begin{lstlisting}
 \DeclareGraphicsRule{.eps}{eps}{.eps}{}
 \DeclareGraphicsRule{.ps}{eps}{.ps}{}
 \DeclareGraphicsRule{.pz}{eps}{.bb}{`gunzip -c #1}
@@ -888,12 +906,24 @@
 \DeclareGraphicsRule{.bmp}{bmp}{}{}
 \DeclareGraphicsRule{.msp}{bmp}{}{}
 \DeclareGraphicsRule{*}{eps}{*}{}
-\end{Verbatim}
+\end{lstlisting}
+前面两个命令定义扩展名为 \file{.eps} 和 \file{.ps} 的文件为 \file{eps} 文件，
+它们后面的五个命令定义了压缩 \file{eps} 文件的扩展名和解压命令，
+接下来的三个命令定义了位图文件 \file{pcx}、\file{bmp}、\file{msp} 的扩展名，
+最后一个命令设定未知扩展名的文件按照 \file{eps} 文件处理。
 
-前面两个命令定义扩展名为~\texttt{.eps}~和~\texttt{.ps}~的文件为~EPS~文件，
-它们后面的五个命令定义了压缩~EPS~文件的扩展名和解压命令，
-接下来的三个命令定义了位图文件的扩展名（见第~\ref{sec:noneps}~节），
-最后一个命令设定未知扩展名的文件为~EPS~文件。
+如果使用 \pdfTeX 引擎，那么 \file{pdftex.def} 缺省定义了以下的图形规则
+\footnote{
+	\file{pdftex.def} 实际上先检查 \pdfTeX{} 的版本，
+	然后根据不同版本的处理方式定义相应的图形规则。}：
+\begin{lstlisting}
+\DeclareGraphicsRule{.png}{png}{.png}{}
+\DeclareGraphicsRule{.pdf}{pdf}{.pdf}{}
+\DeclareGraphicsRule{.jpg}{jpg}{.jpg}{}
+\DeclareGraphicsRule{.mps}{mps}{.mps}{}
+\end{lstlisting}
+这样就指定了 \pdfTeX{} 支持的图像格式的处理方式。
 
+\clearpage
 \endinput
 
