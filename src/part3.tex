@@ -1,83 +1,101 @@
 %part3.tex
 
-\part{\LaTeX{}图形命令的使用}
+\part{\LaTeX{} 图形命令的使用}
 
 \section{水平间距和居中}\label{sec:center}
 
 \subsection{水平居中}\label{ssec:hcenter}
-
-图形的放置位置由当前文本的排列方式所决定。为使图形居中放置，可将其
-放入一个居中（center）环境中。
-
-\begin{Verbatim}[xleftmargin=1cm]
+图形的放置位置由当前文本的排列方式所决定。
+为使图形居中放置，可将其放入居中环境 \env{center} 中。
+\begin{lstlisting}
 \begin{center}
-   \includegraphics[width=2in]{graphic.eps}
+\includegraphics[width=2in]{graphic.eps}
 \end{center}
-\end{Verbatim}
+\end{lstlisting}
 
-如果将~\cmd{includegraphics}~命令放入一个环境中（\texttt{minipage}~或
-~\texttt{figure}），用~\ci{centering}~可将其后的内容居中排列。例如：
+如果 \cmd{includegraphics} 命令处于一个环境中
+（例如 \env{minipage} 或 \env{figure}），
+用 \cmdi{centering} 可将其后的内容居中排列。
+例如：
 
-\begin{Verbatim}[xleftmargin=1cm]
+\begin{lstlisting}
 \begin{figure}
-   \centering
-   \includegraphics[width=2in]{graphic.eps}
+\centering
+\includegraphics[width=2in]{graphic.eps}
 \end{figure}
-\end{Verbatim}
-就等同于
-\begin{Verbatim}[xleftmargin=1cm]
+\end{lstlisting}
+效果类似于
+\begin{lstlisting}
 \begin{figure}
 \begin{center}
-   \includegraphics[width=2in]{graphic.eps}
+\includegraphics[width=2in]{graphic.eps}
 \end{center}
 \end{figure}
-\end{Verbatim}
-
+\end{lstlisting}
 这里推荐使用~\cmd{centering}，因为~\verb+\begin{center}+~会使图形上下
-方的垂直间距增加一倍（~\texttt{figure}~环境带有的间距加上~\texttt{center}~环境
-带有的间距）。若希望有特殊的垂直间距，可使用第~\ref{sec:vspace}~节介绍的命令。
+方的垂直间距增加一倍
+（ \env{figure} 带有的垂直间距加上 \env{center} 环境带有的垂直间距）。
+若希望有额外的垂直间距，可使用第~\ref{ssec:vspace}~节介绍的命令。
 
-\cmd{psfig}~和~\cmd{epsfbox}~命令\marginpar{\CJKfamily{kai}\bfseries 过时的用法}
-的缺陷让它们很难使图形居中排列。作为一种解决办法，使用了~\TeX{}~
-命令~\ci{centerline}~和~\ci{leavevmode}。而~\cmd{includegraphics}~命令
-已克服了这些缺陷，允许直接与~\cmd{centering}~命令一起使用或用在~\texttt{center}
-~环境中，因此也就不需再使用~\cmd{centerline}~和~\cmd{leavevmode}了。
+\cmd{psfig} 和 \cmd{epsfbox} 命令
+\marginpar{过时的用法}
+的缺陷让它们很难使图形居中排列。
+过去，作为一种解决办法，使用了 \TeX{} 命令 \cmdi{centerline} 和 \cmdi{leavevmode}。
+而 \cmd{includegraphics} 命令已克服了这些缺陷，
+允许直接与 \cmd{centering} 命令一起使用或用在 \env{center} 环境中，
+因此也就不需再使 \cmd{centerline} 和 \cmd{leavevmode}了。
 
 \subsection{水平间距}\label{ssec:hspace}
+\LaTeX{} 在排列图形的时候实际上与排列其它的像文字这样的对象是一样的，
+了解到这一点很重要。
+举例来说，如果行尾不是以 \texttt{\%} 结束的话，
+\LaTeX{} 会自动在两行之间加进一个字符的水平间距。
+例如，
+\begin{lstlisting}
+Hello
+World
+\end{lstlisting}
+在输出结果中``Hello'' 和 ``World'' 之间会有一个字符的水平间距。
+类似地，
+\begin{lstlisting}
+\includegraphics{file}
+\includegraphics{file}
+\end{lstlisting}
+则在图形之间有一个字符的水平间距。
+在第一行的行尾加上注释符\texttt{\%}
+\begin{lstlisting}
+\includegraphics{file}%
+\includegraphics{file}
+\end{lstlisting}
+就会取消图形之间的水平间距。
 
-\LaTeX{}~在排列图形的时候实际上与排列其它的像文字这样的对象是一样的，
-了解到这一点很重要。举例来说，如果行尾不是以~\%~结束的话，~\LaTeX{}~会
-自动在两行之间加进一个字符的水平间距。像：
-\begin{Verbatim}[xleftmargin=1cm,formatcom=\CJKfamily{kai}\color{VerbatimColor}]
-朋友
-你好
-\end{Verbatim}
-在输出结果中``{\CJKfamily{kai}朋友}''~和~``{\CJKfamily{kai}你好}''~之间
-会有一个字符的水平间距。
-
-\begin{Verbatim}[xleftmargin=1cm]
-\includegraphics{file.eps}
-\includegraphics{file.eps}
-\end{Verbatim}
-则在图形之间有一个字符的水平间距。在第一行的行尾加上一个~\%~
-\begin{Verbatim}[xleftmargin=1cm]
-\includegraphics{file.eps}%
-\includegraphics{file.eps}
-\end{Verbatim}
-就会使图形之间没有水平间距。如果需要，可用~\ci{hspace}~命令在图形之间
-加进指定长度\realfootnote{用~\cmd{textwidth}~或~\cmd{em}~等的函数作为~\cmd{hspace}
-~的参数，而不是采用一固定度量，可提高文档的通用性。}或用~\ci{hfill}~来
-加进一个可填充可能的间距的橡皮长度。例如：
-\begin{Verbatim}[xleftmargin=1cm]
+如果需要水平间距，可用 \cmdi{hspace} 命令在图形之间
+加入指定长度
+\footnote{
+	用 \cmd{textwidth} 或 \texttt{em} （原文误作 \cmd{em}——译者注）等作为 \cmd{hspace} 的参数，
+	而不是采用固定长度，可提高文档的通用性。}
+或用 \cmdi{hfill} 加入一个可填充可能的间距的弹性长度。
+例如：
+\begin{lstlisting}
 \includegraphics{file.eps}\hfill\includegraphics{file.eps}
-\end{Verbatim}
+\end{lstlisting}
 将两个图形尽量向左右分开。而
-\begin{Verbatim}[xleftmargin=1cm]
-\hfill\includegraphics{file.eps}%
+\begin{lstlisting}
+\hspace*{\fill}\includegraphics{file.eps}%
 \hfill\includegraphics{file.eps}\hspace*{\fill}
-\end{Verbatim}
-使得图形的两边和中间的间距都相等。由于换行符前的~\cmd{hfill}~命令将被忽略，
-所以需要用~\verb+\hspace*{\fill}+~来替代它。
+\end{lstlisting}
+使得图形的两边和中间的间距都相等。
+由于断行前的 \cmd{hfill} 命令会被忽略，
+所以需要用\cmdonearg{hspace*}{\cmd{fill}} 来替代它。
+
+除了 \cmd{hspace} 和 \cmd{hfill} 之外，
+\marginpar{其它间距命令}
+\cmdi{quad} 命令会插入当前字体大小的空白。
+例如，如果使用 \texttt{10 pt} 字体大小，那么 \cmd{quad} 会插入 10 \texttt{pt} 的水平间距。
+而命令 \cmdi{qquad} 会插入两倍于 \cmd{quad} 的水平间距。
+
+
+
 
 \section{旋转、缩放和对齐}\label{sec:rotate-scale-align}
 
