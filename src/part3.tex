@@ -95,83 +95,68 @@ World
 而命令 \cmdi{qquad} 会插入两倍于 \cmd{quad} 的水平间距。
 
 
-
-
 \section{旋转、缩放和对齐}\label{sec:rotate-scale-align}
 
-因为~\cmd{includegraphics}~的选项是从左到右依次处理的，所以角度和大小
-选项的顺序不同会导致不同的结果。如
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{center}
-   \includegraphics[angle=90,totalheight=1cm]{graphic.eps}
-   \includegraphics[totalheight=1cm,angle=90]{graphic.eps}
-\end{center}
-\end{Verbatim}
-的输出结果为：
-\begin{center}
-   \includegraphics[angle=90,totalheight=1cm]{graphic}
-   \includegraphics[totalheight=1cm,angle=90]{graphic}
-\end{center}
-第一个命令使得图形被旋转~90~度后缩放为~1~厘米高，而第二个命令
-则先将图形缩放为~1~厘米高然后再旋转~90~度。
+\subsection{高度和整体高度的区别}\label{ssec:diffheight}
 
-\subsection{高度和总体高度的区别}\label{ssec:diffheight}
-
-在使用~\texttt{height}~选项时要特别小心，仅管它经常意味着由
-~\texttt{totalheight}~选项给出的全部高度（见第~\pageref{fig:samplebox}~页
-图~\ref{fig:samplebox}）。在对象的深度为零时，对象的全部高度就是
-它的高度，使用~\texttt{height}~选项不会有什么问题。但是，当对象的深度
-不为零时，使用~\texttt{height}~而不是~\texttt{totalheight}~会导致不正确的
-图形大小或除零的错误。对于外部的~EPS~图形，区分~\texttt{height}~和
-~\texttt{totalheight}~尤其在旋转和缩放时显得特别重要。例如：
-\begin{Verbatim}[xleftmargin=1cm]
-\includegraphics[angle=-45,totalheight=1in]{file.eps}
-\includegraphics[angle=-45,height=1in]{file.eps}
-\end{Verbatim}
-第一个命令缩放一个旋转了的图形，使其全部高度为~1~英寸。而第二个命令
-缩放一个旋转了的图形，使其在参考点以上的部分为~1~英寸高。
-
-\subsection{旋转图形的放大和缩小}\label{ssec:enlarge}
-
-当在插图命令中指定高度或宽度时，这里给出的大小并不是图形的大小，
-而是图形的~BoundingBox~的大小。这点在图形旋转和缩放时很重要。
+使用 \opt{height} 选项时必须要小心，
+因为用户经常想要的其实是由 \opt{totalheight} 选项设置的整体高度
+（参见~\pageref{fig:samplebox} 页的图~\ref{fig:samplebox}）。
+当对象的深度为零时，对象的整体高度就是它的高度，
+此时使用 \opt{height} 选项不会有什么问题。
+但是，当对象的深度不为零时，使用 \opt{height} 而不是 \opt{totalheight} 会导致不正确的图像大小或除零的错误。
+导入图像时，区分 \opt{height} 和 \opt{totalheight} 对于旋转和缩放时显得尤其重要。
 例如：
+\begin{lstlisting}
+\includegraphics[angle=-45,totalheight=1in]{file}
+\includegraphics[angle=-45,height=1in]{file}
+\end{lstlisting}
+第一个命令缩放一个旋转了的图形，使其全部高度为~1~英寸。
+而第二个命令缩放一个旋转了的图形，使其在参考点以上的部分为~1~英寸高。
 
-\begin{Verbatim}[xleftmargin=1cm]
+\subsection{旋转图形的缩放}\label{ssec:enlarge}
+当在插图命令中指定高度或宽度时，这里给出的大小并不是图形的大小，
+而是图形的 BoundingBox 的大小。
+这点在图形旋转和缩放时很重要。例如：
+\begin{lstlisting}
 \begin{center}
-  \includegraphics[totalheight=1in]{rosette.eps}
-  \includegraphics[angle=45,totalheight=1in]{rosette.eps}
-  \includegraphics[angle=90,totalheight=1in]{rosette.eps}
+\includegraphics[totalheight=1in]{rosette}
+\includegraphics[angle=45,totalheight=1in]{rosette}
+\includegraphics[angle=90,totalheight=1in]{rosette}
 \end{center}
-\end{Verbatim}
+\end{lstlisting}
 得到
 
 \begin{center}
-  \includegraphics[totalheight=1in]{rosette}
-  \includegraphics[angle=45,totalheight=1in]{rosette}
-  \includegraphics[angle=90,totalheight=1in]{rosette}
+	\includegraphics[totalheight=1in]{rosette}
+	\includegraphics[angle=45,totalheight=1in]{rosette}
+	\includegraphics[angle=90,totalheight=1in]{rosette}
 \end{center}
-尽管看上去图形的大小不一有点奇怪，但在看过它们的~BoundingBox~后就
-会明白了。
+尽管看上去图形的大小不一有点奇怪，
+但在看过它们的~BoundingBox~后就会明白了。
 
 \begin{center}
-  \includegraphics[totalheight=1in]{rosettebox}
-  \includegraphics[angle=45,totalheight=1in]{rosettebox}
-  \includegraphics[angle=90,totalheight=1in]{rosettebox}
+	\includegraphics[totalheight=1in]{rosettebox}
+	\includegraphics[angle=45,totalheight=1in]{rosettebox}
+	\includegraphics[angle=90,totalheight=1in]{rosettebox}
 \end{center}
-可以看到，每个图形的~BoundingBox~都被缩放到~1~英寸高。
+每一幅图像的结果是旋转后的BoundingBox 为1英寸高。
+缩放功能改变的是BoundingBox 的大小，而不是实际看到图像的大小。
+
 
 \subsection{旋转图形的对齐}\label{ssec:ralign}
 
+\subsubsection{第一个例子}
+
 当图形被旋转时，可能会出现不对齐的情况。例如：
 
-\begin{Verbatim}[xleftmargin=1cm]
+\begin{lstlisting}
 \begin{center}
-   \includegraphics[totalheight=1in]{rosette.eps}
-   \includegraphics[totalheight=1in,angle=-45]{rosette.eps}
-   \includegraphics[totalheight=1in,angle=-90]{rosette.eps}
+   \includegraphics[totalheight=1in]{rosette}
+   \includegraphics[totalheight=1in,angle=-45]{rosette}
+   \includegraphics[totalheight=1in,angle=-90]{rosette}
 \end{center}
-\end{Verbatim}
+\end{lstlisting}
 得到
 
 \begin{center}
@@ -179,24 +164,22 @@ World
    \includegraphics[totalheight=1in,angle=-45]{rosette}
    \includegraphics[totalheight=1in,angle=-90]{rosette}
 \end{center}
-这次仍可用图形的~BoundingBox~来说明问题。
+当然，这种现象仍可用图形的~BoundingBox~来解释。
 
 \begin{center}
    \includegraphics[totalheight=1in]{rosettebox}
    \includegraphics[totalheight=1in,angle=-45]{rosettebox}
    \includegraphics[totalheight=1in,angle=-90]{rosettebox}
 \end{center}
-在这种情况下，我们可以看到图形对象的参考点（左下角）是处于一条
-水平线上的。如果希望是中间对齐，那么可以用~\cmd{includegraphics}~的
-~\texttt{origin}~选项。
-
-\begin{Verbatim}
+在这种情况下，我们可以看到图形对象的参考点（左下角）是处于同一水平线上的。
+如果希望是中间对齐，那么可以用 \cmd{includegraphics} 的 \opt{origin} 选项。
+\begin{lstlisting}
 \begin{center}
-   \includegraphics[totalheight=1in]{rosette.eps}
-   \includegraphics[totalheight=1in,origin=c,angle=-45]{rosette.eps}
-   \includegraphics[totalheight=1in,origin=c,angle=-90]{rosette.eps}
+   \includegraphics[totalheight=1in]{rosette}
+   \includegraphics[totalheight=1in,origin=c,angle=-45]{rosette}
+   \includegraphics[totalheight=1in,origin=c,angle=-90]{rosette}
 \end{center}
-\end{Verbatim}
+\end{lstlisting}
 这次所有图形都是中间对齐的。
 
 \begin{center}
@@ -204,39 +187,39 @@ World
    \includegraphics[totalheight=1in,origin=c,angle=-45]{rosette}
    \includegraphics[totalheight=1in,origin=c,angle=-90]{rosette}
 \end{center}
+
+\subsubsection{第二个例子}
 同样地，下面的命令
-
-\begin{Verbatim}[xleftmargin=1cm]
+\begin{lstlisting}
 \begin{center}
-   \includegraphics[width=1in]{graphic.eps}
-   \hspace{1in}
-   \includegraphics[width=1in,angle=-90]{graphic.eps}
+\includegraphics[width=1in]{graphic}
+\hspace{1in}
+\includegraphics[width=1in,angle=-90]{graphic}
 \end{center}
-\end{Verbatim}
+\end{lstlisting}
 将右边的图形绕它的左下角旋转，得到如下结果：
-
 \begin{center}
-   \includegraphics[width=1in]{graphic}
-   \hspace{1in}
-   \includegraphics[width=1in,angle=-90]{graphic}
+	\includegraphics[width=1in]{graphic}
+	\hspace{1in}
+	\includegraphics[width=1in,angle=-90]{graphic}
 \end{center}
+
 要想使图形的底部对齐，使用下面的命令：
-
-\begin{Verbatim}[xleftmargin=1cm]
+\begin{lstlisting}
 \begin{center}
-   \includegraphics[width=1in]{graphic.eps}
-   \hspace{1in}
-   \includegraphics[width=1in,origin=br,angle=-90]{graphic.eps}
+\includegraphics[width=1in]{graphic}
+\hspace{1in}
+\includegraphics[width=1in,origin=br,angle=-90]{graphic}
 \end{center}
-\end{Verbatim}
+\end{lstlisting}
 上述命令让右边的图形绕它的右下角旋转，得到如下结果：
-
 \begin{center}
-   \includegraphics[width=1in]{graphic}
-   \hspace{1in}
-   \includegraphics[width=1in,origin=br,angle=-90]{graphic}
+	\includegraphics[width=1in]{graphic}
+	\hspace{1in}
+	\includegraphics[width=1in,origin=br,angle=-90]{graphic}
 \end{center}
 
+====================================
 \subsection{小页环境的垂直对齐}\label{ssec:minivalign}
 
 将图形放置于小页环境中是经常遇到的情况下，而且也十分有用（见
