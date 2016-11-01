@@ -219,147 +219,204 @@ World
 	\includegraphics[width=1in,origin=br,angle=-90]{graphic}
 \end{center}
 
-====================================
+
 \subsection{小页环境的垂直对齐}\label{ssec:minivalign}
 
-将图形放置于小页环境中是经常遇到的情况下，而且也十分有用（见
-第~\ref{chap:sidebyside}~章）。当小页并列时，~\LaTeX{}~会将它们的
-参考点垂直对齐地排列。缺省地，小页的参考点是它的左边界的中点。可用
-一个可选参数项来改变小页的参考点的位置。
-
+将图形放置于 \envi{minipage} 小页环境中是经常遇到的情况下，
+而且也十分实用（见第~\ref{sec:sidebyside}~节）。
+当小页并列时， \LaTeX{} 会将它们的参考点垂直对齐地排列。
+缺省地，小页的参考点是它的左边界的中点。
+可用一个可选参数项来改变小页的参考点的位置。
 \begin{description}
-\item[\texttt{[b]}] 使小页的参考点与小页底边的参考点对齐。
-\item[\texttt{[t]}] 使小页的参考点与小页顶边的参考点对齐。
+	\item[\opt{[b]}] 使小页的参考点与小页底行的参考点对齐。
+	\item[\opt{[t]}] 使小页的参考点与小页顶行的参考点对齐。
 \end{description}
 
-注意选项~\texttt{[b]}~不会将参考点置于小页的底部（除非其底边的参考点
-在它的底部），同样地，选项~\texttt{[t]}~不会将参考点置于小页的顶部（除非其
-顶边的参考点在它的顶部）。
+注意选项 \opt{[b]} 不会将参考点置于小页的底部
+（除非其底行的参考点在它的底部），
+同样地，选项 \opt{[t]}~不会将参考点置于小页的顶部
+（除非其顶行的参考点在它的顶部）。
 
-当小页中只有一行时，~\texttt{[b]}~和~\texttt{[t]}~选项得到的结果是
-一样的。如：
-\begin{Verbatim}[xleftmargin=1cm]
+当小页中只有一行时， \opt{[b]} 和 \opt{[t]} 选项得到的结果是一样的。例如：
+\begin{lstlisting}
 \begin{center}
-  \begin{minipage}[b]{.25\textwidth}
-    \centering
-    \includegraphics[width=1in]{graphic.eps}
-  \end{minipage}%
-  \begin{minipage}[b]{.25\textwidth}
-    \centering
-    \includegraphics[width=1in,angle=-90]{graphic.eps}
-  \end{minipage}
+\begin{minipage}[b]{.25\linewidth}
+\centering
+\includegraphics[width=1in]{graphic}
+\end{minipage}%
+\begin{minipage}[b]{.25\linewidth}
+\centering
+\includegraphics[width=1in,angle=-45]{graphic}
+\end{minipage}
 \end{center}
-\end{Verbatim}
+\end{lstlisting}
 和
-\begin{Verbatim}[xleftmargin=1cm]
+\begin{lstlisting}
 \begin{center}
-  \begin{minipage}[t]{.25\textwidth}
-    \centering
-    \includegraphics[width=1in]{graphic.eps}
-  \end{minipage}%
-  \begin{minipage}[t]{.25\textwidth}
-    \centering
-    \includegraphics[width=1in,angle=-90]{graphic.eps}
-  \end{minipage}
+\begin{minipage}[t]{.25\linewidth}
+\centering
+\includegraphics[width=1in]{graphic}
+\end{minipage}%
+\begin{minipage}[t]{.25\linewidth}
+\centering
+\includegraphics[width=1in,angle=-45]{graphic}
+\end{minipage}
 \end{center}
-\end{Verbatim}
-都得到图~\ref{fig:minipagesamp-1}~的结果。在这两种情况下，小页的
-参考点都是~EPS~图形的参考点（左下角）。
+\end{lstlisting}
+都得到图~\ref{fig:minipagesamp-1}~的结果。
+在这两种情况下，小页的参考点都是图形的参考点（左下角）。
 \begin{figure}
 \begin{center}
-  \begin{minipage}[t]{.25\textwidth}
-    \centering
-    \includegraphics[width=1in]{graphic}
-  \end{minipage}%
-  \begin{minipage}[t]{.25\textwidth}
-    \centering
-    \includegraphics[width=1in,angle=-90]{graphic}
-  \end{minipage}
+	\begin{minipage}[t]{.25\linewidth}
+		\centering
+		\includegraphics[width=1in]{graphic}
+	\end{minipage}%
+	\begin{minipage}[t]{.25\linewidth}
+		\centering
+		\includegraphics[width=1in,angle=-45]{graphic}
+	\end{minipage}
 \end{center}
-\caption{minipage with \texttt{[b]} or \texttt{[t]} options}\label{fig:minipagesamp-1}
+\caption{带 minipage with \opt{[b]} or \opt{[t]} 选项的 \env{minipage} 环境}
+\label{fig:minipagesamp-1}
 \end{figure}
 
 \subsubsection{小页的底部对齐}
+让小页的底部对齐的一种方法是强制使小页的底部为其基线。
+再次要注意的是，\env{minipage} 的 \opt{[b]} 选项效果是让小页最底行的基线作为小页的基线。
 
-让小页的底部对齐的一种方法是使小页的底部为其基线。如果一条高和深
-都为零的线在图形之后加到小页中去，那么~\texttt{[b]}~选项就可使小页
-的底部作为其基线。命令~\verb+\par\vspace{0pt}+~产生那条高和深都为零
-的线段，这时这条深度为零的线的基线就是小页的底部，选项~\texttt{[b]}~
-现在让小页的底部对齐了。例如：
-\begin{Verbatim}[xleftmargin=1cm]
+如果小页最底行正好是一条高和深都为零的线，
+那么最后一行的参考点就是该行的底部，
+这样 \opt{[b]} 选项就可使作为其基线。
+类似地，如果在 \verb|\end{minipage}| 之前添加一条高度和深度为零的线，
+那么 \opt{[b]} 选项就会使小页的底部作为小页的基线。
+命令 \cmd{par}\cmdonearg{vspace}{0pt} 就可以产生这样高和深都为零的线段。
+这时这条深度为零的线的基线就是小页的底部，
+选项 \opt{[b]} 可以让小页的底部对齐了。例如：
+\begin{lstlisting}
 \begin{center}
-  \begin{minipage}[b]{.25\textwidth}
-    \centering
-    \includegraphics[width=1in]{graphic.eps}
-    \par\vspace{0pt}
-  \end{minipage}%
-  \begin{minipage}[b]{.25\textwidth}
-    \centering
-    \includegraphics[width=1in,angle=-90]{graphic.eps}
-    \par\vspace{0pt}
-  \end{minipage}
+\begin{minipage}[b]{.25\linewidth}
+\centering
+\includegraphics[width=1in]{graphic}
+\par\vspace{0pt}
+\end{minipage}%
+\begin{minipage}[b]{.25\linewidth}
+\centering
+\includegraphics[width=1in,angle=-45]{graphic}
+\par\vspace{0pt}
+\end{minipage}
 \end{center}
-\end{Verbatim}
+\end{lstlisting}
 结果如图~\ref{fig:minipagesamp-2}。
 \begin{figure}
 \begin{center}
-  \begin{minipage}[b]{.25\textwidth}
-    \centering
-    \includegraphics[width=1in]{graphic}
-    \par\vspace{0pt}
-  \end{minipage}%
-  \begin{minipage}[b]{.25\textwidth}
-    \centering
-    \includegraphics[width=1in,angle=-90]{graphic}
-    \par\vspace{0pt}
-  \end{minipage}
+	\begin{minipage}[b]{.25\linewidth}
+		\centering
+		\includegraphics[width=1in]{graphic}
+		\par\vspace{0pt}
+	\end{minipage}%
+	\begin{minipage}[b]{.25\linewidth}
+		\centering
+		\includegraphics[width=1in,angle=-45]{graphic}
+		\par\vspace{0pt}
+	\end{minipage}
 \end{center}
-\caption{Minipages with Bottoms Aligned}\label{fig:minipagesamp-2}
+\caption{底端对齐的小页环境}\label{fig:minipagesamp-2}
 \end{figure}
 
 \subsubsection{小页的顶部对齐}
+当在小页的顶行加入一条高度和深度都为零的线段时，
+使用 \opt{[t]} 选项使得小页的基线为它的顶部。
+如果在并列的若干小页环境中都进行这样的操作，那么就可以使这些小页环境的顶端对齐。
 
-为使小页的顶部对齐，必须在小页的开始加入一条高度和深度都为零的
-线段，接着用~\texttt{[t]}~选项使得小页的基线为它的顶部。在
-~\cmd{includegraphics}~前使用~\verb+\vspace{0pt}+~加入这条高度
-和深度都为零的线段，由于这条线段的基线为小页顶部，所以这时~
-\texttt{[t]}~选项可使得小页的顶部对齐。如：
-\begin{Verbatim}[xleftmargin=1cm]
+命令 \cmdonearg{vspace}{0pt} 可以在小页的顶端插入一条高度和深度都为零的线段。
+由于该条高度为零的线段的基线就位于小页的顶部，
+现在使用 \opt{[t]} 选项就可以使得小页的顶部对齐了。例如：
+\begin{lstlisting}
 \begin{center}
-  \begin{minipage}[t]{.25\textwidth}
-    \vspace{0pt}
-    \centering
-    \includegraphics[width=1in]{graphic.eps}
-  \end{minipage}%
-  \begin{minipage}[t]{.25\textwidth}
-    \vspace{0pt}
-    \centering
-    \includegraphics[width=1in,angle=-90]{graphic.eps}
-  \end{minipage}
+\begin{minipage}[t]{.25\linewidth}
+\vspace{0pt}
+\centering
+\includegraphics[width=1in]{graphic}
+\end{minipage}%
+\begin{minipage}[t]{.25\linewidth}
+\vspace{0pt}
+\centering
+\includegraphics[width=1in,angle=-45]{graphic}
+\end{minipage}
 \end{center}
-\end{Verbatim}
+\end{lstlisting}
 结果如图~\ref{fig:minipagesamp-3}~所示。
 \begin{figure}
 \begin{center}
-  \begin{minipage}[t]{.25\textwidth}
-    \vspace{0pt}
-    \centering
-    \includegraphics[width=1in]{graphic}
-  \end{minipage}%
-  \begin{minipage}[t]{.25\textwidth}
-    \vspace{0pt}
-    \centering
-    \includegraphics[width=1in,angle=-90]{graphic}
-  \end{minipage}
+	\begin{minipage}[t]{.25\linewidth}
+		\vspace{0pt}
+		\centering
+		\includegraphics[width=1in]{graphic}
+	\end{minipage}%
+	\begin{minipage}[t]{.25\linewidth}
+		\vspace{0pt}
+		\centering
+		\includegraphics[width=1in,angle=-45]{graphic}
+	\end{minipage}
 \end{center}
-\caption{Minipages with Tops Aligned}\label{fig:minipagesamp-3}
+\caption{顶部对齐的小页环境}\label{fig:minipagesamp-3}
 \end{figure}
 
-这里小页的顶部是和当前基线对齐。如果要求小页的顶部是和当前
-文本行的顶部对齐，可用~\verb+\vspace{-\baselineskip}+~来
-代替~\verb+\vspace{0pt}+~即可。这方面的问题在~\cite[第~456-457~页]{Michel}~
-中有所涉及。
+这里小页的顶部是和当前基线对齐。
+如果要求小页的顶部是和当前文本行的顶部对齐，
+可用 \cmdonearg{vspace}{-\cmd{baselineskip}}。
+  ~\verb+\vspace{-\baselineskip}+~来
+相关专题参考~\cite[第~863--865~页]{Mittelbach2004}。
 
+
+\section{两幅图像的堆叠}
+本节描述如何堆叠两幅图像。
+请注意这里没有检查确保顶层的图像是透明的。
+如果顶层图像创建时使用非透明的背景，那么就会隐藏底层图像。
+
+例如\footnote{
+	尽管在这个例子中使用了两个 \file{eps} 图像，
+	类似的代码也可以用于堆叠其它图像格式。
+}，
+文件 \file{left.eps} 和 \file{right.eps} 包含的图像如图~\ref{fig:leftright} 所示。
+使用如下命令
+\begin{lstlisting}
+\makebox[0pt][l]{\includegraphics{left.eps}}%
+\includegraphics{right.eps}
+\end{lstlisting}
+就会堆叠两幅图像，如图~\ref{fig:leftrightoverlay} 所示。
+堆叠两幅图像时，它们参考点（左下角）是重合的。
+在这个例子中，两幅图像的自然大小是相同的，
+所以不需要缩放就可以完全堆叠在一起。
+其它的图像可能需要缩放
+（使用 \cmd{includegraphics}、\cmd{scalebox} 或是 \cmd{resizebox} 等命令）
+才能达到想要的堆叠效果。
+
+如果没能理解 \cmd{makebox} 命令，这样的堆叠代码看起来就会显得有些不可思议。
+实际上，\cmdthreeargs{makebox}{0pt}{l}{...} 命令会创建一个宽度为零的盒子。
+当指定宽度时（这里是 \texttt{0 pt}），
+那么排版算法就会分配这样宽度的水平空间，而不管其中内容的实际宽度是怎样。
+这样，对于一个内容居左的宽度为零的盒子，
+之后的\LaTeX{} 对象的排版效果就是覆盖在该盒子之上。
+
+\begin{figure}
+	\centering
+	\includegraphics{left.eps}
+	\caption{两幅图像的内容}\label{fig:leftright}
+\end{figure}
+\begin{figure}
+	\centering
+	\makebox[0pt][l]{\includegraphics{left.eps}}%
+	\includegraphics{right.eps}
+	\caption{两幅堆叠的图像}\label{fig:leftrightoverlay}
+\end{figure}
+
+\subsection{Overpic 宏包}
+另一种堆叠图像的方法是使用 \pkgi{overpic} 宏包。
+该宏包定义了一个图形环境，使得大小就是插图的尺寸大小。
+相关细节参考 \pkg{overpic} 宏包文档~\cite{overpic-doc}。
+
+================================================
 \section{使用子目录}\label{sec:subdir}
 
 当需要大量的图形文件时，你可能希望将它们存放到一个子目录下。例如放到
