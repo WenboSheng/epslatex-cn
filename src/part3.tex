@@ -416,169 +416,209 @@ World
 该宏包定义了一个图形环境，使得大小就是插图的尺寸大小。
 相关细节参考 \pkg{overpic} 宏包文档~\cite{overpic-doc}。
 
-================================================
+
 \section{使用子目录}\label{sec:subdir}
 
-当需要大量的图形文件时，你可能希望将它们存放到一个子目录下。例如放到
-子目录~\texttt{images}~下，这时你试图用如下的命令来插入图形~\texttt{file.eps}。
+当需要大量的图形文件时，你可能希望将它们存放到一个子目录下。
+例如，假设子目录的名字叫 \file{sub}，这时你试图用如下的命令来插入图形 \file{file.eps}。
+\begin{lstlisting}
+\includegraphics{sub/file.eps}
+\end{lstlisting}
 
-\begin{Verbatim}
-\includegraphics{images/file.eps}
-\end{Verbatim}
-仅管这种用法在大多数~Unix~和~DOS~下的~\TeX{}~里工作正常，它却有以下的问题：
+尽管这种用法在大多数 Unix 和 DOS 下的 \TeX{} 发行版里工作正常，它却有以下的问题：
 \begin{description}
-\item [{\CJKfamily{hei} 效率不高}]
-
-      每当~\TeX{}~打开一个文件，该文件名就被存入~TeX{}~的内存中。
-      当打开大量的文件时，因为给出子目录名增加了文件名的长度，
-      这种内存的占用就容易导致~poolsize~错误（见第~\ref{sec:poolspace}~节）。
-\item [{\CJKfamily{hei} 通用性差}]
-
-      \LaTeX{}~的一大优势就是它的文件能在任何操作系统平台上使用。
-      然而，在文件名中包括子目录名会使文件依赖于操作系统，如果不
-      作明显的改变，上面的例子就无法在~VMS~或~Macintosh~上使用。
+	\item [效率不高]
+	
+	每当 \TeX{} 打开一个文件，该文件名就被存入 TeX{} 的内存中。
+	当打开大量的文件时，内存空间减少会导致内存池大小的错误（见第~\ref{ssec:poolspace}~节）。
+	显式地给出子目录名增加了文件名的长度，进而加重这种池空间问题。
+	
+	\item [通用性差]
+	
+	\LaTeX{} 的一大优势就是它的文件能在任何操作系统平台上使用。
+	然而，在文件名中包括子目录名会使文件依赖于操作系统。
+	如果不作明显的改变，上面的例子就无法在 VMS 或 Macintosh 上使用。
 \end{description}
-
-对于图形文件存于子目录下的情形，有两种办法：
+实际上除了直接在文件名中使用子目录外，还有两种选择。
 \begin{enumerate}
-\item 最好的方法是将子目录加到~\TeX{}~搜索路径中（见第~\ref{sec:texpath}~节）。
-\item 另外一种办法是用~\ci{graphicspath}~命令来指明所用的子目录（见第
-      ~\ref{sec:graphpath}~节）。不过，这比前一种方法的效率要低。
+	\item 最好的方法是将子目录加到 \TeX{} 搜索路径中（见第 \ref{ssec:texpath} 节）。
+	\item 另外一种办法是用 \cmdi{graphicspath} 命令来指明所用的子目录
+	（见第~\ref{ssec:graphpath}~节）。不过，这比前一种方法的效率要低不少。
 \end{enumerate}
 
-上述两种方法都将使~\cmd{includegraphics}~自动搜索图形子目录，故可在
-文件中用
-
-\begin{Verbatim}
+上述两种方法都将使 \cmd{includegraphics} 自动搜索图形子目录，
+故可在使用
+\begin{lstlisting}
 \includegraphics{file.eps}
-\end{Verbatim}
+\end{lstlisting}
 来替代
-
-\begin{Verbatim}
-\includegraphics{images/file.eps}
-\end{Verbatim}
+\begin{lstlisting}
+\includegraphics{sub/file.eps}
+\end{lstlisting}
 
 \subsection{\TeX{}~搜索路径}\label{ssec:texpath}
 
-因为不同的~TeX~软件设置搜索路径的方法不完全一样，所以很难提供一个
-普遍适用的范例。本节所用的例子是基于~Unix~下的~web2c/te\TeX{}~的。
-其它版本的~\TeX{}~也大致采用相似的策略。
+因为不同的\TeX{} 发行版设置搜索路径的方法不完全一样，
+所以很难提供一个普遍适用的范例。
+本节所用的例子基于 Unix 下的 web2c/te\TeX{}。
+尽管稍有不同，但其它的 \TeX{} 发行版也大致采用相似的策略。
 
-对~Unix~下的~web2c/te\TeX{}~而言，改变~TeX~的搜索路径可通过设
-置环境变量~\texttt{TEXINPUTS}~来实现。如使用~\texttt{csh}，
-\begin{Verbatim}[xleftmargin=1cm]
+对 Unix 下的 web2c/te\TeX{} 而言，
+改变 \TeX{} 的搜索路径可通过设置环境变量 \file{TEXINPUTS} 来实现。
+如使用 \prgname{csh}，命令
+\begin{lstlisting}[language=csh]
 setenv TEXINPUTS /dir1:/dir2:
-\end{Verbatim}
-会使~\TeX{}~在搜索缺省的目录前先搜索~\texttt{/dir1}~和~\texttt{/dir2}。
-如果省掉最后的~\texttt{:}，那么在搜索完~\texttt{/dir1}~和~\texttt{/dir2}
-~后~\TeX{}~将不再搜索缺省的目录。如设
-\begin{Verbatim}[xleftmargin=1cm]
+\end{lstlisting}
+会使 \TeX{} 在搜索缺省的目录前先搜索 \file{/dir1} 和 \file{/dir2}。
+如果省掉最后的冒号 \texttt{:}，
+那么在搜索完 \file{/dir1} 和 \file{/dir2} 后 \TeX{} 将不再搜索缺省的目录。
+如设
+\begin{lstlisting}[language=csh]
 setenv TEXINPUTS :/dir1:/dir2
-\end{Verbatim}
-则使~\TeX{}~在搜索缺省的目录后再搜索~\texttt{/dir1}~和~\texttt{/dir2}。
+\end{lstlisting}
+则使 \TeX{} 在搜索缺省的目录后再搜索 \file{/dir1} 和 \file{/dir2}。
 而
-\begin{Verbatim}[xleftmargin=1cm]
+\begin{lstlisting}[language=csh]
 setenv TEXINPUTS /dir1::/dir2
-\end{Verbatim}
-则使~\TeX{}~在搜索~\texttt{/dir1}~后接下来搜索缺省的目录，最后再
-搜索\texttt{/dir2}。
+\end{lstlisting}
+则使 \TeX{} 在搜索 \file{/dir1} 后接下来搜索缺省的目录，
+最后再搜索\file{/dir2}。
 
-在一个目录后面加上~\texttt{//}~使得此目录下的所有子目录都将被搜索。
+在一个目录后面加上 \file{//} 使得此目录下的所有子目录都将被搜索。
 例如：
-\begin{Verbatim}[xleftmargin=1cm]
+\begin{lstlisting}[language=csh]
 setenv TEXINPUTS /dir1//:/dir2:
-\end{Verbatim}
-会使~\TeX{}~搜索~\texttt{/dir1}~的所有子目录。使用~\texttt{//}~要
-小心，如果一目录下的文件和子目录特别多的话，它会使~\TeX{}~的搜索速度
-变得很慢。
+\end{lstlisting}
+会使 \TeX{} 搜索 \file{/dir1} 的所有子目录（以及子目录的子目录，等等）。
+使用 \file{//} 要小心，如果一目录下的文件和子目录特别多的话，
+它会使 \TeX{} 的搜索速度变得很慢。
 
-若使用~\texttt{sh}，可用命令
-\begin{Verbatim}[xleftmargin=1cm]
+若使用 \prgname{sh}，可用命令
+\begin{lstlisting}[language=sh]
 TEXINPUTS="/dir1:/dir2:"; export TEXINPUTS
-\end{Verbatim}
-来设置环境变量~\texttt{TEXINPUTS}。
+\end{lstlisting}
+来设置环境变量 \file{TEXINPUTS}。
 
-当~\LaTeX~在~\TeX{}~搜索路径中找到文件时，并不将目录名也写到~DVI~文件中，
-因此，旧版本的~\texttt{dvips}~和~\texttt{xdvi}~由于不会
-搜索~\TeX{}~的搜索路径，可能会找不到该文件（见第~\ref{sec:dvips}~节）。
+当 \LaTeX{} 在 \TeX{} 搜索路径中寻找文件时，不会将目录名也写到 \file{dvi} 文件中。
+对于旧版本的 \prgname{dvips} 和 \prgname{xdvi} 而言，
+由于没有搜索\TeX{}~的搜索路径的功能，
+因此，可能会找不到该文件（见第~\ref{ssec:dvips}~节）。
+
+\subsection{临时改变 \TeX{} 的搜索路径}\label{ssec:temptexpath}
+
+本节讲述如何使用 Unix shell 临时修改 \TeX{} 搜索路径，
+以便寻找特定项目的图像文件。
+用户可以为每一个 \LaTeX{} 项目创建各自不同的 shell 脚本，
+每一个脚本指定的路径对于该项目来说是唯一的。
+
+例如，假设用户正在写一篇期刊文章，
+想要创建一个 shell 脚本 \verb|latex_paper| 来代替 \prgname{latex} 命令。
+在 Unix 搜索路径上创建一个文件 \verb|latex_paper|，其中包含如下内容
+\begin{lstlisting}[language=sh]
+#!/bin/sh
+TEXINPUTS= ~/PAPER/SUB1/:~/PAPER/SUB2/:$TEXINPUTS latex $@
+\end{lstlisting}
+使用如下命令将该文件转成可执行文件
+\begin{lstlisting}[language=sh]
+chmod u+x latex_paper
+\end{lstlisting}
+
+设置好之后，输入
+\begin{lstlisting}[language=sh]
+latex_paper file.tex
+\end{lstlisting}
+就会在 \file{TEXINPUTS} 的开头添加 \file{~/PAPER/SUB1/:~/PAPER/SUB2/}，
+之后用 \prgname{latex} 运行 \file{file.tex}，
+就可以搜索 \file{~/PAPER/SUB1/} 和 \file{~/PAPER/SUB2/} 子目录下的任何图像文件。
+
+类似地，还需要写一个 \verb|dvips_paper| 脚本，
+以便让 \prgname{dvips} 在 \file{dvi} 转 \file{ps} 过程中可以搜索到图像文件。
 
 \subsection{图形文件搜索路径}\label{ssec:graphpath}
-
-缺省地，~\LaTeX{}~在~\TeX{}搜索路径中寻找图形文件。除此之外，~\LaTeX{}~还
-会搜索由~\ci{graphicspath}~给出的目录。例如：
-\begin{Verbatim}[xleftmargin=1cm]
+缺省地， \LaTeX{} 在 \TeX{} 搜索路径中寻找图形文件。
+除此之外， \LaTeX{} 还会搜索由 \cmdi{graphicspath} 给出的目录。
+例如：
+\begin{lstlisting}
 \graphicspath{{dir1/}{dir2/}}
-\end{Verbatim}
-告诉~\LaTeX{}~也从目录~\texttt{dir1/}~和~\texttt{dir2/}~下寻找图形文件。
-对~Macintosh~来说，上面的命令改为：
-\begin{Verbatim}[xleftmargin=1cm]
+\end{lstlisting}
+告诉 \LaTeX{} 也从目录 \file{dir1/} 和 \file{dir2/} 下寻找图形文件。
+对 Macintosh 系统来说，上面的命令改为：
+\begin{lstlisting}
 \graphicspath{{dir1:}{dir2:}}
-\end{Verbatim}
+\end{lstlisting}
 
-很重要的一点是，搜索由~\cmd{graphicspath}~给出的目录要比由
-~\texttt{TEXINPUTS}~给出的目录慢的多。更进一步说，搜索由~\cmd{graphicspath}~
-给出的目录要占用一定的~pool space~(见第~\ref{sec:poolspace}节）。
-鉴于~\cmd{graphicspath}效率不高，所以不推奖使用这一命令，
-最好的办法就是将要使用的目录加到~\TeX{}~搜索路径中去（见
-第~\ref{sec:texpath}~节）。
+很重要的一点是，搜索由 \cmd{graphicspath} 给出的目录要比由 \file{TEXINPUTS} 给出的目录慢的多。
+更进一步说，搜索由 \cmd{graphicspath} 给出的目录要占用一定的池空间
+（见第~\ref{ssec:poolspace}节）。
+鉴于 \cmd{graphicspath} 效率不高，所以一般不推荐使用这一命令，
+最好的办法就是将要使用的目录加到 \TeX{} 搜索路径中去（见第~\ref{ssec:texpath}~节）。
 
-\subsection{节约~~Pool~~空间}\label{ssec:poolspace}
 
-\TeX{}为其内部的字符串的传递保留了一部分内存空间，称为~\textit{pool space}
-\index{pool space@\textsl}。每当~\TeX{}~打开一文件或试图打开一文件，
-就会有一部分~pool space~被永久性分配。当打开一个很大的文件时，这种内存的
-丢失会导致~\TeX~耗光它的~pool size，产生如下的错误讯息：
+\subsection{节约池空间}\label{ssec:poolspace}
+
+\TeX{} 为其内部的字符串传递保留了一部分内存空间，称为\emph{池空间}（\emphi{pool space}）。
+每当 \TeX{} （试图）打开打开一文件，就会有一部分池空间按被永久性分配。
+当打开很多文件时，这种内存的占用会导致 \TeX{} 耗光它的池空间，产生如下的错误讯息：
 \begin{Verbatim}[xleftmargin=1cm]
 ! TeX capacity exceeded, sorry [poolsize=72288]
 \end{Verbatim}
-因为已分配的~pool space~是文件名长度的函数，所以若其中带有子目录名会
-使~pool space~问题更加恶化。
 
-除了最新版的基于~web2c~的~\TeX{}~软件和一些商业软件外，增加~poolsize~的
-唯一办法就是重新编译~\TeX{}。所幸的是，通常用下面这些节约~pool space~的
-办法就可以解决问题。
+由于占用的池空间与文件名的长度有关，
+所以其中带有子目录的文件名会加重该问题。
+
+除了最新版的基于 web2c 的 \TeX{} 软件和一些商业软件外，
+增加池空间的唯一办法就是重新编译 \TeX{}。
+所幸的是，通常用下面这些节约池空间的办法就可以解决问题。
 
 \begin{itemize}
 \item 避免用过长的文件名。
-\item 不要把子目录名包括进来
-      \begin{Verbatim}
-      \includegraphics{images/file.eps}
-      \end{Verbatim}
-      取而代之的是将子目录加到~\TeX{}~搜索路径中或不要把图形文件放在
-      子目录下。
-\item 不要使用~\cmd{graphicspath}~命令。
-      \begin{Verbatim}
-      \graphicspath{{dir1/}{dir2/}}
-      ...
-      \includegraphics{file.eps}
-      \end{Verbatim}
-      将使~\cmd{includegraphics}~命令试图打开下列文件：
-      \begin{Verbatim}[xleftmargin=1.5cm]
-      file.eps
-      dir1/file.eps
-      dir2/file.eps
-      \end{Verbatim}
-      这每一次打开文件的尝试都会消耗~pool space。应该用更改~\TeX{}~搜索路径
-      的办法来替代使用命令~\cmd{graphicspath}。
-\item 给出全部的文件名，不要省略文件的扩展名（特别地，像~.eps）。在缺省的
-      ~\cmd{DeclareGraphicsExtensions}~定义下，命令
-      \begin{Verbatim}
-      \includegraphics{file}
-      \end{Verbatim}
-      将使~\cmd{includegraphics}~命令试图打开下列文件：
-      \begin{Verbatim}[xleftmargin=1.5cm]
-      file.eps
-      file.ps
-      file.eps.gz
-      file.ps.gz
-      file.eps.Z
-      \end{Verbatim}
-     若是再加上使用~\cmd{graphicspath}，会导致效率极低。
 
-     最好将~\cmd{DeclareGraphicsExtensions}~中定义的扩展名集减到最小，
-     这样在使用省略扩展名的文件时会好些。
+\item 不要把子目录名包括进来
+	\begin{lstlisting}
+	\includegraphics{images/file.eps}
+	\end{lstlisting}
+	取而代之的是将子目录加到 \TeX{} 搜索路径中或不要把图形文件放在子目录下。
+	
+\item 不要使用 \cmd{graphicspath} 命令。如下代码
+	\begin{lstlisting}
+	\graphicspath{{dir1/}{dir2/}}
+	...
+	\includegraphics{file.eps}
+	\end{lstlisting}
+	将使 \cmd{includegraphics} 命令试图打开下列文件：
+	\begin{Verbatim}[xleftmargin=1.5cm]
+	file.eps
+	dir1/file.eps
+	dir2/file.eps
+	\end{Verbatim}
+	每一次打开文件的尝试都会消耗池空间。
+	应该用更改 \TeX{} 搜索路径的办法来替代使用命令 \cmd{graphicspath}。
+	
+\item 给出全部的文件名，不要省略文件的扩展名（例如 \file{.eps}）。
+	在缺省的 \cmd{DeclareGraphicsExtensions} （第~\ref{ssec:deextension} 节）定义下，命令
+	\begin{lstlisting}
+	\includegraphics{file}
+	\end{lstlisting}
+	将使 \cmd{includegraphics} 命令试图打开下列文件：
+	\begin{Verbatim}[xleftmargin=1.5cm]
+	file.eps
+	file.ps
+	file.eps.gz
+	file.ps.gz
+	file.eps.Z
+	\end{Verbatim}
+	若是再加上使用~\cmd{graphicspath}，会导致效率特别低。
+	
+	最好将 \cmd{DeclareGraphicsExtensions} 中定义的扩展名列表减到最小，
+	这样在使用省略扩展名的文件时会好些。
 \end{itemize}
 
+请注意，\cmd{includegraphics} 命令只会在打开或试图打开文件时消耗池空间。
+由于 \cmd{includegraphics} 命令打开文件的目的只是为了确定图像的 BoundingBox，
+因此，为了阻止池空间消耗，一种有效但却不那么方便的的方法就是，
+使用 \cmd{includegraphics} 命令的 \opt{bb} 选项指定 BoundingBox 参数值（见表~\ref{tab:opt}）。
+
+=======================================
 \section{压缩图形文件和非~~EPS~~文件的使用}\label{sec:noneps}
 
 当使用~\texttt{dvips}~时，使用者可定义一个命令来在插入图形文件之前对它进行操作。
