@@ -504,6 +504,14 @@ TEXINPUTS="/dir1:/dir2:"; export TEXINPUTS
 由于没有搜索\TeX{}~的搜索路径的功能，
 因此，可能会找不到该文件（见第~\ref{ssec:dvips}~节）。
 
+
+
+
+
+
+
+
+
 \subsection{临时改变 \TeX{} 的搜索路径}\label{ssec:temptexpath}
 
 本节讲述如何使用 Unix shell 临时修改 \TeX{} 搜索路径，
@@ -618,252 +626,217 @@ latex_paper file.tex
 因此，为了阻止池空间消耗，一种有效但却不那么方便的的方法就是，
 使用 \cmd{includegraphics} 命令的 \opt{bb} 选项指定 BoundingBox 参数值（见表~\ref{tab:opt}）。
 
-=======================================
-\section{压缩图形文件和非~~EPS~~文件的使用}\label{sec:noneps}
 
-当使用~\texttt{dvips}~时，使用者可定义一个命令来在插入图形文件之前对它进行操作。
-这样，如果设定此命令为一解压缩命令，就可以使用压缩的图形文件。如果设定此命令为
-一图形格式转换命令，就可以使用非~EPS~图形文件。考虑到目前为止~DVI~到~PS~的
-转换程序中只有~\texttt{dvips}~具有这种功能，本节所介绍的内容都需要
-~\texttt{dvips}~的支持。使用者需要在使用~\textsf{graphicx}~宏包时
-设定使用~\texttt{dvips}~选项。这可以通过在~\cmd{documentclass}~命令
-中进行全局设定：
+\section{在 DVIPS 中使用压缩EPS文件和非 EPS 文件}\label{sec:dvips-noneps}
 
-\begin{Verbatim}[xleftmargin=1cm]
+正如第~\ref{sec:intro} 节所述，在 \prgname{dvips} 模式下，
+\LaTeX{} 图像插入的任务是由 \file{dvi} 程序负责。
+这就意味着，\LaTeX{} 文档可以使用任何 \file{dvi} 程序支持的图像格式。
+尽管事实上所有的 \file{dvi}-\file{ps} 转换程序都支持 \file{eps} 图像，
+但几乎没有转换程序支持非 \file{eps} 图像。
+所以，在 \prgname{dvips} 模式下，
+要使用非 \file{eps} 图像需要将其转成 \file{eps} 格式。
+而这可以有两种办法。
+\begin{description}
+	\item[提前转换] 在 \file{dvi}-\file{ps} 转换之前，
+	使用图像转换程序将非\file{eps} 图像转成\file{eps} 格式。
+	保存的 \file{eps} 格式可以用于接下来的 \file{dvi}-\file{ps} 过程。
+	
+	\item[实时转换] 在 \file{dvi}-\file{ps} 过程中，
+	\file{dvi}-\file{ps} 转换程序调用一个图像转换程序，
+	使得图像转换的结果通过管道传回 \file{dvi}-\file{ps} 程序，最后插入到 \file{ps} 文件中。
+\end{description}
+提前转换的缺点是需要存储图像文件的 \file{eps} 版本。
+尽管“实时转换”方法不需要额外存储，
+但需要在每一次执行 \file{dvi}-\file{ps} 程序时都进行重复的图像转换计算。
+所以这里需要在速度和存储之间进行权衡。
+不过大部分用户偏向“提前转换”带来的速度优势。
+
+与直接整合图像转换指令不同，\prgname{dvips} 提供了一种调用外部转换程序的机制
+\footnote{
+	这种机制需要操作系统支持管道功能。}。
+这可以通过在 \LaTeX{} 中使用 \cmd{DeclareGraphicsRule} 的命令选项来完成。
+这种方法比直接的图像转换支持更方便灵活，因为图像转换和 \file{dvi}-\file{ps} 过程是分开的，
+因此，用户可以选择自己想用的图像转换程序。
+
+当在支持管道的操作系统中使用 \prgname{dvips} 时\footnote{
+	例如，Unix 支持管道而 DOS 则不支持}，
+可以使用 \cmd{DeclareGraphicsRule} （见第~\ref{ssec:derule} 节）指定在文件上执行的操作。
+若为解压缩命令，则可允许使用压缩的图形文件。
+若为图形格式转换命令，则可允许使用非 \file{eps} 图形文件。
+当使用不支持管道的操作系统时，这种即时转换的命令是不允许的，
+这时只好将所有的图形文件都存为非压缩的 \file{eps} 格式。
+
+考虑到目前为止 \file{dvi}-\file{ps} 转换程序中只有 \prgname{dvips} 具有这种功能，
+本节所介绍的内容都需要 \prgname{dvips} 的支持。
+使用者需要在使用 \pkg{graphicx} 宏包时设定使用 \opt{dvips} 选项。
+这可以通过在 \cmd{documentclass} 中指定 \opt{dvips} 全局选项进行全局设定：
+\begin{lstlisting}
 \documentclass[dvips,11pt]{article}
-\end{Verbatim}
-或者在~\cmd{usepackage}~中设定~\textsf{graphicx}~的使用~\texttt{dvips}~选项为：
-
-\begin{Verbatim}[xleftmargin=1cm]
+\end{lstlisting}
+或者在 \cmd{usepackage} 中设定 \pkg{graphicx} 的使用 \opt{dvips} 选项为：
+\begin{lstlisting}
 \usepackage[dvips]{graphicx}
-\end{Verbatim}
-推荐使用第一种方法，因为它将~\texttt{dvips}~这一选项传递给所有的宏包。
+\end{lstlisting}
+推荐使用第一种方法，因为它将 \opt{dvips} 这一选项传递给所有的宏包。
 
-当使用一个支持管道\realfootnote{例如，~Unix~支持管道而~DOS~则不支持}的操作系统
-时，~\cmd{DeclareGraphicsRule}~命令（见第~\ref{sec:derule}~节）定义一个
-对文件进行操作的命令。若为解压缩命令，则可允许使用压缩的图形文件。
-若为图形格式转换命令，则可允许使用非~EPS~图形文件。当使用不支持管道的操作系统
-时，这种即时转换的命令是不允许的，这时只好将所有的图形文件都存为非压缩
-的~EPS~格式。
-
-\clearpage
 
 \subsection{压缩 EPS 文件的例子}\label{ssec:compresseps}
-
-使用压缩~EPS~文件的步骤是：
+使用压缩 \file{eps} 文件的步骤是：
 \begin{enumerate}
-\item 创见一个~EPS~文件（比如说~\texttt{file.eps}）。
-\item 将它的~BoundingBox~存放到另外一文件中（~\texttt{file.eps.bb}）。
-\item 压缩~EPS~文件，比如用~Unix~命令：
-      \begin{Verbatim}[xleftmargin=1cm]
-      gzip -9 file.eps
-      \end{Verbatim}
-      得到压缩文件~\texttt{file.eps.gz}。这里~\texttt{-9}（或者~\texttt{-best}）
-      选项表示最佳压缩。
-\item 在~\cmd{includegraphics}前声明适当的
-      ~\cmd{DeclareGraphicsRule}~命令。使得~\LaTeX{}~知道如何
-      处理特殊后缀的文件（见第~\ref{sec:derule}~节）。例如：
-      \begin{Verbatim}
-      \documentclass[dvips]{article}
-      \usepackage{graphicx}
-      \begin{document}
-      \DeclareGraphicsRule{.eps.gz}{eps}{.eps.bb}{`gunzip -c #1}
-      \begin{figure}
-        \centering
-        \includegraphics[width=3in]{file1.eps.gz}
-        \caption{Compressed EPS Graphic}
-        \label{fig:compressed:eps}
-        \end{figure}
-      \end{document}
-      \end{Verbatim}
-在这个特殊的例子里，~\cmd{DeclareGraphicsRule}~实际上是可以省略的，
-因为在~\texttt{dvips.def}~已经定义过了。如果使用另外一个解压缩
-程序或文件名后缀，那么~\cmd{DeclareGraphicsRule}~是不能少的。
-例如~BoundingBox~存放到文件~\texttt{file.bb}~中，则相应的
-~\cmd{DeclareGraphicsRule}~应为：
-\begin{Verbatim}
+	\item 创建一个 \file{eps} 文件（比如说 \file{file1.eps}）。
+	\item 将它的 BoundingBox 存放到另外一文件中（~\file{file1.eps.bb}）。
+	\item 压缩  \file{eps}  文件，比如在很多平台上用命令：
+	\begin{lstlisting}[language=bash]
+	gzip -9 file1.eps
+	\end{lstlisting}
+	得到压缩文件 \file{file1.eps.gz}。这里 \opt{-9}（或者 \opt{-best}） 选项表示最佳压缩。
+	\item 在 \cmd{includegraphics}前声明适当的 \cmd{DeclareGraphicsRule} 命令。
+	使得 \LaTeX{} 知道如何处理特殊后缀的文件（见第~\ref{ssec:derule}~节）。例如：
+\begin{lstlisting}
+\documentclass[dvips]{article}
+\usepackage{graphicx}
+\begin{document}
+\DeclareGraphicsRule{.eps.gz}{eps}{.eps.bb}{`gunzip -c #1}
+\begin{figure}
+\centering
+\includegraphics[width=3in]{file1.eps.gz}
+\caption{压缩的 EPS 图像}
+\label{fig:compressed:eps}
+\end{figure}
+\end{document}
+\end{lstlisting}
+	在这个特殊的例子里，\cmd{DeclareGraphicsRule} 实际上是可以省略的，
+	因为在 \file{dvips.def} 已经预定义过了。
+	如果使用另外一个解压缩程序或文件名后缀，那么 \cmd{DeclareGraphicsRule} 是不能少的。
+	例如 BoundingBox~存放到文件 \texttt{file.bb} 中，
+	则相应的 \cmd{DeclareGraphicsRule} 应为：
+\begin{lstlisting}
 \DeclareGraphicsRule{.eps.gz}{eps}{.bb}{`gunzip -c #1}
-\end{Verbatim}
+\end{lstlisting}
 \end{enumerate}
 
-\clearpage
 
-\subsection{\TeX{} 搜索路径和 dvips}\label{ssec:dvips}
-
-当~\LaTeX{}~遇上一~\cmd{includegraphics}~命令时，会首先在当前目录下
-搜寻图形文件。如果找不到所需的文件，~\LaTeX{}~将按照~\TeX{}~搜索路径来
-寻找。当~DVI~文件转为~PS~文件时，~\texttt{dvips}~也是同样地顺序来
-搜寻图形文件。这不会有什么问题。然而，如果用~\cmd{DeclareGraphicsRule}~
-定义了一个即时转换的命令，那么此命令将会阻止~\texttt{dvips}~在
-~\TeX{}~搜索路径中寻找图形文件。例如：
-\begin{Verbatim}[xleftmargin=1cm]
-\DeclareGraphicsRule{.eps.gz}{eps}{.eps.bb}{`gunzip -c #1}
-\end{Verbatim}
-指定对后缀为~\texttt{.eps.gz}~的文件使用命令~\texttt{gunzip -c}。
-假设用下面的命令来插入图形文件，
-\begin{Verbatim}[xleftmargin=1cm]
-\includegraphics{file.eps.gz}
-\end{Verbatim}
-那么若~\texttt{file.eps.gz}~和~\texttt{file.eps.bb}~在当前目录下的话，
-一切都会很顺利。~\LaTeX{}~使用~\texttt{file.eps.bb}~而~\texttt{dvips}~
-使用~\texttt{gunzip -c file.eps.gz}~来解压缩图形文件。
-
-但是，如果~\texttt{file.eps.gz}~和~\texttt{file.eps.bb}~不在当前目录下，
-而是在目录~\texttt{/a/b/c/}~下（假设该目录已加到~\TeX{}~搜索路径中）。
-~\LaTeX{}~仍然能够找到~\texttt{/a/b/c/file.eps.bb}，但~\texttt{dvips}~在
-执行~\texttt{gunzip -c file.eps.gz}~就会出问题。因为~\texttt{gunzip}~找不到
-~\texttt{file.eps.gz}。假如你的~\TeX{}~软件使用了~\texttt{kpathsea}~库
-\index{kpathsea@\texttt}（比如~teTeX），这个问题可用定义下面的图形
-规则来解决。
-\begin{Verbatim}[xleftmargin=1cm]
-\DeclareGraphicsRule{.eps.gz}{eps}{.eps.bb}%
-                    {`gunzip -c `kpsewhich -n latex tex #1`}
-\end{Verbatim}
-这里使用~\ci{kpsewhich}~来为~\texttt{gunzip}~找寻文件。
-~\verb+`kpsewhich -n latex tex #1+~使得~\texttt{dvips}~在~\TeX{}~搜索
-路径中寻找压缩图形文件，然后把文件的全名（包括目录名）附加到
-~\texttt{gunzip -c}~命令后，使得即使压缩图形文件不在当前目录下，
-~\texttt{gunzip}~也可对其进行操作。
-
-虽然上面给出的新的图形规则可以放在~\LaTeX{}~文件的开头，但是最好的
-用法是把它放到~\texttt{graphics.cfg}~文件中：
-\begin{Verbatim}[xleftmargin=1cm]
-\AtEndOfPackage{%
-\DeclareGraphicsRule{.eps.gz}{eps}{.eps.bb}%
-                    {`gunzip -c `kpsewhich -n latex tex #1`}}
-\end{Verbatim}
-并且保留~\texttt{\bs ExecuteOptions{dvips}}~这一行。
-
-因为旧版本的~\texttt{dvips}~\marginpar{\CJKfamily{kai}\bfseries 旧版本
-的 \\ ~\texttt{dvips}}不会搜索~\TeX{}~搜索路径，~\texttt{dvips}~无法找到
-位于~\TeX{}~搜索路径中的文件，下面的命令利用~\texttt{kpsewhich}~为
-~\texttt{dvips}~搜索位于~\TeX{}~搜索路径中的非压缩的~EPS~文件。
-\begin{Verbatim}[xleftmargin=1cm]
-\DeclareGraphicsRule{.eps}{eps}{.eps}%
-                    {`cat `kpsewhich -n latex tex #1`}
-\end{Verbatim}
-（当然最好的解决办法是升级你的~\TeX{}~软件。）
-
-\subsection{非~~EPS~~图形文件}\label{ssec:noneps}
+\subsection{非 EPS 图形文件}\label{ssec:noneps}
 
 EPS~格式的图形文件可以很容易的插入到~\LaTeX{}~文件中，
-而非~EPS~格式的图形文件则不是将插图命令中的文件名替换一下就可以的。
-对于不同的图形驱动来说，所支持的图形格式也不尽相同。而不同版本的
-~\TeX{}~软件也有各自支持的非~EPS~格式图形。一般来说，除了~\texttt{.png}~
-格式的图形文件外，其它的非~EPS~格式图形基本上只有一两种图形驱动
-支持直接使用它们。更多的情况是需要先转换为~EPS~格式的图形文件
-\footnote{在使用~\texttt{pdf\LaTeX}~和~\texttt{dvipdfm}~图形驱动时
-不支持~EPS~格式的图形，而是支持~PDF~格式的图形。}再插入到~\LaTeX{}~文件中。
-这样就要求有相应的图形格式转换工具。尽管使用非~EPS~格式的图形文件
-不如~EPS~图形文件简单方便，但由于它们可能比~EPS~文件要小，而一些
-绘图软件也不能生成~EPS~文件，所以有时还是希望在~DVI~文件转换为~PS~
-文件时再对其进行格式转换。如果使用~\texttt{dvips}，这种即时转换的命令可用
-~\cmd{DeclareGraphicsRule}来给出。例如用这种方法将~\texttt{file2.gif}~加
-到~\LaTeX{}~文档中需要以下几步：
-
+而非~EPS~格式的图形文件（\file{gif}、\file{tiff}、\file{jpeg}、\file{pict} 等）则不是将插图命令中的文件名替换一下就可以的。
+一个简单的解决方法是检查一下生成该图像的应用程序是否也可以输出 \file{eps}。
+如果不是的话，就必须用图像转换程序（见第~\ref{ssec:convertor} 节）将其转成 PostScript。
+尽管使用非 \file{eps} 格式的图形文件不如 \file{eps} 图形文件简单方便，
+但由于它们可能比 \file{eps} 文件要小，而一些绘图软件也不能生成~EPS~文件，
+所以有时还是希望在 \file{dvi} 文件转换为 \file{ps} 文件时再对其进行图像格式转换。
+如果使用 \prgname{dvips}，这种即时转换的命令可用 \cmd{DeclareGraphicsRule}来给出。
+例如用这种方法将 \file{file2.gif} 插入到 \LaTeX{} 文档中需要以下几步：
 \begin{enumerate}
-\item 找到一个支持命令行方式的~GIF~到~EPS~的转换工具（假设
-      为~\texttt{gif2eps}）。
-\item 建立一个注明~\texttt{file2.gif}~自然大小的~BoundingBox~文件。为此，
-      \begin{enumerate}
-      \item 用~\texttt{ebb file2.gif}~直接得到~BoundingBox~文件\footnote{
-            \texttt{ebb}~是~\texttt{dvipdfm}~中的一个用来计算非~EPS~图形
-            文件的~BoundingBox~应用程序。}。
-      \item 将~\texttt{file2.gif}~转为~\PS~文件，若其中有~BoundingBox~行，
-            则将此行存放到文件~\texttt{file2.gif.bb}~中，否则，可按照
-            第~\ref{sec:pstoeps}~节的方法来计算~BoundingBox~并将所得
-            到的结果放在~\texttt{file2.gif.bb}~中的~\texttt{\%\%BoundingBox:}~
-            后。然后将~\PS~文件删除。
-      \end{enumerate}
-\item \LaTeX{}~文件中，在~\cmd{includegraphics}~命令前，加入图形规则：
-      \begin{Verbatim}
-      \DeclareGraphicsRule{.gif}{eps}{.gif.bb}{`gif2eps #1}
-      \end{Verbatim}
+	\item 找到一个支持命令行方式的 \file{gif} 到 \file{eps} 的转换工具
+	（假设为 \prgname{gif2eps}）。
+	\item 创建一个指定 \file{file2.gif} 自然大小的 BoundingBox 文件。
+	为此，
+	\begin{enumerate}
+		\item 如果 PostScript 文件包含 BoundingBox 行，
+		将此行保存到文件 \file{file2.gif.bb}
+		\item 如果 PostScript 文件不包含 BoundingBox 行，
+		用 \verb|ebb file2.gif| 直接得到 BoundingBox 文件\footnote{
+			\prgname{ebb} 是 \prgname{dvipdfm} 中的一个应用程序，
+			用来计算非\file{eps} 图形文件的 BoundingBox。——旧译本}。
+		\item 将 \file{file2.gif} 转成PostScript。
+		如果 PostScript 文件包含 BoundingBox 行，则将此行保存到文件 \file{file2.gif.bb}；
+		否则，可按照第~\ref{ssec:pstoeps}~节的方法来计算 BoundingBox，
+		并将所得到的结果放在 \file{file2.gif.bb} 中的 \verb|%%BoundingBox|后。
+		然后将 PostScript 文件删除。
+	\end{enumerate}
+	\item \LaTeX{} 文件中，在 \cmd{includegraphics} 命令前，加入图形规则：
+	\begin{lstlisting}
+	\DeclareGraphicsRule{.gif}{eps}{.gif.bb}{`gif2eps #1}
+	\end{lstlisting}
 \end{enumerate}
+当遇到 \cmdonearg{includegraphics}{file.gif} 时，
+\LaTeX{} 会从 \file{file.gif.bb} 中读取 BoundingBox，
+并告诉 \prgname{dvips} 使用 \prgname{gif2eps} 来将 \file{file.gif} 转为 \file{eps} 文件。
 
-当遇到~\verb+\includegraphics{file.gif}+~时，~\LaTeX{}~从~\texttt{file.gif.bb}~
-中读取~BoundingBox~并告诉~\texttt{dvips}~使用~\texttt{gif2eps}~来将
-~\texttt{file2.gif}~转为~EPS~文件。
 
-\subsubsection{GIF~的例子}
+\subsection{GIF 的例子}
+由于插入非 \file{eps} 格式的图形所需的命令依赖于操作系统和图形格式转换程序，
+在此提供两个 Unix 系统下常用的转换程序的例子。
 
-由于插入非~EPS~格式的图形所需的命令依赖于操作系统和图形格式转换程序，
-在此提供两个~Unix~系统下常用的转换程序的例子。
-
-\begin{Verbatim}[xleftmargin=1cm]
+\begin{lstlisting}
 \DeclareGraphicsRule{.gif}{eps}{.gif.bb}{`convert #1 'eps:-' }
 \begin{figure}
-  \centering
-  \includegraphics[width=3in]{file2.gif}
-  \caption{GIF Graphic}
+\centering
+\includegraphics[width=3in]{file2.gif}
+\caption{GIF Graphic}
 \end{figure}
-\end{Verbatim}
-这里使用~\texttt{convert}\index{convert@\texttt}（包含在~ImageMagick~中）来
-将~GIF~转为~EPS。而命令：
-\begin{Verbatim}[xleftmargin=1cm]
+\end{lstlisting}
+这里使用 \prgname{convert}命令（包含在 ImageMagick 中）将\file{gif} 转为 \file{eps}。
+而命令：
+\begin{lstlisting}[language=bash]
 convert file2.gif 'eps:-'
-\end{Verbatim}
-将~\texttt{file2.gif}~转为~EPS~格式的图形并输出到标准输出。
+\end{lstlisting}
+将 \file{file2.gif} 转为\file{eps}格式（“\opt{eps:}”选项）并输出到标准输出（“\opt{-}”指示符）。
 
-另一方法是使用~\texttt{giftoppm, ppmtopgm}~和~\texttt{pgmtops}~来
-将~GIF~转为~EPS。只需在上例中将图形规则改为：
-\begin{Verbatim}[xleftmargin=1cm]
-\DeclareGraphicsRule{.gif}{eps}{.gif.bb}%
-                    {`giftoppm #1 | ppmtopgm | pgmtops}
-\end{Verbatim}
+另一方法是使用 \prgname{ppm} 组件的 \prgname{giftoppm}、\prgname{ppmtopgm} 和 \prgname{pgmtops} 程序
+将 \file{gif} 通过 \file{ppm} 和灰度 \file{pgm} 格式最终转为\file{eps}。
+在Unix中，使用如下 \cmd{DeclareGraphicsRule} 命令可以将这些程序用管道连接起来：
+\begin{lstlisting}
+\DeclareGraphicsRule{.gif}{eps}{.gif.bb}{`giftoppm #1 | ppmtopgm | pgmtops}
+\end{lstlisting}
 
-\clearpage
 
-\subsubsection{对非~EPS~图形的直接支持}
+\subsection{\TeX{} 搜索路径和 dvips}\label{ssec:path-dvips}
 
-虽然~\LaTeX{}~和~\texttt{dvips}~不断地被要求直接支持非~EPS~图形并使
-得如同~EPS~图形一样简单方便。的确，这样做会带来不少方便，但却存在
-着不少问题。
+当 \LaTeX{} 遇到\cmd{includegraphics} 命令时，
+会首先在当前目录下搜寻图形文件。
+如果找不到所需的文件，\LaTeX{} 将按照 \TeX{} 搜索路径来寻找。
+当 \file{dvi} 文件转为PostScript文件时，\prgname{dvips} 也是同样地顺序来搜寻图形文件。
+这不会有什么问题。
+然而，如果用 \cmd{DeclareGraphicsRule} 定义了一个实时转换的命令，
+那么此命令将会阻止 \prgname{dvips} 在 \TeX{} 搜索路径中寻找图形文件。
 
-\begin{itemize}
-\item 因为~\LaTeX{}~是通过从~EPS~文件中读取~BoundingBox~来确定图形
-      文件的大小的，加上~\LaTeX{}~只能读取~ASCII~文件，所以其它的非~EPS~图形
-      文件（绝大多数是二进制文件）会阻碍~\LaTeX{}~获取图形大小的信息。
-\item 进一步讲，支持非~EPS~图形要求~\texttt{dvips}~具有图形格式转换的
-      能力（GIF-to-PS, TIFF-to-PS,~等）。这需要大量的编程和维护工作。
-\end{itemize}
+例如：
+\begin{lstlisting}
+\DeclareGraphicsRule{.eps.gz}{eps}{.eps.bb}{`gunzip -c #1}
+\end{lstlisting}
+指定对后缀为 \texttt{.eps.gz} 的文件使用命令 \texttt{gunzip -c}。
+假设用下面的命令来插入图形文件，
+\begin{lstlisting}
+\includegraphics{file.eps.gz}
+\end{lstlisting}
+如果 \file{file.eps.gz} 和 \file{file.eps.bb} 在当前目录下的话，
+那么不需要路径搜索，一切没有问题。
+\LaTeX{} 会使用 \file{file.eps.bb} 而 \prgname{dvips} 则执行 
+\verb|gunzip -c file.eps.gz| 来解压缩文件。
 
-有鉴于此，~\texttt{dvips}~提供调用外部图形转换程序的机制而不是
-直接支持非~EPS~图形文件。这种机制允许~\LaTeX{}~通过设置
-~\cmd{DeclareGraphicsRule}~来使~\texttt{dvips}~调用指定的外部图形转换程序。
-这样使用者可自己选择图形转换程序，~\texttt{dvips}~也不用捆绑
-一些图形转换功能，从而比直接支持非~EPS~图形文件更具灵活性。
+但是，如果 \file{file.eps.gz} 和 \file{file.eps.bb} 不在当前目录就会有问题。
+假设在目录 \file{/a/b/c/} 下（并且该目录已加到 \TeX{} 搜索路径中）。
+\LaTeX{} 通过搜索路径仍然能够找到 \file{/a/b/c/file.eps.bb}，
+但 \prgname{dvips} 在执行\verb|gunzip -c file.eps.gz| 就会出问题。
+因为 \prgname{gunzip} 找不到文件 \file{file.eps.gz}。
 
-仅管~\LaTeX{}~和~\texttt{dvips}~一般不支持直接插入非~EPS~的图形，
-也还是有几个例外：
+如果 \TeX{} 发行版使用了 \prgname{kpathsea} 库（比如 te\TeX{} 发行版），
+这个问题可用定义下面的图形规则来解决。
+\begin{lstlisting}
+\DeclareGraphicsRule{.eps.gz}{eps}{.eps.bb}%
+{`gunzip -c `kpsewhich -n latex tex #1`}
+\end{lstlisting}
+这里使用 \prgname{kpsewhich}\index{kpsewhich@\textsf} 为 \prgname{gunzip} 寻找文件。
+\begin{lstlisting}[language=bash]
+`kpsewhich -n latex tex #1
+\end{lstlisting}
+会使得 \prgname{dvips} 在 \TeX{} 搜索路径中寻找压缩图形文件，
+然后把文件的全名（包括目录名）附加到 \texttt{gunzip -c} 命令后，
+这样即使压缩图形文件不在当前目录下，\prgname{gunzip} 也可对其进行操作。
 
-\begin{enumerate}
-\item 如果~\texttt{dvips}~编译时用了参数~\texttt{-Demtex}，它将支持
-      一些~Em\TeX{}~的~\cmd{special}~命令，允许直接插入~PCX, BMP~或
-      ~MSP~位图。
-\item Macintosh~下的共享~\TeX/\LaTeX{}~软件~Oztex2.1~中，~DVI~到~PS~的
-      转换程序~\texttt{OzDVIPS}~允许通过~\cmd{special}~命令来使用
-      ~MacPaint~和~PICT~文件。详见
+虽然上面给出的新的图形规则可以放在每个 \LaTeX{} 文件的开头，
+但是更方便的用法是把如下代码放到 \file{graphics.cfg} 文件中：
+\begin{lstlisting}
+\AtEndOfPackage{%
+\DeclareGraphicsRule{.eps.gz}{eps}{.eps.bb}%
+{`gunzip -c `kpsewhich -n latex tex #1`}}
+\end{lstlisting}
+并且保留 \cmdonearg{ExecuteOptions}{dvips} 这一行。
 
-      \href{http://www.kagi.com/authors/akt/oztex.html}{%
-       \texttt{http://www.kagi.com/authors/akt/oztex.html}}
-\item 一些商业版本的~\LaTeX{}~支持非~EPS~的图形。
-     \begin{enumerate}
-     \item Macintosh~下的~Textures~支持~PICT~图形。详见
-
-        \href{http://www.bluesky.com/}{\texttt{http://www.bluesky.com/}}
-    \item Y{\&}Y~的~Windows~版本的~\TeX{}~中，~DVI~到~PS~的转换程序
-          ~\texttt{DVIPSONE}~支持~TIFF~图形。详见
-
-          \href{http://www.YandY.com/}{\texttt{http://www.YandY.com/}}
-    \end{enumerate}
-\end{enumerate}
-
-即使上述方法中，~\TeX{}~仍然无法直接从二进制的图形文件中获得
-其图形的大小。为使~\LaTeX{}~能正确地给所插入的图形分配空间，
-使用者必须用~\texttt{.bb}~文件或在~\cmd{includegraphics}~中
-用~\texttt{bb}~选项给出图形的大小。
-
+================================================
 \section{Psfrag~~宏包}\label{sec:psfrag}
 
 目前大多数绘图和分析软件都可以输出~EPS~格式的图形，但是它们大都
