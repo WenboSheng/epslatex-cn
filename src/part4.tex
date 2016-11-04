@@ -3,56 +3,61 @@
 \part{\LaTeX{}浮动图形环境}
 
 \section{浮动图形环境}\label{sec:floatfigure}
+在使用字处理软件排版时，用户放在哪里图形就会出现在哪里\footnote{
+	尽管许多字处理软件确实可以允许图形在文本周围移动（或者文本在图形周围移动），
+	但是出于糟糕的软件设计以及/或者文档作者的忽略，绝大部分用户并不使用该功能。}。
+但是，因为这些图形不能被分割开来，所以经常会导致糟糕的分页，将大片的空白留在页面下方。
+为得到专家级的排版效果，作者不得不手工调整图形的位置。
+这种工作是非常乏味的，尤其是几乎每次修改文档都得这样做一次。
 
-在使用字处理软件排版时，使用者可以让图形准确出现在放置的
-位置。但是，因为这些图形不能被分割开来，所以经常会导致
-糟糕的分页，将大片的空白留在页面下方。为得到专家级的排版
-效果，作者不得不手工调整图形的位置。这种工作是非常乏味的，
-尤其是几乎每次修改文档都得这样做一次。
-
-为了既能得到专家级的排版效果，又不必手工做调整图形位置的
-乏味的工作，~\LaTeX{}~提供了一个浮动图形机制来自动将图形
-放置到合适的位置。这一机制是非常有效的。不过，它也会给那
-些习惯于手工调整图形的新手带来麻烦。有效的利用浮动图形机制
-需要注意以下几点：
-\begin{itemize}
-	\item {\CJKfamily{hei} 不要使用依赖于图形放置位置的文本。}
-	使用如~``{\CJKfamily{kai} 这幅图...}''~或~``{\CJKfamily{kai}
-		下面的图形...}''~等短语要求所指的图形需在固定位置。
-	而像~``{\CJKfamily{kai} 图~5...}''~这样的短语则允许
-	图形出现在任意位置。
-	\item {\CJKfamily{hei} 放松。}一些使用者在发现图形没有十分
-	准确的出现在他们所想要的位置时，往往非常着急。这没有
-	必要，图形的放置是~\LaTeX{}~的工作，最好放松一些。
-\end{itemize}
-
-在接下来的几页中我们将介绍~\LaTeX{}~是以怎样的排版规则来
-\marginpar{\CJKfamily{kai}\bfseries 经验总结}
-决定浮动图形的位置的。为方便起见，下面列出一些最常见的关
-于浮动图形放置的问题。
-\begin{enumerate}
-	\item 不要束缚~\LaTeX{}~的手脚。给出的浮动选项越多，~\LaTeX{}~
-	做的就越好。特别地，使用选项~\texttt{[htbp]}~和~\texttt{[tbp]}~
-	就很好。见第~\ref{sec:figplacement}~节。
-	\item 很多人发现缺省的浮动参数过于严格了。下面的命令
-	\begin{Verbatim}[xleftmargin=1cm]
-	\renewcommand{\textfraction}{0.15} 
-	\renewcommand{\topfraction}{0.85} 
-	\renewcommand{\bottomfraction}{0.65} 
-	\renewcommand{\floatpagefraction}{0.60}
-	\end{Verbatim}
-	将浮动参数重新设置为更宽松的值。详见第~\ref{sec:figpara}~节。
-	\item \LaTeX{}~允许图形浮动到当前页的顶部，这样会使图形在
-	引述它的文本前出现。不喜欢这样做的用户可以使用~\pai{flafter}~
-	宏包。无需使用特殊的命令，只要简单地调入该宏包
-	~\cmd{usepackage\{flafter\}}~即可。
-	\item 要确保图形的浮动不超过某一特定点，可调入~\pai{placeins}~宏包，
-	并且使用~\ci{FloatBarrier}~命令。见第~\ref{sec:unprocessfig}~节。
+为此，\LaTeX{}~提供了一个浮动图形机制来自动将图形放置到看起来合适的位置，
+既能得到专家级的排版效果，又不必手工做调整图形位置的乏味的工作。
+不过，它也会给那些习惯于手工调整图形的新手带来不适。
+想要有效的利用浮动图形机制需要注意以下几点：
+\begin{description}
+	\item[不要使用依赖于图形放置位置的文本]
 	
-	{\CJKfamily{hei}\color{red} 警告：}过多使用~\cmd{FloatBarrier}~
-	命令会导致浮动位置难以控制或浮动参数不正确。这两种情况都是应当
-	尽量避免的。
+	使用如“\emph{这幅图...}”或“\emph{下面的图形...}”等短语要求所指的图形需在固定位置。
+	而像~``\emph{图~5...}''~这样的短语则允许图形出现在任意位置。
+	\item [放松]
+	
+	一些用户在发现图形没有十分准确的出现在他们所想要的位置时，往往非常着急。
+	这没有必要，图形的放置是 \LaTeX{} 的工作，最好放松一些。
+\end{description}
+
+在接下来的几页中我们将介绍 \LaTeX{} 是以怎样的专业级的排版规则来决定浮动图形的位置的。
+\marginpar{经验总结}
+为方便起见，下面列出关于浮动图形放置的一些最常见问题的解决方法。
+\begin{enumerate}
+	\item 不要束缚 \LaTeX{} 的手脚。
+	给出的浮动选项越多，\LaTeX{} 做的就越好。
+	特别地，使用选项 \opt{[htbp]} 和 \opt{[tbp]}	就很好。
+	见第~\ref{ssec:figplacement}~节。
+	
+	\item 很多人发现缺省的浮动参数过于严格了。下面的命令
+\begin{lstlisting}
+\setcounter{topnumber}{4}
+\setcounter{bottomnumber}{4}
+\setcounter{totalnumber}{10}
+\renewcommand{\textfraction}{0.15}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.70}
+\renewcommand{\floatpagefraction}{0.66}
+\end{lstlisting}
+	将浮动参数重新设置为更宽松的值。详见第~\ref{sec:typerule}~节。
+	
+	\item \LaTeX{} 允许图形浮动到当前页的顶部，
+	这样会使图形在引述它的文本前出现。
+	不喜欢这样做的用户可以使用~\pkgi{flafter}宏包。
+	无需使用特殊的命令，只要简单地调入该宏包 \cmdonearg{usepackage}{flafter} 即可。
+	
+	\item 要确保图形的浮动不超过某一特定点，可调入 \pkgi{placeins} 宏包，
+	并且使用 \cmdi{FloatBarrier} 命令。见第~\ref{ssec:unprocessfig}~节。
+	
+	\textbf{警告}：过多使用 \cmd{FloatBarrier}	命令会导致浮动位置难以控制或浮动参数不正确。
+	这两种情况都是应当尽量避免的。
 \end{enumerate}
+
 
 \subsection{创建浮动图形}
 

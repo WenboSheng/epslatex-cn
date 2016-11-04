@@ -219,7 +219,6 @@ World
 	\includegraphics[width=1in,origin=br,angle=-90]{graphic}
 \end{center}
 
-
 \subsection{小页环境的垂直对齐}\label{ssec:minivalign}
 
 将图形放置于 \envi{minipage} 小页环境中是经常遇到的情况下，
@@ -837,21 +836,24 @@ convert file2.gif 'eps:-'
 并且保留 \cmdonearg{ExecuteOptions}{dvips} 这一行。
 
 ================================================
-\section{Psfrag~~宏包}\label{sec:psfrag}
+\section{PSfrag宏包}\label{sec:psfrag}
 
-目前大多数绘图和分析软件都可以输出~EPS~格式的图形，但是它们大都
-不能像~\LaTeX{}~一样支持符号和公式。~\pai{PSfrag}~宏包允许用
-~\LaTeX{}~的文本和公式来替代~EPS~图形文件中的字符。在~CJK~等
-中文环境下，可以使用~\textsf{PSfrag}~将图形中的标记字符替换
-为所需的中文文本。
+目前很多绘图和分析软件都可以输出\file{eps}格式的图形，
+但是它们大都不能像 \LaTeX{} 一样支持符号和公式。
+\pkgi{PSfrag} 宏包允许用 \LaTeX{} 的文本和公式来替代 \file{eps} 图形文件中的字符。
 
-\textsf{PSfrag 3.0}~是~1996~发布的正式版本，几乎是被完全重新写过。
-以前的版本则需要借助预处理程序（\texttt{ps2frag}~或~\texttt{ps2psfrag}）
-来识别和记录~EPS~图形文件中的文本。而~\textsf{PSfrag 3.0}~不需要借助
-预处理程序，也不需要像~\texttt{perl}~或~\texttt{ghostscript}~等外部
-程序。~\textsf{PSfrag 3.0}~只需要较近版本的~\LaTeX{}~（\texttt{\textit{12/95}}
-~或以后）和~\LaTeX{}~图形宏包套件。参考文献~\cite{psfrag}~给出了
-~\textsf{PSfrag 3.0}~的详细说明。
+\pkg{PSfrag} 3.0 是1996年发布的版本，几乎是被完全重新写过。
+以前的版本则需要借助预处理程序（\prgname{ps2frag}~或~\prgname{ps2psfrag}）
+来识别和记录 \file{eps} 图形文件中的文本。
+而\pkg{PSfrag} 3.0 不需要借助预处理程序，
+也不需要像 \prgname{perl} 或 \prgname{ghostscript} 等外部程序。
+\pkg{PSfrag} 3.0 只需要较近版本的 \LaTeX{} 和图形宏包套件。
+参考文献 \cite{psfrag-doc} 给出了\pkg{PSfrag} 3.0 的详细说明。
+
+
+
+
+
 
 新版的~\textsf{PSfrag 3.0}~的另一优势是支持压缩的~EPS~图形。不过，
 ~\ci{tex}~命令（见第~\ref{sec:latextext}~节）不能被用来在压缩的~EPS~图形
