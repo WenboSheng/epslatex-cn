@@ -58,56 +58,109 @@
 	这两种情况都是应当尽量避免的。
 \end{enumerate}
 
-
 \subsection{创建浮动图形}
-
-可以通过把命令置于一个~\ei{figure}~环境中来生成浮动图形。在图形环境
-中的所有内容都会被保持在一起，浮动到合式的位置以保证得到最好的分页
-结果。通过使用~\ci{caption}~命令来为浮动图形自动地编号并加上标题。
-例如，下面的命令将~EPS~图形~\texttt{graph.eps}~放到一个浮动图形中。
-\begin{Verbatim}[xleftmargin=1cm]
+可以通过把命令置于一个 \envi{figure} 环境中来生成浮动图形。
+在图形环境中的所有内容都会被保持在一起，
+浮动到合适的位置以保证得到最好的分页结果。
+另外，可以通过使用 \cmdi{caption} 命令来为浮动图形自动编号并加上标题。
+例如，下面的命令将 \file{graph.eps} 中的图像放到一个浮动图形中。
+\begin{lstlisting}
 \begin{figure} 
 \centering 
 \includegraphics[totalheight=2in]{graph.eps} 
-\caption{This is an inserted EPS graphic} \label{fig:graph} 
+\caption{一幅插入的EPS图像} \label{fig:graph} 
 \end{figure}
 
-The graph in Figure~\ref{fig:graph} on Page~\pageref{fig:graph}...
-\end{Verbatim}
+第~\pageref{fig:graph} 页的图~\ref{fig:graph}...
+\end{lstlisting}
 
 对于图形环境，应当注意：
 \begin{itemize}
-	\item \ci{label}~命令和~\ci{ref}, \ci{pageref}~命令配合使用，
-	可对图形标题进行交叉引用。而~\cmd{label}~命令必须紧接着~\cmd{caption}~
-	命令给出。
-	\item 如果一图形环境中没有使用~\cmd{caption}~命令，那么它将是一
-	个没有编号的浮动图形。
-	\item 如果一图形环境中使用了多个~\cmd{caption}~命令，那么它将生成
-	多个一起浮动的图形。这在排版并列放置的图形（见
-	第~\ref{chap:sidebyside}~章）或像第~\pageref{fig:normalcap}~页
-	上图~\ref{fig:normalcap}--\ref{fig:hangcap}~那样复杂排列的
-	图形时是非常有用的。
-	\item 可用命令~\ci{listoffigures}~来得到一个图形目录。
-	\item 缺省地，图形标题将在图形目录中列出。~\cmd{caption}~命令有一可选项
-	可用来将与标题文本不同的内容加到图形目录中。如：
-	\begin{Verbatim}[xleftmargin=1cm]
-	\caption[List Text]{Caption Text}
-	\end{Verbatim}
-	会在标题中使用~\texttt{Caption Text}~而在图形目录中使用
-	~\texttt{List Text}。这在使用了特别长的标题时会很有用。
-	\item 图形环境（\texttt{figure}）不能在段落中使用。因此也不能在
-	像~\texttt{parbox}~或~\texttt{minipage}~等盒子中使用。
-	\item 若一图形环境（\texttt{figure}）被置于一正文段落中，
-	\begin{Verbatim}[xleftmargin=1cm]
-	....text text text text text text 
-	\begin{figure} 
-	.... 
-	\end{figure} 
-	text text text text text text...      
-	\end{Verbatim}
-	那么它在正文段落结束之前不会被处理。
+	\item 可选的 \cmdi{label} 命令和 \cmdi{ref}、\cmdi{pageref} 命令配合使用，
+	可对图形标题进行交叉引用。更多信息参见第~\ref{sssec:refcmd} 节。
+	\cmd{label} 命令必须紧接着 \cmd{caption} 命令给出。
+	如果放在之前的话，那么 \cmd{ref} 会引用上一个可引用对象（通常是所在章节或者是之前的图形）。
+	
+	\item 如果一\env{figure} 图形环境中没有使用 \cmd{caption} 命令，
+	那么它将是一个没有编号的浮动图形。
+	
+	\item 如果一图形环境中使用了多个 \cmd{caption} 命令，
+	那么它将生成多个一起浮动的图形。
+	这在排版并列放置的图形（见第~\ref{sec:sidebyside} 节）
+	或者复杂排列的图形（见第~\ref{sec:stackfigs} 节）时是非常有用的。
+	
+	\item 可用命令~\cmdi{listoffigures}~来得到一个图形目录。
+	\item 缺省地，\cmd{caption} 的文本就是标题内容，也会在图形目录中列出。
+	\cmd{caption} 命令的可选项可用来将与标题文本不同的内容加到图形目录中。如：
+\begin{lstlisting}
+\caption[List Text]{Caption Text}
+\end{lstlisting}
+	会在标题中使用 \texttt{Caption Text} 而在图形目录中使用 \texttt{List Text}。
+	这在使用了特别长的标题时会很有用。
+	
+	\item \env{figure} 图形环境只能用于段落外模式，不能在段落中使用。
+	因此不能放在任何的盒子中（例如 \cmd{parbox} 或 \env{minipage}）。
+	
+	\item 若一 \env{figure} 图形环境被置于一正文段落中，例如
+\begin{lstlisting}
+....text text text text text text 
+\begin{figure} 
+.... 
+\end{figure} 
+text text text text text text...      
+\end{lstlisting}
+	那么它在该正文段落结束之前不会被处理。
 \end{itemize}
 
+\subsubsection{定义引用命令}\label{sssec:refcmd}
+相比于直接输入
+\begin{lstlisting}
+第~\pageref{fig:graph} 页的图~\ref{fig:graph}
+\end{lstlisting}
+更为方便的做法是在文档的导言区定义如下命令
+\begin{lstlisting}
+\newcommand\Figpage[1]{第~\pageref*{#1} 页的图~\ref*{#1}
+\end{lstlisting}
+然后引用代码就可以用 \cmdonearg{Figpage}{fig:graph} 来简化。
+
+\paragraph{条件引用}
+以上定义的 \cmd{Figpage} 命令总是会打印出图形编号和页码。
+当图形和引用出现在同一页时，通常需要省略页码。
+使用如下代码即可
+\begin{lstlisting}
+\newcommand\FigDiff[1]{第~\pageref{fig:graph} 页的图~\ref{fig:graph}}
+\newcommand\FigSame[1]{图~\ref{fig:graph}}
+\newcommand\Figref[1]{\ifthenelse{\value{page}=\pageref{#1}}
+	{\FigSame{#1}}{\FigDiff{#1}}}
+\end{lstlisting}
+如果引用和图形在同一页，那么 \cmd{Figref} 命令会调用 \cmd{FigSame} 命令进而显示“图~17”字样。
+如果不在同一页，那么 \cmd{Figref} 命令会调用 \cmd{FigDiff} 命令进而显示“第~25页的图~17”字样。
+
+宏包 \pkgi{varioref} \cite{varioref-doc} 还为引用图表、章节等提供了类似的命令。
+
+\subsubsection{hyperref 宏包}\label{sssec:hyperref}
+
+\pkgi{hyperref} 宏包允许用户为 \LaTeX{} 文档创建超链接，
+主要结合 \prgname{pdflatex} 一起使用。
+
+\pkg{hyperref} 的特性之一就是重定义了 \cmd{ref} 和 \cmd{cite} 命令，
+这样可以作为指向引用的超链接排版显示。
+同时，\cmd{ref*} 和 \cmd{cite*} 定义为不含超链接的引用。
+
+由于 \pkg{hyperref} 重定义了很多 \LaTeX{} 命令，
+通常用户需要注意 \cmd{usepackage} 的顺序以使得最后导入 \pkg{hyperref} 宏包。
+更多信息请参考 \cite{hyperref-manual}。
+
+\paragraph{超文本引用}
+当使用 \pkg{hyperref} 宏包时，\cmd{ref} 命令会打印出的图形编号会带有指向该图形的超链接。
+由于图形编号数字相对较小，会给点击超链接带来困难，
+因此，如下定义的命令会让点击超链接更加容易
+\begin{lstlisting}
+\newcommand\Figlink[1]{\hyperref[#1]{第~\pageref{fig:graph} 页的图~\ref{fig:graph}}
+\end{lstlisting}
+使用 \cmd{Figlink} 命令会将“图~17”这样的引用整个地放在超链接里面。
+
+===================================================
 \subsection{图形的放置}\label{ssec:figplacement}
 
 图形（\texttt{figure}）环境有一个可选参数项允许用户来指示图形有可能
