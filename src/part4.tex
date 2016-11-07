@@ -174,7 +174,7 @@ text text text text text text...
 	\footnote{当一幅图形被放置在页面的底部时，
 		如果此页有脚注的话，它将位于所有脚注的下方。
 		现在还没有办法来避免这种情况。}。
-	\item [p] \emph{\CJKfamily{hei} 浮动页。} 将图形放置在允许有浮动对象的页面上。
+	\item [p] \emph{\CJKfamily{hei} 浮动页。} 将图形放置在允许有浮动体的页面上。
 \end{description}
 
 几个注记：
@@ -228,7 +228,7 @@ text text text text text text...
 	不过，表格在排版时是跳过图形而单独处理的。
 	反之，图形的处理也是与表格的处理无关的。
 	\item 必须符合在第~\ref{sec:typerule}~节中给出的审美条件。
-	例如，一页上的浮动对象的数目不能超过 \opt{totalnumber}\index{totalnumber@\texttt}。
+	例如，一页上的浮动体的数目不能超过 \opt{totalnumber}\index{totalnumber@\texttt}。
 	在浮动位置选项前加上一个惊叹号（如 \cmdonearg{begin}{figure}\opt{[!ht]}）
 	会使 \LaTeX{} 忽略应用于文本页的审美条件，试图强制放置浮动图形。
 	不过，\texttt{!} 不会影响应用于浮动页的审美条件。
@@ -298,12 +298,12 @@ text text text text text text...
 \begin{lstlisting}
 \afterpage{\clearpage}
 \end{lstlisting}
-	会使所有未处理的浮动对象在下一分页前被清除完。
+	会使所有未处理的浮动体在下一分页前被清除完。
 	
 	使用 \cmdonearg{afterpage}{\cmd{clearpage}} 并不总可以解决浮动限制问题
 	（见第~\ref{ssec:toomanyfig}~节）。
 	因为它只是在页面结束前才会执行 \cmd{clearpage} 命令，
-	而到页面结束时可能又会累积新的未处理的浮动对象，
+	而到页面结束时可能又会累积新的未处理的浮动体，
 	进而可能已超过了 \LaTeX{} 的限制。
 	
 	\cmdonearg{afterpage}{\cmd{clearpage}} 命令在排版较小的浮动页图形时特别有用。
@@ -320,7 +320,7 @@ text text text text text text...
 
 如果一浮动体不能被即时处理，它就会被放到未处理的浮动体队列中等待处理。
 由于这一队列只能有 18 个位置，
-所以当未处理的浮动对象的数目超过这一限制时就会导致发生“Too Many Unprocessed Floats”的错误。
+所以当未处理的浮动体的数目超过这一限制时就会导致发生“Too Many Unprocessed Floats”的错误。
 造成这种错误有四种可能的原因：
 
 \begin{enumerate}
@@ -333,7 +333,7 @@ text text text text text text...
 	\item 不适当的浮动体比例参数值会造成一些图形无法放置。
 	要防止出现这种情况，一定要确保所使用的比例参数值满足第~\ref{ssec:figpara} 节中对此的要求。
 
-	\item 在很少的情况下，如使用了很多浮动对象和 \cmd{marginpar} 边注
+	\item 在很少的情况下，如使用了很多浮动体和 \cmd{marginpar} 边注
 	（会和浮动体使用相同的未处理队列机制相同），
 	可能确实需要较长的等待队列。
 	这时可使用 \pkgi{morefloats} 宏包将等待队列的长度限制增加到 36。
@@ -343,7 +343,7 @@ text text text text text text...
 	
 	\begin{enumerate}
 		\item 将图形散布在正文中。
-		这会使得有足够的文本来自然分页，\LaTeX{} 也会更容易地处理浮动对象。
+		这会使得有足够的文本来自然分页，\LaTeX{} 也会更容易地处理浮动体。
 		\item 在这些图形之间加入 \cmd{clearpage}。
 		这样做可能得花费一些时间来调整页面以避免产生有很大空白的页。
 		注意，尽管 \cmdonearg{afterpage}{\cmd{clearpage}} 会在下一个自然分页处调用 \cmd{clearpage}，
@@ -355,178 +355,175 @@ text text text text text text...
 	\end{enumerate}
 \end{enumerate}
 
-===============================================
+
 \section{定制浮动位置}\label{sec:typerule}
 
-下面列出的这些式样参数是~\LaTeX{}~用来避免出现像一页上放置了过度
-的浮动对象等糟糕的情况。如果在正文中修改了这些参数的值，那么
-它们在下一页才会生效。如果在导言区修改了这些参数，那么
-会对整个文档都起作用。
+下列的样式参数用于避免页面生成糟糕的浮动体效果，
+例如一页中的浮动体数量过多或者位置错误。
+如果在正文中的某处修改这些参数，那么直到下一页才会生效。
+不过，如果是在导言区修改的话，就会对整个文档都起作用。
 
-\subsection{浮动图形放置的计数器}
+\subsection{浮动位置的计数器}
 
-表~\ref{tab:floatcounter}~中所给出的三个计数器可用于防止~\LaTeX{}~
-将过多的浮动对象置于一文本页中，但它们不会影响浮动页。在浮动位置
-选项前加上~\texttt{!}~会让~\LaTeX{}~忽略这些计数器。这些计数器的值
-可用~\ci{setcounter}~命令来设置。例如：
-\begin{Verbatim}[xleftmargin=1cm]
+表~\ref{tab:floatcounter} 中所给出的三个计数器可用于防止 \LaTeX{} 将过多的浮动体置于同一文本页中，
+但它们不会影响浮动页。
+在浮动位置选项前加上 \texttt{!} 会让 \LaTeX{} 忽略这些计数器。
+这些计数器的值可用 \cmdi{setcounter} 命令来设置。例如：
+\begin{lstlisting}
 \setcounter{totalnumber}{2}
-\end{Verbatim}
-会阻止~\LaTeX{}~将多于~两个的浮动对象放置到一文本页中。
+\end{lstlisting}
+会阻止 \LaTeX{} 将多于两个的浮动体放置到一文本页中。
+许多人感觉默认的浮动位置计数器太严格了，更喜欢宽松一些的设置，例如
+\begin{lstlisting}
+\setcounter{topnumber}{4}
+\setcounter{bottomnumber}{4}
+\setcounter{totalnumber}{10}
+\end{lstlisting}
 
 \begin{table}[htp]
-	\newcommand{\tbltt}[1]{\textcolor{cyan}{\texttt{#1}}}
-	\renewcommand{\arraystretch}{1.2}
-	\centering
-	\topcaption{Float Placement Counters}\label{tab:floatcounter}
-	
-	\begin{tabular}{>{\columncolor{morelight}}l|>{\CJKfamily{kai}}m{10cm}|}
-		
-		\cline{2-2}
-		\tbltt{topnumber} & 可以位于一页顶部的浮动对象的最大数目（缺省值为~2）。\\
-		\cline{2-2}
-		\tbltt{bottomnumber} & 可以位于一页底部的浮动对象的最大数目（缺省值为~1）。\\
-		\cline{2-2}
-		\tbltt{totalnumber} & 可以位于一页中的浮动对象的最大数目（缺省值为~3）。 \\
-		\cline{2-2}
+	\centering\kaishu
+	\caption{浮动位置计数器}\label{tab:floatcounter}
+	\begin{tabular}{>{\ttfamily}l P{0.7\textwidth} }
+		\toprule
+		topnumber & 可以位于文本页顶部的浮动体的最大数目（缺省值为 2）。\\
+		\hline
+		bottomnumber & 可以位于文本页底部的浮动体的最大数目（缺省值为 1）。\\
+		\hline
+		totalnumber & 可以位于文本页中的浮动体的最大数目（缺省值为 3）。 \\
+		\bottomrule
 	\end{tabular}
 \end{table}
 
-\clearpage
+\subsection{图形环境中的比例参数}\label{ssec:figpara}
 
-\subsection{图形环境中的各种比例参数}\label{ssec:figpara}
-
-表~\ref{tab:floatfraction}~中给出的命令用来控制一页中有多大比例的
-区域可用来放置浮动对象（这里的比例是指浮动对象的高度除以正文高度~
-\cmd{textheight}）。前面三个命令只作用于文本页，而最后一个命令只
-作用于浮动页。在浮动位置选项前加上~\texttt{!}~会让~\LaTeX{}~忽略
-前面三个命令，而~\ci{floatpagefraction}~总是起作用的。这些命令的值
-可以用~\cmd{renewcommand}~来修改。例如：
-\begin{Verbatim}[xleftmargin=1cm]
+表 \ref{tab:floatfraction} 中给出的命令用来控制一页中有多大比例的区域可用来放置浮动体
+（这里的比例是指浮动体的高度除以正文高度 \cmd{textheight}）。
+前面三个命令只作用于文本页，
+而最后一个命令只作用于浮动页。
+在浮动位置选项前加上 \texttt{!} 会让 \LaTeX{} 忽略前面三个命令，
+而 \cmdi{floatpagefraction} 总是起作用的。
+这些命令的值可以用 \cmd{renewcommand} 来修改。例如：
+\begin{lstlisting}
 \renewcommand{\textfraction}{0.3}
-\end{Verbatim}
-限定浮动对象不得占用文本页的~70\%~以上。
+\end{lstlisting}
+限定浮动体不得超过文本页的 $70\percent$。
 
 \begin{table}[hbp]
-	\newcommand{\tbltt}[1]{\textcolor{cyan}{\texttt{\bs #1}}}
-	\renewcommand{\arraystretch}{1.2}
-	\centering
-	\topcaption{Figure Placement Fractions}\label{tab:floatfraction}
-	
-	\begin{tabular}{>{\columncolor{morelight}}l|>{\CJKfamily{kai}}m{10cm}|}
-		
+	\centering\kaishu
+	\caption{图形位置的比例参数}\label{tab:floatfraction}
+	\begin{tabular}{ l P{0.7\textwidth}}
+		\toprule
+		\cmd{textfraction} & 页面中必须用于文本的最小比例。缺省值为 0.2，
+		即一页中浮动体所占的比例不得超过 $80\percent$。 \\
+		\hline
+		\cmd{topfraction} &  文本页中页面顶部可以用来放置浮动体的最大空间比例。
+		缺省值为~0.7，即放置在顶部的浮动体所占的高度不得超过整个页面高度 $70\percent$。
+		同样地，如果多个使用了选项 \opt{t} 的浮动体的高度和超过了整个页面高度的 $70\percent$，
+		即使它们的数目没有超过 \texttt{topnumber} 的值，
+		仍将一个也不会被放置在页面顶部。 \\
+		\hline
+		\cmd{bottomfraction} & 文本页中页面底部可以用来放置浮动体的最大空间比例。
+		缺省值为~0.3，即，
+		只有当浮动体的高度不超过整个页面高度的 $30\percent$ 时才可以放置在页面底部。\\
 		\cline{2-2}
-		\tbltt{textfraction} & 页面中必须用来排放文本的最小比例。缺省值为~0.2，
-		即一页中浮动对象所占的比例不得超过~80\%。 \\
-		\cline{2-2}
-		\tbltt{topfraction} &  页面顶部可以用来放置浮动对象的高度与整个页面高度的最
-		大比例。缺省值为~0.7，即放置在页顶部的浮动对象所占
-		的高度不得超过整个页面高度~70\%。同样地，如果多个
-		使用了选项~\texttt{t}~的浮动对象的高度和超过了
-		整个页面高度的~60\%，即使它们的数目没有超过
-		~\texttt{topnumber}~的值，仍将一个也不会被放置
-		在页面顶部。 \\
-		\cline{2-2}
-		\tbltt{bottomfraction} & 页面底部可以用来放置浮动对象的高度与整个页面高度的最
-		大比例。缺省值为~0.3，这使得如果浮动对象的高度
-		不超过整个页面高度的~40\%，可以允许放置在页面底部。\\
-		\cline{2-2}
-		\tbltt{floatpagefraction} & 浮动页中必须由浮动对象占用的最小比例。因此
-		在一浮动页中空白所占的比例不会超过~\texttt{1 - 
-			\bs floatpagefraction}。缺省值为~0.5。\\
-		\cline{2-2}
+		\cmd{floatpagefraction} & 浮动页中必须由浮动体占用高度的最小比例。
+		因此在浮动页中空白所占的比例不会超过~$1-\text{\cmd{floatpagefraction}}$。
+		缺省值为~0.5。\\
+		\bottomrule
 	\end{tabular}
 \end{table}
 
-这些比例的缺省值既\marginpar{\CJKfamily{kai}\bfseries 各种比例的 \\ 使用指引}
-可以防止浮动对象占据过多的文本页面，也可以防止
-在一有很大的空白的浮动页上放置很小的图形。虽然这些缺省值让~\LaTeX{}~
-工作地很好，但有时显得稍稍严了些，结果导致有些图形被浮动到距标明
-它们的命令很远的地方。这种情况下，可以将这些比例的值放宽松些，
-例如：
-\begin{Verbatim}[xleftmargin=1cm]
+这些默认的位置比例参数值既
+\marginpar{比例系数使用指引}
+可以防止过多/过大的浮动体占据文本页面的主要空间，
+也可以防止在浮动页上有很大的空白而只有很小的图形。
+虽然这些缺省值让 \LaTeX{} 运作得很好，但有时显得稍稍严了些，
+结果导致有些浮动体到标明它们的命令距离很远。
+这种情况下，可以将这些比例的值放宽松些，例如：
+\begin{lstlisting}
 \renewcommand{\textfraction}{0.15} 
 \renewcommand{\topfraction}{0.85} 
-\renewcommand{\bottomfraction}{0.65} 
-\renewcommand{\floatpagefraction}{0.60}
-\end{Verbatim}
-在修改这些比例值的时候必须要小心，不适当的比例值会导致低劣的
-排版结果等问题。要避免出现这类问题，应该遵守以下的规则：
+\renewcommand{\bottomfraction}{0.70} 
+\renewcommand{\floatpagefraction}{0.66}
+\end{lstlisting}
 
+在调整这些比例值的时候必须要小心，不适当的比例值会导致糟糕的排版结果或者大量未处理的浮动体。
+要避免出现这类问题，应该基于如下的一些原则：
 \begin{description}
-	\item [\texttt{\bs textfraction}] \mbox{} \\
-	不要让~\cmd{textfraction}~的值小于~0.15，因为这会导致
-	令人难以阅读的文本页。如果一幅图的高度超过了~\cmd{textwidth}~
-	的~85\%，那么将它单独放置到一浮动页上的效果肯定比勉强
-	将它放置到一文本页，而且下方还有一两行文本的效果好得多。
+	\item [\cmd{textfraction}] \mbox{} \\
+	不要让 \cmd{textfraction} 的值小于~0.15，
+	因为这样的文本页难以阅读。
+	如果一幅图的高度超过了 \cmd{textwidth} 的 $85\percent$，
+	那么最好将它单独放置到一浮动页上。
+	这样的效果肯定比勉强将它放置到一文本页，而且下方还有一两行文本的效果好得多。
 	
-	永远不要将~\cmd{textfraction}~的值设为零。这样作会让~\LaTeX{}~
-	感到迷惑并导致低劣的排版结果。
-	\item [\texttt{\bs topfraction}] \mbox{} \\
-	永远不要使~\cmd{topfraction}~的值小于~\texttt{1 - \bs textfraction}。
-	否则会使~\LaTeX{}~的浮动定位算法发生冲突。
-	\item [\texttt{\bs bottomfraction}] \mbox{} \\
-	好的排版风格不提倡在页面的底部放置太多的图形，故~\cmd{bottomfraction}~
-	的值一般要比~\cmd{topfraction}~的值小。永远不要使~\cmd{bottomfraction}~
-	的值为零。这样作会让~\LaTeX{}~的浮动定位算法发生冲突。
-	\item [\texttt{\bs floatpagefraction}] \mbox{} \\
-	如果~\cmd{floatpagefraction}~的值很小，那么每一浮动页上就会只
-	放置一个浮动对象。当放置的浮动对象很小的时候，会使浮动页上出现
-	很大面积的空白。
+	进一步地，永远不要将 \cmd{textfraction} 的值设为零以便允许文本页中不含文本。
+	这样作会让 \LaTeX{} 感到迷惑并导致低劣的排版结果。
 	
-	如果~\cmd{floatpagefraction}~的值大于~\cmd{topfraction}~的值，
-	使用了~\texttt{[tp]}~选项的图形就有可能变成~``刺''。比如一
-	~\texttt{[tp]}~图形的高要大于~\cmd{topfraction}~的值，却比
-	~\cmd{floatpagefraction}~的值小，那么由于它既无法放置在文本页
-	上，也无法放置在浮动页上，所以就成为一根~``刺''。为避免出现
-	这样的图形，~\cmd{topfraction}~和~\cmd{floatpagefraction}~必须
-	满足以下的不等式：
+	\item [\cmd{topfraction}] \mbox{} \\
+	不要使~\cmd{topfraction}~的值大于 $1-\text{\cmd{textfraction}}$，
+	否则会使 \LaTeX{} 的浮动定位算法发生矛盾\footnote{
+		旧译本误作“小于 $1-\text{\cmd{textfraction}}$”。——译注}。
 	
-	\texttt{\bs floatpagefraction} $\leq$ \texttt{\bs topfraction} - 0.05
+	\item [\cmd{bottomfraction}] \mbox{} \\
+	好的排版风格不提倡在页面的底部放置太多的图形，
+	故 \cmd{bottomfraction} 的值一般要比 \cmd{topfraction} 小。
+	不要使 \cmd{bottomfraction} 的值大于 $1-\text{\cmd{textfraction}}$。
+	否则会使 \LaTeX{} 的浮动定位算法发生矛盾。
 	
-	后面的~0.05~这一项是因为文本页和浮动页有不同的竖直间距
-	\realfootnote{特别地，在比较图形的高度所占比例和~\cmd{topfraction}~时，
-		~\cmd{textfloatsep}~和其它文本页浮动间距都被计算在内。而对浮动页来说，
-		在测试图形的高度所占比例是否超过了~\cmd{floatpagefraction}~时，
-		浮动间距是不被计算在内的。所以必须从~\cmd{topfraction}~中减去
-		~\cmd{textfloatsep}~除以~\cmd{textheight}~的值。详见第~\ref{sec:vspace}~
-		节。}。同样地，如果使用了~\texttt{[bp]}~或~\texttt{[hbp]}~图形，
-	~\cmd{floatpagefraction}~和~\cmd{bottomfraction}~要满足：
+	\item [\cmd{floatpagefraction}] \mbox{} \\
+	如果 \cmd{floatpagefraction} 的值很小，
+	那么每一浮动页上就只能放置一个浮动体。
+	当放置的浮动体很小的时候，会使浮动页上出现很大面积的空白。
 	
-	\texttt{\bs floatpagefraction} $\leq$ \texttt{\bs bottomfraction} - 0.05
-	
-	注意缺省值并不满足上面的不等式，在处理~\texttt{[bp]}~或~\texttt{[hbp]}~
-	图形时可能会有问题。
+	如果 \cmd{floatpagefraction} 的值大于 \cmd{topfraction} 的值，
+	使用 \opt{[tp]} 选项的浮动图形就有可能被阻塞而无法排版。
+	例如，假设一个带有 \opt{[tp]} 选项的图形高度大于 \cmd{topfraction} 却小于 \cmd{floatpagefraction}，
+	那么由于它既无法放置在文本页上，也无法放置在浮动页上，所以就被阻塞而无法处理。
+	为避免出现这样无法处理的情况，
+	\cmd{topfraction} 和 \cmd{floatpagefraction} 的值必须满足以下的不等式：
+	\[
+	\text{\cmd{floatpagefraction}} \leq \text{\cmd{topfraction}} - 0.05.
+	\]
+	后面的 0.05 这一项是由于文本页和浮动页有不同的竖直间距
+	\footnote{特别地，当比较图形的高度比例和 \cmd{topfraction} 时，
+		\cmd{textfloatsep} 和其它文本页浮动间距都被计算在内。
+		而对浮动页来说，在考察图形的高度比例是否超过了 \cmd{floatpagefraction} 时，
+		浮动间距是不被计算在内的。
+		因此，必须从 \cmd{topfraction} 中减去 \cmd{textfloatsep} 除以 \cmd{textheight} 的值（约为0.05）。关于图形间距详见第~\ref{ssec:vspace}~节。}。
+	同样地，如果使用了 \opt{[bp]} 或 \opt{[hbp]}，
+	那么 \cmd{floatpagefraction} 和 \cmd{bottomfraction} 要满足：
+	\[
+	\text{\cmd{floatpagefraction}} \leq \text{\cmd{bottomfraction}} - 0.05.
+	\]
+	注意缺省值并不满足上面的不等式，
+	因此在处理带有 \opt{[bp]} 或 \opt{[hbp]} 选项的图形时偶尔可能会有问题。
 \end{description}
 
 \subsection{限制浮动}
 
-\ci{suppressfloats}~阻止在当前页的顶部或底部出现浮动对象。但是不会
-影响图形出现在当前位置或那些在位置选项前使用了~\texttt{!}~的图形。
+\cmdi{suppressfloats}~阻止在当前页的顶部或底部出现额外的浮动体。
+但是不会影响带有 \opt{h} 或者 \opt{!} 选项的图形位置。
 
-在一幅图形后紧接着给出~\cmd{suppressfloats[t]}~会阻止图形出现
-其在文本中的位置的上方。~\pai{flafter}~宏包重定义了~\LaTeX{}~的
-浮动算法来在整个文档中都会这样做。
-
+在一幅图形之前给出 \cmd{suppressfloats[t]} 会阻止图形出现在文本中位置的上方。
+进一步地，\pkgi{flafter} 宏包重定义了 \LaTeX{} 的浮动算法，可以在整个文档中阻止这种现象。
 \begin{table}[hbp]
-	\newcommand{\tbltt}[1]{\textcolor{cyan}{\texttt{\bs #1}}}
-	\renewcommand{\arraystretch}{1.2}
 	\centering
-	\topcaption{Suppress oats Options}\label{tab:suppressfloat}
+	\caption{Suppressfloats 的选项}\label{tab:suppressfloat}
 	
-	\begin{tabular}{>{\columncolor{morelight}}l|>{\CJKfamily{kai}}m{10cm}|}
-		
-		\cline{2-2}
-		\tbltt{suppressfloats[t]} & 限定在当前页的顶部没有其它的浮动对象。 \\
-		\cline{2-2}
-		\tbltt{suppressfloats[b]} & 限定在当前页的底部没有其它的浮动对象。 \\
-		\cline{2-2}
-		\tbltt{suppressfloats} & 限定在当前页的顶部和底部都不能出现其它的浮动对象。 \\
+	\begin{tabular}{>{\ttfamily}l P{0.7\textwidth}}
+		\toprule
+		\cmd{suppressfloats}\opt{[t]} & 阻止当前页的顶部出现其它的浮动体。 \\
+		\hline
+		\cmd{suppressfloats}\opt{[b]} & 阻止当前页的底部出现其它的浮动体。 \\
+		\hline
+		\cmd{suppressfloats} & 同时阻止当前页的顶部和底部出现其它的浮动体。 \\
 		\cline{2-2}
 	\end{tabular}
 \end{table}
 
-\section{定制图形环境}\label{sec:customfigure}
+======================================================
+\section{定制figure环境}\label{sec:customfigure}
 
 \subsection{图形的间距}\label{ssec:vspace}
 
@@ -549,20 +546,20 @@ text text text text text text...
 	\begin{tabular}{>{\columncolor{morelight}}l|>{\CJKfamily{kai}}m{10cm}|}
 		
 		\cline{2-2}
-		\tbltt{floatsep} & 出现在页面的顶部或底部的浮动对象之间的垂直距离。
+		\tbltt{floatsep} & 出现在页面的顶部或底部的浮动体之间的垂直距离。
 		缺省为~\texttt{12pt plus 2pt minus 2pt}。 \\
 		\cline{2-2}
-		\tbltt{textfloatsep} & 出现在页面的顶部或底部的浮动对象与文本之间的垂直距离。
+		\tbltt{textfloatsep} & 出现在页面的顶部或底部的浮动体与文本之间的垂直距离。
 		缺省为~\texttt{20pt plus 2pt minus 4pt}。 \\
 		\cline{2-2}
-		\tbltt{intextsep} & 出现在页面中间的浮动对象（如使用了~\texttt{h}~选项
-		的浮动对象）与上下方文本之间的垂直距离。
+		\tbltt{intextsep} & 出现在页面中间的浮动体（如使用了~\texttt{h}~选项
+		的浮动体）与上下方文本之间的垂直距离。
 		缺省为~\texttt{12pt plus 2pt minus 2pt}。 \\
 		\cline{2-2}
 	\end{tabular}
 \end{table}
 
-表~\ref{tab:figlength}~中给出的长度不会影响浮动页上各浮动对象之间
+表~\ref{tab:figlength}~中给出的长度不会影响浮动页上各浮动体之间
 的距离。它们由表~\ref{tab:figlength1}~中给出的长度控制。单位
 ~\texttt{fil}~允许无限伸长，就像由~\ci{vfill}~产生的垂直距离
 一样。当在一段距离中出现多个~\texttt{fil}~时，它们将按比例
@@ -577,13 +574,13 @@ text text text text text text...
 	\begin{tabular}{>{\columncolor{morelight}}l|>{\CJKfamily{kai}}m{10cm}|}
 		
 		\cline{2-2}
-		\tbltt{@fptop} & 浮动页中顶部的浮动对象上方的空白。
+		\tbltt{@fptop} & 浮动页中顶部的浮动体上方的空白。
 		缺省为~\texttt{0pt plus 1.0fil}。 \\
 		\cline{2-2}
-		\tbltt{@fpsep} & 浮动页中的浮动对象之间的距离。
+		\tbltt{@fpsep} & 浮动页中的浮动体之间的距离。
 		缺省为~\texttt{8pt plus 2.0fil}。 \\
 		\cline{2-2}
-		\tbltt{@fpbot} & 浮动页中底部的浮动对象下方的空白。
+		\tbltt{@fpbot} & 浮动页中底部的浮动体下方的空白。
 		缺省为~\texttt{0pt plus 1.0fil}。 \\
 		\cline{2-2}
 	\end{tabular}
@@ -605,7 +602,7 @@ text text text text text text...
 \addtolength{\@fpsep}{4pt} 
 \makeatother
 \end{Verbatim}
-将浮动页中浮动对象之间的距离增加了~4pt。
+将浮动页中浮动体之间的距离增加了~4pt。
 
 \subsection{图形上下方的水平线}
 
@@ -624,10 +621,10 @@ text text text text text text...
 	\begin{tabular}{>{\columncolor{morelight}}l|>{\CJKfamily{kai}}m{10cm}|}
 		
 		\cline{2-2}
-		\tbltt{topfigrule} & 在一页顶部的最后一个浮动对象后，~\cmd{textfloatsep}~前
+		\tbltt{topfigrule} & 在一页顶部的最后一个浮动体后，~\cmd{textfloatsep}~前
 		被执行的命令（见第~\ref{sec:vspace}~节）。 \\
 		\cline{2-2}
-		\tbltt{bottomfigrule} & 在一页底部第一个浮动对象前，~\cmd{textfloatsep}~后
+		\tbltt{bottomfigrule} & 在一页底部第一个浮动体前，~\cmd{textfloatsep}~后
 		被执行的命令。\\
 		\cline{2-2}
 	\end{tabular}
@@ -718,14 +715,14 @@ text text text text text text...
 	\resizebox{2in}{!}{\usebox{\graphic}}
 \end{figure}
 
-如果一个文档的所有浮动对象的标题都位于该对象的上方，那么可将
+如果一个文档的所有浮动体的标题都位于该对象的上方，那么可将
 命令
 \begin{Verbatim}[xleftmargin=1cm]
 \setlength{\abovecaptionskip}{0pt}
 \setlength{\belowcaptionskip}{10pt}
 \end{Verbatim}
 放到导言区里，从而对整个文档都起作用。如果只是有一部分标题
-要求位于浮动对象的上方，那么可定义如下的命令：
+要求位于浮动体的上方，那么可定义如下的命令：
 \begin{Verbatim}[xleftmargin=1cm]
 \newcommand{\topcaption}{% 
 \setlength{\abovecaptionskip}{0pt}% 
@@ -764,14 +761,14 @@ text text text text text text...
 \subsection{将图形放于文档的最后}\label{ssec:endfloat}
 
 有些期刊要求将图表和正文文本分开排放。这时可用~\pai{endfloat}~宏包，
-它可以将浮动对象放置到文档的最后。使用~\textsf{endfloat}~时可用
+它可以将浮动体放置到文档的最后。使用~\textsf{endfloat}~时可用
 \begin{Verbatim}[xleftmargin=1cm]
 \usepackage{endfloat}
 \end{Verbatim}
 将它调入。另外，这个宏包在用~\cmd{usepackage}~调入时还有一些选项，
 包括：
 \begin{itemize}
-	\item 在邻近浮动对象的文本中会放置像~``[Figure 4 about here.]''~之类的
+	\item 在邻近浮动体的文本中会放置像~``[Figure 4 about here.]''~之类的
 	说明。要取消这一功能可在调入宏包时使用~\texttt{nomarkers}~选项。
 	\begin{Verbatim}[xleftmargin=1cm]
 	\usepackage[nomarkers]{endfloat}
@@ -790,11 +787,11 @@ text text text text text text...
 	章节标题。
 	\item 图形放置在表格之前，也可用~\texttt{tablefirst}~宏包选项来改变这一顺序。
 	\item 在每一图形和表格后会执行~\cmd{clearpage}~命令，从而使得每一页只有
-	一个浮动对象。这可通过修改~\ci{efloatseparator}~来改变。例如，
+	一个浮动体。这可通过修改~\ci{efloatseparator}~来改变。例如，
 	\begin{Verbatim}[xleftmargin=1cm]
 	\renewcommand{\efloatseparator}{\mbox{}}
 	\end{Verbatim}
-	会在每一浮动对象后面放置一个空的盒子。
+	会在每一浮动体后面放置一个空的盒子。
 \end{itemize}
 
 \section{使用~~caption2~~宏包来定制标题}\label{sec:caption2}
@@ -807,7 +804,7 @@ text text text text text text...
 	尽管从技术角度来说~\textsf{caption2}~仍是~beta~版，但在使用中却
 	也是非常稳定有效的。}来完成。
 
-\textsf{caption2}~宏包可以和很多与浮动对象有关的宏包一起使用。
+\textsf{caption2}~宏包可以和很多与浮动体有关的宏包一起使用。
 它正式声称支持~\textsf{float, longtable, subfigure}，不过实际上
 也和~\textsf{floatfig, rotating, supertabular, wrapfig}~等在一
 起工作的很好。
@@ -1315,7 +1312,7 @@ Second Line of Caption}
 \begin{Verbatim}[xleftmargin=1cm]
 \renewcommand{\baselinestretch}{1.6}
 \end{Verbatim}
-这时，除了使得正文中行距为缺省值的两倍外，脚注和浮动对象中标题的行距
+这时，除了使得正文中行距为缺省值的两倍外，脚注和浮动体中标题的行距
 也扩大为原来的两倍。要想在正文中使用两倍行距，而在标题中使用单倍行距，
 可由~\pai{setspace}~宏包\realfootnote{尽管~\pai{doublespace}~宏包也可
 	以用来改变行距，但它并没有很好地按照~\LaTeXe{}~的标准来写，经常与其它的
@@ -1394,7 +1391,7 @@ This is the text after the figure.
 
 \subsection{float~~宏包中的~~[H]~~位置选项}
 
-\pai{float}~宏包\realfootnote{\textsf{float}~宏包允许用户新的浮动对象，
+\pai{float}~宏包\realfootnote{\textsf{float}~宏包允许用户新的浮动体，
 	如~\texttt{Program, Algorithm}~等。也可以定制加框的和加线条的浮动式样。}
 为~\texttt{figure}~环境加上了一个~\texttt{[H]}~
 位置选项，从而使得用~\texttt{figure}~环境可以生成不浮动的图形。
@@ -1469,7 +1466,7 @@ This is the text after the figure.
 	未处理的浮动图形前排出。因此，如果希望图形按顺序出现的话，必须在边
 	注之前使用~\cmd{clearpage}~或~\cmd{FloatBarrier}~命令。
 	\item 边注的处理机制和浮动图表的处理机制是一样的，所以如果使用了太多的
-	浮动图表和边注，就可能超出~\LaTeX{}~所允许的未处理的浮动对象的数目。
+	浮动图表和边注，就可能超出~\LaTeX{}~所允许的未处理的浮动体的数目。
 	这时使用~\textsf{morefloat}~宏包是一种解决办法。具体见
 	第~\ref{sec:toomanyfig}~节。
 \end{itemize}      
@@ -1604,7 +1601,7 @@ This is the text after the figure.
 \noindent 以上三中方法的区别：
 \begin{itemize}
 	\item 方法~1~和~2~将横排的图形放到单独的一页上，而方法~3~则生成一个
-	并不需要单独一页来放置的浮动对象。
+	并不需要单独一页来放置的浮动体。
 	\item 方法~2~只是将其中的图形横排，而方法~1~则将位于~\texttt{landscape}~
 	环境中的任何文本，图形和表格都横排在一页中。~\texttt{landscape}~
 	环境具有分页的能力，可连续生成多个横排页面
@@ -1623,9 +1620,9 @@ This is the text after the figure.
 了~\texttt{landscape}~环境，允许在竖排版的文档中放置横排页。
 横排页被旋转使得竖排页的左边界为其顶部。
 
-输入命令~\cmd{begin\{landscape\}}~使得所有未处理的竖排的浮动对象
+输入命令~\cmd{begin\{landscape\}}~使得所有未处理的竖排的浮动体
 被排出并开始横排页，同样地，输入命令~\cmd{end\{landscape\}}~使得所
-有未处理的横排的浮动对象被排出并重新回到竖排状态。
+有未处理的横排的浮动体被排出并重新回到竖排状态。
 
 所有位于~\texttt{landscape}~环境中的内容都会被横排。如果只有
 包含一个浮动图形环境
@@ -2751,8 +2748,8 @@ Friday    & 14.9 \\ \hline
 	等分组中，文本折行必须在这些分组前结束。
 	\item 在双栏页版式中不能使用~\texttt{wrapfigure}。
 	\item 如果在~\texttt{wrapfigure}~中使用~\texttt{figure}~等
-	浮动对象，它的编号有可能不正确。
-	\item 如果在~\texttt{wrapfigure}~中使用~\texttt{table}~等浮动对象，
+	浮动体，它的编号有可能不正确。
+	\item 如果在~\texttt{wrapfigure}~中使用~\texttt{table}~等浮动体，
 	它上下方的横线可能被忽略，必须自己再加入。
 	\item 在折行的文本中，~\cmd{linewidth}~并没有改变。
 \end{itemize}
