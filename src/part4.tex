@@ -160,134 +160,163 @@ text text text text text text...
 \end{lstlisting}
 使用 \cmd{Figlink} 命令会将“图~17”这样的引用整个地放在超链接里面。
 
-===================================================
+
 \subsection{图形的放置}\label{ssec:figplacement}
 
-图形（\texttt{figure}）环境有一个可选参数项允许用户来指示图形有可能
-被放置的位置。这一可选参数项可以是下列字母的任意组合。
+利用 \env{figure} 环境的可选参数项可以指定图形有可能放置的位置。
+这一可选参数项可以是下列字母的任意组合。
 \begin{description}
-	\item [\texttt{h}] {\CJKfamily{hei} 当前位置。} 将图形放置在
-	正文文本中给出该图形环境的地方。如果本页所剩的页面不够，
-	这一参数将不起作用。
-	\item [\texttt{t}] {\CJKfamily{hei} 顶部。} 将图形放置在页面的顶部。
-	\item [\texttt{b}] {\CJKfamily{hei} 底部。} 将图形放置在页面的底部
-	\realfootnote{当一幅图形被放置在页面的底部时，如果此页有脚注
-		的话，它将位于所有脚注的下方。现在还没有办法来避免这种情况。}。
-	\item [\texttt{p}] {\CJKfamily{hei} 浮动页。} 将图形放置在一只允许
-	有浮动对象的页面上。
+	\item [h] \emph{当前位置。} 
+	将图形放置在正文文本中给出该图形环境的地方。
+	如果本页所剩的页面不够，这一参数将不起作用。
+	\item [t] \emph{顶部。} 将图形放置在页面的顶部。
+	\item [b] \emph{底部。} 将图形放置在页面的底部
+	\footnote{当一幅图形被放置在页面的底部时，
+		如果此页有脚注的话，它将位于所有脚注的下方。
+		现在还没有办法来避免这种情况。}。
+	\item [p] \emph{\CJKfamily{hei} 浮动页。} 将图形放置在允许有浮动对象的页面上。
 \end{description}
 
-\noindent{\CJKfamily{hei} 注：}
+几个注记：
 \begin{itemize}
-	\item 如果在图形环境中没有给出上述任一参数，则缺省为~\texttt{[tbp]}。
-	\item 给出参数的顺序不会影响到最后的结果。因为在考虑这些参数时~\LaTeX{}~
-	总是尝试以~\texttt{h-t-b-p}~的顺序来确定图形的位置。所以
-	~\texttt{[hb]}~和~\texttt{[bh]}~都使~\LaTeX{}~以~\texttt{h-b}~
-	的顺序来排版。
-	\item 给出的参数越多，~\LaTeX{}~的排版结果就会越好。~\texttt{
-		[htbp], [tbp], [htp], [tp]}~这些组合得到的效果不错。
-	\item 只给出单个的参数项极易引发问题\realfootnote{实际上，~\texttt{[h]}~
-		选项不可能单独使用。由于使用单个的~\texttt{[h]}~选项所导致的
-		糟糕结果使得较新版本的~\LaTeX{}~自动将其改为~\texttt{[ht]}。}。
-	如果该图形不适合所指定的位置，它就会被搁置并阻碍对后面的图形
-	的处理。一旦这些阻塞的图形数目超过了~18~幅这一~\LaTeX{}~所能容许
-	的最大值，就会产生~``Too Many Unprocessed Floats''~的错误（见
-	第~\ref{sec:unprocessfig}~节）。
+	\item 如果在图形环境中没有给出上述任一参数，则缺省为 \opt{[tbp]}。
+	该默认选项可以通过重定义内部命令 \verb|\fps@figure| 定制。
+	例如，
+\begin{lstlisting}
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\end{lstlisting}
+	会将缺省值设为 \opt{[htbp]}。
+	
+	\item 位置参数的顺序不会影响到最后的结果。
+	因为 \LaTeX{} 总是尝试以 \texttt{h-t-b-p} 的顺序来确定图形的位置。
+	所以 \opt{[hb]} 和 \opt{[bh]} 都会以 \texttt{h-b}	的顺序来排版。
+	
+	\item 给出的参数越多，\LaTeX{} 的排版结果就会越好。
+	一般来说，\opt{[htbp]}、\opt{[tbp]}、\opt{[htp]}、\opt{[tp]} 这些组合得到的效果就很不错。
+	
+	\item 只给出单个的参数项 \opt{[t]}、\opt{[b]}、\opt{[p]}、\opt{[h]} 极易引发问题
+	\footnote{实际上，永远不要单独使用 \opt{[h]} 选项。
+		由于使用单个的 \opt{[h]} 选项效果过于糟糕，
+		较新版本的 \LaTeX{} 自动将其改为 \opt{[ht]}。}。
+	如果该图形不适合所指定的位置，它就会被搁置并阻碍对接下来图形的处理。
+	一旦这些阻塞的图形数目超过了18幅这一 \LaTeX{} 所能容许的最大值，
+	就会产生 ``Too Many Unprocessed Floats'' 的错误（见第~\ref{ssec:toomanyfig}~节）。
 \end{itemize}
 
-当~\LaTeX{}~``{\CJKfamily{kai} 试图}''~放置一浮动图形时，
-\marginpar{\CJKfamily{kai}\bfseries 参见文献 \\ \cite[第~198~页]{Leslie}}
+当 \LaTeX{}“\emph{试图}”放置一浮动图形时，
+\marginpar{参见文献 \cite[第~198~页]{Leslie1994}}
 它将遵循以下规则：
 \begin{enumerate}
 	\item 图形只能置于由位置参数所确定的地点。
-	\item 图形的放置不能造成超过版心的错误（\texttt{overfull page}）。
-	\item 图形只能置于当前页或后面的页中\realfootnote{因为图形可浮动到当前页
-		的顶部，所以它可能会出现在它所在文本的前面。要防止出现这种情况，
-		可使用~\textsf{flafter}~宏包。}。所以图形只能~``向后浮动''~而
-	不能~``向前浮动''。
-	\item 图形必须按顺序出现。这样只有当前面的图形都被放置好之后才能被放置。
+	\item 图形的放置不能造成页面溢出（\texttt{overfull page}）。
+	\item 图形只能置于当前页或后面的页中
+		\footnote{因为图形可浮动到当前页的顶部，所以它可能会出现在它所在文本的前面。
+			如果要防止出现这种情况，可使用 \pkg{flafter}宏包。
+			只要使用 \cmd{usepackage} 导入宏包即可，
+			不需要使用什么命令。}。
+	所以图形只能“向后浮动”而不能“向前浮动”。
+	\item 图形必须按顺序出现。当前图形只有当之前的图形都被放置好之后才能被放置。
+	进一步又有两个衍生规则：
 	\begin{itemize}
 		\item 只要前面有未被处理的图形，一幅图形就不会被放在当前位置。
-		\item 一幅~``不可能放置''~的图形将阻碍它后面的图形的放置。直到
-		文件结束或达到~\LaTeX{}~的浮动限制。参见第~\ref{sec:toomanyfig}~节。
+		\item 一幅“不可能放置”的图形将阻碍它后面的图形的放置。
+		直到文件结束或达到~\LaTeX{}~的浮动限制。参见第~\ref{ssec:toomanyfig}~节。
 	\end{itemize}
 	同样地，一表格也只能在其前面的表格都被处理完后才能被放置。
 	不过，表格在排版时是跳过图形而单独处理的。
-	\item 必须符合在第~\ref{chap:typerule}~章中给出的审美条件。例如，一页上的
-	浮动对象的数目不能超过~\texttt{totalnumber}。\index{totalnumber@\texttt}
-	在浮动位置选项前加上一个惊叹号（如~\cmd{begin\{figure\}[!ht]}）
-	会使~\LaTeX{}~忽略应用于文本页的审美条件，试图用最严格的标准来
-	放置浮动图形。不过，~\texttt{!}~不会影响应用于浮动页的审美条件。
+	反之，图形的处理也是与表格的处理无关的。
+	\item 必须符合在第~\ref{sec:typerule}~节中给出的审美条件。
+	例如，一页上的浮动对象的数目不能超过 \opt{totalnumber}\index{totalnumber@\texttt}。
+	在浮动位置选项前加上一个惊叹号（如 \cmdonearg{begin}{figure}\opt{[!ht]}）
+	会使 \LaTeX{} 忽略应用于文本页的审美条件，试图强制放置浮动图形。
+	不过，\texttt{!} 不会影响应用于浮动页的审美条件。
 \end{enumerate}
+
 
 \subsection{清除未处理的浮动图形}\label{ssec:unprocessfig}
 
-使用浮动图形的一大优势就是~\LaTeX{}~不需要在将它们放置在输入它们的
-地方。~\LaTeX{}~会将它们暂时保存，在更合适的地点加以放置。当一浮动
-图形已被~\LaTeX{}~读入，但还没有将它放到页面上时，这一图形被称为
-~``未处理浮动图形''。虽然~\LaTeX{}~通常对浮动图形的处理很好，但有时
-还是需要强迫~\LaTeX{}~去处理那些未处理的浮动图形。
+使用浮动体的一大优势就是不需要将它们立即放置在输入它们的地方。
+\LaTeX{} 会将它们暂时保存，直到在更合适的地点加以放置。
+当一浮动图形已被~\LaTeX{}~读入，但还没有将它放到页面上时，
+这一图形被称为“未处理浮动图形”。
+虽然 \LaTeX{} 处理浮动体的算法通常很好，
+但有时还是需要手动强制处理那些未处理的浮动图形。
 
-下面的三个方法都可以用来清除未处理的浮动图形。这些命令必须分开使用。
-同时，过多地使用这些命令会使得你有时得自己来管理浮动图形的位置或
-意味着浮动图形的放置参数是错误的（见第~\ref{chap:typerule}~章）。
+下面的三个方法都可以用来清除未处理的浮动图形。
+这些命令必须分开使用。
+然而，过度使用这些方法要么说明手动管理浮动体位置过去细致，
+要么说明位置参数有问题（见第~\ref{sec:typerule}~节）。
 
 \begin{description}
 	\item [clearpage] \mbox{} \\
-	最基本的用来清除未处理的浮动图形的方法就是使用~\ci{clearpage}~
-	命令。它可让~\LaTeX{}~排版所有未处理的浮动图形并开始一新页。
+	最基本的用来清除未处理的浮动图形的方法就是使用 \cmdi{clearpage} 命令。
+	它可让 \LaTeX{} 排版所有未处理的浮动图形并开始一新页。
 	尽管这一命令很有效，但它也常常导致页面的下方出现很大的空白。
+	
 	\item [FloatBarrier] \mbox{} \\
-	对于大多数情况，最好的方法是使用~\textsf{placeins}~宏包提供
-	的~\cmd{FloatBarrier}~命令。使用~\textsf{placeins}~宏包的方法
-	如下：
-	\begin{itemize}
-		\item \cmd{FloatBarrier}~使所有未处理的浮动图形立即被处理。
-		与~\cmd{clearpage}~不同的是，它不会开始一新页。
-		\item 如果经常要求浮动图形在它们所在的章节中排出，可在调用
-		~\textsf{placeins}~宏包时使用~\texttt{section}~选项：
-		\begin{Verbatim}[xleftmargin=1cm]
-		\usepackage[section]{placeins}
-		\end{Verbatim}
-		这样会重新定义~\cmd{section}~命令，在每一个~\texttt{section}~
-		前都加上一个~\cmd{FloatBarrier}~命令。
+	对于大多数情况，最好的方法是使用 \pkgi{placeins} 宏包提供的 \cmdi{FloatBarrier} 命令。
+	使用 \pkg{placeins} 宏包有三种方法：
+	\begin{enumerate}
+		\item \cmd{FloatBarrier} 使所有未处理的浮动图形立即被处理。
+		但与 \cmd{clearpage} 不同的是，它不会开始一新页。
+		\item 很普遍的一种情况是要求浮动图形在它们所在的章节中排出，
+		为此可在调用 \pkg{placeins} 宏包时使用 \opt{section} 选项：
+\begin{lstlisting}
+\usepackage[section]{placeins}
+\end{lstlisting}
+		这样会重新定义 \cmd{section} 命令，
+		在每一节之前都加上一个 \cmd{FloatBarrier} 命令。
 		
-		注意这个~\texttt{[section]}~选项是很严的。举例来说，
-		如果在一页的中间开始一新的~\texttt{section}，那么上面这
-		个~\texttt{section}~的浮动图形就不能放置在这一页的底部。
-		\item 使用~\texttt{below}~选项：
-		\begin{Verbatim}[xleftmargin=1cm]
-		\usepackage[below]{placeins}
-		\end{Verbatim}
-		会比使用~\texttt{section}~选项松一些。它可以允许上一个
-		~\texttt{section}~的浮动图形出现在下一~\texttt{section}~
-		的开始部分，只要在同一页中有上一个~\texttt{section}~
-		的内容。
-	\end{itemize}
+		注意这个 \opt{[section]} 选项是很严的。
+		举例来说，如果在一页的中间开始新的一节，
+		那么上面这个 \opt{section} 选项会阻止上一节的浮动图形放置在这一页的底部，
+		因为这样会在新的一节之后。
+		\item 使用 \opt{below} 选项：
+\begin{lstlisting}
+\usepackage[below]{placeins}
+\end{lstlisting}
+		会比使用 \opt{section} 选项松一些。
+		它允许上一节的浮动图形出现在新一节之后，只要在同一页中有上一节的内容。
+	\end{enumerate}
+	\pkg{placeins} 宏包不会改变浮动体的顺序。
+	例如，由于 \cmd{FloatBarrier} 只能在当前页的顶部放置带 \opt{[t]} 选项的浮动体，
+	因此，\cmd{FloatBarrier} 命令处理时会在当前页留白并另起新一页，
+	然后将带 \opt{[t]} 选项的浮动体放置在新一页的顶端。
+	类似地，\cmd{FloatBarrier} 不能在当前位置放置带 \opt{[b]} 选项的浮动体，
+	因此会禁止文本出现在该浮动体的下面。
+	
+	这两个例子再次说明了，
+	当指定多个位置选项（例如 \opt{[tbp] 或 \opt{[htbp]}}）时，
+	浮动体位置的处理方式会更加有效。
+
 	\item [afterpage/clearpage] \mbox{} \\
-	\pai{afterpage}~宏包提供了命令~\ci{afterpage}，该命令将在下一
-	自然分页时执行。因此，用
-	\begin{Verbatim}[xleftmargin=1cm]
-	\afterpage{\clearpage}
-	\end{Verbatim}
+	\pkgi{afterpage} 宏包提供了命令 \cmdi{afterpage}，
+	可以在下一自然分页时执行一个命令。
+	因此，用
+\begin{lstlisting}
+\afterpage{\clearpage}
+\end{lstlisting}
 	会使所有未处理的浮动对象在下一分页前被清除完。
 	
-	使用~\cmd{afterpage\{\bs clearpage\}}~并不总可以解决浮动限制
-	问题（见第~\ref{sec:toomanyfig}~节）。因为它只是在下一页结束前
-	才会执行~\cmd{clearpage}~命令，而在下一页结束前，未处理的浮动对象
-	可能已超过了~\LaTeX{}~的限制。
+	使用 \cmdonearg{afterpage}{\cmd{clearpage}} 并不总可以解决浮动限制问题
+	（见第~\ref{ssec:toomanyfig}~节）。
+	因为它只是在页面结束前才会执行 \cmd{clearpage} 命令，
+	而到页面结束时可能又会累积新的未处理的浮动对象，
+	进而可能已超过了 \LaTeX{} 的限制。
 	
-	\cmd{afterpage\{\bs clearpage\}}~命令在排版较小的浮动页图形时特别
-	有用。而命令~\cmd{floatpagefraction}~（见第~\ref{sec:figpara}~节）会
-	阻止~``太小''~的图形在浮动页上出现，由于浮动参数改变选项~\texttt{!}~
-	不会应用于浮动页，~\texttt{[!p]}~不会破除~\cmd{floatpagefraction}~
-	的限制，使用~\cmd{afterpage\{\bs clearpage\}}~是一个克服
-	~\cmd{floatpagefraction}~的限制而又不会导致有较多空白的正文页的
-	一个简单的办法。
+	\cmdonearg{afterpage}{\cmd{clearpage}} 命令在排版较小的浮动页图形时特别有用。
+	而命令 \cmd{floatpagefraction} （见第~\ref{ssec:figpara} 节）
+	会阻止“太小”的图形在浮动页上出现。
+	进一步地，由于浮动位置标识符 \texttt{!} 	不会应用于浮动页，
+	因此 \opt{[!p]} 不会破除 \cmd{floatpagefraction} 的限制，
+	使用 \cmdonearg{afterpage}{\cmd{clearpage}} 既可以克服 \cmd{floatpagefraction} 的限制，
+	又不会导致正文页有较多空白。
 \end{description}
 
-\clearpage
 
+===========================================================
 \subsection{过多未处理的浮动对象}\label{ssec:toomanyfig}
 
 如果一浮动对象不能被即时处理，它就会被放到未处理的浮动对象
