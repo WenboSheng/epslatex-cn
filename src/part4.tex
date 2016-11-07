@@ -451,7 +451,7 @@ text text text text text text...
 要避免出现这类问题，应该基于如下的一些原则：
 \begin{description}
 	\item [\cmd{textfraction}] \mbox{} \\
-	不要让 \cmd{textfraction} 的值小于~0.15，
+	不要让 \cmd{textfraction} 的值小于0.15，
 	因为这样的文本页难以阅读。
 	如果一幅图的高度超过了 \cmd{textwidth} 的 $85\percent$，
 	那么最好将它单独放置到一浮动页上。
@@ -522,156 +522,157 @@ text text text text text text...
 	\end{tabular}
 \end{table}
 
-======================================================
+
 \section{定制figure环境}\label{sec:customfigure}
 
 \subsection{图形的间距}\label{ssec:vspace}
 
-表~\ref{tab:figlength}~中给出的长度控制着两幅图形之间或图形与正文之间
-的间距。与其它的~\LaTeX{}~长度不同的是，这三个都是橡皮长度，这就使得
-它们可以缩短或拉长来更好的排版页面。这些长度可用~\cmd{setlength}~命令
-来设定。例如：
-\begin{Verbatim}[xleftmargin=1cm]
+表~\ref{tab:figlength}~中给出的长度控制着两幅图形之间或图形与正文的间距。
+与其它大部分的~\LaTeX{}~长度不同的是，这三个都是橡皮长度，
+这就使得可以通过缩短或拉伸获得更好的排版页面。
+这些长度可用 \cmd{setlength} 命令来设定。例如：
+\begin{lstlisting}
 \setlength{\floatsep}{10pt plus 3pt minus 2pt}
-\end{Verbatim}
-将正常的~\ci{floatsep}~的值设定为~10pt。并且在需要时可缩短到~8pt~
-或拉长到~13pt。
+\end{lstlisting}
+将 \cmdi{floatsep} 的正常值设定为~10\pt。
+此外，为了改善页面排版，浮动体的间距可以从 8\pt 到 13\pt 之间调节。
+
+由于 \LaTeX{} 在每一个按照选项 \opt{h} 排在当前位置的浮动体前后都放置一个 \cmdi{intextsep} 间距，
+因此两个连续的带 \opt{h} 选项的浮动体之间的间距是 \cmd{intextsep} 的两倍。
+为了消除这一额外间距，可以将两个浮动体合并成一个。
+不过这样的话，浮动位置算法就不会分开放置，得到的排版效果没有分开时那么好。
 
 \begin{table}
-	\newcommand{\tbltt}[1]{\textcolor{cyan}{\texttt{\bs #1}}}
-	\renewcommand{\arraystretch}{1.2}
 	\centering
-	\topcaption{Figure Spacing for Text Pages}\label{tab:figlength}
-	
-	\begin{tabular}{>{\columncolor{morelight}}l|>{\CJKfamily{kai}}m{10cm}|}
-		
-		\cline{2-2}
-		\tbltt{floatsep} & 出现在页面的顶部或底部的浮动体之间的垂直距离。
-		缺省为~\texttt{12pt plus 2pt minus 2pt}。 \\
-		\cline{2-2}
-		\tbltt{textfloatsep} & 出现在页面的顶部或底部的浮动体与文本之间的垂直距离。
+	\caption{文本页面中的浮动图形间距}\label{tab:figlength-textpage}
+	\kaishu
+	\begin{tabular}{>{\ttfamily}l P{0.7\textwidth}}
+		\toprule
+		\cmdi{floatsep} & 出现在页面的顶部或底部的浮动体之间的垂直距离。
+		缺省为 \texttt{12pt plus 2pt minus 2pt}。 \\
+		\hline
+		\cmdi{textfloatsep} & 出现在页面的顶部或底部的浮动体与文本之间的垂直距离。
 		缺省为~\texttt{20pt plus 2pt minus 4pt}。 \\
-		\cline{2-2}
-		\tbltt{intextsep} & 出现在页面中间的浮动体（如使用了~\texttt{h}~选项
-		的浮动体）与上下方文本之间的垂直距离。
+		\hline
+		\cmdi{intextsep} & 出现在页面中间的浮动体
+		（如使用了 \opt{h} 选项的浮动体）与上下方文本之间的垂直距离。
 		缺省为~\texttt{12pt plus 2pt minus 2pt}。 \\
-		\cline{2-2}
+		\bottomrule
 	\end{tabular}
 \end{table}
 
-表~\ref{tab:figlength}~中给出的长度不会影响浮动页上各浮动体之间
-的距离。它们由表~\ref{tab:figlength1}~中给出的长度控制。单位
-~\texttt{fil}~允许无限伸长，就像由~\ci{vfill}~产生的垂直距离
-一样。当在一段距离中出现多个~\texttt{fil}~时，它们将按比例
-充满这段距离。
+表~\ref{tab:figlength-textpage}~中给出的长度不会影响浮动页上各浮动体之间的距离。
+它们由表~\ref{tab:figlength-floatpage}~中给出的长度控制。
+浮动页面中的空白经常使用单位 \texttt{fil}，
+类似于 \cmdi{vfill} 生成的垂直间距，具有无限伸展的能力。
+当在一段距离中出现多个 \texttt{fil} 时，它们将按比例填充这段距离。
+例如，默认的浮动页面参数效果是，
+浮动页面上的浮动体之间的距离是最顶端浮动体到页面顶端距离的两倍，
+也是最底端浮动体到页面底端距离的两倍。
 
 \begin{table}
-	\newcommand{\tbltt}[1]{\textcolor{cyan}{\texttt{\bs #1}}}
-	\renewcommand{\arraystretch}{1.2}
 	\centering
-	\topcaption{Figure Spacing for Floatpages}\label{tab:figlength1}
-	
-	\begin{tabular}{>{\columncolor{morelight}}l|>{\CJKfamily{kai}}m{10cm}|}
-		
-		\cline{2-2}
-		\tbltt{@fptop} & 浮动页中顶部的浮动体上方的空白。
+	\caption{浮动页面中的浮动体间距}\label{tab:figlength-floatpage}
+	\kaishu
+	\begin{tabular}{>{\ttfamily}l P{0.7\textwidth}}
+		\toprule
+		\cmdi{@fptop} & 浮动页中顶部的浮动体上方的空白。
 		缺省为~\texttt{0pt plus 1.0fil}。 \\
-		\cline{2-2}
-		\tbltt{@fpsep} & 浮动页中的浮动体之间的距离。
+		\hline
+		\cmdi{@fpsep} & 浮动页中的浮动体之间的距离。
 		缺省为~\texttt{8pt plus 2.0fil}。 \\
-		\cline{2-2}
-		\tbltt{@fpbot} & 浮动页中底部的浮动体下方的空白。
+		\hline
+		\cmdi{@fpbot} & 浮动页中底部的浮动体下方的空白。
 		缺省为~\texttt{0pt plus 1.0fil}。 \\
-		\cline{2-2}
+		\bottomrule
 	\end{tabular}
 \end{table}
 
-在表~\ref{tab:figlength1}~中的长度名字前的~\texttt{@}~表示
-这是一个~\LaTeX{}~内部命令\realfootnote{为实现它的功能，~\LaTeX{}~
-	使用了很多普通用户无需涉及的内部命令。为防止这些内部命令名字和用户
-	定义的命令的名字发生冲突，，~\LaTeX{}~在它的内部命令名字前加上了一个
-	~\texttt{@}。由于~\LaTeX{}~命令的名字只能包含字母，所以通常不可能
-	定义一个含有~\texttt{@}~的命令。不过，命令~\ci{makeatletter}~让
-	~\LaTeX{}~把~\texttt{@}~当作字母，从而可以定义带有~\texttt{@}~的
-	命令。命令~\ci{makeatother}~则重新令~\LaTeX{}~不把~\texttt{@}~当作字母。
-	用户所有涉及到~\LaTeX{}~内部命令的代码都必须包含在~\cmd{makeatletter}~
-	和~\cmd{makeatother}~之间。}。所以，所有改变这些长度的~\cmd{setlength}~
-命令都必须放到~\cmd{makeatletter}~和~\cmd{makeatother}~之间。例如：
-\begin{Verbatim}[xleftmargin=1cm]
+在表~\ref{tab:figlength-floatpage}~中的长度名字中的 \texttt{@} 表示
+这是一个 \LaTeX{} 内部命令\footnote{
+	用户所有涉及到 \LaTeX{} 内部命令的代码都必须包含在 \cmd{makeatletter} 和 \cmd{makeatother} 之间。
+	为实现它的功能， \LaTeX{} 使用了很多普通用户无需涉及的内部命令。
+	为防止这些内部命令名字和用户定义的命令的名字发生冲突，
+	\LaTeX{} 在它的内部命令名字前加上了一个\texttt{@}。
+	由于 \LaTeX{} 命令的名字只能包含字母，
+	所以通常不可能定义一个含有 \texttt{@} 的命令。
+	不过，命令~\cmdi{makeatletter} 让 \LaTeX{} 把 \texttt{@} 当作字母，
+	从而可以定义带有~\texttt{@} 的命令。
+	命令~\cmdi{makeatother} 则重新令 \LaTeX{} 不把 \texttt{@} 当作字母。
+	}。
+所以，所有改变这些长度的 \cmd{setlength} 命令都必须放到 \cmd{makeatletter}  和 \cmd{makeatother} 之间。例如：
+\begin{lstlisting}
 \makeatletter 
 \addtolength{\@fpsep}{4pt} 
 \makeatother
-\end{Verbatim}
-将浮动页中浮动体之间的距离增加了~4pt。
+\end{lstlisting}
+将浮动页中浮动体之间的距离增加了 4\pt。
 
-\subsection{图形上下方的水平线}
+\subsection{图形上下方的水平线}\label{ssec:fig-line}
 
-通过重新定义~\ci{topfigurerule}~和~\ci{bottomfigurerule}~
-可在页面顶部或底部的文本和图形之间画上一水平线。尽管
-~\cmd{topfigurerule}~和~\cmd{bottomfigurerule}~是已经定义的
-~\LaTeX{}~命令，但是它们奇特的定义方式要求在重定义时用
-~\cmd{newcommand}~而不是~\cmd{renewcommand}。
+通过重新定义 \cmdi{topfigurerule} 和 \cmdi{bottomfigurerule} 命令可在文本和页面顶部或底部的浮动图形之间画一条水平线。
+尽管 \cmd{topfigurerule} 和 \cmd{bottomfigurerule} 是已经定义的 \LaTeX{} 命令，
+但是由于它们奇特的定义方式，在重定义时要用 \cmd{newcommand} 而不是 \cmd{renewcommand}。
+
+为了不破坏版面，这些命令所加标尺的高度必须为零。
+例如要画一条 $0.4\pt$ 的水平线，就必须加上 $-0.4\pt$ 的距离：
+\begin{lstlisting}
+\newcommand{\topfigrule}{\hrule\vspace{-0.4pt}}
+\end{lstlisting}
+因为 \cmd{topfigrule} 在 \cmd{textfloatsep} 之前被执行，
+上面的命令没有在图形与水平线之间留出距离。
+下面的命令则在图形与水平线之间留出了 5\texttt{pt} 的空间。
+\begin{lstlisting}
+\newcommand{\topfigrule}{% 
+	\vspace*{5pt}\hrule\vspace{-5.4pt}} 
+\newcommand{\botfigrule}{% 
+	\vspace*{-5.4pt}\hrule\vspace{5pt}}
+\end{lstlisting}
 
 \begin{table}
-	\newcommand{\tbltt}[1]{\textcolor{cyan}{\texttt{\bs #1}}}
-	\renewcommand{\arraystretch}{1.2}
 	\centering
-	\topcaption{Figure Rule Commands}\label{tab:figrulecmd}
-	
-	\begin{tabular}{>{\columncolor{morelight}}l|>{\CJKfamily{kai}}m{10cm}|}
-		
-		\cline{2-2}
-		\tbltt{topfigrule} & 在一页顶部的最后一个浮动体后，~\cmd{textfloatsep}~前
-		被执行的命令（见第~\ref{sec:vspace}~节）。 \\
-		\cline{2-2}
-		\tbltt{bottomfigrule} & 在一页底部第一个浮动体前，~\cmd{textfloatsep}~后
-		被执行的命令。\\
-		\cline{2-2}
+	\caption{图形标尺命令}\label{tab:figrulecmd}
+	\kaishu
+	\begin{tabular}{>{\ttfamily}l P{0.7\textwidth}}
+		\toprule
+		\cmdi{topfigrule} & 该命令在一页顶部的最后一个浮动体后，
+		\cmd{textfloatsep} 前被执行的命令（见第~\ref{ssec:vspace}~节）。 \\
+		\hline
+		\cmdi{bottomfigrule} & 该命令在一页底部第一个浮动体前，
+		\cmd{textfloatsep} 后被执行。\\
+		\bottomrule
 	\end{tabular}
 \end{table}
 
-为了不破坏版面，这些命令所加的标尺的高度必须为零。例如要
-划一条~0.4pt~的水平线，就必须加上一~-0.4pt~的距离：
-\begin{Verbatim}[xleftmargin=1cm]
-\newcommand{\topfigrule}{\hrule\vspace{-0.4pt}}
-\end{Verbatim}
-因为~\cmd{topfigrule}~在~\cmd{textfloatsep}~之前被执行，上面的
-命令没有在图形与水平线之间留出距离。下面的命令则在图形与水平线之间
-留出了~5pt~的空间。
-\begin{Verbatim}[xleftmargin=1cm]
+在这里 \cmd{topfigrule} 的定义中，
+首先向下移动 $5\pt$ （进入到~\cmd{textfloatsep} 的区域）
+以提供图形与水平线之间的距离，然后画上一高为 $0.4\pt$ 的水平线，
+最后再向上移动 $5.4pt$ 以补偿前面向下的位移。
+同样地，\cmd{botfigrule} 在图形与水平线之间留出了 $5\pt$ 的空间。
+
+由于上面的命令使得图形与水平线之间的距离为 $5\pt$，
+所以水平线与文本之间的距离为~$\text{\cmd{textfloatsep}}-5\pt$（见第~\ref{ssec:vspace}~节）。
+
+水平线的厚度缺省为 $0.4\pt$，
+并可用 \cmd{hrule} 命令的 \opt{height} 选项来改变。
+\begin{lstlisting}
 \newcommand{\topfigrule}{% 
-\vspace*{5pt}\hrule\vspace{-5.4pt}} 
+	\vspace*{5pt}{\hrule height0.8pt}\vspace{-5.8pt}} 
 \newcommand{\botfigrule}{% 
-\vspace*{-5.4pt}\hrule\vspace{5pt}}
-\end{Verbatim}
-在这里~\cmd{topfigrule}~的定义中，首先向下移动~5pt~（进入到~\cmd{textfloatsep}
-~的区域）来给出图形与水平线之间的距离，然后画上一高为~0.4pt~的水平线，
-最后再向上移动~5.4pt~以补偿前面向下的位移。同样地，~\cmd{botfigrule}~
-在图形与水平线之间留出了~5pt~的空间。
+	\vspace*{-5.8pt}{\hrule height0.8pt}\vspace{5pt}}
+\end{lstlisting}
 
-由于上面的命令使得图形与水平线之间的距离为~5pt~，所以水平线与文本
-之间的距离为~\cmd{textfloatsep - 5pt}~（见第~\ref{sec:vspace}~节）。
-
-水平线的线宽缺省为~0.4pt，并可用~\cmd{hrule}~命令的~\texttt{height}~选项
-来改变。
-\begin{Verbatim}[xleftmargin=1cm]
-\newcommand{\topfigrule}{% 
-\vspace*{5pt}{\hrule height0.8pt}\vspace{-5.8pt}} 
-\newcommand{\botfigrule}{% 
-\vspace*{-5.8pt}{\hrule height0.8pt}\vspace{5pt}}
-\end{Verbatim}
-
-\noindent {\CJKfamily{hei} 需要注意下面几点：}
+\paragraph{需要注意下面几点：}
 \begin{itemize}
-	\item ~\cmd{topfigrule}~和~\cmd{botfigrule}~命令对浮动页上的图形
-	和放置在当前位置的图形（如使用了~\texttt{h}~选项）不起作用。
-	如果一放置在当前位置的图形正好位于页面的顶部或底部，也不会
-	画上水平线。
-	\item 水平线的长度与文本的宽度相等。而不管图形是不是很宽。
-	\item 因为~\LaTeX{}~的~\cmd{rule}~命令在~\cmd{parskip}~不为零时会产生
-	额外的空白，所以代之以~\TeX{}~命令~\cmd{hrule}。
+	\item \cmd{topfigrule} 和 \cmd{botfigrule} 命令对浮动页上的图形
+	和放置在当前位置的图形（如使用了\opt{h} 选项）不起作用。
+	如果一放置在当前位置的图形正好位于页面的顶部或底部，也不会画上水平线。
+	\item 即便图形很宽，水平线的长度也只与文本的宽度相等（参见第~\ref{sec:widefig} 节）。
+	\item 因为 \LaTeX{} 的\cmd{rule} 命令在 \cmd{parskip} 不为零时会产生额外的空白，
+	所以代之以 \TeX{} 命令 \cmd{hrule}。
 \end{itemize}
 
+===================================
 \subsection{图形与标题的间距}\label{ssec:capspace}
 
 ~\LaTeX{}~假定图形的标题位于图形的下方，故而在标题上方保留了更
