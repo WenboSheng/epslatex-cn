@@ -672,129 +672,218 @@ text text text text text text...
 	所以代之以 \TeX{} 命令 \cmd{hrule}。
 \end{itemize}
 
-===================================
+
 \subsection{图形与标题的间距}\label{ssec:capspace}
 
-~\LaTeX{}~假定图形的标题位于图形的下方，故而在标题上方保留了更
-多的空白。因此
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\centering 
-\caption{Caption Above Graphic} 
-\includegraphics[width=2in]{graphic.eps} 
+19.3 Caption Vertical Spacing
+L
+A T E X assumes that captions are placed below the graphic, placing more vertical
+spacing above the caption than below it. As a result, the commands
+\begin{figure}
+	\centering
+	\caption{Caption Above Graphic}
+	\includegraphics[width=1in]{graphic}
 \end{figure}
-\end{Verbatim}
+produce Figure 13, whose caption is placed quite close to the graphic.
+
+\LaTeX{} 假定图形的标题位于图形的下方，
+故而在标题上方保留了更多的空白。因此
+\begin{lstlisting}
+\begin{figure} 
+	\centering 
+	\caption{图像上方的标题} 
+	\includegraphics[width=2in]{graphic.eps} 
+\end{figure}
+\end{lstlisting}
 生成的图~\ref{fig:verynearcap}~中标题和图形非常接近。
 
 \begin{figure} 
 	\centering 
-	\caption{Caption Above Graphic}\label{fig:verynearcap}
-	\resizebox{2in}{!}{\usebox{\graphic}}
+	\caption{图像上方的标题} \label{fig:verynearcap}
+	\includegraphics[width=2in]{graphic.eps} 
 \end{figure}
 
-标题上下方的间距由长度~\ci{abovecaptionskip}~和
-~\ci{belowcaptionskip}~（缺省分别为~10pt~与零）。可以用标准的~\LaTeX{}~
-命令~\cmd{setlength}~和~\cmd{addtolength}~来修改这些长度。
+标题的垂直间距由长度 \cmdi{abovecaptionskip} 和 \cmdi{belowcaptionskip}
+（缺省分别为 10\pt 与零）控制。
+可以用标准的 \LaTeX{} 命令 \cmd{setlength} 和 \cmd{addtolength} 来修改。
 例如：
-\begin{Verbatim}[xleftmargin=1cm]
+\begin{lstlisting}
 \begin{figure} 
-\setlength{\abovecaptionskip}{0pt} 
-\setlength{\belowcaptionskip}{10pt} 
-\centering 
-\caption{Caption Above Graphic} 
-\includegraphics[width=2in]{graphic.eps} 
+	\setlength{\abovecaptionskip}{0pt} 
+	\setlength{\belowcaptionskip}{10pt} 
+	\centering 
+	\caption{图像上方的标题} 
+	\includegraphics[width=2in]{graphic.eps} 
 \end{figure}
-\end{Verbatim}
-得到图~\ref{fig:normalabovefig}。其中标题的上方没有额外的
-空白，与图形之间则有~10pt~的距离。
+\end{lstlisting}
+得到图~\ref{fig:normalabovefig}。其中标题的上方没有额外的空白，与图形之间则有 10\pt 的距离。
 
-\begin{figure}
-	\setlength{\abovecaptionskip}{0pt}
-	\setlength{\belowcaptionskip}{10pt}
-	\centering
-	\caption{Caption Above Graphic}\label{fig:normalabovefig}
-	\resizebox{2in}{!}{\usebox{\graphic}}
+\begin{figure} 
+	\setlength{\abovecaptionskip}{0pt} 
+	\setlength{\belowcaptionskip}{10pt} 
+	\centering 
+	\caption{图像上方的标题}\label{fig:normalabovefig}
+	\includegraphics[width=2in]{graphic.eps} 
 \end{figure}
 
-如果一个文档的所有浮动体的标题都位于该对象的上方，那么可将
-命令
-\begin{Verbatim}[xleftmargin=1cm]
+如果文档的所有浮动体标题都位于顶部，那么可将如下命令放到导言区：
+\begin{lstlisting}
 \setlength{\abovecaptionskip}{0pt}
 \setlength{\belowcaptionskip}{10pt}
-\end{Verbatim}
-放到导言区里，从而对整个文档都起作用。如果只是有一部分标题
-要求位于浮动体的上方，那么可定义如下的命令：
-\begin{Verbatim}[xleftmargin=1cm]
+\end{lstlisting}
+从而对整个文档都起作用（包括图形和表格）。
+如果只是有一部分标题要求位于浮动体的上方，那么可定义如下的命令：
+\begin{lstlisting}
 \newcommand{\topcaption}{% 
-\setlength{\abovecaptionskip}{0pt}% 
-\setlength{\belowcaptionskip}{10pt}% 
-\caption}
-\end{Verbatim}
-在希望得到上方标题的时候可用~\cmd{topcaption\{\CJKfamily{kai}标题文本\}}~
-来代替~\cmd{caption\{\CJKfamily{kai}标题文本\}}~即可。
+	\setlength{\abovecaptionskip}{0pt}% 
+	\setlength{\belowcaptionskip}{10pt}% 
+	\caption}
+\end{lstlisting}
+此时 \cmdonearg{topcaption}{标题文本} 生成的标题放在浮动体顶部就很合适。
+
+另外还有两种方法可以使浮动体顶部的标题具有合适的间距：
+\begin{itemize}
+	\item 使用 \pkg{caption} 宏包的 \opt{position=top} 选项
+	（见表~\ref{tab:caption-spaceopt}）
+	可以交换 \cmd{abovecaptionskip} 和 \cmd{belowcaptionskip} 的长度。
+	
+	\item \pkgi{topcapt} 宏包 \cite{topcapt-doc} 定义了一个 \cmd{topcaption} 命令，
+	可以在交换  \cmd{abovecaptionskip} 和 \cmd{belowcaptionskip} 的长度的同时生成标题。
+\end{itemize}
 
 \subsection{标题的标记}\label{ssec:captionlabel}
 
-缺省情况下，~\LaTeX{}~会在图形的标题开头加上像~``Figure 13: ''~这样的
-标记。其中的~``Figure''~可以通过重定义~\ci{figurename}~来更改。例如，
-下面的命令
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\centering 
-\includegraphics[width=2in]{graphic.eps} 
-\renewcommand{\figurename}{Fig.} 
-\caption{This is the Caption} 
-\end{figure}
-\end{Verbatim}
-得到如图~\ref{fig:figname}~的结果。至于标题文本的字体，分隔符~``:''~以及
-其它标题属性的修改可用~\pai{caption2}~宏包（见第~\ref{chap:caption2}~章）
-来完成。
-
-\clearpage
-
-\begin{figure} 
+19.4 Caption Label
+By default, L
+A T E X inserts a caption label such as “Figure 13: ” at the beginning of the
+the caption. The “Figure” portion can be changed by redefining the \figurename
+command. For example, the commands
+\begin{figure}
 	\centering
-	\resizebox{2in}{!}{\usebox{\graphic}}
+	\includegraphics[width=1in]{graphic}
+	\renewcommand{\figurename}{Fig.}
+	\caption{This is the Caption}
+\end{figure}
+produce Figure 15. The caption font, the “:” delimiter, and other caption charac-
+teristics can be customized with the caption package (see Section 20 on Page 69).
+Graphic
+Fig. 15: This is the Caption
+
+缺省情况下，\LaTeX{} 会在图形的标题开头加上像~``Figure 13: ''~这样的标记。
+其中的 ``Figure'' 可以通过重定义 \cmdi{figurename} 来更改。例如，下面的命令
+\begin{lstlisting}
+\begin{figure} 
+	\centering 
+	\includegraphics[width=1in]{graphic.eps} 
+	\renewcommand{\figurename}{Fig.} 
+	\caption{This is the Caption} 
+\end{figure}
+\end{lstlisting}
+得到如图~\ref{fig:figname}~的结果。
+至于标题文本的字体，分隔符~``:''~以及其它标题属性的修改可用~\pkg{caption}~宏包
+（见第~\ref{sec:caption}~节）来完成。
+
+\begin{figure} 
+	\centering 
+	\includegraphics[width=1in]{graphic.eps} 
 	\renewcommand{\figurename}{Fig.} 
 	\caption{This is the Caption}\label{fig:figname} 
 \end{figure}
 
+\subsection{标题的编号}
+
+图形编号的默认方式是使用阿拉伯数字 $1,2,3,\dots$
+这可以通过重新定义 \cmdi{thefigure} 命令来改变。
+
+当前图形的编号存放在 \opt{figure} 计数器内。
+而 \cmd{thefigure} 命令制定用何种计数命令
+（包括 \cmd{arabic}、\cmd{roman}、\cmd{Roman}、\cmd{alph}、\cmd{Alph} 等）打印计数器的值。
+例如：
+\begin{lstlisting}
+\renewcommand{\thefigure}{\Roman{figure}}
+\end{lstlisting}
+图片编号的效果是大写罗马数字（I,II,III,IV,\dots）
+
+关于图片编号的注记：
+\begin{itemize}
+	\item 如果使用 \cmd{alph} 或 \cmd{Alph}，那么图片的个数不能超过26个。
+	\item 由于罗马数字一般比较长（例如比较18和XVIII），
+	因此在图形组成的表格中使用 \cmd{Roman} 或 \cmd{roman} 可能导致水平间距问题。
+\end{itemize}
+
 \subsection{将图形放于文档的最后}\label{ssec:endfloat}
 
-有些期刊要求将图表和正文文本分开排放。这时可用~\pai{endfloat}~宏包，
-它可以将浮动体放置到文档的最后。使用~\textsf{endfloat}~时可用
-\begin{Verbatim}[xleftmargin=1cm]
+
+
+
+
+
+有些期刊要求将图表和正文文本分开排放。
+这时可用 \pkgi{endfloat} 宏包就可以将浮动体放置到文档的最后。
+直接导入该宏包即可：
+\begin{lstlisting}
 \usepackage{endfloat}
-\end{Verbatim}
-将它调入。另外，这个宏包在用~\cmd{usepackage}~调入时还有一些选项，
-包括：
+\end{lstlisting}
+另外，这个宏包在导入时还有一系列选项，包括：
 \begin{itemize}
-	\item 在邻近浮动体的文本中会放置像~``[Figure 4 about here.]''~之类的
-	说明。要取消这一功能可在调入宏包时使用~\texttt{nomarkers}~选项。
-	\begin{Verbatim}[xleftmargin=1cm]
-	\usepackage[nomarkers]{endfloat}
-	\end{Verbatim}
-	另外，说明中的文本可通过重定义命令~\ci{figureplace}~和~\ci{tableplace}~
-	来更改。例如：
-	\begin{Verbatim}[xleftmargin=1cm]
-	\renewcommand{\figureplace}{% 
+	\item 在邻近浮动体的文本中会放置像~``[Figure 4 about here.]''~之类的说明。
+	要取消这一功能可在调入宏包时使用 \opt{nomarkers} 选项。
+\begin{lstlisting}
+\usepackage[nomarkers]{endfloat}
+\end{lstlisting}
+	另外，说明中的文本可通过重定义命令 \cmdi{figureplace} 和 \cmdi{tableplace} 来更改。例如：
+\begin{lstlisting}
+\renewcommand{\figureplace}{% 
 	\begin{center}% 
 	[\figurename~\thepostfig\ would appear here.]% 
 	\end{center}
-	\end{Verbatim}
-	\item 在图形和表格之前会有一列表。可使用~\texttt{nofiglist}~和
-	~\texttt{notablist}~宏包选项来取消这一功能。
-	\item ~\texttt{fighead}~和~\texttt{tabhead}~宏包选项分别在图形和表格前加上
-	章节标题。
-	\item 图形放置在表格之前，也可用~\texttt{tablefirst}~宏包选项来改变这一顺序。
-	\item 在每一图形和表格后会执行~\cmd{clearpage}~命令，从而使得每一页只有
-	一个浮动体。这可通过修改~\ci{efloatseparator}~来改变。例如，
-	\begin{Verbatim}[xleftmargin=1cm]
-	\renewcommand{\efloatseparator}{\mbox{}}
-	\end{Verbatim}
+\end{lstlisting}
+	会修改 \cmd{figureplace} 文本。
+	
+	\item 在图形和表格之前会有一列表。
+	可使用 \opt{nofiglist} 和 \opt{notablist} 宏包选项来取消这一功能。
+	
+	\item \opt{fighead} 和 \opt{tabhead} 宏包选项分别在图形和表格前加上章节标题。
+	
+	\item 图形放置在表格之前，也可用 \opt{tablefirst} 宏包选项来改变这一顺序。
+	
+	\item 在每一图形和表格后会执行 \cmd{clearpage} 命令，
+	从而使得每一页只有一个浮动体。这可通过修改 \cmdi{efloatseparator} 来改变。例如，
+\begin{lstlisting}
+\renewcommand{\efloatseparator}{\mbox{}}
+\end{lstlisting}
 	会在每一浮动体后面放置一个空的盒子。
 \end{itemize}
 
+\subsection{调整标题行距}\label{ssec:caplinspacing}
+
+在导言区使用
+\begin{lstlisting}
+\linespread{1.6}
+\end{lstlisting}
+或者
+\begin{lstlisting}
+\renewcommand{\baselinestretch}{1.6}
+\end{lstlisting}
+可以实现双倍行距\footnote{
+	这些命令也可以在文档内部使用，以改变某些段落的行间距，不过一般认为这样的设计很糟糕。
+	在文档内部使用时，必须在行距命令之后使用 \cmd{normalsize} 等字号命令才能使新行距生效。}。
+不过这也会使浮动体标题和脚注也变成双倍行距。
+为了使双倍行距只应用于正文，而标题和脚注仍是单倍行距，
+需要使用 \pkgi{setspace} 宏包\footnote{
+	尽管 \pkg{doublespace} 宏包也可以设置行距，
+	但是没有很好地更新到 \LaTeXe{} 下，
+	所以会与许多宏包相互影响。
+	取而代之应使用 \pkg{setspace} 宏包。}：
+\begin{lstlisting}
+\usepackage{setspace}
+\linestretch{1.5}
+\end{lstlisting}
+一个 \texttt{linstretch} 是单倍行距，$1.25$ 倍\texttt{linstretch} 是 $1.5$ 倍行距，
+而 $1.6$ 倍 \texttt{linstretch} 是双倍行距。
+
+
+=============================================
 \section{使用~~caption2~~宏包来定制标题}\label{sec:caption2}
 
 第~\ref{sec:capspace}~节和第~\ref{sec:endfloat}~节分别介绍了如何
