@@ -58,7 +58,7 @@
 	这两种情况都是应当尽量避免的。
 \end{enumerate}
 
-\subsection{创建浮动图形}
+\subsection{创建浮动图形}\label{ssec:creatfloatfig}
 可以通过把命令置于一个 \envi{figure} 环境中来生成浮动图形。
 在图形环境中的所有内容都会被保持在一起，
 浮动到合适的位置以保证得到最好的分页结果。
@@ -883,22 +883,115 @@ Fig. 15: This is the Caption
 而 $1.6$ 倍 \texttt{linstretch} 是双倍行距。
 
 
-=============================================
-\section{使用~~caption2~~宏包来定制标题}\label{sec:caption2}
+\section{使用 caption 宏包来定制标题}\label{sec:caption-pkg}
 
-第~\ref{sec:capspace}~节和第~\ref{sec:endfloat}~节分别介绍了如何
-定制浮动图形的标题之标记和标题上下方的空白。对于标题的其它属性的
-自由控制，则利用~\textsf{caption2}~宏包\realfootnote{由于最早的
-	~\pai{caption}~宏包有很多副作用（比如要求在其它宏包后被调入后再
-	才能被调入），所以被完全重新写过，命名为~\textsf{caption2}。
-	尽管从技术角度来说~\textsf{caption2}~仍是~beta~版，但在使用中却
-	也是非常稳定有效的。}来完成。
+第~\ref{ssec:captionlabel}~节和第~\ref{ssec:capspace}~节分别介绍了如何定制浮动图形的标题的标签和标题上下方的垂直间距。
+对于标题其它属性的控制，则可以用 \pkgi{caption} 宏包\footnote{%
+	版本$3.0+$的 \pkg{caption} 宏包取代了之前版本的 \pkg{caption} 以及过时的 \pkg{caption2} 宏包。}来完成。
+本节简要介绍了 \pkg{caption} 宏包，更多细节请参考宏包文档 \cite{caption-doc}。
 
-\textsf{caption2}~宏包可以和很多与浮动体有关的宏包一起使用。
-它正式声称支持~\textsf{float, longtable, subfigure}，不过实际上
-也和~\textsf{floatfig, rotating, supertabular, wrapfig}~等在一
-起工作的很好。
+\pkg{caption} 宏包可以用于多种类型的浮动体。
+它官方支持\pkg{float}、\pkg{listings}、\pkg{longtable}、\pkg{rotating}、\pkg{sidecap}、\pkg{supertabular}、\pkg{subfig} 等宏包，
+同时也可以与 \pkg{floatfig}、\pkg{subfloat}、\pkg{wrapfig} 等宏包一起使用\footnote{
+	这份名单有些过时了，例如 \pkg{floatfig} 是一个 \LaTeX2.09 宏包，
+	在 \LaTeXe{} 中已扩展为 \pkg{floatflt}。
+	关于最新3.3版本的兼容性，其宏包文档\cite{caption-doc}中的叙述为：
+	\begin{quotation}
+		The caption package was adapted to the following packages which deals with captions, too:
+		
+		\begin{quote}
+			\pkg{float}, \pkg{floatflt}, \pkg{fltpage}, \pkg{hyperref}, \pkg{hypcap}, \pkg{listings}, \pkg{longtable}, \pkg{picinpar}, \pkg{picins}, \pkg{rotating}, \pkg{setspace}, \pkg{sidecap}, \pkg{subfigure}, \pkg{supertabular}, \pkg{threeparttable}, \pkg{wrapfig}, and \pkg{xtab}
+		\end{quote}
+		
+		Furthermore the \pkg{floatrow} package, the \pkg{subcaption} package (which is part of the \pkg{caption} package bundle), and the \pkg{subfig} package support the \pkg{caption} package and use its \cmd{captionsetup} interface.
+	\end{quotation}
+	——译注}。
 
+尽管本文档中没有介绍，
+\marginpar{\pkg{ccaption} 宏包}
+不过 \pkgi{ccaption} 宏包（注意有两个字母 c）也提供了标题定制的命令，参见\cite{ccaption-doc}。
+
+\subsection{Caption 宏包概述}\label{ssec:caption-overview}
+
+关于 \pkg{caption} 宏包有几个方面：
+\begin{itemize}
+	\item 新版本的 \cmd{caption} 命令可以生成标题，
+	这将在第~\ref{ssub:caption-cmd} 节介绍并在表~\ref{tab:caption-cmd}　列出。
+	
+	\item 第~\ref{ssub:caption-custom} 节介绍了两种如何定制标题选项的方法。
+	其中选项主要有四种类型：
+	\begin{description}
+		\item[字体选项] 用于定制标题中的字体\footnote{%
+			尽管 \pkg{caption} 宏包提供了定制标题字体的命令，
+			不过使用的字体不一定包含了所有的字体因子组合。
+			例如，假如用户指定罗马字族、小型大写字样和粗体系列。
+			如果当前字体不支持这一组合，
+			那么 \LaTeX{} 可能会用罗马字族、直立字样和粗体系列的字体来代替。}。
+		这些选项在表~\ref{tab:caption-fontopt} 和表~\ref{tab:caption-fontval} 列出。
+		相关例子在第~\ref{sssec:caption-fontopt} 节。
+		
+		\item[标题间距选项] 控制了标题的垂直间距。
+		相关选项在表~\ref{tab:caption-spaceopt} 中列出。
+		相关例子在第~\ref{sssec:caption-spaceopt} 节。
+		
+		\item[标题标签选项] 用于定制标题的标签和分隔符。
+		相关选项在表~\ref{tab:caption-labelopt} 中列出。
+		相关例子在第~\ref{sssec:caption-labelopt} 节。
+		
+		\item[标题格式选项] 用于定制标题的格式。
+		相关选项在表~\ref{tab:caption-formatopt} 中列出。
+		相关例子在第~\ref{sssec:caption-formatopt} 节。
+	\end{description}
+	为了方便查询，关于 \pkg{caption} 宏包选项的表格集中列于 \pageref{tab:caption-fontopt}--\pageref{tab:caption-formatopt} 页。
+	相关例子集中列于第~\ref{ssec:caption-example} 节。
+	
+	\item 用户可以定义一组标题选项，称之为\emph{标题样式}。
+	之后可以用 \opt{style=} 选项指定所有的选项。
+	参见第~\ref{sssec:caption-style} 节。
+	
+	\item 除了使用内置的选项值外，用户还可以自己定义选项值。
+	参见第~\ref{sssec:caption-addoptval} 节。
+\end{itemize}
+
+\subsection{标题命令} \label{ssec:caption-cmd}
+
+第~\ref{ssec:createfloatfig} 节和第~\ref{sec:customfigure} 节分别介绍了 \cmd{caption} 命令以及相关的定制方法。
+而 \pkg{caption} 宏包提供了更多的定制化选项。
+
+\pkg{caption} 宏包稍微修改了 \cmd{caption} 命令，
+此外还引入了一些新的变形，见表~\ref{tab:caption-cmd}。
+其中的要点包括：
+\begin{itemize}
+	\item \pkg{caption} 宏包修改了 \cmd{caption} 命令，如果可选项指定为空：
+\begin{lstlisting}
+\caption[]{caption text}
+\end{lstlisting}
+	那么图列表/表格列表中不会有该标题的条目。
+	
+	\item 新的 \cmd{caption*} 命令会展示标题内容，
+	但是没有标签编号，也不会出现在列表中。
+	
+	\item 新的 \cmd{captionof} 命令允许一种特定类型的标题在任何地方使用，
+	包括 \env{figure} 环境、\env{table} 环境以及文档中的其它地方。
+	例如，
+	\begin{lstlisting}
+	\begin{figure}
+	....
+	\captionof{table}[List of Tables Text]{Table Caption}
+	\end{figure}
+	\end{lstlisting}
+	会在 \env{figure} 环境中生成表格标题。
+	这在以下一些情况中会很有用：
+	\begin{enumerate}
+		\item 将表格和图形并列排放（见第~\ref{sec:figuretable} 节）。
+		\item 创建边注图形（见第~\ref{sec:marginfigure} 节）。
+		\item 创建非浮动图形（见第~\ref{sec:nonfloat} 节）。
+	\end{enumerate}
+	需要注意的是，\cmd{captionof} 命令应该总是在某个环境内部使用（例如 \env{minipage}），
+	这样可以避免在标题和浮动体内容之间分页。
+\end{itemize}
+
+=======================================
 \noindent{\large{\raisebox{1ex}{\CJKfamily{hei}用法：}}\hspace{1cm}
 	\color{morelight}{\shadowbox{\textcolor{blue}{\texttt{%
 					\bs usepackage[\CJKfamily{kai}选项]\{caption2\}}}}}}
