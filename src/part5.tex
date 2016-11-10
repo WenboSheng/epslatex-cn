@@ -276,241 +276,356 @@ produces Figure 62, which has vertically-centered graphics.
 这是因为图~\ref{fig:subfig} 中的子图只包含图像，
 而图~\ref{fig:mini:subfig} 中的子图包含了宽度为 $0.5\text{\cmd{linewidth}}$ 的小页环境。
 
-========================================
-\section{Separate Minipages for Captions}
 
+\section{标题中分开的小页环境}
 
-在图~\ref{fig:side:a}~和~\ref{fig:side:b}中，并列的小页环境使用了
-~\texttt{[t]}~选项，使得两幅图形的基线对齐。这对于非旋转的图形
-没有任何问题，而且使得两标题的顶部对齐。不过，如果图形的底部
-不对齐的话（如其中一图形被旋转），就会发生问题。例如：
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\centering 
-\begin{minipage}[t]{.33\textwidth} 
-\centering 
-\includegraphics[width=2cm]{graphic.eps} 
-\caption{Box with a Long Caption} 
-\end{minipage}% 
-\begin{minipage}[t]{.33\textwidth} 
-\centering 
-\includegraphics[width=2cm,angle=-30]{graphic.eps} 
-\caption{Rotated Box} 
-\end{minipage}% 
+第~\ref{ssec:sidefigure} 节描述了如何通过在小页环境中同时使用插图命令和 \cmd{caption} 命令来构建并列图形。
+本节将介绍如何通过在不同的小页环境中使用插图命令和 \cmd{caption} 命令来获得更好的对齐效果。
+
+在图~\ref{fig:side:a}~和~\ref{fig:side:b}中，
+并列的小页环境使用了 \opt{[t]}~选项，进而使得两幅图形的基线对齐。
+这对于非旋转的图形没有任何问题，而且使得两标题的顶部对齐。
+不过，如果图形的底部不对齐的话（如其中一图形被旋转），就会发生问题。例如：
+\begin{lstlisting}
+\begin{figure}
+	\centering
+	%%----start of first figure----
+	\begin{minipage}[t]{.4\linewidth}
+		\centering
+		\includegraphics[width=2cm]{graphic}
+		\caption{Box with a Long Caption}
+	\end{minipage}%
+	\hspace{1cm}%
+	%%----start of second figure----
+	\begin{minipage}[t]{.4\linewidth}
+		\centering
+		\includegraphics[width=2cm,angle=-30]{graphic}
+		\caption{Rotated Box}
+	\end{minipage}%
 \end{figure}
-\end{Verbatim}
-生成图~\ref{fig:mininonrot}~和~\ref{fig:minirot}，我们可以看到这里
-两幅图形的标题并不对齐。而若只使用小页的~\texttt{[b]}~选项，会使得标题
-的最后一行对齐，并不能解决问题。
-
-\begin{figure} 
-	\centering 
-	\begin{minipage}[t]{.33\textwidth} 
-		\centering 
-		\includegraphics[width=2cm]{graphic} 
-		\caption{Box with a Long Caption}\label{fig:mininonrot} 
-	\end{minipage}%   
-	\begin{minipage}[t]{.33\textwidth} 
-		\centering 
-		\includegraphics[width=2cm,angle=-30]{graphic} 
-		\caption{Rotated Box}\label{fig:minirot} 
-	\end{minipage}% 
-\end{figure}
-
-一种解决办法是在小页环境中把图形和标题分开放到两行中：第一行放置图形，
-第二行放置标题。例如：
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\centering 
-\begin{minipage}[b]{.33\textwidth} 
-\centering 
-\includegraphics[width=2cm]{graphic.eps} 
-\end{minipage}% 
-\begin{minipage}[b]{.33\textwidth} 
-\centering 
-\includegraphics[width=2cm,angle=-30]{graphic.eps} 
-\end{minipage}\\[-10pt] 
-\begin{minipage}[t]{.33\textwidth} 
-\caption{Box with a Long Caption} 
-\end{minipage}% 
-\begin{minipage}[t]{.33\textwidth} 
-\caption{Rotated Box} 
-\end{minipage}% 
-\end{figure}
-\end{Verbatim}
-生成的图~\ref{fig:mininonrot:a}~和~\ref{fig:minirot:a}~中，图形的基
-线和标题的第一行分别对齐。
+\end{lstlisting}
+生成图~\ref{fig:mininonrot}~和~\ref{fig:minirot}，
+我们可以看到这里两幅图形的标题并不对齐。
+而若只使用小页的 \opt{[b]} 选项，会使得标题的最后一行对齐，并不能解决问题。
 
 \begin{figure}
 	\centering
-	\begin{minipage}[b]{.33\textwidth}
+	%%----start of first figure----
+	\begin{minipage}[t]{.4\linewidth}
+		\centering
+		\includegraphics[width=2cm]{graphic}
+		\caption{Box with a Long Caption}\label{fig:mininonrot} 
+	\end{minipage}%
+	\hspace{1cm}%
+	%%----start of second figure----
+	\begin{minipage}[t]{.4\linewidth}
+		\centering
+		\includegraphics[width=2cm,angle=-30]{graphic}
+		\caption{Rotated Box}\label{fig:minirot} 
+	\end{minipage}%
+\end{figure}
+
+一种解决办法是在创建两行小页环境，并把图形和标题分开放置：
+第一行放置图形，第二行放置标题。例如：
+\begin{lstlisting}
+\begin{figure}
+	\centering
+	%%----start of first figure graphics----
+	\begin{minipage}[b]{.4\linewidth}
 		\centering
 		\includegraphics[width=2cm]{graphic}
 	\end{minipage}%
-	\begin{minipage}[b]{.33\textwidth}\label{fig:mininonrot:a}
+	\hspace{1cm}%
+	%%----start of second figure graphics----
+	\begin{minipage}[b]{.4\linewidth}
 		\centering
 		\includegraphics[width=2cm,angle=-30]{graphic}
 	\end{minipage}\\[-10pt]
-	\begin{minipage}[t]{.33\textwidth}
+	%%----start of first figure caption----
+	\begin{minipage}[t]{.4\linewidth}
 		\caption{Box with a Long Caption}
 	\end{minipage}%
-	\begin{minipage}[t]{.33\textwidth}
+	\hspace{1cm}%
+	%%----start of second figure caption----
+	\begin{minipage}[t]{.4\linewidth}
+		\caption{Rotated Box}
+	\end{minipage}%
+\end{figure}
+\end{lstlisting}
+生成的图~\ref{fig:mininonrot:a}~和~\ref{fig:minirot:a}~中，
+图形的基线和标题的第一行分别对齐。
+
+\begin{figure}
+	\centering
+	%%----start of first figure graphics----
+	\begin{minipage}[b]{.4\linewidth}
+		\centering
+		\includegraphics[width=2cm]{graphic}
+	\end{minipage}%
+	\hspace{1cm}%
+	%%----start of second figure graphics----
+	\begin{minipage}[b]{.4\linewidth}
+		\centering
+		\includegraphics[width=2cm,angle=-30]{graphic}
+	\end{minipage}\\[-10pt]
+	%%----start of first figure caption----
+	\begin{minipage}[t]{.4\linewidth}
+		\caption{Box with a Long Caption}\label{fig:mininonrot:a}
+	\end{minipage}%
+	\hspace{1cm}%
+	%%----start of second figure caption----
+	\begin{minipage}[t]{.4\linewidth}
 		\caption{Rotated Box}\label{fig:minirot:a}
 	\end{minipage}%
 \end{figure}
 
-\noindent在这个例子中，需要注意：
+在这个例子中，需要注意以下几点：
 \begin{itemize}
-	\item 在最后一幅图后面用~\cmd{\bs}~来断行，~\cmd{\bs}~的参数项
-	~\texttt{[-10pt]}~使得图形与标题之间的距离比当前行距
-	减少~\texttt{10pt}。这样做是让图形和标题更接近些，用户也可
-	自己选用合适的值。
-	\item 包含图形的小页使用~\texttt{[b]}~选项，使得它们的参考点为
-	其最后一行的基线。
-	\item 包含标题小页使用~\texttt{[t]}~选项，使得它们的参考点为
-	其第一行的基线。
-	\item 任何一个~\cmd{label}~命令都必须和它相应的~\cmd{caption}~
-	命令在同一个小页中。
+	\item 在最后一幅图后面用 \cmd{\cmd{}} 来断行，
+	\cmd{\cmd{}}的参数项 \opt{[-10pt]} 使得图形与标题之间的距离比当前行距减少10\pt 。
+	这样做是让图形和标题更接近些，用户也可自己选用合适的值。
+	\item 包含图形的小页使用 \opt{[b]} 选项，使得它们的参考点为其最后一行的基线。
+	\item 包含标题小页使用 \opt{[t]} 选项，使得它们的参考点为其第一行的基线，这样使得标题的顶行对齐。
+	\item 任何一个 \cmd{label} 命令都必须和它相应的 \cmd{caption} 命令在同一个小页中。
 \end{itemize}
 
 
 \section{图形与表格的平行排列}\label{sec:figuretable}
 
-在第~\ref{chap:sidebyside}~章中，通过在一个~\texttt{figure}~环境中使用多个
-~\cmd{caption}~命令来得到并列的多个图形。同样地，在一个~\texttt{table}~
-环境中使用多个~\cmd{caption}~命令可将多个表格平行排列。
-若想使表格和图形平行排列在一起，可使用第~\ref{chap:nonfloat}~中定义
-的命令~\cmd{figcaption}~和~\cmd{tabcaption}。
-例如下面的命令：
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure}[htb] 
-\begin{minipage}[b]{0.5\textwidth} 
-\centering 
-\includegraphics[width=0.8\textwidth]{graphic.eps} 
-\caption{This is a Figure by a Table} 
-\label{fig:by:table} 
-\end{minipage}% 
-\begin{minipage}[b]{0.5\textwidth} 
-\centering
-\begin{tabular}{|c|c|} \hline 
-Day & Data \\ \hline\hline 
-Monday    & 14.6 \\ 
-Tuesday   & 14.3 \\ 
-Wednesday & 14.2 \\ 
-Thursday  & 14.5 \\ 
-Friday    & 14.9 \\ \hline 
-\end{tabular} 
-\tabcaption{This is a Table by a Figure} 
-\label{table:by:fig} 
-\end{minipage} 
-\end{figure}
-\end{Verbatim}
-用一个~\texttt{figure}~环境生成了并排放置的图~\ref{fig:by:table}~和
-表~\ref{table:by:fig}。
+在第~\ref{sec:sidebyside} 节中，
+通过在一个 \env{figure} 环境中使用多个 \cmd{caption} 命令来得到并列的多个图形。
+同样地，在一个 \env{table} 环境中使用多个 \cmd{caption} 命令可以得到并列的表格。
 
+第~\ref{sec:nonfloat} 节介绍的 \cmd{captionof} 命令可以将表格放在图形旁边。
+例如下面的命令：
+\begin{lstlisting}
 \begin{figure}[htb]
-	\begin{minipage}[b]{0.5\textwidth}
+	\begin{minipage}[b]{0.5\linewidth}
 		\centering
-		\includegraphics[width=0.8\textwidth]{graphic} 
-		\caption{This is a Figure by a Table} 
-		\label{fig:by:table} 
-	\end{minipage}% 
-	\begin{minipage}[b]{0.5\textwidth} 
+		\includegraphics[width=0.8\linewidth]{graphic}
+		\caption{This is a Figure by a Table}
+		\label{fig:by:table}
+	\end{minipage}%
+	\begin{minipage}[b]{0.5\linewidth}
 		\centering
 		\begin{tabular}{|c|c|} \hline
 			Day & Data \\ \hline\hline
-			Monday    & 14.6 \\ 
-			Tuesday   & 14.3 \\
-			Wednesday & 14.2 \\ 
-			Thursday  & 14.5 \\ 
-			Friday    & 14.9 \\ \hline
+			Monday & 14.6 \\
+			Tuesday & 14.3 \\
+			Wednesday & 14.2 \\
+			Thursday & 14.5 \\
+			Friday & 14.9 \\ \hline
 		\end{tabular}
-		\tabcaption{This is a Table by a Figure} 
-		\label{table:by:fig} 
-	\end{minipage} 
+		\captionof{table}{This is a Table by a Figure}
+		\label{table:by:fig}
+	\end{minipage}
+\end{figure}
+\end{lstlisting}
+使用一个 \env{figure} 环境创建图~\ref{fig:by:table} 和 表~\ref{tab:by:fig}。
+
+\begin{figure}[htb]
+	\begin{minipage}[b]{0.5\linewidth}
+		\centering
+		\includegraphics[width=0.8\linewidth]{graphic}
+		\caption{This is a Figure by a Table}
+		\label{fig:by:table}
+	\end{minipage}%
+	\begin{minipage}[b]{0.5\linewidth}
+		\centering
+		\begin{tabular}{|c|c|} \hline
+			Day & Data \\ \hline\hline
+			Monday & 14.6 \\
+			Tuesday & 14.3 \\
+			Wednesday & 14.2 \\
+			Thursday & 14.5 \\
+			Friday & 14.9 \\ \hline
+		\end{tabular}
+		\captionof{table}{This is a Table by a Figure}
+		\label{table:by:fig}
+	\end{minipage}
 \end{figure}
 
-因为~\LaTeX{}~允许图形的浮动不必考虑其前后表格的顺序，所以在
-~\texttt{figure}~环境中使用命令~\cmd{tabcaption}~可能会将表格
-放置到尚未处理的浮动图形前面。同理，在~\texttt{table}~环境中
-使用命令~\cmd{figcaption}~可能会将图形放置到尚未处理的浮动图形前面。
-这种情况下，可以在图形环境前使用~\cmd{FloatBarrier}~命令来清除
-其前面尚未处理的浮动图形。
+因为 \LaTeX{} 允许图形的浮动不必考虑其前后表格的顺序，
+所以在 \env{figure} 环境中使用
+\begin{lstlisting}
+\captionof{table}{...}
+\end{lstlisting}
+可能会将该表格放在未处理的表格之前。
+类似地，在 \env{table} 环境中使用
+\begin{lstlisting}
+\captionof{figure}{...}
+\end{lstlisting}
+可能会将该图形放在未处理的图形之前。
+如果不希望这样，
+可以在 \env{figure} 环境之前使用 \cmd{FloatBarrier} 或者 \cmd{clearpage} 命令清除未处理的浮动体
+（参见第~\ref{ssec:unprocessfig} 节）。
 
-\section{Placing a Table Beside a Figure}
 
-\section{堆叠图形}
+\section{堆叠的图形和子图}
 
-在第~\ref{chap:sidebyside}~章中，通过将几个盒子并排放置在
-一行中来得到并列图形。堆叠图形（stacked graphics）也可用同样的
-方法来生成。例如：
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\centering 
-\begin{minipage}[b]{0.3\textwidth} 
-\centering 
-\includegraphics[width=1in]{graphic.eps} 
-\caption{Caption 1}
-\end{minipage}% 
-\hspace{0.04\textwidth}% 
-\begin{minipage}[b]{0.3\textwidth} 
-\centering 
-\includegraphics[width=1in]{graphic.eps} 
-\caption{Caption 2} 
-\end{minipage}\\[20pt] 
-\begin{minipage}[b]{0.3\textwidth} 
-\centering 
-\includegraphics[width=1in]{graphic.eps} 
-\caption{Caption 3} 
-\end{minipage}% 
-\hspace{0.04\linewidth}% 
-\begin{minipage}[b]{0.3\textwidth} 
-\centering 
-\includegraphics[width=1in]{graphic.eps} 
-\caption{Caption 4} 
-\end{minipage}% 
-\hspace{0.04\linewidth}% 
-\begin{minipage}[b]{0.3\textwidth} 
-\centering 
-\includegraphics[width=1in]{graphic.eps} 
-\caption{Caption 5} 
-\end{minipage} 
+第~\ref{sec:sidebyside}~节介绍了一系列方法创建并列图形。
+这些方法的原理都是将对象（图形、小页、子浮动体等）依次排列在一条直线上。
+当使用 \cmd{\cmd{}} 显式断行时，相同的方法也可以生成堆叠的图形。
+此外还可以通过 \cmd{\cmd{}} 命令的可选参数（例如 \cmd{\cmd{}}\opt{[20pt]}）指定竖直间距。
+
+\subsection{堆叠的图形}
+
+第~\ref{sec:sidebyside}~节介绍了如何创建并列图形。
+本节的内容表明，添加断行可以生成多行图形。
+例如下列代码
+\begin{lstlisting}
+\begin{figure}[htbp]
+	\centering
+	%%----start of first figure----
+	\begin{minipage}[t]{0.25\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{graphic}
+		\caption{First Stacked Figure}
+		\label{fig:stacked:first}
+	\end{minipage}%
+	\hspace{1cm}%
+	%%----start of second figure----
+	\begin{minipage}[t]{0.25\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{graphic}
+		\caption{Second Stacked Figure}
+		\label{fig:stacked:second}
+	\end{minipage}\\[20pt]
+	%%----start of third figure----
+	\begin{minipage}[t]{0.25\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{graphic}
+		\caption{Third Stacked Figure}
+		\label{fig:stacked:third}
+	\end{minipage}%
+	\hspace{1cm}%
+	%%----start of fourth figure----
+	\begin{minipage}[t]{0.25\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{graphic}
+		\caption{Fourth Stacked Figure}
+		\label{fig:stacked:fourth}
+	\end{minipage}%
+	\hspace{1cm}%
+	%%----start of fifth figure----
+	\begin{minipage}[t]{0.25\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{graphic}
+		\caption{Fifth Stacked Figure}
+		\label{fig:stacked:fifth}
+	\end{minipage}%
 \end{figure}
-\end{Verbatim}
-得到图~\ref{fig:stacked:a}-\ref{fig:stacked:e}。其中在~``Caption2''~小页后
-的~\texttt{\bs\bs[20pt]}~命令得到一增加了~20pt~的行距。
+\end{lstlisting}
+生成一组图~\ref{fig:stacked:first}--\ref{fig:stacked:fifth}。
 
-\begin{figure} 
-	\centering 
-	\begin{minipage}[b]{0.3\textwidth} 
-		\centering 
-		\includegraphics[width=1in]{graphic} 
-		\caption{Caption 1}\label{fig:stacked:a}
-	\end{minipage}% 
-	\hspace{0.04\textwidth}% 
-	\begin{minipage}[b]{0.3\textwidth} 
-		\centering 
-		\includegraphics[width=1in]{graphic} 
-		\caption{Caption 2} \label{fig:stacked:b}
-	\end{minipage}\\[20pt] 
-	\begin{minipage}[b]{0.3\textwidth} 
-		\centering 
-		\includegraphics[width=1in]{graphic} 
-		\caption{Caption 3} \label{fig:stacked:c}
-	\end{minipage}% 
-	\hspace{0.04\linewidth}% 
-	\begin{minipage}[b]{0.3\textwidth} 
-		\centering 
-		\includegraphics[width=1in]{graphic} 
-		\caption{Caption 4} \label{fig:stacked:d}
-	\end{minipage}% 
-	\hspace{0.04\linewidth}% 
-	\begin{minipage}[b]{0.3\textwidth} 
-		\centering 
-		\includegraphics[width=1in]{graphic} 
-		\caption{Caption 5} \label{fig:stacked:e}
-	\end{minipage} 
+\begin{figure}[htbp]
+	\centering
+	%%----start of first figure----
+	\begin{minipage}[t]{0.25\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{graphic}
+		\caption{First Stacked Figure}
+		\label{fig:stacked:first}
+	\end{minipage}%
+	\hspace{1cm}%
+	%%----start of second figure----
+	\begin{minipage}[t]{0.25\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{graphic}
+		\caption{Second Stacked Figure}
+		\label{fig:stacked:second}
+	\end{minipage}\\[20pt]
+	%%----start of third figure----
+	\begin{minipage}[t]{0.25\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{graphic}
+		\caption{Third Stacked Figure}
+		\label{fig:stacked:third}
+	\end{minipage}%
+	\hspace{1cm}%
+	%%----start of fourth figure----
+	\begin{minipage}[t]{0.25\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{graphic}
+		\caption{Fourth Stacked Figure}
+		\label{fig:stacked:fourth}
+	\end{minipage}%
+	\hspace{1cm}%
+	%%----start of fifth figure----
+	\begin{minipage}[t]{0.25\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{graphic}
+		\caption{Fifth Stacked Figure}
+		\label{fig:stacked:fifth}
+	\end{minipage}%
 \end{figure}
+
+\subsection{堆叠的子图}
+
+第~\ref{sec:sidesubfigure}~节介绍了如何创建并列的子图。
+本节的内容表明，添加断行可以生成多行子图。
+例如下列代码
+\begin{lstlisting}
+\begin{figure}
+	\centering
+	%%----start of first subfigure----
+	\subfloat[First Subfigure]{
+		\label{fig:stacksub:a} %% label for first subfigure
+		\includegraphics[width=0.25\linewidth]{graphic}}
+	\hspace{0.1\linewidth}
+	%%----start of second subfigure----
+	\subfloat[Second Subfigure]{
+		\label{fig:stacksub:b} %% label for second subfigure
+		\includegraphics[width=0.25\linewidth]{graphic}}\\[20pt]
+	%%----start of third subfigure----
+	\subfloat[Third Subfigure]{
+		\label{fig:stacksub:c} %% label for third subfigure
+		\includegraphics[width=0.25\linewidth]{graphic}}
+	\hspace{0.1\linewidth}
+	%%----start of fourth subfigure----
+	\subfloat[Fourth Subfigure]{
+		\label{fig:stacksub:d} %% label for fourth subfigure
+		\includegraphics[width=0.25\linewidth]{graphic}}
+	\hspace{0.1\linewidth}
+	%%----start of fifth subfigure----
+	\subfloat[Fifth Subfigure]{
+		\label{fig:stacksub:e} %% label for fifth subfigure
+		\includegraphics[width=0.25\linewidth]{graphic}}
+	\caption{Five Subfigures}
+	\label{fig:stacksub} %% label for entire figure
+\end{figure}
+\end{lstlisting}
+生成图~\ref{fig:stacksub}。
+
+\begin{figure}
+	\centering
+	%%----start of first subfigure----
+	\subfloat[First Subfigure]{
+		\label{fig:stacksub:a} %% label for first subfigure
+		\includegraphics[width=0.25\linewidth]{graphic}}
+	\hspace{0.1\linewidth}
+	%%----start of second subfigure----
+	\subfloat[Second Subfigure]{
+		\label{fig:stacksub:b} %% label for second subfigure
+		\includegraphics[width=0.25\linewidth]{graphic}}\\[20pt]
+	%%----start of third subfigure----
+	\subfloat[Third Subfigure]{
+		\label{fig:stacksub:c} %% label for third subfigure
+		\includegraphics[width=0.25\linewidth]{graphic}}
+	\hspace{0.1\linewidth}
+	%%----start of fourth subfigure----
+	\subfloat[Fourth Subfigure]{
+		\label{fig:stacksub:d} %% label for fourth subfigure
+		\includegraphics[width=0.25\linewidth]{graphic}}
+	\hspace{0.1\linewidth}
+	%%----start of fifth subfigure----
+	\subfloat[Fifth Subfigure]{
+		\label{fig:stacksub:e} %% label for fifth subfigure
+		\includegraphics[width=0.25\linewidth]{graphic}}
+	\caption{Five Subfigures}
+	\label{fig:stacksub} %% label for entire figure
+\end{figure}
+
 
 \section{The subfig package}
 
