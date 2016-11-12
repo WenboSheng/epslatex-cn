@@ -2034,109 +2034,115 @@ This is the text after the figure.
 	~\texttt{[!ht]}~等，详见第~ref{sec:figplacement}~节。
 \end{itemize}
 
-\section{奇偶页中的图形}
+\section{奇偶页中的图形}\label{sec:evenoddpage}
 
-图形环境的浮动放置算法不能控制图形出现在奇数页还是偶数页。要达到
-控制浮动图形的奇数或偶数页放置，必须使用~\textsf{afterpage}~宏包
-的~\cmd{afterpage}~命令和~\textsf{ifthen}~宏包的~\cmd{ifthenelse}~
-命令。
+图形环境的浮动放置算法不能控制图形出现在奇数页还是偶数页。
+要达到控制浮动图形的奇数或偶数页放置，
+必须使用 \pkgi{afterpage} 宏包的 \cmdi{afterpage} 命令和 \pkgi{ifthen} 宏包的 \cmdi{ifthenelse} 命令。
 
-将图形置于~\texttt{figure}~环境，可能会使得在偶数页中声明的图形被浮动到奇数页
-中。反之，使用第~\ref{chap:nonfloat}~章中定义的~\cmd{figcaption}~命令
-则可在不用~\texttt{figure}~环境的情况下生成图形。
-\begin{Verbatim}[xleftmargin=1cm]
-\makeatletter 
-\newcommand\figcaption{\def\@captype{figure}\caption} 
-\makeatother
-\end{Verbatim}
+创建图形的一般方法是将图像放置于 \env{figure} 环境中。
+然而，由于 \env{figure} 环境是浮动的，
+因此不能保证要求放置在偶数页的图形不会浮动到奇数页（或者要求在奇数页的图形浮动到偶数页）。
 
-使用~\cmd{ifthenelse}~命令可用来将出现在奇数页上的图形放到下一偶数页
-上。这需要重复一次插图命令，一次是对应于下一页为奇数页的情况，另一次
-则对应于下一页为偶数页的情况。为简便起见，首先定义一个~\ci{leftfig}~命令：
-\begin{Verbatim}[xleftmargin=1cm]
-\newcommand\leftfig{% 
-\vspace*{\fill}% 
-\centering 
-\includegraphics{graphic.eps} 
-\figcaption{This is on the left (even) page.} 
-\vspace*{\fill}\newpage}
-\end{Verbatim}
-接下来就可以用这个新定义的命令和~\cmd{afterpage},\cmd{ifthenelse}~命令一起
-来生成一幅只出现在偶数页上的图形。
-\begin{Verbatim}[xleftmargin=1cm]
-\afterpage{\clearpage% 
-\ifthenelse{\isodd{\value{page}}}% 
-{\afterpage{\leftfig}}% 
-{\leftfig}}
-\end{Verbatim}
-
-\noindent{\CJKfamily{hei}几点说明：}
-\begin{itemize}
-	\item 欲使图形只出现在奇数页上，掉换一下~\cmd{ifthenelse}~的参数顺序即可。
-	\begin{Verbatim}
-	\afterpage{\clearpage% 
-	\ifthenelse{\isodd{\value{page}}}% 
-	{\leftfig}}%
-	{\afterpage{\leftfig}}
-	\end{Verbatim}
-	\item 使用~\cmd{value\{page\}}~而不是~\cmd{pageref}~的好处是它总是正确的。
-	相反，~\cmd{pageref}~只有在~\LaTeX{}~的交叉引用收敛时才正确。
-	\item 当图形较大时，可能会出现在图形中间（图形与标题之间）分页的情况。
-	这时可将它放到一个小页环境中以保持它的完整性。
-	\begin{Verbatim}
-	\newcommand\leftfig{% 
-	\vspace*{\fill}% 
-	\begin{minipage}{\textwidth} 
-	\centering 
-	\includegraphics{graphic.eps} 
-	\figcaption{This is on the left (even) page.} 
-	\end{minipage} 
+不过，第~\ref{sec:nonfloat} 节介绍的 \cmd{captionof} 命令可以在不使用 \env{figure} 环境的条件下创建一个图形。
+然后用 \cmd{ifthenelse} 命令将出现在奇数页上的图形放到下一偶数页上。
+这需要重复使用两次插图命令，
+分别对应下一页是奇数和下一页是偶数的情形。
+为了简化代码，定义 \cmd{leftfig} 命令如下：
+\begin{lstlisting}
+\newcommand\leftfig{%
+	\vspace*{\fill}%
+	\centering
+	\includegraphics{graphic}
+	\captionof{figure}{This is on the left (even) page.}
 	\vspace*{\fill}\newpage}
-	\end{Verbatim}
-	\item \cmd{afterpage}~命令在极少数情况下会造成一个~``lost float''~的错误，
-	这时将~\cmd{clearpage}~从~\cmd{ifthenelse}~前去掉可能会有所帮助。
-	\begin{Verbatim}[xleftmargin=1cm]
-	\afterpage{\ifthenelse{\isodd{\value{page}}}% 
+\end{lstlisting}
+
+接下来使用这个新定义的命令以及 \cmd{afterpage}、\cmd{ifthenelse} 就可以生成一幅只出现左页上的图形：
+\begin{lstlisting}
+\afterpage{\clearpage% 
+	\ifthenelse{\isodd{\value{page}}}% 
 	{\afterpage{\leftfig}}% 
 	{\leftfig}}
-	\end{Verbatim}
-	\item 在上面的例子中，图形是占据完整的一偶数页的。要将其置于偶数页的顶部，
-	修改或去掉~\cmd{vspace*\{\bs fill\}}~和~\cmd{newpage}~命令。
-	\begin{Verbatim}
-	\newcommand\leftfig{% 
-	\centering 
-	\includegraphics{graphic.eps} 
-	\figcaption{This is at the top of the left (even) page.} 
+\end{lstlisting}
+
+关于奇偶页插图的几点说明：
+\begin{itemize}
+	\item 欲使图形只出现在右页（奇数页）上，掉换一下 \cmd{ifthenelse} 的参数顺序即可。
+\begin{lstlisting}
+\afterpage{\clearpage% 
+	\ifthenelse{\isodd{\value{page}}}% 
+	{\leftfig}}%
+{\afterpage{\leftfig}}
+\end{lstlisting}
+	\item 由于这些图形是非浮动的，可以用 \cmdonearg{value}{page} 命令确定当前页码。
+	注意，\cmdonearg{value}{page} 对于浮动图形用处不大，
+	因为它指的是图形处理时的页码，不是图形放置的页码。
+	因此，使用 \cmdonearg{value}{page} 比 \cmd{pageref} 更好，
+	因为 \cmd{pageref} 只有在 \LaTeX{} 的交叉引用收敛时才正确。
+	
+	\item 当图形较大时，可能会出现在图形中间（例如图形与标题之间）分页的情况。
+	这时可将它放到一个小页环境中以保持它的完整性。
+\begin{lstlisting}
+\newcommand\leftfig{%
+	\vspace*{\fill}%
+	\begin{minipage}{\linewidth}
+		\centering
+		\includegraphics{graphic}
+		\captionof{figure}{This is on the left (even) page.}
+	\end{minipage}
+	\vspace*{\fill}\newpage}
+\end{lstlisting}
+
+	\item \cmd{afterpage} 命令在极少数情况下会造成一个~``lost float'' 的错误。
+	这时将 \cmd{clearpage} 从 \cmd{ifthenelse} 前去掉可能会有所帮助。
+\begin{lstlisting}
+\afterpage{\ifthenelse{\isodd{\value{page}}}%
+	{\afterpage{\leftfig}}%
+	{\leftfig}}
+\end{lstlisting}
+	
+	\item 在上面的例子中，图形是占据完整的偶数页。
+	要将其置于偶数页的顶部，修改或去掉 \cmdonearg{vspace*}{\cmd{fill}} 和 \cmd{newpage} 命令：
+\begin{lstlisting}
+\newcommand\leftfig{%
+	\centering
+	\includegraphics{graphic}
+	\captionof{figure}{This is at the top of the left (even) page.}
 	\vspace{\floatsep}}
-	\end{Verbatim}
+\end{lstlisting}
+
 \end{itemize}
 
-\subsection{迎面页图形}
+\subsection{迎面页图形}\label{ssec:fig-facingpage}
 
-在双面版式的文档中，为消除浮动图形间差别，常常希望将图形放在迎面页
-（\texttt{facing page}）上。为达到这一目的，仍须使用与前两节中相似的
-方法。为简单起见，定义命令~\ci{facingfigures}~如下：
-\begin{Verbatim}[xleftmargin=1cm]
-\newcommand\facingfigures{% 
-\vspace*{\fill}% 
-\centering 
-\includegraphics{left.eps} 
-\figcaption{This is on the left (even) page.} 
-\vspace*{\fill}\newpage\vspace*{\fill}% 
-\centering 
-\includegraphics{right.eps} 
-\figcaption{This is on the right (odd) page.} 
-\vspace*{\fill}\newpage}
-\end{Verbatim}
-这时可用~\cmd{facingfigures}~与~\cmd{afterpage},\cmd{ifthenelse}~一起
-来生成迎面页图形。
-\begin{Verbatim}[xleftmargin=1cm]
-\afterpage{\clearpage% 
-\ifthenelse{\isodd{\value{page}}}% 
-{\afterpage{\facingfigures}}% 
-{\facingfigures}}
-\end{Verbatim}
+在双面版式的文档中，为了方便图形的比较，
+常常希望将两幅图形分别放在相对的迎面页（\texttt{facing page}）上。
+为此，需要使用类似于之前一节中放置奇偶页图形的方法。
+为简单起见，定义命令 \cmd{facingfigures} 如下：
+\begin{lstlisting}
+\newcommand\facingfigures{%
+	\vspace*{\fill}%
+	\centering
+	\includegraphics{left}
+	\captionof{figure}{This is on the left (even) page.}
+	\vspace*{\fill}\newpage\vspace*{\fill}%
+	\centering
+	\includegraphics{right}
+	\captionof{figure}{This is on the right (odd) page.}
+	\vspace*{\fill}\newpage}
+\end{lstlisting}
 
+这时可用 \cmd{facingfigures} 与 \cmd{afterpage}、\cmd{ifthenelse} 一起生成迎面页图形：
+\begin{lstlisting}
+\afterpage{\clearpage%
+	\ifthenelse{\isodd{\value{page}}}%
+	{\afterpage{\facingfigures}}%
+	{\facingfigures}}
+\end{lstlisting}
+
+
+=======================================
 \section{盒子中的图形}
 
 \noindent 盒子中的图形通常指下面两种情形：
