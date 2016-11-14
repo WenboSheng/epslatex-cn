@@ -4,8 +4,9 @@
 \usepackage{amsmath}
 \usepackage{nicefrac}
 \usepackage{lmodern}
-\usepackage[utf8]{vntex}
+\usepackage[T1,T5]{fontenc}
 
+\usepackage{fancybox}
 \usepackage{xcolor}
 \usepackage{listings}
 \usepackage{makeidx}
@@ -27,6 +28,8 @@
 % new column type in tabular with fixed width
 \newcolumntype{P}[1]{>{\setlength{\parindent}{2em}}p{#1}}
 
+
+\newcommand{\HanTheThanh}{{\fontencoding{T5}\selectfont H\`an Th\'\ecircumflex\ Th\`anh}}
 \newcommand{\file}[1]{\texttt{#1}}
 \newcommand{\prgname}[1]{\textsf{#1}}
 \newcommand{\pkg}[1]{\texttt{#1}}
@@ -49,6 +52,16 @@
 \newcommand{\percent}{\char37}
 \newcommand{\pt}{\ensuremath{\,\mathtt{pt}}}
 
+%% cmd and env defined in epslatex
+\newenvironment{narrow}[2]{%
+	\begin{list}{}{%
+			\setlength{\topsep}{0pt}%
+			\setlength{\leftmargin}{#1}%
+			\setlength{\rightmargin}{#2}%
+			\setlength{\listparindent}{\parindent}%
+			\setlength{\itemindent}{\parindent}%
+			\setlength{\parsep}{\parskip}}%
+	\item[]}{\end{list}}
 
 \makeindex
 \includeonly{preface}

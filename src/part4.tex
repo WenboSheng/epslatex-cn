@@ -1605,169 +1605,156 @@ This is the text after the figure.
 
 \section{边注图形}\label{sec:marginfigure}
 
-\ci{marginpar}~命令可以用来生成边注。除非使用了~\ci{reversemarginpar}~命令，
-边注一般放在页面的右边（在~\texttt{twoside}~格式的文档中放在页面的外侧）。
-边注的宽度由长度~\ci{marginparwidth}~控制，而与正文之间的水平距离由
-~\ci{marginparsep}~决定。
+\cmdi{marginpar} 命令可以用来生成边注。
+除非使用了 \cmdi{reversemarginpar} 命令（本文档就用了该命令），
+边注一般放在页面的右边（在 \opt{twoside} 格式的文档中放在页面的外侧）。
+边注的宽度由长度 \cmdi{marginparwidth} 控制，
+而与正文之间的水平距离由 \cmdi{marginparsep} 决定。
 
-边注的第一行与包含它的正文文本的那一行对齐（边注的第一行的参考点
-与当前基线对齐）。
+边注的第一行与包含 \cmd{marginpar} 命令的正文文本的那一行对齐
+（边注的第一行的参考点与当前基线对齐）。
 
-边注不能分页，辱国一个边注太靠近页面的底部而无法排下时，它会在
-页面的底边继续排出。如果前面一个边注干扰了后面的边注，那么~\LaTeX{}~
-会把后面的边注向下移动，但不会移到下一页。所以在最后完成排版前可能
-要调整一下边注的位置以防它离分页的地方太近。
+边注不能分页，如果一个边注靠近页面的底部而无法正常排下时，
+它会伸入页面的底边空白继续排出。
+如果前面一个边注干扰了后面的边注，
+那么 \LaTeX{} 会把后面的边注向下移动，但不会移到下一页。
+所以在最后完成排版前可能要调整一下边注的位置以防它离分页的地方太近。
 
-由于~\texttt{figure}~环境不能在边注中使用，所以无法直接得到浮动的
-边注图形。这时，可以用第~\ref{chap:nonfloat}~章前面介绍的通过定义
-~\cmd{figcaption}~来构造非浮动的边注图形。
+由于 \env{figure}~环境不能在边注中使用，
+所以无法直接得到浮动的边注图形。
+这时，可以用第~\ref{sec:nonfloat}~节定义的 \cmd{captionof} 命令来构造非浮动的边注图形。
 \marginpar{\centering
-	\resizebox{\marginparwidth}{!}{\usebox{\graphic}}%
+	\includegraphics[width=\marginparwidth]{graphic}%
+	\captionof{figure}{这是边注图形}
+	\label{fig:marginal:fig} }
+例如，图~\ref{fig:marginal:fig} 就由下面的命令来得到：
+\begin{lstlisting}
+... 构造非浮动的边注图形。
+\marginpar{\centering 
+	\includegraphics[width=\marginparwidth]{graphic.eps}% 
 	\figcaption{This is a Marginal Figure} 
 	\label{fig:marginal:fig} }
-例如，图~\ref{fig:marginal:fig}~就由下面的命令来得到：
-\begin{Verbatim}[xleftmargin=1cm]
-...~构造非浮动的边注图形。
-\marginpar{\centering 
-\includegraphics[width=\marginparwidth]{graphic.eps}% 
-\figcaption{This is a Marginal Figure} 
-\label{fig:marginal:fig} }
-例如，图~\ref{fig:marginal:fig}~就由下面的命令来得到：
-\end{Verbatim}
+例如，图~\ref{fig:marginal:fig} 就由下面的命令来得到：
+\end{lstlisting}
 
-图~\ref{fig:marginal:fig}~的基线与与包含~\cmd{marginpar}~的正文文本的
-那一行对齐。对于使用边注图形，需要注意的是：
-\begin{itemize}
-	\item 由于边注图形都比较窄小，所以使用~\textsf{caption2}~宏包的标题式样
-	~\texttt{flushleft}~或~\texttt{flushright}~
-	可能会得到更好的效果。此外，~\textsf{caption2}~宏包的命令
-	\begin{Verbatim}[xleftmargin=1cm]
-	\renewcommand{captionfont}{\small}
-	\end{Verbatim}
-	可使标题的字体变小。详见第~\ref{chap:caption2}~章。
-	\item 如同第~\ref{chap:nonfloat}~章所介绍的非浮动图形一样，边注图形会在
-	未处理的浮动图形前排出。因此，如果希望图形按顺序出现的话，必须在边
-	注之前使用~\cmd{clearpage}~或~\cmd{FloatBarrier}~命令。
-	\item 边注的处理机制和浮动图表的处理机制是一样的，所以如果使用了太多的
-	浮动图表和边注，就可能超出~\LaTeX{}~所允许的未处理的浮动体的数目。
-	这时使用~\textsf{morefloat}~宏包是一种解决办法。具体见
-	第~\ref{sec:toomanyfig}~节。
+图~\ref{fig:marginal:fig} 中图像底部与 \cmd{marginpar} 命令所在文本的基线是对齐的。
+对于使用边注图形，需要注意的是：
+\begin{itemize}	
+	\item 由于边注图形都比较窄小，所以在 \cmd{caption} 命令之前使用 \pkg{caption} 宏包命令
+\begin{lstlisting}
+\captionstyle{justification=raggedright}
+\captionstyle{justification=raggedleft}
+\end{lstlisting}
+	可能会得到更好的标题格式效果。
+	此外，\pkg{caption} 宏包命令
+\begin{lstlisting}
+\captionsetup{font=small}
+\end{lstlisting}
+	可以减小标题的字体。
+	关于 \pkg{caption} 的信息详见第~\ref{sec:caption-pkg} 节。
+	
+	\item 如同第~\ref{sec:nonfloat}~节所介绍的非浮动图形，
+	边注图形会在未处理的浮动图形前排出。
+	因此，如果希望图形按顺序出现的话，
+	必须在边注之前使用 \cmd{clearpage} 或 \cmd{FloatBarrier} 命令。
+	
+	\item 边注的处理机制和浮动图表的处理机制是一样的，
+	所以如果使用了太多的浮动图表和边注，
+	就可能超出 \LaTeX{} 所允许的未处理的浮动体的数目。
+	这时使用 \pkg{morefloat}~宏包是一种解决办法。
+	具体见第~\ref{ssec:toomanyfig} 节。
 \end{itemize}      
 
-\section{宽图形的处理}
+\section{宽图形的处理} \label{sec:widefig}
 
-排版的易读性规则限制了一行文本中的字符个数，如果不是使用大字体或
-双列版式，就会使得页面的边空很大。在第~\ref{chap:marginfigure}~章
-中展示了边空可以用来放置边注图形。另外也可以用来得到扩展到一边或
-两边边空的宽图形。这可通过在浮动图形环境中嵌套一个很宽的列表环境
-来实现。例如，可以在导言区加入下列代码来定义一个~\texttt{narrow}~
-环境：
-\begin{Verbatim}[xleftmargin=1cm]
-\newenvironment{narrow}[2]{% 
-\begin{list}{}{%
-\setlength{\topsep}{0pt}% 
-\setlength{\leftmargin}{#1}% 
-\setlength{\rightmargin}{#2}% 
-\setlength{\listparindent}{\parindent}% 
-\setlength{\itemindent}{\parindent}% 
-\setlength{\parsep}{\parskip}}% 
-\item[]}{\end{list}}
-\end{Verbatim}
-那么，所有位于~\cmd{begin\{narrow\}\{1in\}\{2in\}}~和~\cmd{end\{narrow\}}~
-之间的文本都被向左缩进~1~英寸，向右缩进~2~英寸。当使用负长度时，文本就会
-延伸到边空上去。
+排版的易读性原则限制了一行文本中的字符个数。
+如果不是使用大字体或双列版式，这样的易读性原则就会使得页面的页边距很大，
+特别当使用 $8.5\times 11 $ 英寸的 letter 页面时更是如此。
+在第~\ref{sec:marginfigure}~节中展示了边空可以用来放置边注图形。
+另外一种方法则是创建一个常规的浮动图形，并且伸到一边或者两边的边空中。
+这可通过在浮动图形环境中嵌套一个很宽的列表环境来实现。
+例如，可以在导言区加入下列代码来定义一个 \env{narrow} 环境：
+\begin{lstlisting}
+\newenvironment{narrow}[2]{%
+	\begin{list}{}{%
+		\setlength{\topsep}{0pt}%
+		\setlength{\leftmargin}{#1}%
+		\setlength{\rightmargin}{#2}%
+		\setlength{\listparindent}{\parindent}%
+		\setlength{\itemindent}{\parindent}%
+		\setlength{\parsep}{\parskip}}%
+	\item[]}{\end{list}}
+\end{lstlisting}
 
-\clearpage
+那么，所有位于 \cmdthreeargs{begin}{narrow}{1in}{2in} 和 \cmdonearg{end}{narrow} 之间的文本都被向左缩进1英寸，向右缩进2英寸。
+当使用负长度时，文本就会延伸到边空上去。
 
-\subsection{单面版式中的宽图形}
+\subsection{单面版式中的宽图形}\label{ssec:widefig-oneside}
 
 在使用单面版式排版时，页面左右的边空不会因奇偶页而取不同的值，
-故可以不用考虑图形浮动到奇数页或偶数页的问题。下面的命令利用
-前面定义的~\texttt{narrow}~环境使得图形左边延伸到左边空中~1~英寸。
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\begin{narrow}{-1in}{0in} 
-\includegraphics[width=\linewidth]{wide.eps} 
-\caption{This is a wide figure} 
-\end{narrow} 
+故可以不用考虑图形浮动到奇数页或偶数页的问题。
+下面的命令利用前面定义的 \env{narrow} 环境使得图形左边延伸到左边空中1英寸，见图~\ref{fig:widefig}。
+\begin{lstlisting}
+\begin{figure}
+	\begin{narrow}{-1in}{0in}
+		\includegraphics[width=\linewidth]{wide}
+		\caption{这是宽图形}
+	\end{narrow}
 \end{figure}
-\end{Verbatim}
+\end{lstlisting}
+这里给定宽度参数为 \cmd{linewidth} 使得图形的宽度和 \env{narrow} 环境的宽度相等。
+若给定宽度参数为 \cmd{textwidth} 会使图形的宽度和原来的正文宽度一样。
 
-这里给定宽度参数为~\cmd{linewidth}~使得图形的宽度和~\texttt{narrow}~环境
-的宽度相等。若给定宽度参数为~\cmd{textwidth}~会使图形的宽度和原来的
-正文宽度一样。
+\begin{figure}
+	\begin{narrow}{-1in}{0in}
+		\includegraphics[width=\linewidth]{wide}
+		\caption{这是宽图形}\label{fig:widefig}
+	\end{narrow}
+\end{figure}
 
-当使用边注时，可能希望宽图形精确延伸到边注的边界（使得图形的宽度为
-~\texttt{\bs textwidth}$+$\texttt{\bs marginparwidth}$+$%
-\texttt{\bs marginparsep}）。这时，可以定义一新长度~\texttt{\bs marginwidth}~
-并将它设为~\texttt{\bs marginparwidth}$+$\texttt{\bs marginparsep}。
+当使用边注时，可能希望宽图形精确延伸到边注的边界
+（使得图形的宽度为 $\text{\cmd{linewidth}}+\text{\cmd{marginparwidth}}+\text{\cmd{marginparsep}}$）。这时，可以定义一新长度 \cmd{marginwidth} 并将它设为 $\text{\cmd{marginparwidth}}+\text{\cmd{marginparsep}}$。
 例如：
-\begin{Verbatim}[xleftmargin=1cm]
+\begin{lstlisting}
 \newlength{\marginwidth} 
 \setlength{\marginwidth}{\marginparwidth} 
 \addtolength{\marginwidth}{\marginparsep}
-\end{Verbatim}
-接着在~\cmd{begin\{narrow\}}~中使用~\texttt{-\bs marginwidth}~来达到目的。
+\end{lstlisting}
+接着在 \cmdonearg{begin}{narrow} 的选项中使用 \opt{-\cmd{marginwidth}} 来达到目的。
 
-\subsection{双面版式中的宽图形}
+\subsection{双面版式中的宽图形}\label{widefig-twoside}
 
 在使用双面版式排版时，页面左右的边空因奇偶页而取不同的值，
-且使用宽图形时常常希望图形延伸到装订的那一边（奇数页的左边，
-偶数页的右边）。在这种情形下，需要使用~\pai{ifthen}~宏包提供的
-~\ci{ifthenelse}~命令来根据图形出现在奇数页或偶数页而使用不同的命令。
+且使用宽图形时常常希望图形延伸到装订的那一边
+（奇数页的左边，偶数页的右边）。
+在这种情形下，需要使用 \pkg{ifthen} 宏包提供的 \cmd{ifthenelse} 命令，
+进而根据图形出现在奇数页或偶数页而选取不同的命令。
 例如：
-\begin{Verbatim}[xleftmargin=1cm]
+\begin{lstlisting}
 \usepackage{ifthen}
 ...
-\newlength{\marginwidth}
-\setlength{\marginwidth}{\marginparwidth}
-\addtolength{\marginwidth}{\marginparsep}
-\begin{figure} 
-\ifthenelse{\isodd{\pageref{fig:wide}}}% 
-{% BEGIN ODD-PAGE FIGURE 
-\begin{narrow}{0in}{-\marginwidth} 
-\includegraphics[width=\linewidth]{wide.eps}
-\caption{Figure Caption} 
-\label{fig:wide} 
-\end{narrow} 
-}% END ODD-PAGE FIGURE 
-{% BEGIN EVEN-PAGE FIGURE 
-\begin{narrow}{-\marginwidth}{0in} 
-\includegraphics[width=\linewidth]{wide.eps} 
-\caption{Figure Caption} 
-\label{fig:wide} 
-\end{narrow} 
-}% END EVEN-PAGE FIGURE 
-\end{figure}
-\end{Verbatim}
-结果如图~\ref{fig:wide}。由于~\cmd{ifthenelse}~使用命令~\cmd{pageref}~
-作为输入，所以需要~\LaTeX{}~运行足够的次数后才能正确地排出。
-
-\noindent{\CJKfamily{hei}注：}如果使用了~\pai{hyperref}~宏包，
-上例中的~\cmd{pageref}~应替换为~\ci{hypergetpageref}~。
-
-\newlength{\marginwidth}
-\setlength{\marginwidth}{\marginparwidth}
-\addtolength{\marginwidth}{\marginparsep}
-
-\begin{figure}[hbp] 
-	\ifthenelse{\isodd{\hypergetpageref{fig:wide}}}% 
-	{% BEGIN ODD-PAGE FIGURE 
-		\begin{narrow}{0in}{-\marginwidth} 
-			\includegraphics[width=\linewidth]{wide}
-			\caption{Figure Caption}  
-			\label{fig:wide}  
-		\end{narrow}  
-	}% END ODD-PAGE FIGURE 
-	{% BEGIN EVEN-PAGE FIGURE 
-		\begin{narrow}{-\marginwidth}{0in} 
-			\includegraphics[width=\linewidth]{wide} 
-			\caption{Figure Caption} 
-			\label{fig:wide} 
-		\end{narrow} 
+\begin{figure}
+	\ifthenelse{\isodd{\pageref{fig:wide}}}%
+	{% BEGIN ODD-PAGE FIGURE
+		\begin{narrow}{0in}{-1in}
+			\includegraphics[width=\linewidth]{file}
+			\caption{Figure Caption}
+			\label{fig:wide}
+		\end{narrow}
+	}% END ODD-PAGE FIGURE
+	{% BEGIN EVEN-PAGE FIGURE
+		\begin{narrow}{-1in}{0in}
+			\includegraphics[width=\linewidth]{file}
+			\caption{Figure Caption}
+			\label{fig:wide}
+		\end{narrow}
 	}% END EVEN-PAGE FIGURE
 \end{figure}
+\end{lstlisting}
+由于 \cmd{ifthenelse} 使用命令 \cmd{pageref} 作为输入，
+所以需要 \LaTeX{} 运行足够的次数后才能正确地排出交叉引用。
 
+=====================================
 \section{横排的图形}
 
 \noindent 在一竖排版的文档中，有三种方法来得到横排的图形。
@@ -2142,228 +2129,241 @@ This is the text after the figure.
 \end{lstlisting}
 
 
-=======================================
-\section{盒子中的图形}
+\section{盒子中的图形}\label{sec:boxfig}
 
-\noindent 盒子中的图形通常指下面两种情形：
+盒子中的图形通常指下面两种情形：
 \begin{itemize}
 	\item 图形在盒子中，但其标题在盒子之外。
 	\item 图形及其标题都在盒子中。
 \end{itemize}
 
-将某一对象置于盒子中的最基本的方法就是把它放到~\ci{fbox}~命令中，这样
-会将该对象用一长方形的框围起来。~\pai{fancybox}~宏包提供了不同式样的盒子。
+将某一对象置于盒子中的最基本的方法就是把它放到 \cmd{fbox} 命令中，
+这样会将该对象用一长方形的框围起来。
+\pkg{fancybox} 宏包提供了更多不同式样的盒子。
 
-\subsection{图形在盒子中}
 
-把~\cmd{includegraphics}~命令放到~\cmd{fbox}~中会使所插入的图形置于
-一个带框盒子中。例如：
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\centering 
-\fbox{\includegraphics[totalheight=2in]{pend.eps}} 
-\caption{Box Around Graphic, But Not Around Caption} 
-\label{fig:boxed_graphic} 
+\subsection{图形在盒子中}\label{ssec:boxgraphic}
+
+把 \cmd{includegraphics} 命令放到 \cmdi{fbox} 中会使所插入的图形置于一个带框盒子中。例如：
+\begin{lstlisting}
+\begin{figure}
+	\centering
+	\fbox{\includegraphics[totalheight=2in]{file}}
+	\caption{图形在盒子中，但标题在盒子外}
+	\label{fig:boxed_graphic}
 \end{figure}
-\end{Verbatim}
+\end{lstlisting}
 如图~\ref{fig:boxed_graphic}所示，图形被置于一带框盒子中。
 
-\clearpage
-
-\begin{figure} 
-	\centering 
-	\fbox{\includegraphics[totalheight=2in]{pend}}
-	\caption{Box Around Graphic, But Not Around Caption} 
+\begin{figure}
+	\centering
+	\fbox{\includegraphics[totalheight=2in]{file}}
+	\caption{图形在盒子中，但标题在盒子外}
 	\label{fig:boxed_graphic}
 \end{figure}
 
 \subsection{图形与标题均在盒子中}
 
-要将图形与标题均置于盒子中，也许有人想当然的以为把~\cmd{caption}~
-命令也放到~\cmd{fbox}~命中就可以了。然而，由于~\cmd{caption}~命令
-只能在段落模式中使用，而~\cmd{fbox}~命令中的内容是在~LR~模式中被处理
-的\realfootnote{\LaTeX{}~使用三种模式，~LR~，段落模式和数学模式。}，
-所以这样做是不能达到目的的。
+要将图形与标题均置于盒子中，
+也许有人想当然的以为把 \cmd{caption} 命令也放到 \cmd{fbox} 命中就可以了。
+然而，这样做是无效的，因为 \cmd{caption} 命令只能在段落模式中使用，
+而 \cmd{fbox} 命令中的内容是在左右模式中被处理\footnote{
+	\LaTeX{} 使用三种模式，左右模式，段落模式和数学模式。
+	参考 \cite[第36页]{lamport1994}}。
 
-因为小页环境的内容和~\cmd{parbox}~命令都使在段落模式中处理，所以将
-~\cmd{fbox}~命令的内容放到小页环境或~\cmd{parbox}~命令中，就可以把
-~\cmd{caption}~包含在~\cmd{fbox}~中。由于小页环境和~\cmd{parbox}~命令
-都必须给出它们的宽度，故没有直接的办法让~\cmd{fbox}~和图形及其标题一样
-宽。 例如下列命令：
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\centering 
-\fbox{ 
-\begin{minipage}{4 in} 
-\centering 
-\includegraphics[totalheight=2in]{pend.eps} 
-\caption{Box Around Figure Graphic and Caption} 
-\label{fig:boxed_figure} 
-\end{minipage} } 
+因为小页环境和 \cmd{parbox} 命令的内容都在段落模式中处理，
+所以将 \cmd{fbox} 命令的内容放到小页环境或 \cmd{parbox} 命令中，
+就可以把 \cmd{caption} 包含在 \cmd{fbox} 中。
+然而，由于小页环境和 \cmd{parbox} 命令都必须给出它们的宽度，
+故没有直接的办法让 \cmd{fbox} 和图形及其标题一样宽。
+例如下列命令：
+\begin{lstlisting}
+\begin{figure}
+	\centering
+	\fbox{ \begin{minipage}{4 in}
+			\centering
+			\includegraphics[totalheight=2in]{pend}
+			\caption{图形和标题都在盒子中}
+			\label{fig:boxed_figure}
+		\end{minipage} }
 \end{figure}
-\end{Verbatim}
+\end{lstlisting}
 得到图~\ref{fig:boxed_figure}，其中图形与标题都置于盒子中。
 
-\begin{figure} 
-	\centering 
-	\fbox{ 
-		\begin{minipage}{4 in} 
-			\centering 
+\begin{figure}
+	\centering
+	\fbox{ \begin{minipage}{4 in}
+			\centering
 			\includegraphics[totalheight=2in]{pend}
-			\caption{Box Around Figure Graphic and Caption} 
-			\label{fig:boxed_figure} 
-	\end{minipage} }
-\end{figure}
-
-一般通过不断的尝试修改来确定小页环境的宽度从而使得盒子能够恰好
-围住图形和标题。下面的这些方法可以避免枯燥麻烦的尝试修改。
-\begin{enumerate}
-	\item 选择一个确定的小页的宽度，使得图形的宽度与其相同。
-	\begin{Verbatim}
-	\includegraphics[width=\textwidth]{pend.eps}
-	\end{Verbatim}
-	\item 当指定图形的高度时，适当的小页的宽度可以通过把图形放到一个
-	盒子中，然后计算盒子的宽度来得到。
-	\begin{Verbatim}
-	\newsavebox{\mybox} 
-	\newlength{\mylength} 
-	\sbox{\mybox}{\includegraphics[height=3in]{file.eps}} 
-	\settowidth{\mylength}{\usebox{\mybox}} 
-	\begin{figure}
-	\centering 
-	\fbox{ 
-	\begin{minipage}{\mylength} 
-	\centering 
-	\usebox{\mybox} 
-	\caption{Box Around Figure Graphic and Caption} 
-	\label{fig:boxed_figure} 
-	\end{minipage} } 
+			\caption{图形和标题都在盒子中}
+			\label{fig:boxed_figure}
+		\end{minipage} }
 	\end{figure}
-	\end{Verbatim}
-	\item 为保证标题只有一行，可以使用~\ci{settowidth}~命令来估计标题
-	的宽度并将其作为小页的宽度。
-	\begin{Verbatim}
-	\newlength{\mylength} 
-	\settowidth{\mylength}%
-	{Figure XX: Box Around Figure Graphic and Caption} 
-	\fbox{ \begin{minipage}{\mylength} 
-	...
-	\end{Verbatim}
+
+一般而言，需要通过不断的尝试修改才能来确定小页环境的宽度，
+从而使得盒子能够恰好围住图形和标题。
+不过下面的这些方法可以避免枯燥麻烦的尝试修改。
+\begin{enumerate}
+	\item 任选一个确定的小页宽度，设置图形的宽度与其相同。
+\begin{lstlisting}
+\includegraphics[width=\textwidth]{pend}
+\end{lstlisting}
+	\item 当指定图形的高度时，将图像放在盒子中，然后测量盒子的高度，
+	即可计算出合适的小页宽度。
+\begin{lstlisting}
+\newsavebox{\mybox}
+\newlength{\mylength}
+\sbox{\mybox}{\includegraphics[height=3in]{file}}
+\settowidth{\mylength}{\usebox{\mybox}}
+\begin{figure}
+	\centering
+	\fbox{ \begin{minipage}{\mylength}
+			\centering
+			\usebox{\mybox}
+			\caption{图形和标题都在盒子中}
+			\label{fig:boxed_figure}
+		\end{minipage} }
+\end{figure}
+\end{lstlisting}
+
+	\item 为保证标题只有一行，
+	可以使用 \cmdi{settowidth} 命令来估计标题的宽度并将其作为小页的宽度。
+\begin{lstlisting}
+\newlength{\mylength} 
+\settowidth{\mylength}{Figure XX: Box Around Figure Graphic and Caption} 
+\fbox{ \begin{minipage}{\mylength} 
+...
+\end{lstlisting}
 \end{enumerate}
 
-\subsection{定制~~fbox~~的参数}
+\subsection{定制 fbox 的参数} \label{ssec:customizefbox}
 
-在图~\ref{fig:boxed_graphic}~和~\ref{fig:boxed_figure}~中，盒子由
-厚为~0.4pt~的直线围成，在框线和图形之间有~3pt~的距离。这些维数值
-都可以通过使用~\cmd{setlength}~命令设置~\LaTeX{}~的长度变量
-~\cmd{fboxrule}~和~\cmd{fboxsep}~来修改。例如命令：
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\centering 
-\setlength{\fboxrule}{3pt} 
-\setlength{\fboxsep}{1cm} 
-\fbox{\includegraphics[totalheight=2in]{pend.eps}} 
-\caption{Graphic with Customized Box} 
-\label{fig:boxed_custom} 
-\end{figure}
-\end{Verbatim}
-使得盒子的边框线厚为~3pt~且其与图形间的距离为~1~厘米。如图
-~\ref{fig:boxed_custom}~所示。
-
-\begin{figure} 
-	\centering 
-	\setlength{\fboxrule}{3pt} 
-	\setlength{\fboxsep}{1cm} 
+在图~\ref{fig:boxed_graphic}~和~\ref{fig:boxed_figure}~中，
+盒子的框线厚度为$0.4\pt$，在框线和图形之间有 3\pt 的空白。
+可以使用 \cmd{setlength} 命令设置 \LaTeX{} 长度变量 \cmd{fboxrule} 和 \cmd{fboxsep}，
+进而修改这些长度。例如命令：
+\begin{lstlisting}
+\begin{figure}
+	\centering
+	\setlength{\fboxrule}{3pt}
+	\setlength{\fboxsep}{1cm}
 	\fbox{\includegraphics[totalheight=2in]{pend}}
-	\caption{Graphic with Customized Box} 
-	\label{fig:boxed_custom} 
+	\caption{带有定制盒子的图形}
+	\label{fig:boxed_custom}
+\end{figure}
+\end{lstlisting}
+使得盒子的边框线厚为 3\pt 且其与图形间的距离为1厘米。
+如图~\ref{fig:boxed_custom}~所示。
+
+\begin{figure}
+	\centering
+	\setlength{\fboxrule}{3pt}
+	\setlength{\fboxsep}{1cm}
+	\fbox{\includegraphics[totalheight=2in]{pend}}
+	\caption{带有定制盒子的图形}
+	\label{fig:boxed_custom}
 \end{figure}
 
-\subsection{fancybox~~宏包}
+\subsection{fancybox 宏包} \label{ssec:fancybox}
 
-在图~\ref{fig:boxed_graphic},\ref{fig:boxed_figure}~和~\ref{fig:boxed_custom}~
-中，用~\cmd{fbox}~命令将图形包围在标准的长方形框盒子中。要想使用不同类型的
-盒子，可使用~\pai{fancybox}~宏包。它提供了~\ci{shadowbox}, \ci{doublebox},
-\ci{ovalbox}~和~\ci{Ovalbox}~四个命令来生成不同形状的盒子。
+
+
+在图~\ref{fig:boxed_graphic}、\ref{fig:boxed_figure}~和~\ref{fig:boxed_custom}~中，
+使用 \cmd{fbox} 命令将图形包围在标准的长方形框盒子中。
+要想使用不同类型的盒子，可使用 \pkgi{fancybox} 宏包。
+它提供了 \cmdi{shadowbox}、\cmdi{doublebox}、\cmdi{ovalbox} 和 \cmdi{Ovalbox} 等命令来生成不同形状的盒子，如表~\ref{tab:fancyboxcmd} 所示。
 
 \begin{table}
-	\newcommand{\tbltt}[1]{\textcolor{blue}{\texttt{#1}}}
-	\renewcommand{\arraystretch}{1.2}
 	\centering
-	\topcaption{\textsf{FancyBox} Commands}\label{tab:fancybox}
-	
-	\begin{tabular}{|m{4cm}|>{\CJKfamily{kai}}m{10cm}|}
-		
-		\hline
-		\centering\tbltt{\bs shadowbox\{Example\}} 
-		
-		\centering\shadowbox{Example}  &
+	\caption{\pkg{fancybox} 命令}\label{tab:fancyboxcmd}
+	\ttfamily
+	\begin{tabular}{ p{4cm} p{10cm} }
+		\toprule
+		命令 & 参数  \\
+		\midrule
+		\begin{center}
+			\cmdonearg{shadowbox}{Example}\\
+			\shadowbox{Example}
+		\end{center}  &
 		\begin{itemize}
-			\item 盒子边框线厚度为~\cmd{fboxrule}
-			\item 盒子阴影厚度为~\cmd{shadowsize}~（缺省为~4pt）。
+			\item 盒子边框线厚度为 \cmd{fboxrule}
+			\item 盒子阴影厚度为 \cmd{shadowsize} （缺省为 4\pt ）。
 		\end{itemize} \\
-		\hline
-		\centering\tbltt{\bs doublebox\{Example\}} 
-		
-		\centering\doublebox{Example} &
+		\midrule
+		\begin{center}
+			\cmdonearg{doublebox}{Example}\\
+			\doublebox{Example}
+		\end{center} &
 		\begin{itemize}
-			\item 内框线厚为~.75\cmd{fboxrule}。 
-			\item 外框线厚为~1.5\cmd{fboxrule}。
-			\item 内外框之间的距离为~1.5\cmd{fboxrule}$+$0.5pt。
+			\item 内框线厚为 $.75$\cmd{fboxrule}。 
+			\item 外框线厚为 $1.5$\cmd{fboxrule}。
+			\item 内外框之间的距离为 $1.5\text{\cmd{fboxrule}} + 0.5\pt$。
 		\end{itemize} \\
-		\hline
-		\centering\tbltt{\bs ovalbox\{Example\}}
-		
-		\centering\ovalbox{Example} &
-		\begin{itemize}
-			\item 盒子边框线厚度为~\cmd{thinlines}。
-			\item 使用~\ci{cornersize\{x\}}~四个角的直径设为~\texttt{x}~乘以盒子宽和高
-			之间较小的那个。缺省为~0.5。
-			\item 使用~\cmd{cornersize*\{x\}}~命令直接将四个角的直径设为~\texttt{x}。
-			如~\cmd{cornersize*\{1cm\}}~将四个角的直径设为~1~厘米。
+		\midrule
+		\begin{center}
+			\cmdonearg{ovalbox}{Example}\\
+			\ovalbox{Example}
+		\end{center} &
+		\begin{itemize}		
+			\item 盒子边框线厚度为 \cmd{thinlines}。
+			\item 使用 \cmdonearg{cornersize}{x} 四个角的直径设为 \opt{x} 乘以盒子宽和高
+			之间的较小值。\opt{x}缺省为 0.5。
+			\item 使用\cmdonearg{cornersize*}{x} 命令直接将四个角的直径设为 \texttt{x}。
+			如 \cmdonearg{cornersize*}{1cm} 将四个角的直径设为~1~厘米。
 		\end{itemize} \\
-		\hline
-		\centering\tbltt{\bs Ovalbox\{Example\}} 
-		
-		\centering\Ovalbox{Example}  &
-		除了盒子边框线厚度为~\cmd{thicklines}~外，均与~\cmd{ovalbox}~一样。\\
-		\hline
+		\midrule
+		\begin{center}
+			\cmdonearg{Ovalbox}{Example}\\
+			\Ovalbox{Example}
+		\end{center}  &
+		除了盒子边框线厚度为 \cmd{thicklines} 外，其它均与 \cmd{ovalbox} 一样。\\
+		\bottomrule
 	\end{tabular}
 \end{table}
 
-如同~\cmd{fbox}~命令一样，这些盒子命令中的内容与边框间距由~\LaTeX{}~长度
-~\cmd{fboxsep}~控制。长度~\cmd{shadowsize}~可用~\cmd{setlength}~命令来设定。
-而~\cmd{ovalbox}~和~cmd{Ovalbox}~命令中的边框线厚度对应于~\texttt{picture}~
-环境中的~\cmd{thinlines}~和~\cmd{thicklines}~的值，由于它们不是长度，所以
-无法用~\cmd{setlength}~来设定。这两个值依赖于当前字体的大小和形状，缺省
-分别为~0.4pt~和~0.8pt。例如：
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\centering 
-\shadowbox{ 
-\begin{minipage}{3.5 in} 
-\centering 
-\includegraphics[totalheight=2in]{pend.eps} 
-\caption{Shadowbox Around Entire Figure} 
-\label{fig:boxed_fancy} 
-\end{minipage} } 
+
+Like \fbox, the separation between these boxes and their contents is controlled
+by the L
+A T E X length \fboxsep. The length \shadowsize is set with the \setlength
+command, as was done for \fboxrule and \fboxsep in Section 27.3 on Page 101.
+The lines for \ovalbox and \Ovalbox have thicknesses corresponding to the picture
+environment’s \thicklines and \thinlines, which are not lengths and thus can-
+not be changed with the \setlength command. The values of \thicklines and
+\thinlines depend on the size and style of the current font. Typical values are
+0.8 pt for \thicklines and 0.4 pt for \thinlines. For example, the commands
+
+如同 \cmd{fbox} 命令一样，这些盒子命令中的内容与边框间距由 \LaTeX{} 长度 \cmd{fboxsep} 控制。
+与第~\ref{ssec:customizefbox} 节中的 \cmd{fboxrule} 和 \cmd{fboxsep} 相同，
+长度 \cmd{shadowsize} 也可用 \cmd{setlength} 命令来设定。
+而 \cmd{ovalbox} 和 \cmd{Ovalbox} 命令中的边框线厚度对应于 \env{picture} 环境中的 \cmd{thinlines} 和 \cmd{thicklines} 的值，
+由于它们不是长度变量，所以无法用 \cmd{setlength} 来设定。
+这两个宏的值依赖于当前字体的大小和形状，缺省分别为 $0.4\pt$ 和 $0.8\pt$。例如：
+\begin{lstlisting}
+\begin{figure}
+	\centering
+	\shadowbox{ \begin{minipage}{3.5 in}
+			\centering
+			\includegraphics[totalheight=2in]{pend}
+			\caption{环绕整个图形的阴影框}
+			\label{fig:boxed_fancy}
+	\end{minipage} }
 \end{figure}
-\end{Verbatim}
+\end{lstlisting}
 用一个带阴影的盒子将图形与标题包围起来，如图~\ref{fig:boxed_fancy}~所示。
 
-\begin{figure} 
-	\centering 
-	\shadowbox{ 
-		\begin{minipage}{3.5 in} 
-			\centering 
-			\includegraphics[totalheight=2in]{pend} 
-			\caption{Shadowbox Around Entire Figure} 
-			\label{fig:boxed_fancy} 
-	\end{minipage} } 
+\begin{figure}
+	\centering
+	\shadowbox{ \begin{minipage}{3.5 in}
+			\centering
+			\includegraphics[totalheight=2in]{pend}
+			\caption{环绕整个图形的阴影框}
+			\label{fig:boxed_fancy}
+	\end{minipage} }
 \end{figure}
 
 
 
+=====================================
 \section{图文混排}
 
 在使用外部图形时，通常的是将其置于一个~\texttt{figure}~环境中，
