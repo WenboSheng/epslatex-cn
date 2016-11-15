@@ -1516,92 +1516,110 @@ Second Line of Caption}
 
 \section{不浮动的图形}\label{sec:nonfloat}
 
-如同第~\ref{chap:floatfigure}~章所介绍的那样，~\LaTeX{}~允许图形和
-表格~``浮动''~以增强排版效果。不过，偶尔也会希望一幅图形不要浮动，
-就放置在与它在~\LaTeX{}~源文件中相同的位置\realfootnote{因为经常会
-	导致出现大面积的空白，不让图形浮动被认为是一种糟糕的排版风格。
-	代之以使用~\texttt{[!ht]}~选项的图形环境通常会得到较好的结果。}。
-~\cmd{caption}~命令可以在~\texttt{figure}~和~\texttt{table}~环境中
-使用是因为这两个环境各自定义了内部命令~\ci{@captype}。这样，通过定义
-~\cmd{@captype}~就可以在~\texttt{figure}~和~\texttt{table}~环境外
-使用~\cmd{caption}~命令。当然这时~\cmd{@captype}~必须用~\cmd{makeatletter}-%
-\cmd{makeatother}~命令对包围起来，使得可以在命令名中使用~\texttt{@}。
-在每次使用时可用如下的命令：
-\begin{Verbatim}[xleftmargin=1cm]
-\includegraphics{file.eps} 
+\emph{由于不浮动的图形会生成大段的垂直空白，因此一般认为是比较糟糕的排版风格。
+	此时强烈建议用户使用 \env{figure} 环境的 \opt{[!ht]} 选项，
+	这样只有当当前页面排不下时才会移动图形。}
+
+如同第~\ref{sec:floatfigure}~节所介绍的那样，
+\LaTeX{} 允许“浮动”的图形和表格以增强排版效果。
+不过，偶尔也会希望一幅图形不要浮动，就放置在与它在 \LaTeX{} 源文件中相同的位置。
+虽然 \cmd{caption} 命令只能在 \env{figure} 和 \env{table} 环境中使用，
+但是 \pkg{caption} 宏包定义了 \cmd{captionof} 命令，
+该命令有两个选项：标题的类型（表格、图形等）以及标题的内容，
+这样就可以在 \env{figure} 和 \env{table} 环境之外使用了。
+使用命令
+\begin{lstlisting}
+\captionof{figure}{caption text}
+\end{lstlisting}
+就可以创建一个图形标题，而不用关心是否真的出现在 \env{figure} 环境中。
+类似地，使用命令
+\begin{lstlisting}
+\captionof{table}{caption text}
+\end{lstlisting}
+会创建一个表格标题。
+而如下的命令
+\begin{lstlisting}
+This is the text before the figure.
+\\[\intextsep]
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=2in]{graphic}%
+	\captionof{figure}{This is a non-floating figure}
+	\label{fig:non:float}
+\end{minipage}
+\\[\intextsep]
+This is the text after the figure.
+\end{lstlisting}
+可得到一幅不浮动的图形。对于不浮动的图形，需要注意下面几点：
+\begin{itemize}
+	\item 需要使用 \env{minipage} 小页环境来防止在图形中出现分页的情况。
+	\item 命令 \cmdonearg{\cmd{}}{\cmd{intextsep}} 开始新的一行并在图形的前后加上垂直的空白。
+	\cmd{intextsep}~（见第~\ref{ssec:vspace}~节）可以使用任意大小的空白，
+	目的是使不浮动的图形具有与浮动图形相同的上下间距。
+	\item 正常情况下，浮动图形是按照它们在 \LaTeX{} 源文件中的顺序一一被放置的。
+	而不浮动的图形是被立即放置到页面上，
+	所以可以跳过浮动图形队列中的未处理图形。
+	如果出现这样情况，那么图形不会按照数字顺序编号\footnote{
+		在这种情况下，图形目录中图形的顺序是按照图形出现的顺序，而不是图形编号的顺序。}。
+	要避免这种顺序错乱，可在不浮动的图形前用 \cmd{clearpage} 或 \cmd{FloatBarrier} 命令
+	清除未处理的浮动图形（见第~\ref{ssec:unprocessfig}~节）。
+	\item \cmd{captionof}　命令也可以用于生成边注图形
+	（见第~\ref{sec:marginfigure}~节）以及与图形并列的表格
+	（见第~\ref{sec:figuretable} 节）。
+\end{itemize}
+
+\subsection{不使用 caption 宏包的非浮动图形}\label{ssec:nonfloat-nocaption}
+
+以上篇幅介绍了如何使用 \pkg{caption} 宏包的 \cmd{captionof} 命令来创建 \env{figure}/\env{table} 环境之外的标题。
+本节介绍如何不使用 \pkg{caption} 宏包做到这一点。
+
+\cmd{caption} 命令之所以可以在 \env{figure} 和 \env{table} 环境中使用，
+是因为这两个环境分别为图形和表格定义了内部命令 \cmdi{@captype}。
+这样，通过定义 \cmd{@captype} 就可以在 \env{figure} 和 \env{table} 环境外使用 \cmd{caption} 命令。
+当然这时 \cmd{@captype} 必须用 \cmd{makeatletter}-\cmd{makeatother} 命令对包围起来，
+使得可以在命令名中使用 \texttt{@}。
+当然，可以每次都使用如下的命令：
+\begin{lstlisting}
+\includegraphics{file} 
 \makeatletter\def\@captype{figure}\makeatother 
 \caption{This is the caption}
-\end{Verbatim}
-在导言区中定义下面的命令会更加方便。
-\begin{Verbatim}[xleftmargin=1cm]
+\end{lstlisting}
+不过，更方便的做法是在导言区中定义下面的命令：
+\begin{lstlisting}
 \makeatletter 
 \newcommand\figcaption{\def\@captype{figure}\caption} 
 \newcommand\tabcaption{\def\@captype{table}\caption} 
 \makeatother
-\end{Verbatim}
-这样在正文中无论是否在图形环境中，都可用~\cmd{figcaption}~来得到图形标题。
-同样地，无论是否在表格环境中，都可用~\cmd{tabcaption}~来得到表格标题。
-下面的命令
-\begin{Verbatim}[xleftmargin=1cm]
-This is the text before the figure. 
-\\[\intextsep] 
-\begin{minipage}{\textwidth} 
-\centering 
-\includegraphics[width=2in]{graphic.eps}% 
-\figcaption{This is a non-floating figure} 
-\label{fig:non:float} 
-\end{minipage} 
-\\[\intextsep] 
-This is the text after the figure.
-\end{Verbatim}
-可得到一幅不浮动的图形。对于不浮动的图形，需要注意下面几点：
-\begin{itemize}
-	\item 需要使用小页环境（\texttt{minipage}）来防止在图形中出现分页的情况。
-	\item 命令~\cmd{\bs[\bs intextsep]}~开始一新行并在图形的前后加上
-	垂直的空白。任意大小的空白都可以，~\cmd{intextsep}~（见
-	第~\ref{sec:vspace}~节）被用来使不浮动的图形具有与浮动图形相同的上
-	下间距。
-	\item 一般地，浮动图形是按照它们在~\LaTeX{}~源文件中的顺序一一被放置的。
-	而不浮动的图形是被立即放置到页面上，所以可能会出现图形顺序错误的
-	情况，图形出现的顺序被打乱~\realfootnote{在这种情况下，图形目录中图形的
-		顺序是按照图形出现的顺序，而不是图形编号的顺序。}。要避免这种顺序
-	错乱，可在不浮动的图形前用~\cmd{clearpage}~或~\cmd{FloatBarrier}~命令
-	清除未处理的浮动图形（见第~\ref{sec:unprocessfig}~节）。
-	\item \cmd{figcaption}~和~\cmd{tabcaption}~在生成边注图形（见
-	第~\ref{chap:marginfigure}~章）以及与图形并列的表格（见
-	第~\ref{chap:figuretable}~章）时会很有用。
-\end{itemize}
+\end{lstlisting}
+这样定义了两个命令 \cmd{figcaption} 和 \cmd{tabcaption}。
+在正文中无论是否在图形环境中，都可用 \cmd{figcaption} 得到图形标题。
+同样地，无论是否在表格环境中，都可用 \cmd{tabcaption} 得到表格标题。
 
-\subsection{float~~宏包中的~~[H]~~位置选项}
+\subsection{float 宏包中的 [H] 位置选项}
 
-\pai{float}~宏包\realfootnote{\textsf{float}~宏包允许用户新的浮动体，
-	如~\texttt{Program, Algorithm}~等。也可以定制加框的和加线条的浮动式样。}
-为~\texttt{figure}~环境加上了一个~\texttt{[H]}~
-位置选项，从而使得用~\texttt{figure}~环境可以生成不浮动的图形。
-为使用此功能，须在导言区使用
-\begin{Verbatim}[xleftmargin=1cm]
+\pkgi{float} 宏包\footnote{
+	\pkg{float} 宏包允许用户新的浮动体，如 \env{Program}、\env{Algorithm} 等。
+	也可以定制加框的和加线条的浮动式样。
+	这些可选的浮动式样重定义了 \cmd{caption} 命令，
+	使得无论将 \cmd{caption} 命令放在何处，
+	总会在特定的地方排版标题，因此不可以创建并列图形以及其它的复杂图形。}
+为 \env{figure} 环境加上了一个 \opt{[H]} 位置选项，
+从而使得用 \env{figure} 环境可以生成不浮动的图形。
+如下代码
+\begin{lstlisting}
 \usepackage{float}
-\end{Verbatim}
-并且在使用~\cmd{begin\{figure\}[H]}~命令前声明~\ci{restylefloat}~命令（见
-~\cite[第~149~页]{Michel}）。不过，使用~\textsf{float}~宏包提供的~\texttt{[H]}~
-选项会伴有下面的副作用：
-\begin{enumerate}
-	\item 如果当前页没有足够的空间放置一幅使用了~\texttt{[H]}~位置选项的图形，
-	该图形会被置于下一页的顶部。然而，如果当前页中有脚注的话，它将会
-	紧接在文本后排出，而不是像通常那样置于页面的底部。这时用户必须在图形前
-	面加上足够的空白以保证将脚注移到页面的底部。
-	\item 使用由~\textsf{float}~宏包定义的图形环境总是将标题置于图形的下方。
-	对于一般的图形来说不会有什么影响。但是，它会影响如
-	第~\pageref{fig:normalabovefig}~页上图~\ref{fig:normalabovefig}~那样
-	标题在上方的图形，第~\pageref{fig:side:caption}~页上
-	图~\ref{fig:side:caption}~那样标题在旁边的图形或其它比较复杂的图形
-	排放（如第~\pageref{fig:normalcap}-\pageref{fig:hangcap}~页上的
-	图~\ref{fig:normalcap}-~\ref{fig:hangcap}）。
-\end{enumerate}
+...
+\begin{figure}[H]
+	.....
+\end{figure}
+\end{lstlisting}
+可以生成不浮动的图形。
 
-综上所述，使用本章前面所介绍的通过定义~\cmd{figcaption}~
-来得到不浮动的图形要比使用~\textsf{float}~宏包的~\texttt{[H]}~位置选项
-更好些。
+如果当前页没有足够的空间放置一幅使用了 \opt{[H]} 位置选项的图形，
+该图形会被置于下一页的顶部。
+如果当前页中有脚注的话，它将会紧接在文本后排出，而不是像通常那样置于页面的底部。
+如果不想要这种效果，可以使用第~\ref{sec:nonfloat} 节介绍的 \cmd{captionof} 命令来代替 \pkg{float} 宏包的 \opt{[H]} 位置选项。
+
 
 \section{边注图形}\label{sec:marginfigure}
 
