@@ -1772,272 +1772,282 @@ This is the text after the figure.
 由于 \cmd{ifthenelse} 使用命令 \cmd{pageref} 作为输入，
 所以需要 \LaTeX{} 运行足够的次数后才能正确地排出交叉引用。
 
-=====================================
-\section{横排的图形}
 
-\noindent 在一竖排版的文档中，有三种方法来得到横排的图形。
+\section{横排的图形}\label{sec:lscapefig}
+
+在竖排版的文档中，有三种方法可以得到横排的图形。
 \begin{enumerate}
-	\item \pai{lscape}~宏包提供了一个~\ei{landscape}~环境，将纸张的左
-	边界作为页面的顶部，使得在此环境中的文本，表格和图形都被
-	横排。
-	\item \pai{rotating}~宏包提供了一个~\ci{sidewaysfigure}~环境，与
-	~\texttt{figure}~环境相似，只是其中的图形被横排。
-	\item \pai{rotating}~宏包提供了一个~\ci{rotcaption}~命令，与
-	~\cmd{caption}~命令相似，只是标题被横排。
+	\item \pkgi{lscape} 宏包提供了一个 \envi{landscape} 环境，
+	将纸张的左边界作为页面的顶部，使得在此环境中的文本，表格和图形都被横排。
+	\item \pkgi{rotating} 宏包提供了一个 \envi{sidewaysfigure} 环境，
+	与 \env{figure} 环境相似，只是其中的图形被横排。
+	\item \pkg{rotating} 宏包提供了一个 \cmdi{rotcaption}~命令，
+	与 \cmd{caption} 命令相似，只是标题被横排。
 \end{enumerate}
 
-\noindent 以上三中方法的区别：
+以上三种方法的区别：
 \begin{itemize}
-	\item 方法~1~和~2~将横排的图形放到单独的一页上，而方法~3~则生成一个
-	并不需要单独一页来放置的浮动体。
-	\item 方法~2~只是将其中的图形横排，而方法~1~则将位于~\texttt{landscape}~
-	环境中的任何文本，图形和表格都横排在一页中。~\texttt{landscape}~
-	环境具有分页的能力，可连续生成多个横排页面
-	\realfootnote{~\texttt{landscape}~环境能很好的与~\pai{longtable}~
-		宏包配合，从而得到连续多页横排的超长表格。}。
-	\item 使用方法~2~得到的整页的图形可以浮动以求得最佳排版效果，而方法~1~
-	得到的图形是不能浮动的\realfootnote{在~\texttt{landscape}~环境
-		中声明的浮动图形只能在横排页中浮动。}。
-	\item 因为方法~1~和~3~使用~\texttt{figure}~环境，所以它们可以和
-	~\textsf{endfloat}~宏包（见第~\ref{sec:endfloat}~节）一起使用。
+	\item 方法1和2将横排的图形放到单独的一页上，
+	而方法3则生成独立的浮动体，并不需要单独一页来放置。
+	\item 方法2只是将其中的图形横排，
+	而方法1中的 \env{landscape} 环境是一种通用环境，可以横排任何文本、图形和表格。
+	\env{landscape} 环境还具有分页的能力，可连续生成多个横排页面\footnote
+		{\env{landscape} 环境能很好地与 \pkgi{longtable} 宏包配合使用，
+		从而得到连续多页横排的超长表格。}。
+	\item 使用方法2得到的整页图形可以浮动以达到更好的排版效果，
+	而方法1得到的图形是不能浮动的\footnote{
+		在 \env{landscape}环境中声明的浮动图形只能在该横排页内浮动。}。
+	\item 因为方法1和3使用 \env{figure} 环境，
+	所以它们可以和 \pkg{endfloat}~宏包（见第~\ref{ssec:endfloat}~节）一起使用。
+	\item 方法1和2特别适用于并列的横排图像（关于并列图形的方法见第~\ref{sec:sidebyside} 节）。
 \end{itemize}
 
-\subsection{Landscape~~环境}\label{ssec:landscape}
+\subsection{Landscape 环境}\label{ssec:landscape}
 
-\textsf{landscape}~宏包（包括在标准的~\LaTeX{}~图形宏包套件中）定义
-了~\texttt{landscape}~环境，允许在竖排版的文档中放置横排页。
+\pkg{lscape} 宏包是 \LaTeX{} 标准图形宏集的一部分，
+它定义的 \env{landscape} 环境可以将横排页面放置在竖排版的文档中。
 横排页被旋转使得竖排页的左边界为其顶部。
 
-输入命令~\cmd{begin\{landscape\}}~使得所有未处理的竖排的浮动体
-被排出并开始横排页，同样地，输入命令~\cmd{end\{landscape\}}~使得所
-有未处理的横排的浮动体被排出并重新回到竖排状态。
+输入命令 \cmdonearg{begin}{landscape} 会立即排版所有未处理的竖排浮动体，
+然后进入横排方向页面。
+同样地，输入命令 \cmdonearg{end}{landscape} 会立即排版所有未处理的横排浮动体，
+然后重新回到竖排状态。
 
-所有位于~\texttt{landscape}~环境中的内容都会被横排。如果只有
-包含一个浮动图形环境
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{landscape} 
-\begin{figure} 
-\centering 
-\includegraphics[width=4in]{graphic.eps} 
-\caption{Landscape Figure} 
-\end{figure} 
+所有位于 \env{landscape} 环境中的内容都会被横排，例如任何文本、图形和表格的组合。
+如果只有包含一个浮动图形环境
+\begin{lstlisting}
+\begin{landscape}
+	\begin{figure}
+		\centering
+		\includegraphics[width=4in]{graphic}
+		\caption{Landscape Figure}
+	\end{figure}
 \end{landscape}
-\end{Verbatim}
-这时会得到如图~\ref{fig:landscape}~所示的横排图形。不过，由于
-~\texttt{landscape}~开始一新页，可能会导致页面出现很大空白。
-如同此页 :)
+\end{lstlisting}
+这是会得到一个横排的图形。
+不过，由于 \env{landscape} 开始一新页，可能会导致页面出现很大空白，如同本页一样。
 
 \begin{landscape} 
 	\begin{figure} 
 		\centering
-		\resizebox{4in}{!}{\usebox{\graphic}}
+		\includegraphics[width=4in]{graphic}
 		\caption{Landscape Figure}\label{fig:landscape}
 	\end{figure} 
 \end{landscape}
 
-\subsection{Sidewaysfigure~~环境}\label{ssec:sidewaysfigure}
+\subsection{Sidewaysfigure 环境}\label{ssec:sidewaysfigure}
 
-\textsf{rotating}~宏包提供了~\texttt{sidewaysfigure}~环境来生成
-横排的图形。例如：
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{sidewaysfigure} 
-\centering 
-\includegraphics[width=4in]{graphic.eps} 
-\caption{Sidewaysfigure Figure} 
+\pkg{rotating} 宏包提供了 \env{sidewaysfigure} 环境生成横排的图形\footnote{
+	\pkg{rotating} 宏包还提供了一个 \envi{sidewaystable} 环境，
+	可以生成横排的表格。}。例如：
+\begin{lstlisting}
+\begin{sidewaysfigure}
+	\centering
+	\includegraphics[width=4in]{graphic}
+	\caption{Sidewaysfigure Figure}
 \end{sidewaysfigure}
-\end{Verbatim}
+\end{lstlisting}
 得到图~\ref{fig:sidewaysfigure}。
 
 \begin{sidewaysfigure}
 	\centering
-	\resizebox{4in}{!}{\usebox{\graphic}}
+	\includegraphics[width=4in]{graphic}
 	\caption{Sidewaysfigure Figure}\label{fig:sidewaysfigure}
 \end{sidewaysfigure}
 
-与~\texttt{landscape}~环境不同的是，由~\texttt{sidewaysfigure}~得到
-的图形可在竖排页中浮动以避免导致出现过多空白的页面。相反~\texttt{landscape}~
-环境则有更大的灵活性，允许横排页中有文本，表格和图形等。
+与 \env{landscape} 环境不同的是，
+由 \env{sidewaysfigure} 得到的图形可在竖排页中浮动，
+从而避免导致出现过多空白的页面。
+不过 \env{landscape} 环境则有更大的灵活性，允许横排页中有文本，表格和图形等。
 
-\texttt{sidewaysfigure}~排出的图形的外观缺省由文档使用~\texttt{oneside}~
-还是~\texttt{twoside}~版式所决定。
+\env{sidewaysfigure} 生成图形的默认方向取决于该文档使用 \opt{oneside} 还是 \opt{twoside} 文档类选项。
 \begin{itemize}
-	\item 当使用~\texttt{oneside}~时，图形的底部面向竖排页的右边界。
-	\item 当使用~\texttt{twoside}~时，图形的底部面向竖排页的外边界。
+	\item 当使用 \opt{oneside} 时，图形的底部面向竖排页的右边。
+	\item 当使用 \opt{twoside} 时，图形的底部面向竖排页的外边界。
 \end{itemize}
-在调入~\textsf{rotating}~是使用宏包选项可以改变上述缺省行为。
-如：
-\begin{Verbatim}[xleftmargin=1cm]
+使用 \pkg{rotating} 的宏包选项可以覆盖默认设置。例如：
+\begin{lstlisting}
 \usepackage[figuresleft]{rotating}
-\end{Verbatim}
-使得用~\texttt{sidewaysfigure}~排出的图形的底部面向竖排页的左边界（无论
-是~\texttt{oneside}~还是~\texttt{twoside}~）。同样，
-\begin{Verbatim}[xleftmargin=1cm]
+\end{lstlisting}
+使得用 \env{sidewaysfigure} 图像的底部面向竖排页的左边界
+（无论是 \opt{oneside} 还是 \opt{twoside}）。同样地，
+\begin{lstlisting}
 \usepackage[figuresright]{rotating}
-\end{Verbatim}
-使得用~\texttt{sidewaysfigure}~排出的图形的底部面向竖排页的右边界。
+\end{lstlisting}
+使得用 \env{sidewaysfigure} 图像的底部面向竖排页的右边界。
 
-\subsection{Rotcaption~~命令}
+\subsection{Rotcaption 命令}
 
-用第~\ref{sec:landscape}~节和第~\ref{sec:sidewaysfigure}~节的方法
-得到的横排图形都是放在一单独的横排页上的。不过对于比较小的图形来说，
-显然没有必要。这种情况下，可以利用~\textsf{rotating}~宏包中的
-~\cmd{rotcaption}~来得到小的横排图形。例如：
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\centering 
-\begin{minipage}[c]{1in} 
-\includegraphics[angle=90,width=\textwidth]{graphic.eps}
-\end{minipage} 
-\begin{minipage}[c]{0.5in} 
-\rotcaption{Rotcaption Caption} 
-\label{fig:rotcaption} 
-\end{minipage} 
-\end{figure}
-\end{Verbatim}
-得到图~\ref{fig:rotcaption}。
-
-\begin{figure} 
-	\centering 
+用第~\ref{ssec:landscape} 节和第~\ref{ssec:sidewaysfigure} 节的方法得到的横排图形都是放在一单独的横排页上的。
+不过对于比较小的图形来说显然没有必要。
+这种情况下，可以利用 \env{rotating} 宏包中的 \cmd{rotcaption} 来得到小的横排图形。例如：
+\begin{lstlisting}
+\begin{figure}
+	\centering
 	\begin{minipage}[c]{1in}
-		\includegraphics[angle=90,width=\textwidth]{graphic}  
+		\hfill\includegraphics[width=2in,angle=90]{graphic}
+	\end{minipage}%
+	\hspace{0.2in}%
+	\begin{minipage}[c]{0.5in}
+		\captionsetup{width=2in}
+		\rotcaption{由 Rotcaption 命令创建的标题}
+		\label{fig:rotcaption}
 	\end{minipage}
-	\begin{minipage}[c]{0.5in} 
-		\rotcaption{Rotcaption Caption} 
-		\label{fig:rotcaption} 
+\end{figure}
+\end{lstlisting}
+会生成图~\ref{fig:rotcaption}。
+\cmd{rotcaption} 命令生成标题的底部总是面向页面的右边界。
+与第~\ref{ssec:landscape}~节和第~\ref{ssec:sidewaysfigure}~节的方法不同的是，
+\cmd{rotcaption} 并不旋转图形。
+因此上例中的 \cmd{includegraphics} 命令需要使用 \opt{angle=90} 这一选项。
+
+\begin{figure}
+	\centering
+	\begin{minipage}[c]{1in}
+		\hfill\includegraphics[width=2in,angle=90]{graphic}
+	\end{minipage}%
+	\hspace{0.2in}%
+	\begin{minipage}[c]{0.5in}
+		\captionsetup{width=2in}
+		\rotcaption{由 Rotcaption 命令创建的标题}
+		\label{fig:rotcaption}
 	\end{minipage}
 \end{figure}
 
-\cmd{rotcaption}~命令生成的标题总是旋转使得其底部面向页面的右边界。
-与第~\ref{sec:landscape}~节和第~\ref{sec:sidewaysfigure}~节的方法
-不同的是，~\cmd{rotcaption}~并不旋转图形。因此上例中的~\cmd{includegraphics}~
-命令需要使用~\texttt{angle=90}~这一选项。
 
 \section{标题在一边的图形}\label{sec:sidecaption}
 
-一般来说，图形的标题放置在其上方或下方。本章将介绍怎样将标题放置在
-图形的旁边\realfootnote{因为~\textsf{float}~宏包定义的~\texttt{figure}~环境
-	中，标题固定在图形的下方，因此无法使用它来得到置于图形旁边的标题。
-	只要没有声明~\cmd{restylefloat}~命令，其它的~\textsf{float}~宏包的
-	命令都可使用。}。第~\ref{sec:leftcaption}~节介绍了将标题置于图形左侧的
-方法，同样地也可将标题置于图形的右侧。对于双面版式的文档，第
-~\ref{sec:bindcaption}~节介绍了将标题置于图形内侧（奇数页中为图形的
-左侧，偶数页中为图形的右侧）的方法。
+一般来说，图形的标题放置在其上方或下方。
+本节将介绍怎样将标题放置在图形的一侧\footnote{
+	因为 \pkg{float} 宏包定义的 \env{figure} 环境将标题固定在图形的下方，
+	因此无法使用它来得到置于图形一侧的标题。
+	不过，只要没有声明 \cmd{restylefloat} 命令，
+	其它的 \pkg{float} 宏包的命令都可使用。}。
 
-\subsection{图形左侧标题}\label{ssec:leftcaption}
 
-\cmd{caption}~命令一般将标题置于图形或表格的下方。可以利用小页
-环境来欺骗~\cmd{caption}~命令，从而使它把标题放在图形的一侧。
-例如命令：
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\centering 
-\begin{minipage}[c]{.45\textwidth} 
-\centering 
-\caption{Caption on the Side} 
-\label{fig:side:caption} 
-\end{minipage}%
-\begin{minipage}[c]{.45\textwidth} 
-\centering 
-\includegraphics[width=\textwidth]{graphic.eps} 
-\end{minipage} 
-\end{figure}
-\end{Verbatim}
-得到如图~\ref{fig:side:caption}~的结果。在小页之间加入像~\cmd{hfill}~
-或~\cmd{hspace\{.05\bs textwidth\}}~的水平距离可能会更好些。
+\subsection{Sidecap 宏包}\label{ssec:sidecap}
 
-\begin{figure} 
-	\centering 
-	\begin{minipage}[c]{.45\textwidth} 
-		\centering
-		\caption{Caption on the Side} 
-		\label{fig:side:caption} 
-	\end{minipage}%
-	\begin{minipage}[c]{.45\textwidth} 
-		\centering 
-		\resizebox{\textwidth}{!}{\usebox{\graphic}}
-	\end{minipage}  
-\end{figure}
-
-图~\ref{fig:side:caption}~中标题和图形垂直居中。如果想让图形和标题
-顶部对齐或底部对齐，可参见第~\ref{sec:minivalign}节。
-
-\subsection{图形内侧标题}\label{ssec:bindcaption}
-
-上节图~\ref{fig:side:caption}~中将标题放在图形的左侧，而对于双面版式
-的文档，常常会希望将标题置于图形的内侧。这时可用~\textsf{ifthen}~宏包
-的~\cmd{ifthenelse}~命令来指定对奇数页和偶数页所使用的不同代码。例如：
-\begin{Verbatim}[xleftmargin=1cm]
-\usepackage{ifthen} 
-... 
-\begin{figure} 
-\centering 
-\ifthenelse{\isodd{\pageref{fig:side:caption}}} 
-{% BEGIN ODD-PAGE FIGURE 
-\begin{minipage}[c]{.45\textwidth} 
-\centering 
-\caption{Caption on the Side} 
-\label{fig:side:caption} 
-\end{minipage}% 
-\hspace{0.05\textwidth}% 
-\begin{minipage}[c]{.45\textwidth} 
-\includegraphics[width=\textwidth]{graphic.eps} 
-\end{minipage}% 
-}% END ODD-PAGE FIGURE
-{% BEGIN EVEN-PAGE FIGURE 
-\begin{minipage}[c]{.45\textwidth} 
-\includegraphics[width=\textwidth]{graphic.eps} 
-\end{minipage}% 
-\hspace{0.05\textwidth}% 
-\begin{minipage}[c]{.45\textwidth} 
-\centering 
-\caption{Caption on the Side} 
-\label{fig:side:caption} 
-\end{minipage}% 
-}% END EVEN-PAGE FIGURE 
-\end{figure}
-\end{Verbatim}
-生成的图形其标题总在图形的内侧。
-
-\subsection{Sidecap~~宏包}\label{ssec:sidecap}
-
-利用前面量节介绍的方法可以得到标题在一侧的图形。如果希望有更多的灵活性，
-那么使用~\pai{sidecap}~宏包将更为简单方便。
-
-当在~\textsf{sidecap}~宏包提供的~\ei{SCfigure}~
-环境中使用~\cmd{caption}~命令时，标题会被自动地放置于图形的一侧。
+创建一侧标题最简单的途径就是使用 \pkgi{sidecap} 宏包。
+该宏包定义了 \envi{SCfigure} 和 \envi{SCtable} 环境。
+在其中使用 \cmd{caption} 命令时，标题就会自动放在环境内容的一侧。
 例如：
-\begin{Verbatim}[xleftmargin=1cm]
-\usepackage{sidecap} 
-... 
-\begin{SCfigure} 
-\includegraphics[width=3in]{graphic.eps} 
-\caption{This is a SCfigure} 
+\begin{lstlisting}
+\usepackage{sidecap}
+...
+\begin{SCfigure}
+	\includegraphics[width=3in]{graphic}
+	\caption{This is a SCfigure}
 \end{SCfigure}
-\end{Verbatim}
-结果如图~\ref{fig:sidecap}~所示。
+\end{lstlisting}
+会生成图~\ref{fig:sidecap}。
 
 \begin{SCfigure} 
-	\resizebox{3in}{!}{\usebox{\graphic}}
+	\includegraphics[width=3in]{graphic}
 	\caption{This is a SCfigure}
 	\label{fig:sidecap}
 \end{SCfigure}
 
-\noindent\textsf{sidecap}~宏包在用~\cmd{usepackage}~调入时有下面四个可选项：
+\pkg{sidecap} 宏包在用 \cmd{usepackage} 调入时有下面四个可选项：
 \begin{description}
 	\item [outercaption] 标题在偶数页中出现在左侧，奇数页中出现在右侧。
-	这也是~\textsf{sidecap}~宏包的缺省选项。
+	这也是 \pkg{sidecap} 宏包的缺省选项。
 	\item [innercaption] 标题在偶数页中出现在右侧，奇数页中出现在左侧。
 	\item [leftcaption]  标题总出现在左侧。
 	\item [rightcaption] 标题总出现在右侧。
 \end{description}
 
-\noindent\texttt{Scfigure}~环境包括下面两个可选参数：
+\env{Scfigure} 环境包括下面两个可选参数：
 \begin{itemize}
-	\item 第一个可选参数指定标题对于图形的相对宽度。一个大的值（如~100）会让
-	标题使用最大可能的宽度。缺省为~1。
-	\item 第二个可选参数指定图形的浮动位置选项。如~\texttt{[htp]}~或
-	~\texttt{[!ht]}~等，详见第~ref{sec:figplacement}~节。
+	\item 第一个可选参数指定标题对于图形的相对宽度。
+	比较大的值（如100）会让标题使用最大可能的宽度。缺省为1。
+	\item 第二个可选参数指定图形的浮动位置选项，如 \opt{[htp]}或 \opt{[!ht]} 等，
+	详见第~\ref{ssec:figplacement}~节。
 \end{itemize}
+
+\subsection{不使用 Sidecap 宏包时的一侧标题}
+
+如果 \pkg{sidecap} 没有提供足够的灵活性，
+用户可以使用本节的方法生成一侧标题。
+第~\ref{sssec:leftcaption} 节展示了如何将标题放在图像的左侧。
+放在图像右侧的方法也是类似的。
+第~\ref{sssec:bindcaption} 节展示了对于双面版式的文档，
+如何将标题置于图形内侧（奇数页中为图形的左侧，偶数页中为图形的右侧）。
+
+\subsubsection{图形左侧标题}\label{sssec:leftcaption}
+
+\cmd{caption}  命令一般将标题置于图形或表格的下方。
+可以利用小页环境的技巧使得 \cmd{caption} 命令把标题放在图形的一侧。
+例如命令：
+\begin{lstlisting}
+\begin{figure}
+	\centering
+	\begin{minipage}[c]{.45\linewidth}
+		\centering
+		\caption{Caption on the Side}
+		\label{fig:side:caption}
+	\end{minipage}%
+	\begin{minipage}[c]{.45\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{graphic}
+	\end{minipage}
+\end{figure}
+\end{lstlisting}
+得到图~\ref{fig:side:caption}。
+在小页之间加入像 \cmd{hfill} 或 \cmdonearg{hspace}{.05\cmd{linewidth}} 的水平距离可能会更好些。
+
+\begin{figure}
+	\centering
+	\begin{minipage}[c]{.45\linewidth}
+		\centering
+		\caption{Caption on the Side}
+		\label{fig:side:caption}
+	\end{minipage}%
+	\begin{minipage}[c]{.45\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{graphic}
+	\end{minipage}
+\end{figure}
+
+图~\ref{fig:side:caption} 中标题和图形垂直居中。
+如果想让图形和标题顶部对齐或底部对齐，可参见第~\ref{ssec:minivalign}节。
+
+\subsubsection{图形内侧标题}\label{sssec:bindcaption}
+
+上节图~\ref{fig:side:caption}~中将标题放在图形的左侧，
+而对于双面版式的文档，常常会希望将标题置于图形的内侧。
+这时可用 \pkg{ifthen} 宏包的 \cmd{ifthenelse} 命令来指定对奇数页和偶数页所使用的不同代码。例如：
+\begin{lstlisting}
+\usepackage{ifthen}
+...
+\begin{figure}
+	\centering
+	\ifthenelse{\isodd{\pageref{fig:side:caption}}}
+	{% BEGIN ODD-PAGE FIGURE
+		\begin{minipage}[c]{.45\linewidth}
+			\centering
+			\caption{Caption on the Side}
+			\label{fig:side:caption}
+		\end{minipage}%
+		\hspace{0.05\linewidth}%
+		\begin{minipage}[c]{.45\linewidth}
+			\includegraphics[width=\linewidth]{graphic}
+		\end{minipage}%
+	}% END ODD-PAGE FIGURE
+	{% BEGIN EVEN-PAGE FIGURE
+		\begin{minipage}[c]{.45\linewidth}
+			\includegraphics[width=\linewidth]{graphic}
+		\end{minipage}%
+		\hspace{0.05\linewidth}%
+		\begin{minipage}[c]{.45\linewidth}
+			\centering
+			\caption{Caption on the Side}
+			\label{fig:side:caption}
+		\end{minipage}%
+	}% END EVEN-PAGE FIGURE
+\end{figure}
+\end{lstlisting}
+这样生成的图形其标题总在图形的内侧。
+
 
 \section{奇偶页中的图形}\label{sec:evenoddpage}
 
