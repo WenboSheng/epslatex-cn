@@ -100,7 +100,7 @@ produces Figure 62, which has vertically-centered graphics.
 	选项 \opt{[t]} 将参考点置于小页顶行的基线上，
 	而选项 \opt{[b]} 将参考点置于小页底行的基线上（参见第~\ref{ssec:minivalign}~节）。
 	
-	\item 在第一个 \cmdonearg{end}{minipage} 后面的 \texttt{\%} 防止在两个小页之间多一个空格
+	\item 在第一个 \cmdM{end}{minipage} 后面的 \texttt{\%} 防止在两个小页之间多一个空格
 	（参见第~\ref{ssec:hspace} 节）。
 	
 	\item 当几个并列小页的宽度之和没有达到 $1.0\text{\cmd{textwidth}}$ 时，
@@ -156,7 +156,7 @@ produces Figure 62, which has vertically-centered graphics.
 	
 	\item 两个放置图像的小页环境宽度为 \env{figure} 环境宽度的 $40\percent$，
 	之间有1厘米的水平间距。
-	（注意，在 \cmdonearg{end}{minipage} 和 \cmdonearg{hspace}{1cm} 之后的注释会阻止额外的空格，
+	（注意，在 \cmdM{end}{minipage} 和 \cmdM{hspace}{1cm} 之后的注释会阻止额外的空格，
 	从而确保了间距正好是1厘米。）
 	
 	默认情况下，图形标题的宽度就是小页环境的宽度。
@@ -165,7 +165,7 @@ produces Figure 62, which has vertically-centered graphics.
 	此外，标题的宽度也可以用 \pkg{caption} 宏包的 \opt{margin} 或 \opt{width} 关键字进行控制
 	（参见表~\ref{tab:caption-formatopt}）。
 	
-	\item 紧接着 \cmdonearg{begin{figure} 的 \cmd{centering} 命令使得两个小页以及之间的空白在 \env{figure} 环境中居中放置。
+	\item 紧接着 \cmdM{begin{figure} 的 \cmd{centering} 命令使得两个小页以及之间的空白在 \env{figure} 环境中居中放置。
 		
 	\item 小页内部的 \cmd{centering} 命令使得图像在小页环境内部居中放置。
 \end{itemize}
@@ -219,13 +219,13 @@ produces Figure 62, which has vertically-centered graphics.
 		\toprule
 		引用命令 & 输出 \\
 		\midrule
-		\cmdonearg{subref}{fig:subfig:a} & \subref{fig:subfig:a} \\
-		\cmdonearg{subref*}{fig:subfig:a} & \subref*{fig:subfig:a} \\
-		\cmdonearg{ref}{fig:subfig:a} & \subref*{fig:subfig:a} \\
-		\cmdonearg{subref}{fig:subfig:b} & \subref{fig:subfig:b} \\
-		\cmdonearg{subref*}{fig:subfig:b} & \subref*{fig:subfig:b} \\
-		\cmdonearg{ref}{fig:subfig:b} & \ref{fig:subfig:b} \\
-		\cmdonearg{ref}{fig:subfig} & \ref{fig:subfig} \\
+		\cmdM{subref}{fig:subfig:a} & \subref{fig:subfig:a} \\
+		\cmdM{subref*}{fig:subfig:a} & \subref*{fig:subfig:a} \\
+		\cmdM{ref}{fig:subfig:a} & \subref*{fig:subfig:a} \\
+		\cmdM{subref}{fig:subfig:b} & \subref{fig:subfig:b} \\
+		\cmdM{subref*}{fig:subfig:b} & \subref*{fig:subfig:b} \\
+		\cmdM{ref}{fig:subfig:b} & \ref{fig:subfig:b} \\
+		\cmdM{ref}{fig:subfig} & \ref{fig:subfig} \\
 		\bottomrule
 	\end{tabular}
 \end{table}

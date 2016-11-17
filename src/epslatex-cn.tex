@@ -5,6 +5,7 @@
 \usepackage{nicefrac}
 \usepackage{lmodern}
 \usepackage[T1,T5]{fontenc}
+\usepackage{textcomp}
 
 \usepackage{fancybox}
 \usepackage{xcolor}
@@ -38,10 +39,13 @@
 \newcommand{\prgname}[1]{\textsf{#1}}
 \newcommand{\pkg}[1]{\texttt{#1}}
 \newcommand{\env}[1]{\texttt{#1}}
-\newcommand{\cmd}[1]{{\textcolor{blue}{\texttt{\char`\\#1}}}}
-\newcommand{\cmdonearg}[2]{\cmd{#1}\texttt{\{#2\}}}
-\newcommand{\cmdtwoargs}[3]{\cmd{#1}\texttt{[#2]\{#3\}}}
-\newcommand{\cmdthreeargs}[4]{\cmd{#1}\texttt{[#2][#3]\{#4\}}}
+\newcommand{\cmd}[1]{{\textcolor{blue}{\texttt{\char`\\#1}}}} % \foo
+\newcommand{\cmdM}[2]{\cmd{#1}\texttt{\{#2\}}} % \foo{bar}
+\newcommand{\cmdO}[2]{\cmd{#1}\texttt{[#2]}} % \foo[bar]
+\newcommand{\cmdMM}[3]{\cmd{#1}\texttt{\{#2\}\{#3\}}} % \foo{bar1}{bar2}
+\newcommand{\cmdOM}[3]{\cmd{#1}\texttt{[#2]\{#3\}}} % \foo[bar1]{bar2}
+\newcommand{\cmdOOM}[4]{\cmd{#1}\texttt{[#2][#3]\{#4\}}} % \foo[bar1][bar2]{bar3}
+\newcommand{\cmdMOM}[4]{\cmd{#1}\texttt{\{#2\}[#3]\{#4\}}} % \foo{bar1}[bar2]{bar3}
 \newcommand{\opt}[1]{\texttt{#1}}
 \newcommand{\pkgi}[1]{\pkg{#1}%
 	\index{#1@{\textsf{#1} 宏包}}}
@@ -55,6 +59,7 @@
 \newcommand{\HR}{\rule{1em}{0.4pt}}
 \newcommand{\percent}{\char37}
 \newcommand{\pt}{\ensuremath{\,\mathtt{pt}}}
+\newcommand{\metacmd}[1]{{\rm\textlangle\it#1\rm\textrangle}}
 
 %% cmd and env defined in epslatex
 \newenvironment{narrow}[2]{%

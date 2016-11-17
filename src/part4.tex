@@ -49,7 +49,7 @@
 	\item \LaTeX{} 允许图形浮动到当前页的顶部，
 	这样会使图形在引述它的文本前出现。
 	不喜欢这样做的用户可以使用~\pkgi{flafter}宏包。
-	无需使用特殊的命令，只要简单地调入该宏包 \cmdonearg{usepackage}{flafter} 即可。
+	无需使用特殊的命令，只要简单地调入该宏包 \cmdM{usepackage}{flafter} 即可。
 	
 	\item 要确保图形的浮动不超过某一特定点，可调入 \pkgi{placeins} 宏包，
 	并且使用 \cmdi{FloatBarrier} 命令。见第~\ref{ssec:unprocessfig}~节。
@@ -121,7 +121,7 @@ text text text text text text...
 \begin{lstlisting}
 \newcommand\Figpage[1]{第~\pageref*{#1} 页的图~\ref*{#1}
 \end{lstlisting}
-然后引用代码就可以用 \cmdonearg{Figpage}{fig:graph} 来简化。
+然后引用代码就可以用 \cmdM{Figpage}{fig:graph} 来简化。
 
 \paragraph{条件引用}
 以上定义的 \cmd{Figpage} 命令总是会打印出图形编号和页码。
@@ -229,7 +229,7 @@ text text text text text text...
 	反之，图形的处理也是与表格的处理无关的。
 	\item 必须符合在第~\ref{sec:typerule}~节中给出的审美条件。
 	例如，一页上的浮动体的数目不能超过 \opt{totalnumber}\index{totalnumber@\texttt}。
-	在浮动位置选项前加上一个惊叹号（如 \cmdonearg{begin}{figure}\opt{[!ht]}）
+	在浮动位置选项前加上一个惊叹号（如 \cmdM{begin}{figure}\opt{[!ht]}）
 	会使 \LaTeX{} 忽略应用于文本页的审美条件，试图强制放置浮动图形。
 	不过，\texttt{!} 不会影响应用于浮动页的审美条件。
 \end{enumerate}
@@ -300,18 +300,18 @@ text text text text text text...
 \end{lstlisting}
 	会使所有未处理的浮动体在下一分页前被清除完。
 	
-	使用 \cmdonearg{afterpage}{\cmd{clearpage}} 并不总可以解决浮动限制问题
+	使用 \cmdM{afterpage}{\cmd{clearpage}} 并不总可以解决浮动限制问题
 	（见第~\ref{ssec:toomanyfig}~节）。
 	因为它只是在页面结束前才会执行 \cmd{clearpage} 命令，
 	而到页面结束时可能又会累积新的未处理的浮动体，
 	进而可能已超过了 \LaTeX{} 的限制。
 	
-	\cmdonearg{afterpage}{\cmd{clearpage}} 命令在排版较小的浮动页图形时特别有用。
+	\cmdM{afterpage}{\cmd{clearpage}} 命令在排版较小的浮动页图形时特别有用。
 	而命令 \cmd{floatpagefraction} （见第~\ref{ssec:figpara} 节）
 	会阻止“太小”的图形在浮动页上出现。
 	进一步地，由于浮动位置标识符 \texttt{!} 	不会应用于浮动页，
 	因此 \opt{[!p]} 不会破除 \cmd{floatpagefraction} 的限制，
-	使用 \cmdonearg{afterpage}{\cmd{clearpage}} 既可以克服 \cmd{floatpagefraction} 的限制，
+	使用 \cmdM{afterpage}{\cmd{clearpage}} 既可以克服 \cmd{floatpagefraction} 的限制，
 	又不会导致正文页有较多空白。
 \end{description}
 
@@ -346,7 +346,7 @@ text text text text text text...
 		这会使得有足够的文本来自然分页，\LaTeX{} 也会更容易地处理浮动体。
 		\item 在这些图形之间加入 \cmd{clearpage}。
 		这样做可能得花费一些时间来调整页面以避免产生有很大空白的页。
-		注意，尽管 \cmdonearg{afterpage}{\cmd{clearpage}} 会在下一个自然分页处调用 \cmd{clearpage}，
+		注意，尽管 \cmdM{afterpage}{\cmd{clearpage}} 会在下一个自然分页处调用 \cmd{clearpage}，
 		但在此情况下并不起作用，
 		因为引发自然分页需要足够的文本，在这之前就会超过浮动体队列限制了。
 		\item 因为这里没有文本，所以图形并不需要浮动。
@@ -739,7 +739,7 @@ produce Figure 13, whose caption is placed quite close to the graphic.
 	\setlength{\belowcaptionskip}{10pt}% 
 	\caption}
 \end{lstlisting}
-此时 \cmdonearg{topcaption}{标题文本} 生成的标题放在浮动体顶部就很合适。
+此时 \cmdM{topcaption}{标题文本} 生成的标题放在浮动体顶部就很合适。
 
 另外还有两种方法可以使浮动体顶部的标题具有合适的间距：
 \begin{itemize}
@@ -915,7 +915,7 @@ Fig. 15: This is the Caption
 
 关于 \pkg{caption} 宏包有几个方面：
 \begin{itemize}
-	\item 新版本的 \cmd{caption} 命令可以生成标题，
+	\item 3.x 版本的 \cmd{caption} 命令可以生成标题，
 	这将在第~\ref{ssub:caption-cmd} 节介绍并在表~\ref{tab:caption-cmd}　列出。
 	
 	\item 第~\ref{ssub:caption-custom} 节介绍了两种如何定制标题选项的方法。
@@ -991,12 +991,173 @@ Fig. 15: This is the Caption
 	这样可以避免在标题和浮动体内容之间分页。
 \end{itemize}
 
-=======================================
-\noindent{\large{\raisebox{1ex}{\CJKfamily{hei}用法：}}\hspace{1cm}
-	\color{morelight}{\shadowbox{\textcolor{blue}{\texttt{%
-					\bs usepackage[\CJKfamily{kai}选项]\{caption2\}}}}}}
+\begin{sidewaystable}
+\centering
+\caption{\pkg{caption} 宏包命令}\label{tab:caption-cmd}
+\begin{tabular}{l P{0.5\linewidth}}
+	\toprule
+	命令 & 描述 \\
+	\midrule
+	\cmdM{caption}{\metacmd{caption text}} & 
+	使用 \metacmd{caption text} 作为图表标题以及图表目录的内容。
+	这与不用 \pkg{caption} 宏包时是一样的。 \\
+	\cmdOM{caption}{\metacmd{list entry}}{\metacmd{caption text}} & 
+	使用 \metacmd{caption text} 作为图表标题，\metacmd{list entry} 作为图表目录中的条目。
+	这与不用 \pkg{caption} 宏包时是一样的。 \\
+	\cmdOM{caption}{}{\metacmd{caption text}} & 
+	使用 \metacmd{caption text} 作为图表标题，在图表目录中不创建相应条目。\\
+	\cmdM{caption*}{\metacmd{caption text}} & 
+	使用 \metacmd{caption text} 作为图表标题，但标题中不包含标题标签和分隔符（见图~\ref{fig:def-capcontent}）。
+	在图表目录中不创建相应条目。\\
+	\cmdMOM{captionof}{\metacmd{float type}}{\metacmd{list entry}}{\metacmd{caption text}} & 
+	如果 \metacmd{float type} 是 \opt{figure}，
+	即使 \cmd{captionof} 命令位于 \env{figure} 环境外，也将生成图标题以及图目录中的条目。
+	类似地，如果 \metacmd{float type} 是 \opt{table}，
+	即使 \cmd{captionof} 命令位于 \env{table} 环境外，也将生成表格标题以及表格目录中的条目。\\
+	\cmdMM{captionof*}{float type}{caption text} &
+	类似于 \cmd{captionof} 命令，\metacmd{float type} 指定生成图形还是表格类型标题。
+	类似于 \cmd{caption*} 命令，\cmd{captionof*} 命令使用 \metacmd{caption text} 作为标题内容，
+	但不含标题标签和分隔符（见图~\ref{fig:def-capcontent}）。
+	在图表目录中不创建相应条目。\\
+	\cmd{ContinuedFloat} &
+	允许多个 \cmd{caption} 命令使用同一个图形编号。
+	参考第~\ref{ssec:continuedfloat} 节和第~\ref{sec:continuedfig-subfig} 节。\\
+	\bottomrule
+\end{tabular}
+\end{sidewaystable}
 
-这里{\CJKfamily{kai}选项}~的具体说明见表~\ref{tab:caption2opt}。
+
+\subsection{使用 Caption 命令定制标题} \label{ssec:captioncmd}
+
+正如第~\ref{ssec:caption-overview} 提到的，
+利用 \pkg{caption} 宏包可以定制标题的字体、间距、标签和格式。
+表~\ref{tab:captionsetupcmd}--\ref{tab:caption-formatopt} 列出了相应的选项。
+这些选项可以通过以下两种方式之一来指定。
+
+\begin{description}
+	\item[usepackage 选项] 
+	
+	\cmdOM{usepackage}{options}{caption} 命令。
+	其中 \opt{[options]} 可以是表~\ref{tab:caption-fontopt}--\ref{tab:caption-formatopt} 中任意选项的组合。例如
+\begin{lstlisting}
+\usepackage[margin=10pt,font=small,labelfont=bf]{caption}
+\end{lstlisting}
+	会使得标题两侧缩进了 $10\pt$，标题的全部（标签和文本）使用 \texttt{small} 字号，
+	并且标签字体加粗。
+	
+	\item[captionsetup 命令]
+	
+	\cmdM{captionsetup}{options} 命令指定的选项仅在之后的环境中起作用。
+	如果放在导言区，那么 \cmd{captionsetup} 会作用在整个文档上。
+	例如，
+\begin{lstlisting}
+\captionsetup{margin=10pt,font=small,labelfont=bf}
+\end{lstlisting}
+	会使得当前环境中接下来的左右标题左右缩进 $10\pt$，标题的全部（标签和文本）使用 \texttt{small} 字号，
+	并且标签字体加粗。
+	表~\ref{tab:captionsetupcmd} 介绍了 \cmdi{captionsetup} 和 \cmdi{clercaptionsetup} 命令。
+\end{description}
+
+相比于在 \cmd{usepackage} 命令中指定可选项，使用 \cmd{captionsetup} 有两方面的优势。
+\begin{itemize}
+	\item \cmd{captionsetup} 命令中可以指定选项仅作用于图形或仅作用于表格。
+	\item \cmd{captionsetup} 可以为单独的图形或表格更改设置。例如：
+\begin{lstlisting}
+\begin{figure}
+	...
+	\captionsetup{justification=centering}
+	\caption{This is the Caption Text}
+\end{figure}
+\end{lstlisting}
+	会使得该图形的标题居中，但不影响其它图形。
+\end{itemize}
+不过，尽管 \cmd{captionsetup} 可以用于定制单独的标题，
+但一般来说这是一种糟糕的设计。
+用户应该在导言区组织 \cmd{captionsetup} 命令，
+而避免在文档内使用。
+
+\begin{table}
+\centering
+\caption{\pkg{caption} 宏包中的标题设置命令}
+\begin{tabular}{p{.2\linewidth}p{0.5\linewidth} p{0.5\linewidth}}
+\toprule
+\multicolumn{2}{l}{命令} & 描述 \\
+\midrule
+\multicolumn{2}{l}{\cmdOM{captionsetup}{\metacmd{float type}}{\metacmd{options}}} & 设置标题因子\\
+例 & \cmdM{captionsetup}{\metacmd{options}} & 设置所有标题的格式 \\
+& \cmdOM{captionsetup}{figure}{\metacmd{options}} & 设置图形标题的格式 \\
+& \cmdOM{captionsetup}{table}{\metacmd{options}} & 设置表格标题的格式 \\
+\midrule
+\multicolumn{2}{l}{\cmdM{clearcaptionsetup}{\metacmd{float type}}}
+& 更改标题因子为默认值 \\
+例 & \cmdM{clearcaptionsetup}{figure} & 重置图形标题选项为默认值 \\
+& \cmdM{clearcaptionsetup}{table} & 重置表格标题选项为默认值
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}
+\centering
+\caption{\cmd{captionsetup} 字体选项}\label{tab:caption-fontopt}
+\begin{tabular}{lp{0.5\linewidth}}
+\toprule
+选项 & 作用部分 \\
+\midrule
+\opt{font=} & 作用于整个标题，包括标题标签、分隔符和标题内容 \\
+\opt{labelfont=} & 只作用于标题标签和分隔符 \\
+\opt{textfont=} & 只作用于标题内容\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\begin{table}
+\centering
+\caption{\cmd{captionsetup} 字体选项值}\label{tab:caption-fontval}
+\begin{tabular}{l>{\ttfamily}lp{0.4\linewidth}}
+\toprule
+作用 & {\rm 选项值} & 描述 \\
+\midrule
+使用所有的字体默认值 & default & 将字族、字形、字系和字号设置为默认值 \\
+\midrule
+设置字族 & rm & \textrm{罗马字族，roman}（默认值） \\
+& sf & \textsf{无衬线字族，sans sarif} \\
+& tt & \texttt{打字机字族，typewriter} \\
+\midrule
+设置字形 & up & \textup{直立字形，upright} （默认值） \\
+& it & \textit{意大利字形，italic} \\
+& sl & \textsl{倾斜字形，slanted} \\
+& sc & \textsc{小型大写字形，small caps} \\
+\midrule
+设置字系 & md & \textmd{中等字系，medium} （默认值） \\
+& bf & \textbf{粗体字系，bold} \\
+\midrule
+设置字号 & scriptsize & {\scriptsize scriptsize 字号} \\
+& footnotesize & {\footnotesize footnotesize 字号} \\
+& small & {\small small 字号} \\
+& normalsize & {\normalsize normalsize 字号} （默认值） \\
+& large & {\large large 字号} \\
+& Large & {\Large Large 字号}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}
+\centering
+\caption{\cmd{captionsetup} 垂直间距选项}\label{tab:caption-spaceopt}
+\end{table}
+
+
+\begin{table}
+\centering
+\caption{\cmd{captionsetup} 标题标签和分隔符选项}\label{tab:caption-labelopt}
+\end{table}
+
+\begin{table}
+\centering
+\caption{\cmd{captionsetup} 格式选项}\label{tab:caption-formatopt}
+\end{table}
+
 
 \begin{table}
 	\newcommand{\tbltt}[1]{\textcolor{cyan}{\texttt{#1}}}
@@ -1553,7 +1714,7 @@ This is the text after the figure.
 可得到一幅不浮动的图形。对于不浮动的图形，需要注意下面几点：
 \begin{itemize}
 	\item 需要使用 \env{minipage} 小页环境来防止在图形中出现分页的情况。
-	\item 命令 \cmdonearg{\cmd{}}{\cmd{intextsep}} 开始新的一行并在图形的前后加上垂直的空白。
+	\item 命令 \cmdM{\cmd{}}{\cmd{intextsep}} 开始新的一行并在图形的前后加上垂直的空白。
 	\cmd{intextsep}~（见第~\ref{ssec:vspace}~节）可以使用任意大小的空白，
 	目的是使不浮动的图形具有与浮动图形相同的上下间距。
 	\item 正常情况下，浮动图形是按照它们在 \LaTeX{} 源文件中的顺序一一被放置的。
@@ -1704,7 +1865,7 @@ This is the text after the figure.
 	\item[]}{\end{list}}
 \end{lstlisting}
 
-那么，所有位于 \cmdthreeargs{begin}{narrow}{1in}{2in} 和 \cmdonearg{end}{narrow} 之间的文本都被向左缩进1英寸，向右缩进2英寸。
+那么，所有位于 \cmdOOM{begin}{narrow}{1in}{2in} 和 \cmdM{end}{narrow} 之间的文本都被向左缩进1英寸，向右缩进2英寸。
 当使用负长度时，文本就会延伸到边空上去。
 
 \subsection{单面版式中的宽图形}\label{ssec:widefig-oneside}
@@ -1738,7 +1899,7 @@ This is the text after the figure.
 \setlength{\marginwidth}{\marginparwidth} 
 \addtolength{\marginwidth}{\marginparsep}
 \end{lstlisting}
-接着在 \cmdonearg{begin}{narrow} 的选项中使用 \opt{-\cmd{marginwidth}} 来达到目的。
+接着在 \cmdM{begin}{narrow} 的选项中使用 \opt{-\cmd{marginwidth}} 来达到目的。
 
 \subsection{双面版式中的宽图形}\label{widefig-twoside}
 
@@ -1808,9 +1969,9 @@ This is the text after the figure.
 它定义的 \env{landscape} 环境可以将横排页面放置在竖排版的文档中。
 横排页被旋转使得竖排页的左边界为其顶部。
 
-输入命令 \cmdonearg{begin}{landscape} 会立即排版所有未处理的竖排浮动体，
+输入命令 \cmdM{begin}{landscape} 会立即排版所有未处理的竖排浮动体，
 然后进入横排方向页面。
-同样地，输入命令 \cmdonearg{end}{landscape} 会立即排版所有未处理的横排浮动体，
+同样地，输入命令 \cmdM{end}{landscape} 会立即排版所有未处理的横排浮动体，
 然后重新回到竖排状态。
 
 所有位于 \env{landscape} 环境中的内容都会被横排，例如任何文本、图形和表格的组合。
@@ -1993,7 +2154,7 @@ This is the text after the figure.
 \end{figure}
 \end{lstlisting}
 得到图~\ref{fig:side:caption}。
-在小页之间加入像 \cmd{hfill} 或 \cmdonearg{hspace}{.05\cmd{linewidth}} 的水平距离可能会更好些。
+在小页之间加入像 \cmd{hfill} 或 \cmdM{hspace}{.05\cmd{linewidth}} 的水平距离可能会更好些。
 
 \begin{figure}
 	\centering
@@ -2090,10 +2251,10 @@ This is the text after the figure.
 	{\leftfig}}%
 {\afterpage{\leftfig}}
 \end{lstlisting}
-	\item 由于这些图形是非浮动的，可以用 \cmdonearg{value}{page} 命令确定当前页码。
-	注意，\cmdonearg{value}{page} 对于浮动图形用处不大，
+	\item 由于这些图形是非浮动的，可以用 \cmdM{value}{page} 命令确定当前页码。
+	注意，\cmdM{value}{page} 对于浮动图形用处不大，
 	因为它指的是图形处理时的页码，不是图形放置的页码。
-	因此，使用 \cmdonearg{value}{page} 比 \cmd{pageref} 更好，
+	因此，使用 \cmdM{value}{page} 比 \cmd{pageref} 更好，
 	因为 \cmd{pageref} 只有在 \LaTeX{} 的交叉引用收敛时才正确。
 	
 	\item 当图形较大时，可能会出现在图形中间（例如图形与标题之间）分页的情况。
@@ -2118,7 +2279,7 @@ This is the text after the figure.
 \end{lstlisting}
 	
 	\item 在上面的例子中，图形是占据完整的偶数页。
-	要将其置于偶数页的顶部，修改或去掉 \cmdonearg{vspace*}{\cmd{fill}} 和 \cmd{newpage} 命令：
+	要将其置于偶数页的顶部，修改或去掉 \cmdM{vspace*}{\cmd{fill}} 和 \cmd{newpage} 命令：
 \begin{lstlisting}
 \newcommand\leftfig{%
 	\centering
@@ -2310,7 +2471,7 @@ This is the text after the figure.
 		命令 & 参数  \\
 		\midrule
 		\begin{center}
-			\cmdonearg{shadowbox}{Example}\\
+			\cmdM{shadowbox}{Example}\\
 			\shadowbox{Example}
 		\end{center}  &
 		\begin{itemize}
@@ -2319,7 +2480,7 @@ This is the text after the figure.
 		\end{itemize} \\
 		\midrule
 		\begin{center}
-			\cmdonearg{doublebox}{Example}\\
+			\cmdM{doublebox}{Example}\\
 			\doublebox{Example}
 		\end{center} &
 		\begin{itemize}
@@ -2329,19 +2490,19 @@ This is the text after the figure.
 		\end{itemize} \\
 		\midrule
 		\begin{center}
-			\cmdonearg{ovalbox}{Example}\\
+			\cmdM{ovalbox}{Example}\\
 			\ovalbox{Example}
 		\end{center} &
 		\begin{itemize}		
 			\item 盒子边框线厚度为 \cmd{thinlines}。
-			\item 使用 \cmdonearg{cornersize}{x} 四个角的直径设为 \opt{x} 乘以盒子宽和高
+			\item 使用 \cmdM{cornersize}{x} 四个角的直径设为 \opt{x} 乘以盒子宽和高
 			之间的较小值。\opt{x}缺省为 0.5。
-			\item 使用\cmdonearg{cornersize*}{x} 命令直接将四个角的直径设为 \texttt{x}。
-			如 \cmdonearg{cornersize*}{1cm} 将四个角的直径设为~1~厘米。
+			\item 使用\cmdM{cornersize*}{x} 命令直接将四个角的直径设为 \texttt{x}。
+			如 \cmdM{cornersize*}{1cm} 将四个角的直径设为~1~厘米。
 		\end{itemize} \\
 		\midrule
 		\begin{center}
-			\cmdonearg{Ovalbox}{Example}\\
+			\cmdM{Ovalbox}{Example}\\
 			\Ovalbox{Example}
 		\end{center}  &
 		除了盒子边框线厚度为 \cmd{thicklines} 外，其它均与 \cmd{ovalbox} 一样。\\

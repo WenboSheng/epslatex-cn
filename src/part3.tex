@@ -86,7 +86,7 @@ World
 \end{lstlisting}
 使得图形的两边和中间的间距都相等。
 由于断行前的 \cmd{hfill} 命令会被忽略，
-所以需要用\cmdonearg{hspace*}{\cmd{fill}} 来替代它。
+所以需要用\cmdM{hspace*}{\cmd{fill}} 来替代它。
 
 除了 \cmd{hspace} 和 \cmd{hfill} 之外，
 \marginpar{其它间距命令}
@@ -288,7 +288,7 @@ World
 这样 \opt{[b]} 选项就可使作为其基线。
 类似地，如果在 \verb|\end{minipage}| 之前添加一条高度和深度为零的线，
 那么 \opt{[b]} 选项就会使小页的底部作为小页的基线。
-命令 \cmd{par}\cmdonearg{vspace}{0pt} 就可以产生这样高和深都为零的线段。
+命令 \cmd{par}\cmdM{vspace}{0pt} 就可以产生这样高和深都为零的线段。
 这时这条深度为零的线的基线就是小页的底部，
 选项 \opt{[b]} 可以让小页的底部对齐了。例如：
 \begin{lstlisting}
@@ -327,7 +327,7 @@ World
 使用 \opt{[t]} 选项使得小页的基线为它的顶部。
 如果在并列的若干小页环境中都进行这样的操作，那么就可以使这些小页环境的顶端对齐。
 
-命令 \cmdonearg{vspace}{0pt} 可以在小页的顶端插入一条高度和深度都为零的线段。
+命令 \cmdM{vspace}{0pt} 可以在小页的顶端插入一条高度和深度都为零的线段。
 由于该条高度为零的线段的基线就位于小页的顶部，
 现在使用 \opt{[t]} 选项就可以使得小页的顶部对齐了。例如：
 \begin{lstlisting}
@@ -363,7 +363,7 @@ World
 
 这里小页的顶部是和当前基线对齐。
 如果要求小页的顶部是和当前文本行的顶部对齐，
-可用 \cmdonearg{vspace}{-\cmd{baselineskip}}。
+可用 \cmdM{vspace}{-\cmd{baselineskip}}。
   ~\verb+\vspace{-\baselineskip}+~来
 相关专题参考~\cite[第~863--865~页]{Mittelbach2004}。
 
@@ -392,7 +392,7 @@ World
 才能达到想要的堆叠效果。
 
 如果没能理解 \cmd{makebox} 命令，这样的堆叠代码看起来就会显得有些不可思议。
-实际上，\cmdthreeargs{makebox}{0pt}{l}{...} 命令会创建一个宽度为零的盒子。
+实际上，\cmdOOM{makebox}{0pt}{l}{...} 命令会创建一个宽度为零的盒子。
 当指定宽度时（这里是 \texttt{0 pt}），
 那么排版算法就会分配这样宽度的水平空间，而不管其中内容的实际宽度是怎样。
 这样，对于一个内容居左的宽度为零的盒子，
@@ -750,7 +750,7 @@ EPS~格式的图形文件可以很容易的插入到~\LaTeX{}~文件中，
 	\DeclareGraphicsRule{.gif}{eps}{.gif.bb}{`gif2eps #1}
 	\end{lstlisting}
 \end{enumerate}
-当遇到 \cmdonearg{includegraphics}{file.gif} 时，
+当遇到 \cmdM{includegraphics}{file.gif} 时，
 \LaTeX{} 会从 \file{file.gif.bb} 中读取 BoundingBox，
 并告诉 \prgname{dvips} 使用 \prgname{gif2eps} 来将 \file{file.gif} 转为 \file{eps} 文件。
 
@@ -833,7 +833,7 @@ convert file2.gif 'eps:-'
 \DeclareGraphicsRule{.eps.gz}{eps}{.eps.bb}%
 {`gunzip -c `kpsewhich -n latex tex #1`}}
 \end{lstlisting}
-并且保留 \cmdonearg{ExecuteOptions}{dvips} 这一行。
+并且保留 \cmdM{ExecuteOptions}{dvips} 这一行。
 
 ================================================
 \section{PSfrag宏包}\label{sec:psfrag}

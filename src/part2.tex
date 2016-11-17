@@ -36,7 +36,7 @@
 \begin{enumerate}
 	\item 默认值在 \file{graphics.cfg} 文件中指定。
 	\item 任何通过 \cmd{documentclass} 的选项指定的驱动会覆盖由 \file{graphics.cfg} 文件指定的驱动。
-	\item 任何由 \cmdonearg{usepackage}{graphics} 的选项指定的驱动会覆盖前两种方式指定的驱动。
+	\item 任何由 \cmdM{usepackage}{graphics} 的选项指定的驱动会覆盖前两种方式指定的驱动。
 \end{enumerate}
 
 \subsection{DVIPS 模式下图像加载}
@@ -95,7 +95,7 @@
 		当使用 \prgname{pdflatex} 编译时会导入。
 	\end{enumerate}
 	
-	\item 不要在 \cmd{documentclass} 或者 \cmdonearg{usepackage}{graphicx} 命令中指定 \opt{dvips} 或者 \opt{pdftex} 选项。
+	\item 不要在 \cmd{documentclass} 或者 \cmdM{usepackage}{graphicx} 命令中指定 \opt{dvips} 或者 \opt{pdftex} 选项。
 	\file{graphic.cfg} 文件会自动传递合适的选项给 \pkg{graphicx} 宏包。
 	
 	\item 当使用 \cmd{includegraphics} 命令插图时，
@@ -280,7 +280,7 @@
 	这会加快文档的显示和打印速度。
 	使用 \opt{draft=false} 则会显示图像。
 	
-	如果使用 \opt{draft} 宏包选项 \cmdtwoargs{usepackage}{draft}{graphicx}，
+	如果使用 \opt{draft} 宏包选项 \cmdOM{usepackage}{draft}{graphicx}，
 	那么文档中的所有图像都以\opt{draft} 方式插入。  \\ \hline
 	keepaspectratio & 在没有设定\opt{keepaspectratio} 选项时，
 	如果同时给定图像的宽度和高度/整体高度，
@@ -763,7 +763,7 @@
 
 为方便起见，在选择图形驱动
 \footnote{
-	指定一个图形驱动选项如 \cmdtwoargs{usepackage}{dvips}{graphics} 将会覆盖掉在~\texttt{graphics.cfg} 中设定的缺省驱动选项——旧译本注。}
+	指定一个图形驱动选项如 \cmdOM{usepackage}{dvips}{graphics} 将会覆盖掉在~\texttt{graphics.cfg} 中设定的缺省驱动选项——旧译本注。}
 时，就已经有一个相应的预设扩展名集。
 举例来说，如果选择 \prgname{dvips} 作为图形驱动，
 那么默认会使用下列图形文件扩展名（在~\file{dvips.def}~中定义）：
@@ -788,7 +788,7 @@
 \end{lstlisting}
 
 在 \opt{dvips} 图像扩展名列表中，
-\cmdonearg{includegraphics}{file} 首先寻找 \file{file.eps}，
+\cmdM{includegraphics}{file} 首先寻找 \file{file.eps}，
 其次是 \file{file.ps}，再其次是 \texttt{file.eps.gz}，直到找到一个文件。
 相应地，可以用
 \begin{lstlisting}
