@@ -883,7 +883,7 @@ Fig. 15: This is the Caption
 而 $1.6$ 倍 \texttt{linstretch} 是双倍行距。
 
 
-\section{使用 caption 宏包来定制标题}\label{sec:caption-pkg}
+\section{使用caption宏包来定制标题}\label{sec:caption-pkg}
 
 第~\ref{ssec:captionlabel}~节和第~\ref{ssec:capspace}~节分别介绍了如何定制浮动图形的标题的标签和标题上下方的垂直间距。
 对于标题其它属性的控制，则可以用 \pkgi{caption} 宏包\footnote{%
@@ -1145,536 +1145,117 @@ Fig. 15: This is the Caption
 \begin{table}
 \centering
 \caption{\cmd{captionsetup} 垂直间距选项}\label{tab:caption-spaceopt}
+\begin{tabular}{llp{0.6\linewidth}}
+\toprule
+关键字 & 值 & 描述 \\
+\midrule
+\opt{aboveskip=} & \opt{<amount>} & 
+设置标题和图表内容的垂直间距，默认是 $10\pt$。
+正常情况下间距是在标题上方，
+但是当 \opt{position=top} 时，\opt{aboveskip=} 间距则位于与标题下方。\\
+\midrule
+\opt{belowskip=} & \opt{<amount>} &
+设置标题朝图表内容外侧方向的垂直间距，默认是 $0\pt$。
+正常情况下该间距在标题下方，
+但是当 \opt{position=top} 时，\opt{belowskip=} 间距则位于标题上方。\\
+\midrule
+\opt{position} & \opt{bottom}, \opt{below} & 
+将 \opt{aboveskip} 间距置于标题上方，\opt{belowskip} 间距置于标题下方。\\
+\cline{2-3}
+& \opt{top}, \opt{above} & 
+将 \opt{aboveskip} 间距置于标题上方，\opt{belowskip} 间距置于标题下方。\\
+\cline{2-3}
+& \opt{auto} & 默认值。自动判断标题的位置从而确定间距的方向。
+在绝大部分情况下没有问题，不过极少数场合可能判断错误。\\
+\midrule
+\opt{parskip} & \opt{<amount>} & 
+标题内部的段间距，默认为 $0\pt$。
+如果标题只有一个段落，该选项不起作用。\\
+\bottomrule
+\end{tabular}
 \end{table}
-
 
 \begin{table}
 \centering
 \caption{\cmd{captionsetup} 标题标签和分隔符选项}\label{tab:caption-labelopt}
+\begin{tabular}{llp{0.6\linewidth}}
+\toprule
+关键字 & 值 & 描述 \\
+\midrule
+\opt{labelformat=} & \opt{default} & 按照文档类中指定的方式排版标题标签（默认值），
+一般来说与 \opt{simple} 效果类似。\\
+\cline{2-3}
+& \opt{simple} & 标题标签为标题名和数字。例如“Figure 9”。\\
+\cline{2-3}
+& \opt{parens} & 数字放在括号内，例如“Figure (9)”。\\
+\cline{2-3}
+& \opt{brace} & 数字以右括号结束，例如“Figure 9)”。\\
+\cline{2-3}
+& \opt{empty} & 标题标签为空，没有“Figure”，也没有数字。
+通常与 \opt{labelsep=none} 一起使用，以避免分隔符。\\
+\midrule
+\opt{labelsep=} & \opt{colon} & 标题分隔符为冒号和一个空格（默认值） \\
+& \opt{period} & 标题分隔符为句点和一个空格 \\
+& \opt{space} & 标题分隔符为一个空格 \\
+& \opt{quad} & 标题分隔符为 \cmd{quad} \\
+& \opt{newline} & 标题分隔符为 \cmd{newline}。
+注意不能与 \opt{format=hang} 一起使用。\\
+& \opt{none} & 没有标题分隔符。一般只和 \opt{labelformat=empty} 一起使用。\\
+& \opt{endash} & 标题分隔符为两端加空格的 en dash 连接号“\texttt{\textvisiblespace-{}-\textvisiblespace}”\\
+\bottomrule
+\end{tabular}
 \end{table}
 
 \begin{table}
 \centering
 \caption{\cmd{captionsetup} 格式选项}\label{tab:caption-formatopt}
+\begin{tabular}{llp{0.6\linewidth}}
+\toprule
+关键字 & 值 & 描述 \\
+\midrule
+\opt{format=} & \opt{plain} & 标题按正常段落样式排版（默认值） \\
+\cline{2-3}
+& \opt{hang} & 标题从第二行起缩进，使得第二行起每行都与第一行的标题文本对齐。 \\
+\midrule
+\opt{justification=} & \opt{justified} & 标题按正常段落样式排版（默认值） \\
+\cline{2-3}
+& \opt{centerlast} & 最后一行居中 \\
+\cline{2-3}
+& \opt{centerfirst} & 第一行居中 \\
+\cline{2-3}
+& \opt{centering} & 标题每一行都居中对齐 \\
+\cline{2-3}
+& \opt{Centering} & 与 \opt{centering} 相同，此外还加入了 \TeX{} 断词算法 \\
+\cline{2-3}
+& \opt{raggedright} & 每一行靠左对齐 \\
+\cline{2-3}
+& \opt{RaggedRight} & 与 \opt{raggedright} 相同，此外还加入了 \TeX{} 断词算法 \\
+\cline{2-3}
+& \opt{raggedleft} & 每一行靠右对齐 \\
+\cline{2-3}
+& \opt{RaggedLeft} & 与 \opt{raggedleft} 相同，此外还加入了 \TeX{} 断词算法\\
+\midrule
+\opt{indention=} & \opt{<amount>} & 标题第二行起额外的缩进量（默认为 $0\pt$） \\
+\midrule
+\opt{hangindent=} & \opt{<amount>} & 标题中\emph{每一段}第二行起的额外缩进量（默认为 $0\pt$）。
+注意 \opt{hangindent=} 对于每一段的第一行不起作用。
+如果标题中只有一个段落，那么 \opt{hangindent=} 和 \opt{indention=} 是等价的。\\
+\midrule
+\opt{margin=} & \opt{<amount>} & 左右两端的边距（默认为 $0\pt$） \\
+\midrule
+\opt{width=} & \opt{<amount>} & 设置标题的宽度，此时左右两端的边距是相同的。
+如果同时设置了 \opt{margin=} 和 \opt{width=} 选项，最后的选项将起作用。 \\
+\midrule
+\opt{singlelinecheck=} & \opt{true}, \opt{yes}, \opt{on}, \opt{1} & 
+如果标题只有一行，那么将保持居中而忽略 \opt{justification=} 选项（默认值）。 \\
+\cline{2-3}
+& \opt{false}, \opt{no}, \opt{off}, \opt{0} & \opt{justification=} 格式也作用于单行标题。 \\
+\bottomrule
+\end{tabular}
 \end{table}
 
 
-\begin{table}
-	\newcommand{\tbltt}[1]{\textcolor{cyan}{\texttt{#1}}}
-	\renewcommand{\arraystretch}{1.2}
-	\centering
-	\topcaption{caption2~{\CJKfamily{hei}选项}}\label{tab:caption2opt}
-	
-	\begin{tabular}{|>{\CJKfamily{kai}\color{blue}}m{2cm}|m{3cm}|>{\CJKfamily{kai}}p{\textwidth - 6.5cm}|}
-		
-		\hline
-		标题式样 & \tbltt{normal, center, flushleft, flushright, centerlast, 
-			hang, indent} & 选择标题的式样（详见第~\ref{sec:captionstyle}~节）。 \\
-		\hline
-		标题字号 & \tbltt{scriptsize, footnotesize, small, normalsize, large, Large}
-		& 选择标题的标记和文本的字体大小。\\
-		\hline
-		标记字形 & \tbltt{up, it, sl, sc} & 选择标题的标记的字形，不会影响到
-		标题的文本。 \\
-		\hline
-		字体序列 & \tbltt{mb, bf} & 选择标题的标记的字体序列，即字体的宽度或
-		权重。不会影响到标题的文本。\\
-		\hline
-		标记字族 & \tbltt{sl, sf, tt} & 选择标题的标记的字族，可为~Roman, 
-		San Serif~或~Typewriter~字体。不会影响到标题的文本。 \\
-		\hline
-		单行标题 & \tbltt{oneline, nooneline} & 控制是否采用单行标题格式
-		（见第~\ref{sec:onelinecaption}~节）。  \\
-		\hline
-	\end{tabular}
-\end{table}
-
-\subsection{标题式样}\label{ssec:captionstyle}
-
-图~\ref{fig:normalcap}--\ref{fig:hangcap}~展示了~\textsf{caption2}~宏包定义
-的下列标题式样。
-
-\begin{description}
-	\item [normal] 标题文本两边对齐，其中最后一行为左对齐。
-	\item [center] 标题文本居中。
-	\item [flushleft] 标题文本左对齐。
-	\item [flushright] 标题文本右对齐。
-	\item [centerlast] 标题文本两边对齐，其中最后一行居中。
-	\item [indent] 与~\textbf{normal}~式样相似，只是标题文本从第二行开始，
-	每行行首缩进由命令~\ci{captionindent}~给出的长度。因为
-	~\cmd{captionindent}~的缺省值为零，通常用像~
-	\cmd{setlength\{\bs captionindent\}\{1cm\}}~这样的命令
-	来设置缩进值。
-	\item [hang] 与~\textbf{normal}~式样相似，只是标题文本从第二行开始，
-	每行行首缩进与标题标记宽度相等的长度。
-\end{description}
-
-通常这些标题式样在调入宏包时给出，如：
-\begin{Verbatim}[xleftmargin=1cm]
-\usepackage[centerlast]{caption}
-\end{Verbatim}
-将使整个文档中的标题都为~\textbf{centerlast}~式样。
-
-\subsection{标题式样的变换}\label{ssec:changestyle}
-
-\ci{captionstyle}~命令用来改变标题的式样。将这一命令置于一
-环境中时，仅仅改变这一环境中的标题式样。例如：
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\captionstyle{centerlast} 
-\centering 
-\includegraphics[width=3in]{graphic.eps} 
-\caption{Centerlast Caption Style. Centerlast Caption Style.} 
-\end{figure}
-\end{Verbatim}
-只改变这一幅图形的标题式样。因为~\cmd{captionstyle}~命令是
-置于一个浮动图形环境中的。而
-\begin{Verbatim}[xleftmargin=1cm]
-\captionstyle{centerlast} 
-\begin{figure} 
-\centering 
-\includegraphics[width=3in]{graphic.eps} 
-\caption{Centerlast Caption Style. Centerlast Caption Style.} 
-\end{figure}
-\end{Verbatim}
-将此图与以后的图形的标题式样都改为~\textbf{centerlast}。
-因为命令~\cmd{captionstyle}~是置于浮动图形环境外的。
-
-\begin{figure}
-	\begin{center}
-		\begin{minipage}[t]{.3\textwidth}
-			\vspace{0pt}
-			\captionstyle{normal}
-			\setcaptionmargin{5pt}
-			\centering
-			\resizebox{4cm}{!}{\usebox{\graphic}}
-			\caption{Normal Caption Style Normal Caption Style Normal Caption Style 
-				Normal Caption Style}\label{fig:normalcap}
-		\end{minipage}%\hfill
-		\begin{minipage}[t]{.3\textwidth}
-			\vspace{0pt}
-			\captionstyle{center}
-			\setcaptionmargin{5pt}
-			\centering
-			\resizebox{4cm}{!}{\usebox{\graphic}}
-			\caption{Center Caption Style Center Caption Style
-				Center Caption Style Center Caption Style}\label{fig:centercap}
-		\end{minipage}%\hfill
-		\begin{minipage}[t]{.3\textwidth}
-			\vspace{0pt}
-			\captionstyle{centerlast}
-			\setcaptionmargin{5pt}
-			\centering
-			\resizebox{4cm}{!}{\usebox{\graphic}}
-			\caption{Centerlast Caption Style Centerlast Caption Style 
-				Centerlast Caption Style Centerlast Caption Style}\label{fig:clastcap}
-		\end{minipage}
-	\end{center}
-\end{figure}
-
-\begin{figure}
-	\begin{minipage}[t]{.45\textwidth}
-		\vspace{0pt}
-		\captionstyle{flushleft}
-		\setcaptionmargin{5pt}
-		\centering
-		\resizebox{4cm}{!}{\usebox{\graphic}}
-		\caption{Flushleft Caption Style Flushleft Caption Style
-			Flushleft Caption Style Flushleft Caption Style}\label{fig:fleftcap}
-	\end{minipage}%\hfill
-	\begin{minipage}[t]{.45\textwidth}
-		\vspace{0pt}
-		\captionstyle{flushright}
-		\setcaptionmargin{5pt}
-		\centering
-		\resizebox{4cm}{!}{\usebox{\graphic}}
-		\caption{Flushright Caption Style Flushright Caption Style 
-			Flushright Caption Style Flushright Caption Style}\label{frightcap}
-	\end{minipage}
-\end{figure}
-
-\begin{figure}
-	\begin{minipage}[t]{.45\textwidth}
-		\vspace{0pt}
-		\captionstyle{indent}
-		\setcaptionmargin{5pt}
-		\centering
-		\resizebox{4cm}{!}{\usebox{\graphic}}
-		\caption{Indent Caption Style Indent Caption Style
-			Indent Caption Style Indent Caption Style}\label{fig:indentcap}
-	\end{minipage}%\hfill
-	\begin{minipage}[t]{.45\textwidth}
-		\vspace{0pt}
-		\captionstyle{hang}
-		\setcaptionmargin{5pt}
-		\centering
-		\resizebox{4cm}{!}{\usebox{\graphic}}
-		\caption{Hang Caption Style Hang Caption Style
-			Hang Caption Style Hang Caption Style}\label{fig:hangcap}
-	\end{minipage}
-\end{figure}
-
-\subsection{单行标题}\label{ssec:onelinecaption}
-
-如果标题只有一行，上节介绍的所有的式样都会居中放置这一标题。
-为在标题文本只有一行的情况下，仍然可以应用这些不同的式样，必须在
-调入~\textsf{caption2}~时给出~\texttt{nooneline}~选项。如
-\begin{Verbatim}[xleftmargin=1cm]
-\usepackage[nooneline,flushleft]{caption2}
-\end{Verbatim}
-使得所有的标题文本（包括单行标题）都采用~\texttt{flushleft}~式样。
-若想在文本中改变~\texttt{nooneline}~选项，可使用命令~\ci{onelinecaptiontrue}~
-来居中放置单行标题，而命令~\ci{onelinecaptionfalse}~使得重新对
-单行标题应用所选择的标题式样。例如：
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\captionstyle{flushleft} 
-\onelinecaptionstrue 
-\centering 
-\includegraphics[width=2.5in]{graphic.eps} 
-\caption{First Caption} 
-\end{figure}
-\end{Verbatim}
-如同图~\ref{fig:centertrue}~所示，标题被居中放置。
-而下面的命令：
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\captionstyle{flushleft} 
-\onelinecaptionsfalse
-\centering 
-\includegraphics[width=2.5in]{graphic.eps} 
-\caption{Second Caption}
-\end{figure}
-\end{Verbatim}
-使得单行标题如图~\ref{fig:centerfalse}~所示，采用左对齐式样。
-
-\begin{figure} 
-	\captionstyle{flushleft} 
-	\onelinecaptionstrue 
-	\centering 
-	\resizebox{2.5in}{!}{\usebox{\graphic}}
-	\caption{First Caption}\label{fig:centertrue}
-\end{figure}
-
-\begin{figure} 
-	\captionstyle{flushleft} 
-	\onelinecaptionsfalse
-	\centering 
-	\resizebox{2.5in}{!}{\usebox{\graphic}}
-	\caption{Second Caption}\label{fig:centerfalse}
-\end{figure}
-
-\subsection{标题的宽度}
-
-~\textsf{caption2}~宏包提供了直接指定标题的宽度及其两边的空白的功能。
-\begin{itemize}
-	\item \cmd{setcaptionwidth\{width\}}~设定标题的宽度为~\texttt{width}，
-	这里的~\texttt{width}~为任意有效的~\TeX{}~度量单位。
-	\item \cmd{setcaptionmargin\{mar\}}~设定标题任一边的空白为~\texttt{mar}，
-	从而使得标题的宽度为标准宽度减去两倍的~\texttt{mar}。
-	
-	如果~\texttt{mar}~为一负值，那么标题的宽度要比标准的宽度宽一些。
-	这在子图和小页环境中非常有用。
-\end{itemize}
-
-\noindent例如，命令
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\setcaptionwidth{2in} 
-\centering 
-\includegraphics[width=2in]{graphic.eps} 
-\caption{Figure Caption Limited to Two Inches} 
-\end{figure}
-\end{Verbatim}
-使得标题的宽度为~2~英寸，结果如图~\ref{fig:twoinwidth}。
-
-\begin{figure} 
-	\setcaptionwidth{2in}
-	\centering 
-	\resizebox{2in}{!}{\usebox{\graphic}}
-	\caption{Figure Caption Limited to Two Inches}\label{fig:twoinwidth}
-\end{figure}
-
-上面的例子直接设定了标题的宽度。还有一种方法是通过给定标题和两边页
-边界的距离来间接设定标题的宽度。例如，命令
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure}
-\setcaptionmargin{1in} 
-\centering
-\includegraphics[width=2in]{graphic.eps}
-\caption{Figure Caption Where There is One Inch of Spacing 
-between the Caption and Each Margin} 
-\end{figure}
-\end{Verbatim}
-使得标题到两边页边界的距离为~1~英寸。如图~\ref{fig:setcapmargin}~所示。
-
-\begin{figure}
-	\setcaptionmargin{1in}
-	\centering
-	\resizebox{2in}{!}{\usebox{\graphic}}
-	\caption{Figure Caption Where There is One Inch of Spacing 
-		between the Caption and Each Margin}\label{fig:setcapmargin}
-\end{figure}
-
-下面主要介绍一下如何将标题的宽度设为图形的宽度。如果图形的宽度已知，
-这将是非常容易的。
-\begin{Verbatim}[xleftmargin=1cm]
-\includegraphics[width=3in]{file.eps} 
-\setcaptionwidth{3in} 
-\caption{...}
-\end{Verbatim}
-如果图形的宽度未知，可以通过将它放到一个盒子里然后测量盒子的宽度来
-得到。
-\begin{Verbatim}[xleftmargin=1cm]
-\newsavebox{\mybox} 
-\newlength{\mylength} 
-... 
-\begin{figure} 
-\centering 
-\sbox{\mybox}{\includegraphics[height=3in]{file.eps}} 
-\settowidth{\mylength}{\usebox{\mybox}} 
-\setcaptionwidth{\mylength} 
-\usebox{\mybox} 
-\caption{This is a figure with a very, very, very, 
-very, very, very, very long caption} 
-\end{figure}
-\end{Verbatim}
-这种方法也可应用于表格。~\cmd{mybox}~和~\cmd{mylength}~可在
-文档中使用多次，而~\cmd{newlength}~和~\cmd{newsavebox}~只须
-声明一次即可。
-
-\subsection{标题的分隔符}
-
-在标题中，缺省的分隔符~``:''~可通过重定义~\ci{captionlabeldelim}~来
-加以改变。例如，
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\renewcommand{\captionlabeldelim}{.} 
-\centering 
-\includegraphics[width=2in]{graphic.eps} 
-\caption{Caption with New Delimiter} 
-\end{figure}
-\end{Verbatim}
-将图~\ref{fig:newdelim}~中的分隔符改为句点~``.''。如果希望在句点
-后面加上一点距离，可用下面的命令来得到。
-\begin{Verbatim}[xleftmargin=1cm]
-\renewcommand{\captionlabeldelim}{.~}
-\end{Verbatim}
-
-\begin{figure} 
-	\renewcommand{\captionlabeldelim}{.} 
-	\centering 
-	\resizebox{2in}{!}{\usebox{\graphic}}
-	\caption{Caption with New Delimiter}\label{fig:newdelim}
-\end{figure}
-
-\subsection{标题的字体}
-
-当在~\cmd{usepackage\{caption2\}}~中使用~\texttt{scriptsize,...,Large}~
-选项时，标题的标记和文本的字号均会相应的改变。而使用~\texttt{up, it, sl,
-	sc, md, bf, rm, sf, tt}~选项时只作用于标题标记。
-
-~\textsf{caption2}~宏包也允许用户设定单独的标题字体。~\ci{captionfont}~
-命令可用来设定标题的字体（包括标记和文本），而命令~\ci{captionlabelfont}~
-则只设定标题标记的字体。因此若只想设定标题文本的字体，必须使用
-~\cmd{captionfont}~来设定标题文本的字体，同时用~\cmd{captionlabelfont}~
-来设定标题标记的字体，包括取消一些由~\cmd{captionfont}~设置的字体属性。
-下面的命令可以有效的生成标题：
-\begin{Verbatim}[xleftmargin=1cm]
-{\captionfont% 
-{\captionlabelfont \captionlabel \captionlabeldelim}% 
-\captiontext}
-\end{Verbatim}
-这里的~\ci{captionlabel}~命令生成标题标记，如~``{\CJKfamily{hei}图~1}''。
-~\cmd{captionlabeldelim}~生成标记与文本之间的分隔符~``:''。
-~\cmd{captiontext}~则给出标题文本。
-
-\LaTeX{}~的字体可用字号和三个式样：字形，字族和字体序列（见
-~\cite[第~37,115~页]{Leslie}，~\cite[第~170-171~页]{Michel}）来描述。
-所有这四个字体特性均可用~\cmd{captionfont}~和~\cmd{captionlabel}~
-来指定。例如：
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\renewcommand{\captionfont}{\Large \bfseries \sffamily} 
-\renewcommand{\captionlabelfont}{} 
-\centering 
-\includegraphics[width=2in]{graphic.eps} 
-\caption{Test Caption} 
-\end{figure}
-\end{Verbatim}
-结果如图~\ref{fig:captionfont}~所示。在这个例子中，~\cmd{captionlabelfont}~
-没有是空的，这意味着它没有改变标题缺省的字体属性和由命令~\cmd{captionfont}~
-设定的标题标记的字体属性。由于没有给出字形，所以整个标题的字形为缺省的~
-\texttt{upright}~字体。
-
-\begin{figure} 
-	\renewcommand{\captionfont}{\Large \bfseries \sffamily} 
-	\renewcommand{\captionlabelfont}{} 
-	\centering 
-	\resizebox{2in}{!}{\usebox{\graphic}}
-	\caption{Test Caption}\label{fig:captionfont}
-\end{figure}
-
-图~\ref{fig:captionfont-1}~由下面的命令得到：
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\renewcommand{\captionfont}{\Large \bfseries \sffamily} 
-\renewcommand{\captionlabelfont}{\small} 
-\centering 
-\includegraphics[width=2in]{graphic.eps} 
-\caption{Test Caption} 
-\end{figure}
-\end{Verbatim}
-在这个例子中，由~\cmd{captionlabelfont}~给出的~\cmd{small}~
-覆盖了由~\cmd{captionfont}~指定的~\cmd{Large}~字号。不过，由于
-~\cmd{captionlabelfont}~没有指定字体序列和字族，所以~\cmd{bfseries}~
-和~\cmd{sffamily}~也应用于标题标记。
-
-\begin{figure} 
-	\renewcommand{\captionfont}{\Large \bfseries \sffamily} 
-	\renewcommand{\captionlabelfont}{\small} 
-	\centering 
-	\resizebox{2in}{!}{\usebox{\graphic}}
-	\caption{Test Caption}\label{fig:captionfont-1}
-\end{figure}
-
-\subsection{定制标题式样}
-
-\textsf{caption2}~宏包也允许用户定义自己的标题式样。例如下面的命令
-\begin{Verbatim}[xleftmargin=1cm]
-\newcaptionstyle{one}{% 
-\usecaptionmargin\captionfont% 
-\onelinecaption% 
-{{\bfseries\captionlabelfont\captionlabel\captionlabeldelim} 
-\captiontext}% 
-{{\centering\bfseries\captionlabelfont\captionlabel\par}%
-\captiontext}} 
-
-\newcaptionstyle{two}{% 
-\usecaptionmargin\captionfont% 
-{\centering\bfseries\captionlabelfont\captionlabel\par} 
-\onelinecaption{\captiontext}{\captiontext}}
-\end{Verbatim}
-定义了标题式样~\texttt{one}~和~\texttt{two}。对于多于一行的标题，
-这两种式样都使用加黑的标题标记（如~\textbf{Figure 12}）并单独占据
-一行。而对于单行标题，式样~\texttt{two}~使用加黑的标题标记并单独占据
-一行，标题文本另起一行。式样~\texttt{one}~则将标题标记和文本放置在
-同一行，中间用分隔符隔开。下面的图~\ref{fig:caption-1}~和图~\ref{fig:caption-2}
-~是由下面的命令得到的并分别使用了上面自定义的两种标题式样。
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\captionstyle{one} 
-\centering 
-\includegraphics[width=2in]{graphic.eps} 
-\caption{First Custom Caption Style} 
-\end{figure} 
-
-\begin{figure} 
-\captionstyle{two} 
-\centering 
-\includegraphics[width=2in]{graphic.eps} 
-\caption{Second Custom Caption Style} 
-\end{figure}
-\end{Verbatim}
-
-\begin{figure} 
-	\captionstyle{one} 
-	\centering 
-	\resizebox{2in}{!}{\usebox{\graphic}}
-	\caption{First Custom Caption Style}\label{fig:caption-1} 
-\end{figure} 
-
-\begin{figure} 
-	\captionstyle{two} 
-	\centering 
-	\resizebox{2in}{!}{\usebox{\graphic}}
-	\caption{Second Custom Caption Style}\label{fig:caption-2} 
-\end{figure}
-
-对于自定义标题式样，需要注意以下几点：
-\begin{itemize}
-	\item 命令~\cmd{onelinecommand}~带有两个参数：第一个在标题为
-	单行时使用，第二个则是在标题文本多于一行时使用。
-	\item 自定义标题式样时，不要求必须用~\cmd{captionfont}~和
-	~\cmd{captionlabelfont}。不过，鼓励使用这些命令以使得
-	所定义的式样更具灵活性。
-	
-	例如，在上面自定义的式样中，可用~\cmd{captionlabelfont}~来改变
-	缺省的~\cmd{bfseries}。如果不需要这种灵活性，那么上面自定义的
-	标题式样的代码可以更简洁些。
-\end{itemize}
-
-\subsection{标题中的断行}
-
-如果标题的文本多于一行，可用~\cmd{protect\bs\bs}~来断行。然而，当标题
-文本的长度不超过一行时，它们被放在一个水平盒子中来处理，所有的
-~\texttt{\bs\bs}~或~\texttt{\bs par}~都将被忽略。
-
-\textsf{caption2}~宏包允许标题文本以指定的任意长度断行。例如命令
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\centering 
-\includegraphics[width=3in]{graphic.eps} 
-\captionstyle{center} 
-\onelinecaptionsfalse 
-\caption{First Line of Caption \protect\\ 
-Second Line of Caption} 
-\label{fig:caption:linebreak} 
-\end{figure}
-\end{Verbatim}
-得到图~\ref{fig:caption:linebreak}~中的标题。因为~\texttt{\bs\bs}~
-是脆弱的\realfootnote{一些命令（如~\cmd{textbf}）不在辅助文件中
-	储存任何信息。那些把信息储存起来以备将来使用的命令被称作具有\emph{移动
-		参数}的命令。在\emph{移动参数}中使用时会崩溃的命令就被称为是
-	脆弱的，相反则称为健壮的。}，必须在其前面加上~\cmd{protect}。
-
-\begin{figure}
-	\centering
-	\resizebox{2in}{!}{\usebox{\graphic}}
-	\captionstyle{center}
-	\onelinecaptionsfalse
-	\caption{First Line of Caption \protect\\ 
-		Second Line of Caption}
-	\label{fig:caption:linebreak}
-\end{figure}
-
-使用~\cmd{onelinecaptionfalse}~命令（或~\texttt{nooneline}~宏包选项）
-防止~\LaTeX{}~将标题置于一水平盒子中处理以致不能断行。
-
-\clearpage
-
-\subsection{调整标题中的行距}
-
-若在文档中使用两倍行距，要在导言区中加入\realfootnote{这样的命令也
-	可在正文中使用，尽管这种方式被认为是蹩脚的，但也是可以用来在正文中
-	改变行距。当使用这种方式时，必须在其后声明像~\cmd{normalsize}~等字号
-	命令以使所做的行距变化生效。}：
-\begin{Verbatim}[xleftmargin=1cm]
-\linespread{1.6}
-\end{Verbatim}
-或等价地
-\begin{Verbatim}[xleftmargin=1cm]
-\renewcommand{\baselinestretch}{1.6}
-\end{Verbatim}
-这时，除了使得正文中行距为缺省值的两倍外，脚注和浮动体中标题的行距
-也扩大为原来的两倍。要想在正文中使用两倍行距，而在标题中使用单倍行距，
-可由~\pai{setspace}~宏包\realfootnote{尽管~\pai{doublespace}~宏包也可
-	以用来改变行距，但它并没有很好地按照~\LaTeXe{}~的标准来写，经常与其它的
-	~\LaTeXe{}~宏包冲突，所以最好还是用~\textsf{setspace}。}来完成这一任务。
-\begin{Verbatim}[xleftmargin=1cm]
-\usepackage{setspace} 
-\linestretch{1.6}
-\end{Verbatim}
-\cmd{linestrech}~的值为~1~时为单倍行距，~1.2~时是一倍半行距，
-而为~1.6~时是双倍行距。
-
-无论~\textsf{setspace}~使用与否，~\cmd{captionfont}~命令都可以用来
-调节标题文本的行距。例如：
-\begin{Verbatim}[xleftmargin=1cm]
-\renewcommand{\captionfont}{\linespread{1.6}\normalsize}
-\end{Verbatim}
-使得无论正文中的行距是多少，标题标题文本为双倍行距。
-
+=================================================
 \section{不浮动的图形}\label{sec:nonfloat}
 
 \emph{由于不浮动的图形会生成大段的垂直空白，因此一般认为是比较糟糕的排版风格。
