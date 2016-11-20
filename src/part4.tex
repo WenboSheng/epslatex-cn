@@ -1149,6 +1149,8 @@ Fig. 15: This is the Caption
 \toprule
 关键字 & 值 & 描述 \\
 \midrule
+\opt{skip=} & \opt{<amount>} & 标题和图标内容的垂直间距，默认是 $10\pt$。 \\
+\midrule
 \opt{aboveskip=} & \opt{<amount>} & 
 设置标题和图表内容的垂直间距，默认是 $10\pt$。
 正常情况下间距是在标题上方，
@@ -1254,6 +1256,202 @@ Fig. 15: This is the Caption
 \end{tabular}
 \end{table}
 
+\FloatBarrier
+\subsection{Caption宏包示例}
+
+\subsubsection{Caption宏包字体选项}
+
+表~\ref{tab:caption-fontopt} 列出了\pkg{caption} 宏包提供的三个定制标题字体的选项。
+其中“标签”、“分隔符”和“标题内容”的定义如图~\ref{fig:captiondef} 所示。
+这三个选项可以修改字族、字形、字系和字号的任意组合，见表~\ref{tab:caption-fontval}。
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics{captiondef}
+	\captionof{figure}{标题标签、分隔符和标题内容的定义}
+	\vskip2em\hrule
+\end{minipage}
+
+\vskip2em\hrule
+
+\paragraph{字体示例\#1}
+
+命令
+\begin{lstlisting}
+\captionsetup{font={default,Large,bf}}
+\caption{This is Caption Font Example \#1}
+\end{lstlisting}
+会将所有的标题字体重置为默认值，然后将整个标题（标签、分隔符和标题内容）设置为 \opt{Large} 字号并加粗，
+而字族和字形仍然保持默认值，如图~\ref{fig:caption-font-ex1} 所示。
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics{graphic2}
+	\captionsetup{font={default,Large,bf}}
+	\captionof{figure}{This is Caption Font Example \#1}
+	\label{fig:caption-font-ex1}
+\end{minipage}
+
+注意以上的例子会同时影响图形和表格的标题。
+如果 \cmd{captionsetup} 添加了 \opt{[figure]} 选项
+\begin{lstlisting}
+\captionsetup[figure]{font={default,Large,bf}}
+\end{lstlisting}
+就会只修改图形标题的字体。
+
+\vskip2em\hrule
+
+
+\paragraph{字体示例\#2}
+
+命令
+\begin{lstlisting}
+\captionsetup{font=default, textfont={scriptsize,sf}}
+\caption{This is Caption Font Example \#2}
+\end{lstlisting}
+会将所有的标题字体重置为默认值，
+然后将标题内容设置为 \opt{scriptsize} 字号和无衬线字族，
+如图~\ref{fig:caption-font-ex2} 所示。
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics{graphic2}
+	\captionsetup{font=default, textfont={scriptsize,sf}}
+	\captionof{figure}{This is Caption Font Example \#2}
+	\label{fig:caption-font-ex2}
+\end{minipage}
+
+\vskip2em\hrule
+
+\paragraph{字体示例\#3}
+
+命令
+\begin{lstlisting}
+\captionsetup{font={default,Large}, labelfont=bf, textfont=sl}
+\caption{This is Caption Font Example \#3}
+\end{lstlisting}
+会将所有的标题字体重置为默认值，
+然后将整个标题（标题标签、分隔符和标题内容）设置为 \opt{Large} 字号，
+然后将标题标签和分隔符加粗、将标题内容设置为斜体，
+如图~\ref{fig:caption-font-ex3} 所示。
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics{graphic2}
+	\captionsetup{font={default,Large}, labelfont=bf, textfont=sl}
+	\captionof{figure}{This is Caption Font Example \#3}
+	\label{fig:caption-font-ex3}
+\end{minipage}
+
+\vskip2em\hrule
+
+\subsubsection{Caption垂直间距选项}
+
+顾名思义，标题上方的间距由 \opt{aboveskip} 选项控制，
+标题下方的间距由 \opt{belowskip} 选项控制。
+不过，仅当使用 \opt{position=bottom} 选项时才成立。
+当使用 \opt{position=top} 选项时，\opt{aboveskip} 和 \opt{belowskip} 选项的意义是相反的。
+\footnote{
+	注意，\opt{position=top} 只说明标题的上下间距按浮动体顶部的标题来处理，
+	并不意味着标题真的位于图形或表格的上方。
+	标题的实际位置取决于声明 \cmd{caption} 的位置。——译注}
+遵循如下的原则可以避免发生混淆：
+\begin{enumerate}
+	\item 使用 \opt{skip=} 选项指定标题和浮动体内容的间距。
+	\item 使用 \opt{belowskip=} 选项指定标题和周围正文的间距。
+	\item 默认的选项 \opt{position=auto} 会自动判断标题的位置。
+	在极少数情况下自动判断失效时，使用 \opt{position=bottom} 或 \opt{position=top} 指定标题位于浮动体底部或顶部。
+\end{enumerate}
+
+\paragraph{垂直间距示例\#1}
+
+使用 \opt{skip=} 选项修改标题和浮动体内容的间距（默认为 $10\pt$）。
+如下命令
+\begin{lstlisting}
+\captionsetup{skip=1cm}
+\caption{Vertical Spacing Example \#1}
+\end{lstlisting}
+在标题和浮动体内容之间留出1厘米间距，如图~\ref{fig:caption-skip-ex1}
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics{graphic2}
+	\captionsetup{skip=1cm}
+	\captionof{figure}{Vertical Spacing Example \#1}
+	\label{fig:caption-skip-ex1}
+\end{minipage}
+
+\vskip2em\hrule
+
+\paragraph{垂直间距示例\#2}
+
+以下例子表明 \opt{position=top} 会反转 \opt{aboveskip} 和 \opt{belowskip} 的意义。
+\begin{lstlisting}
+\captionsetup{aboveskip=1cm,position=top}
+\caption{Vertical Spacing Example \#2}
+\end{lstlisting}
+如表~\ref{tab:caption-skip-ex2} 所示，标题下方的间距为1厘米\footnote{
+	实际上该设置等价于
+	\begin{lstlisting}
+	\captionsetup{skip=1cm}
+	\end{lstlisting}
+	这是因为当在 \env{tabular} 表格环境或者 \cmd{includegraphics} 插入命令之前使用 \cmd{caption} 时，
+	默认选项 \opt{position=auto} 会自动判断为 \opt{top}。}。
+
+\begin{minipage}{\linewidth}
+	\centering
+	\captionsetup{aboveskip=1cm,position=top}
+	\captionof{table}{Vertical Spacing Example \#2}
+	\begin{tabular}{|c|c|}
+		\hline
+		a & b \\ \hline
+		c & d \\ \hline
+	\end{tabular}
+\end{minipage}
+
+\vskip2em\hrule
+
+\paragraph{垂直间距示例\#3}
+
+一般而言，表格标题位于表格上方，而图形标题位于图形的下方。
+因此，为方便起见可以分别为表格和图形设置标题位置。
+\begin{lstlisting}
+\captionsetup{skip=1cm,belowskip=0pt}
+\captionsetup[figure]{position=bottom}
+\captionsetup[table]{position=top}
+...
+\caption{Table for Vertical Spacing Example \#3}
+\caption{Figure for Vertical Spacing Example \#3}
+\end{lstlisting}
+\pkg{caption} 宏包还专门提供了宏包选项 \opt{figureposition} 和 \opt{tableposition} 作为以上命令的缩写。上述命令等价于
+\begin{lstlisting}
+\usepackage[...,figureposition=bottom,tableposition=top]{caption}
+\captionsetup{skip=1cm,belowskip=0pt}
+...
+\caption{Table for Vertical Spacing Example \#3}
+\caption{Figure for Vertical Spacing Example \#3}
+\end{lstlisting}
+这样表格的标题下方有1厘米间距（表~\ref{tab:caption-skip-ex3}），
+而图形的标题上方有1厘米间距（图~\ref{fig:caption-skip-ex3}）。
+
+\begin{minipage}{\linewidth}
+	\centering
+	\captionsetup{skip=1cm,belowskip=0pt}
+	\captionsetup[figure]{position=bottom}
+	\captionsetup[table]{position=top}
+	\captionof{table}{Table for Vertical Spacing Example \#3}
+	\label{tab:caption-skip-ex3}
+	\begin{tabular}{|c|c|}
+		\hline
+		a & b \\ \hline
+		c & d \\ \hline
+	\end{tabular}\\
+	\includegraphics{graphic2}
+	\captionof{figure}{Figure for Vertical Spacing Example \#3}
+	\label{fig:caption-skip-ex3}
+\end{minipage}
+
+\vskip2em\hrule
 
 =================================================
 \section{不浮动的图形}\label{sec:nonfloat}
