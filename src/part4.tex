@@ -1269,7 +1269,7 @@ Fig. 15: This is the Caption
 	\centering
 	\includegraphics{captiondef}
 	\captionof{figure}{标题标签、分隔符和标题内容的定义}
-	\vskip2em\hrule
+	\label{fig:captiondef}
 \end{minipage}
 
 \vskip2em\hrule
@@ -1453,7 +1453,509 @@ Fig. 15: This is the Caption
 
 \vskip2em\hrule
 
-=================================================
+\subsubsection{Caption 宏包标签选项}
+
+\paragraph{标签选项示例\#1}
+
+\begin{lstlisting}
+\captionsetup{labelformat=simple}
+\caption{This is Caption Label Example \#1}
+\end{lstlisting}
+如图~\ref{fig:caption-label-ex1} 所示，标签格式设置为 \opt{simple}。
+一般情况下 \opt{simple} 格式等同于 \opt{default} 格式，
+除非文档类重新定义了 \opt{default} 为不同样式。
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics{graphic2}
+	\captionsetup{labelformat=simple}
+	\captionof{figure}{This is Caption Label Example \#1}
+	\label{fig:caption-label-ex1}
+\end{minipage}
+
+\vskip2em\hrule
+
+\paragraph{标签选项示例\#2}
+
+\begin{lstlisting}
+\captionsetup{labelformat=parens}
+\caption{This is Caption Label Example \#2}
+\end{lstlisting}
+如图~\ref{fig:caption-label-ex2} 所示，标签格式为 \opt{parens}。
+数字编号位于一对圆括号内。
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics{graphic2}
+	\captionsetup{labelformat=parens}
+	\captionof{figure}{This is Caption Label Example \#2}
+	\label{fig:caption-label-ex2}
+\end{minipage}
+
+\vskip2em\hrule
+
+\paragraph{标签选项示例\#3}
+
+\begin{lstlisting}
+\captionsetup{labelformat=empty, labelsep=none}
+\caption{This is Caption Label Example \#3}
+\end{lstlisting}
+如图~\ref{fig:caption-label-ex3} 所示，标签格式为 \opt{empty}。
+不过由于没有编号，很难说这是图~\ref{fig:caption-label-ex3}。
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics{graphic2}
+	\captionsetup{labelformat=empty, labelsep=none}
+	\captionof{figure}{This is Caption Label Example \#3}
+	\label{fig:caption-label-ex3}
+\end{minipage}
+
+\vskip2em\hrule
+
+\paragraph{标签选项示例\#4}
+
+\begin{lstlisting}
+\captionsetup{labelformat=default, labelsep=period}
+\caption{This is Caption Label Example \#4}
+\end{lstlisting}
+如图~\ref{fig:caption-label-ex4} 所示，标题分隔符由默认的冒号改为句点。
+
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics{graphic2}
+	\captionsetup{labelformat=default, labelsep=period}
+	\captionof{figure}{This is Caption Label Example \#4}
+	\label{fig:caption-label-ex4}
+\end{minipage}
+
+\vskip2em\hrule
+
+\paragraph{标签选项示例\#5}
+
+\begin{lstlisting}
+\captionsetup{labelformat=default, labelsep=newline}
+\caption{This is Caption Label Example \#5}
+\end{lstlisting}
+如图~\ref{fig:caption-label-ex5} 所示，标题分隔符改成另起一行。
+
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics{graphic2}
+	\captionsetup{labelformat=default, labelsep=newline}
+	\captionof{figure}{This is Caption Label Example \#5}
+	\label{fig:caption-label-ex5}
+\end{minipage}
+
+\vskip2em\hrule
+
+\subsubsection{Caption 宏包格式选项}
+
+\paragraph{格式选项示例\#1：标题宽度}
+
+\begin{lstlisting}
+\captionsetup{width=3in}
+\caption{This is an example of customizing the caption width}
+\end{lstlisting}
+如图~\ref{fig:caption-format-ex1} 所示，标题宽度设置为 3英寸。
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics{graphic2}
+	\captionsetup{width=3in}
+	\captionof{figure}{This is an example of customizing the caption width}
+	\label{fig:caption-format-ex1}
+\end{minipage}
+
+\vskip2em\hrule
+
+\paragraph{格式选项示例\#2：默认格式}
+
+图~\ref{fig:caption-format-ex2-justified}--\ref{fig:caption-format-ex2-raggedleft} 展示了在 \opt{format=default} 格式下，七种不同的 \opt{justification=} 的效果。
+这些图由如下代码生成：
+\begin{lstlisting}
+\captionsetup{format=default,justification=justified}
+\caption{Caption with default format and justified justification.
+Caption with default format and justified justification.
+Caption with default format and justified justification.}
+...
+\captionsetup{format=default,justification=centering}
+\caption{Caption with default format and centering justification.
+Caption with default format and centering justification.
+Caption with default format and centering justification.}
+...
+\captionsetup{format=default,justification=centerlast}
+\caption{Caption with default format and centerlast justification.
+Caption with default format and centerlast justification.
+Caption with default format and centerlast justification.}
+...
+\captionsetup{format=default,justification=centerfirst}
+\caption{Caption with default format and centerfirst justification.
+Caption with default format and centerfirst justification.
+Caption with default format and centerfirst justification.}
+...
+\captionsetup{format=default,justification=raggedright}
+\caption{Caption with default format and raggedright justification.
+Caption with default format and raggedright justification.
+Caption with default format and raggedright justification.}
+...
+\captionsetup{format=default,justification=RaggedRight}
+\caption{Caption with default format and RaggedRight justification.
+Caption with default format and RaggedRight justification.
+Caption with default format and RaggedRight justification.}
+...
+\captionsetup{format=default,justification=raggedleft}
+\caption{Caption with default format and raggedleft justification.
+Caption with default format and raggedleft justification.
+Caption with default format and raggedleft justification.}
+\end{lstlisting}
+从图~\ref{fig:caption-format-ex2-justified}--\ref{fig:caption-format-ex2-raggedleft} 中可以看出，
+标题的第一行与其它行的格式是一样的。
+
+\begin{figure}[tp]
+	\centering
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics{graphic2}
+		\captionsetup{format=default,justification=justified}
+		\caption{Caption with default format and justified justification.
+			Caption with default format and justified justification.
+			Caption with default format and justified justification.}
+		\label{fig:caption-format-ex2-justified}
+	\end{minipage}\\[1em]
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics{graphic2}
+		\captionsetup{format=default,justification=centering}
+		\caption{Caption with default format and centering justification.
+			Caption with default format and centering justification.
+			Caption with default format and centering justification.}
+		\label{fig:caption-format-ex2-centering}
+	\end{minipage}\hfill
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics{graphic2}
+		\captionsetup{format=default,justification=centerlast}
+		\caption{Caption with default format and centerlast justification.
+			Caption with default format and centerlast justification.
+			Caption with default format and centerlast justification.}
+		\label{fig:caption-format-ex2-centerlast}
+	\end{minipage}\\[1em]
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics{graphic2}
+		\captionsetup{format=default,justification=centerfirst}
+		\caption{Caption with default format and centerfirst justification.
+			Caption with default format and centerfirst justification.
+			Caption with default format and centerfirst justification.}
+		\label{fig:caption-format-ex2-centerfirst}
+	\end{minipage}\hfill
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics{graphic2}
+		\captionsetup{format=default,justification=raggedright}
+		\caption{Caption with default format and raggedright justification.
+			Caption with default format and raggedright justification.
+			Caption with default format and raggedright justification.}
+		\label{fig:caption-format-ex2-raggedright}
+	\end{minipage}\\[1em]
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics{graphic2}
+		\captionsetup{format=default,justification=RaggedRight}
+		\caption{Caption with default format and RaggedRight justification.
+			Caption with default format and RaggedRight justification.
+			Caption with default format and RaggedRight justification.}
+		\label{fig:caption-format-ex2-RaggedRight}
+	\end{minipage}\hfill
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics{graphic2}
+		\captionsetup{format=default,justification=raggedleft}
+		\caption{Caption with default format and raggedleft justification.
+			Caption with default format and raggedleft justification.
+			Caption with default format and raggedleft justification.}
+		\label{fig:caption-format-ex2-raggedleft}
+	\end{minipage}
+\end{figure}
+
+\vskip2em\hrule
+
+\paragraph{格式选项示例\#3：悬挂模式}
+
+图~\ref{fig:caption-format-ex3-justified}--\ref{fig:caption-format-ex3-raggedleft} 展示了在 \opt{format=hang} 格式下，七种不同的 \opt{justification=} 的效果。
+这些图由如下代码生成：
+\begin{lstlisting}
+\captionsetup{format=hang,indention=0pt,justification=justified}
+\caption{Caption with hang format and justified justification.
+Caption with hang format and justified justification.
+Caption with hang format and justified justification.}
+...
+\captionsetup{format=hang,indention=0pt,justification=centering}
+\caption{Caption with hang format and centering justification.
+Caption with hang format and centering justification.
+Caption with hang format and centering justification.}
+...
+\captionsetup{format=hang,indention=0pt,justification=centerlast}
+\caption{Caption with hang format and centerlast justification.
+Caption with hang format and centerlast justification.
+Caption with hang format and centerlast justification.}
+...
+\captionsetup{format=hang,indention=0pt,justification=centerfirst}
+\caption{Caption with hang format and centerfirst justification.
+Caption with hang format and centerfirst justification.
+Caption with hang format and centerfirst justification.}
+...
+\captionsetup{format=hang,indention=0pt,justification=raggedright}
+\caption{Caption with hang format and raggedright justification.
+Caption with hang format and raggedright justification.
+Caption with hang format and raggedright justification.}
+...
+\captionsetup{format=hang,indention=0pt,justification=RaggedRight}
+\caption{Caption with hang format and RaggedRight justification.
+Caption with hang format and RaggedRight justification.
+Caption with hang format and RaggedRight justification.}
+...
+\captionsetup{format=hang,indention=0pt,justification=raggedleft}
+\caption{Caption with hang format and raggedleft justification.
+Caption with hang format and raggedleft justification.
+Caption with hang format and raggedleft justification.}
+\end{lstlisting}
+从图~\ref{fig:caption-format-ex3-justified}--\ref{fig:caption-format-ex3-raggedleft} 中可以看出，
+\opt{format=hang} 效果是：标题从第二行有额外的缩进。
+标题的第一行与其它行的格式是一样的。
+
+\begin{figure}[tp]
+	\centering
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics{graphic2}
+		\captionsetup{format=hang,indention=0pt,justification=justified}
+		\caption{Caption with hang format and justified justification.
+			Caption with hang format and justified justification.
+			Caption with hang format and justified justification.}
+		\label{fig:caption-format-ex3-justified}
+	\end{minipage}\\[1em]
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics{graphic2}
+		\captionsetup{format=hang,indention=0pt,justification=justified}
+		\caption{Caption with hang format and justified justification.
+			Caption with hang format and justified justification.
+			Caption with hang format and justified justification.}
+		\label{fig:caption-format-ex3-centering}
+	\end{minipage}\hfill
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics{graphic2}
+		\captionsetup{format=hang,indention=0pt,justification=centerlast}
+		\caption{Caption with hang format and centerlast justification.
+			Caption with hang format and centerlast justification.
+			Caption with hang format and centerlast justification.}
+		\label{fig:caption-format-ex3-centerlast}
+	\end{minipage}\\[1em]
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics{graphic2}
+		\captionsetup{format=hang,indention=0pt,justification=centerfirst}
+		\caption{Caption with hang format and centerfirst justification.
+			Caption with hang format and centerfirst justification.
+			Caption with hang format and centerfirst justification.}
+		\label{fig:caption-format-ex3-centerfirst}
+	\end{minipage}\hfill
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics{graphic2}
+		\captionsetup{format=hang,indention=0pt,justification=raggedright}
+		\caption{Caption with hang format and raggedright justification.
+			Caption with hang format and raggedright justification.
+			Caption with hang format and raggedright justification.}
+		\label{fig:caption-format-ex3-raggedright}
+	\end{minipage}\\[1em]
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics{graphic2}
+		\captionsetup{format=hang,indention=0pt,justification=RaggedRight}
+		\caption{Caption with hang format and RaggedRight justification.
+			Caption with hang format and RaggedRight justification.
+			Caption with hang format and RaggedRight justification.}
+		\label{fig:caption-format-ex3-RaggedRight}
+	\end{minipage}\hfill
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics{graphic2}
+		\captionsetup{format=hang,indention=0pt,justification=raggedleft}
+		\caption{Caption with hang format and raggedleft justification.
+			Caption with hang format and raggedleft justification.
+			Caption with hang format and raggedleft justification.}
+		\label{fig:caption-format-ex3-raggedleft}
+	\end{minipage}
+\end{figure}
+
+
+\subsection{进一步定制}
+
+\pkg{caption} 宏包还有一些额外的特性，可以允许用户进行进一步的定制。
+本节对此进行了简要介绍，详细的指南请参考 \cite{caption-doc}。
+
+\subsubsection{标题样式}
+
+用户可以定义一组标题选项，称之为\emph{标题样式}。
+这样通过一个样式选项就可以指定一组选项值。
+例如，\opt{caption} 宏包已经定义了名为 \opt{default} 的选项：
+\begin{lstlisting}
+\captionsetup{style=default}
+\end{lstlisting}
+就等价于
+\begin{lstlisting}
+\captionsetup{font=default, labelfont=default,
+textfont=default, parskip=0pt,
+labelformat=simple, labelsep=colon,
+format=default, indentation=0pt,
+hangindent=0pt, margin=0pt,
+parinident=0pt, justification=justified,
+singlelinecheck=true}
+\end{lstlisting}
+可以在导言区使用 \cmdi{DeclareCaptionStyle} 命令来定义其它标题样式。
+这些样式既可以是显式地定义所有的参数值，
+也可以从默认样式出发只修改个别的选项值。
+例如，在导言区中使用如下 \cmd{DeclareCaptionStyle} 命令
+\begin{lstlisting}
+\DeclareCaptionStyle{BigLeft}{style=default, labelsep=period,
+font=Large, labelfont=bold,
+justification=RaggedRight,
+singlelinecheck=false}
+\end{lstlisting}
+就可以通过如下命令使用 \opt{BigLeft} 样式
+\begin{lstlisting}
+\captionsetup{style=BigLeft}
+\caption{This Caption uses BigLeft Style}
+\end{lstlisting}
+效果如图~\ref{fig:caption-style-BigLeft}
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics{graphic2}
+	\captionsetup{style=BigLeft}
+	\captionof{figure}{This Caption uses BigLeft Style}
+	\label{fig:caption-style-BigLeft}
+\end{minipage}
+
+\vskip2em\hrule
+
+\subsubsection{其它选项值}
+
+\pkg{caption} 宏包提供了一组命令用于其它的选项值，这些命令只能用于导言区中。
+\begin{lstlisting}
+\DeclareCaptionFont
+\DeclareCaptionLabelSeparator
+\DeclareCaptionLabelFormat
+\DeclareCaptionFormat
+\DeclareCaptionJustification
+\DeclareCaptionTextFormat
+\end{lstlisting}
+
+\paragraph{选项定义示例\#1}
+
+表~\ref{tab:caption-fontval} 定义了可以用于 \opt{font=}、\opt{labelfont=}和 \opt{textfont=} 选项的字体选项值。
+\cmdi{DeclareCaptionFont} 命令允许用户定义额外的字体选项值。
+例如，在导言区使用如下命令会定义一个 \opt{BigAndBold} 选项值
+\begin{lstlisting}
+\DeclareCaptionFont{BigAndBold}{\Large\bfseries}
+\end{lstlisting}
+然后可以使用如下代码
+\begin{lstlisting}
+\captionsetup{font=BigAndBold}
+\caption{This Caption uses a Custom Font}
+\end{lstlisting}
+效果如图~\ref{fig:caption-font-BigAndBold} 所示。
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics{graphic2}
+	\captionsetup{font=BigAndBold}
+	\captionof{figure}{This Caption uses a Custom Font}
+	\label{fig:caption-font-BigAndBold}
+\end{minipage}
+
+\vskip2em\hrule
+
+\paragraph{选项定义示例\#2}
+
+表~\ref{tab:caption-labelopt} 描述了如何用 \opt{labelformat=} 选项控制标题的表头（例如“Figure 33”）部分的格式。
+\cmdi{DeclareCaptionLabelFormat} 命令允许用户自定义额外的 \opt{labelformat=} 选项。
+在自定义中，使用符号 \opt{\#1} 和 \opt{\#2} 指定表头（例如“Figure”）和数字编号的插入地点。
+例如，在导言区使用如下命令会定义一个 \opt{hash} 选项值
+\begin{lstlisting}
+\DeclareCaptionLabelFormat{hash}{#1 {\#}#2}
+\end{lstlisting}
+效果是在数字编号之前使用符号 \# 。
+不过，该定义有一个小瑕疵，如果 \opt{\#1} 为空的话，在\opt{\#1} 后面的空格是不必要的。
+因此，\pkg{caption} 宏包提供了两个辅助命令。
+\cmdi{bothIfFirst} 命令有两个变量，只有当第一个变量不为空时才输出这两个变量，
+否则都不会输出。
+类似地，\cmdi{bothIfSecond} 仅当第二个变量不为空时才输出这两个变量，否则都不会输出。
+使用 \cmd{bothIfFirst} 命令后的定义是
+\begin{lstlisting}
+\DeclareCaptionLabelFormat{hash}{\bothIfFirst{#1}{ }{\#}#2}
+\end{lstlisting}
+该定义要放在导言区，之后可以设置标题格式
+\begin{lstlisting}
+\captionsetup{labelformat=hash}
+\caption{This Caption has a Custom Label Format}
+\end{lstlisting}
+效果如图~\ref{fig:caption-labelformat-hash}。
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics{graphic2}
+	\captionsetup{labelformat=hash}
+	\captionof{figure}{This Caption has a Custom Label Format}
+	\label{fig:caption-labelformat-hash}
+\end{minipage}
+
+\vskip2em\hrule
+
+\paragraph{选项定义示例\#3}
+
+表~\ref{tab:caption-labelopt} 定义了 \opt{labelsep=} 选项值。
+用户可以用 \cmdi{DeclareCaptionLabelSeparator} 命令为 \opt{labelsep=} 选项自定义额外的选项值。
+例如，在导言区使用如下命令会将标签分隔符定义为箭头
+\begin{lstlisting}
+\DeclareCaptionLabelSeparator{arrow}{\quad\ensuremath{\Rightarrow}\quad}
+\end{lstlisting}
+之后如下代码
+\begin{lstlisting}
+\captionsetup{labelsep=arrow}
+\caption{This Caption has a Custom Label Separator}
+\end{lstlisting}
+的效果见图~\ref{fig:caption-labelsep-arrow}。
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics{graphic2}
+	\captionsetup{labelsep=arrow}
+	\captionof{figure}{This Caption has a Custom Label Separator}
+	\label{fig:caption-labelformat-hash}
+\end{minipage}
+
+\vskip2em\hrule
+
+\paragraph{选项定义示例\#4}
+
+表~\ref{tab:caption-formatopt} 介绍了 \opt{format=} 选项值。
+\cmdi{DeclareCaptionFormat} 命令允许用户为 \opt{format=} 选项自定义额外的选项值。
+在自定义中，使用符号 \opt{\#1}、\opt{\#2} 和 \opt{\#3} 指代标题的各部分。
+其中 \opt{\#1} 代表标题标签，\opt{\#2} 代表标题分隔符，\opt{\#3} 代表标题文本（其定义可参见图~\ref{fig:captiondef}）。
+例如，在导言区使用如下命令定义了 \opt{reverse} 格式，
+使得先出现标题内容，然后是标题分隔符，最后是放在双尖括号 \cmd{ll} 和 \cmd{gg} 内的标题标签。
+\begin{lstlisting}
+\DeclareCaptionFormat{reverse}{#3#2\ensuremath{\ll}#1\ensuremath{\gg}}
+\end{lstlisting}
+之后如下代码
+\begin{lstlisting}
+\captionsetup{format=reverse,labelsep=empty}
+\caption{This Caption has a Custom Format}
+\end{lstlisting}
+的效果见图~\ref{fig:caption-format-reverse}。
+
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics{graphic2}
+	\captionsetup{format=reverse,labelsep=empty}
+	\captionof{figure}{This Caption has a Custom Format}
+	\label{fig:caption-format-reverse}
+\end{minipage}
+
+
 \section{不浮动的图形}\label{sec:nonfloat}
 
 \emph{由于不浮动的图形会生成大段的垂直空白，因此一般认为是比较糟糕的排版风格。

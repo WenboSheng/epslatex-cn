@@ -32,9 +32,18 @@
 	commentstyle=\ttfamily\slshape,
 	language=LaTeX}
 
+% declared in main text of epslatex
+\DeclareCaptionStyle{BigLeft}{style=default, labelsep=period,
+	font=Large, labelfont=bold,
+	justification=RaggedRight,
+	singlelinecheck=false}
+\DeclareCaptionFont{BigAndBold}{\Large\bfseries}
+\DeclareCaptionLabelFormat{hash}{\bothIfFirst{#1}{ }{\#}#2}
+\DeclareCaptionLabelSeparator{arrow}{\quad\ensuremath{\Rightarrow}\quad}
+\DeclareCaptionFormat{reverse}{#3#2\ensuremath{\ll}#1\ensuremath{\gg}}
+
 % new column type in tabular with fixed width
 \newcolumntype{P}[1]{>{\setlength{\parindent}{2em}}p{#1}}
-
 
 \newcommand{\HanTheThanh}{{\fontencoding{T5}\selectfont H\`an Th\'\ecircumflex\ Th\`anh}}
 \newcommand{\file}[1]{\texttt{#1}}
