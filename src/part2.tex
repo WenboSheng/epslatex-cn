@@ -18,7 +18,7 @@
 用户必须指定一个图形驱动以告诉图形宏包如何处理导入的图像。
 目前\LaTeX{} 图形宏集支持18种不同的驱动
 \footnote{
-	到目前（2016年）为止，支持的驱动数已经超过了20种。——译者注
+	到目前（2016年）为止，支持的驱动数已经超过了20种。——译注
 	}，
 不过，本文档只涉及两种最常用的驱动：
 \prgname{dvips} 类型文档所用的 \prgname{dvips} 驱动
@@ -156,7 +156,7 @@
 \includegraphics[width=3in]{file}
 \end{lstlisting}
 导入指定的图片文件，且宽度为 3英寸
-\footnote{同时高度也会按相应的比例缩放——译者注}。
+\footnote{同时高度也会按相应的比例缩放——译注}。
 不过，为了使图像的页面布局更具通用性，
 图片宽度最好指定为可伸缩的相对长度而不是用像3英寸这样的固定尺寸
 \footnote{
@@ -297,7 +297,7 @@
 
 下面是一些使用 \cmd{includegraphics} 命令来插入图形的例子。
 \footnote{
-	本小节来自于王磊在旧版本的中译本《\LaTeXe{} 插图指南》中额外补充的内容。——译者注}
+	本小节来自于王磊在旧版本的中译本《\LaTeXe{} 插图指南》中额外补充的内容。——译注}
 这里为方便起见，定义水平线 \cmd{HR} 为
 \begin{lstlisting}
 \newcommand{\HR}{\rule{1em}{0.4pt}}
@@ -782,7 +782,7 @@
 \begin{lstlisting}
 \def\Gin@extensions{.png,.pdf,.jpg,.mps,.jpeg,.PNG,.PDF,.JPG,.JPEG}
 \end{lstlisting}
-	——译者注}：
+	——译注}：
 \begin{lstlisting}
 \DeclareGraphicsExtensions{.png,.pdf,.jpg,.mps}
 \end{lstlisting}
@@ -868,7 +868,7 @@
 		如果这一选项为空，
 		那么必须要在 \cmd{includegraphics} 命令中给定 \opt{bb} 选项的值。 \\ \hline
 		command & 作用于图像文件的命令，此项常为空。
-		命令前必须有一个前单引号（键盘上数字键 \texttt{1} 的左侧键——译者注），
+		命令前必须有一个前单引号（键盘上数字键 \texttt{1} 的左侧键——译注），
 		注意不是常用的后单引号。
 		目前为止，只有 \prgname{dvips} 能够执行这样的命令。
 		参见第~\ref{sec:noneps}~节关于如何用这样的命令来处理非 \file{eps} 格式图像和压缩的 \file{eps} 图像的例子。\\
