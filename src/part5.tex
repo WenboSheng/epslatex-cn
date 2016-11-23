@@ -629,76 +629,163 @@ produces Figure 62, which has vertically-centered graphics.
 
 \section{The subfig package}
 
-\section{连续图形}
+\section{连续图形和连续子图}\label{sec:contfig}
 
-当两个相邻的图形含有关系较为密切的材料时，常常希望具有相同的
-图形编号。因为计数器~\texttt{figure}~中记录了下一图形的编号，
-所以可在图形环境前减低~\texttt{figure}~的值使得两幅图形具有
-相同的编号。例如：
-\begin{Verbatim}[xleftmargin=1cm]
-\addtocounter{figure}{-1} 
+当连续两个图形的内容关系较为密切时，常常希望具有相同的图形编号。
+因为计数器 \opt{figure} 中记录了下一图形的编号，
+所以可在图形环境前减小 \opt{figure} 的值使得两幅图形具有相同的编号。例如：
+\begin{lstlisting}
 \begin{figure}
-\end{Verbatim}
-不过，这样做会使得两幅图形无法被正确区分，导致~\LaTeX{}~的引用
-等的混乱。
-
-构造连续图形的最好的方法是使用~\textsf{subfigure}~宏包。
-这样既可以使连续的几幅图形具有相同的编号，如~``{\CJKfamily{hei}图}~12''，
-且其中的每幅图形也有自己的标记，如~``{\CJKfamily{hei}图}~12(a)''~等。
-由于连续的子图位于不同的~\texttt{figure}~环境，所以在两个图形环境
-之间，必须减低计数器~\texttt{figure}~的值。
-\begin{Verbatim}[xleftmargin=1cm]
-\addtocounter{figure}{-1} 
-\end{Verbatim}
-同时，必须在第二幅子图前将子图的计数器~\texttt{subfigure}~加一。
-\begin{Verbatim}[xleftmargin=1cm]
-\addtocounter{subfigure}{1}
-\end{Verbatim}
-例如下面的命令得到两个连续的子图。
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{figure} 
-\centering 
-\subfigure[First Part]{% 
-\label{fig:graphics:a}% label for subfigure 
-\includegraphics[width=\textwidth]{wide.eps}}% 
-\caption{Large Graphics}% 
-\label{fig:graphics}% label for figure
-\end{figure} 
-\addtocounter{figure}{-1} 
-\begin{figure} 
-\addtocounter{subfigure}{1} 
-\centering 
-\subfigure[Second Part]{% 
-\label{fig:graphics:b}% label for subfigure 
-\includegraphics[width=\textwidth]{wide.eps}}% 
-\caption{Large Graphics (con't)}% 
+....
 \end{figure}
-\end{Verbatim}
+\addtocounter{figure}{-1}
+\begin{figure}
+....
+\end{figure}
+\end{lstlisting}
+不过，这样做会使得两幅图形无法被正确区分，导致 \LaTeX{} 的引用的混乱。
 
-\begin{figure} 
-	\centering 
-	\subfigure[First Part]{% 
-		\label{fig:graphics:a}% label for subfigure 
-		\includegraphics[width=\textwidth]{wide}}% 
-	\caption{Large Graphics}%   
-	\label{fig:graphics}% label for figure
-\end{figure} 
-\addtocounter{figure}{-1} 
-\begin{figure} 
-	\addtocounter{subfigure}{1} 
-	\centering 
-	\subfigure[Second Part]{% 
-		\label{fig:graphics:b}% label for subfigure 
-		\includegraphics[width=\textwidth]{wide}}% 
-	\caption{Large Graphics (con't)}% 
+\subsection{连续图形}
+
+连续图形既需要具有相同的编号，又应该有各自不同的引用，例如“Figure 12, Figure 12b”。
+构造连续图形的最佳办法是使用 \pkg{caption} 宏包。
+\pkg{caption} 宏包提供了 \cmdi{ContinuedFloat} 命令以及相应的标题类型 \opt{ContinuedFloat} 以及同名的计数器 \opt{ContinuedFloat}。
+\begin{lstlisting}
+\renewcommand\theContinuedFloat{\alph{ContinuedFloat}}
+\DeclareCaptionLabelFormat{continued}{Continued #1˜#2}
+\captionsetup[ContinuedFloat]{labelformat=continued}
+...
+\begin{figure}
+	...
+	\caption{A figure}
+\end{figure}
+...
+\begin{figure}\ContinuedFloat
+	...
+	\caption{A figure}
+\end{figure}
+\end{lstlisting}
+
+更多情况下希望第一幅图从“Figure 12a”而不是“Figure 12”开始，
+进而第二幅图是“Figure 12b”而不是“Figure 12a”。
+此时需要在第一幅图的环境内使用 \cmdi{ContinuedFloat*} 命令。
+\begin{lstlisting}
+\renewcommand\theContinuedFloat{\alph{ContinuedFloat}}
+...
+\begin{figure}[tbp]
+	\ContinuedFloat*
+	\centering
+	\includegraphics[height=6in]{tux-color}
+	\caption{First figure of a series}
+	\label{fig:continued:first}
+\end{figure}
+...
+\begin{figure}[tbp]
+	\ContinuedFloat
+	\centering
+	\includegraphics[height=6in]{tux-black}
+	\caption{Second figure of a series}
+	\label{fig:continued:second}
+\end{figure}
+\end{lstlisting}
+效果见图~\ref{fig:continued:first} 和图~\ref{fig:continued:second}。
+
+\begin{figure}[tbp]
+	\ContinuedFloat*
+	\centering
+	\includegraphics[height=6in]{tux-color}
+	\caption{First figure of a series}
+	\label{fig:continued:first}
 \end{figure}
 
-在这一例子中，每个图形环境中只有一个子图。而当像第~\ref{sec:sidesubfigure}~
-节中那样每个图形环境中有多个子图，就需要根据第一个图形环境中子图的个数来
-相应地调整计数器~\texttt{subfigure}~的增加值。另外，由于连续图形都是不
-同的浮动对像，有可能不出现在连续的页面上。如果出现这种情况，可在最后
-一幅连续图形后使用命令~\cmd{FloatBarrier}~来迫使~\LaTeX{}~将连续图形
-放置在一起。
+\begin{figure}[tbp]
+	\ContinuedFloat
+	\centering
+	\includegraphics[height=6in]{tux-black}
+	\caption{Second figure of a series}
+	\label{fig:continued:second}
+\end{figure}
 
+\subsection{连续子图}
+
+当一个 \env{figure} 环境中包含很多子图时，
+很多时候没有足够的空间将所有的子图放在一页内。
+此时使用 \cmd{ContinuedFloat} 命令可以使子图分成若干组，并且具有相同的图形编号。
+这样就可以避免分割在不同编号的图形环境。
+
+\begin{lstlisting}
+\usepackage{graphicx}
+\usepackage{caption,subcaption}
+...
+\begin{figure}
+	\centering
+	%%----start of first subfigure----
+	\subcaptionbox{%
+		First Subfigure\label{fig:contfig:subone}}{%
+		\includegraphics[width=3cm]{graphic}}
+	\hspace{1cm}
+	%%----start of second subfigure----
+	\subcaptionbox{%
+		Second Subfigure\label{fig:contfig:subtwo}}{%
+		\includegraphics[width=3cm]{graphic}}
+	\caption{Two Subfigures}
+	\label{fig:contfig:one}
+\end{figure}
+\begin{figure}
+	\ContinuedFloat
+	\centering
+	%%----start of third subfigure----
+	\subcaptionbox{%
+		Third Subfigure\label{fig:contfig:subthree}}{%
+		\includegraphics[width=3cm]{graphic}}
+	\hspace{1cm}
+	%%----start of fourth subfigure----
+	\subcaptionbox{%
+		Fourth Subfigure\label{fig:contfig:subfour}}{%
+		\includegraphics[width=3cm]{graphic}}
+	\caption{Two Additional Subfigures}
+	\label{fig:contfig:two}
+\end{figure}
+\end{lstlisting}
+该代码片段会创建两个浮动体，
+分别包含图~\ref{fig:contfig:subone}、\ref{fig:contfig:subtwo} 
+以及图~\ref{fig:contfig:subthree}、\ref{fig:contfig:subfour}。
+显然这四个子图可以放在同一个浮动体内，
+但本例只是为了说明如何进行更大的子图分组。
+
+注意 \cmd{ContinuedFloat} 命令不仅保持浮动体编号不变，而且确保第二个浮动体内的子图编号不会重置为 (a)。
+此外两个浮动体的标题具有不同的引用标签（\texttt{fig:contfig:one} 和 \texttt{fig:contfig:two}），
+但相应的 \cmd{ref} 引用值是相同的，
+不过由于两个浮动体可能不同页，因此对应的 \cmd{pageref} 值可能不同。
+
+\begin{figure}
+	\centering
+	%%----start of first subfigure----
+	\subcaptionbox{%
+		First Subfigure\label{fig:contfig:subone}}{%
+		\includegraphics[width=3cm]{graphic}}
+	\hspace{1cm}
+	%%----start of second subfigure----
+	\subcaptionbox{%
+		Second Subfigure\label{fig:contfig:subtwo}}{%
+		\includegraphics[width=3cm]{graphic}}
+	\caption{Two Subfigures}
+	\label{fig:contfig:one}
+\end{figure}
+\begin{figure}
+	\ContinuedFloat
+	\centering
+	%%----start of third subfigure----
+	\subcaptionbox{%
+		Third Subfigure\label{fig:contfig:subthree}}{%
+		\includegraphics[width=3cm]{graphic}}
+	\hspace{1cm}
+	%%----start of fourth subfigure----
+	\subcaptionbox{%
+		Fourth Subfigure\label{fig:contfig:subfour}}{%
+		\includegraphics[width=3cm]{graphic}}
+	\caption{Two Additional Subfigures}
+	\label{fig:contfig:two}
+\end{figure}
 
 \endinput

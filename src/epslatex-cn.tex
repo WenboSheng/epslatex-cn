@@ -42,6 +42,7 @@
 \DeclareCaptionLabelFormat{hash}{\bothIfFirst{#1}{ }{\#}#2}
 \DeclareCaptionLabelSeparator{arrow}{\quad\ensuremath{\Rightarrow}\quad}
 \DeclareCaptionFormat{reverse}{#3#2\ensuremath{\ll}#1\ensuremath{\gg}}
+\renewcommand\theContinuedFloat{\alph{ContinuedFloat}}
 
 % new column type in tabular with fixed width
 \newcolumntype{P}[1]{>{\setlength{\parindent}{2em}}p{#1}}
