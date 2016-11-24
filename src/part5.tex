@@ -173,109 +173,110 @@ produces Figure 62, which has vertically-centered graphics.
 \subsection{并列的子图形}\label{ssec:sidesubfigure}
 
 在某些情况下，有时会希望将并列的图形组成一组，同时其中的每一幅图都保持其独立性。
-\pkgi{subfig} 宏包的 \cmdi{subfloat} 命令（参见第~\ref{sec:subfig-pkg} 节）
+\pkgi{subcaption} 宏包的 \cmdi{subcaptionbox} 命令（详见第~\ref{sec:subcaption-pkg} 节）
 可以将一组独立的图像作为一个 \env{figure} 环境中的子图。
 例如：
 \begin{lstlisting}
-\usepackage{subfig}
+\usepackage{subcaption}
 ...
 \begin{figure}
 	\centering
 	%%----start of first subfigure----
-	\subfloat[Small Box with a Long Caption]{
+	\subcaptionbox{Small Box with a Long Caption%
 		\label{fig:subfig:a} %% label for first subfigure
-		\includegraphics[width=1.0in]{graphic}}
+		}{\includegraphics[width=1.1in]{graphic}}
 	\hspace{1in}
 	%%----start of second subfigure----
-	\subfloat[Big Box]{
+	\subcaptionbox{Big Box%
 		\label{fig:subfig:b} %% label for second subfigure
-		\includegraphics[width=1.5in]{graphic}}
+		}{\includegraphics[width=1.5in]{graphic}}
 	\caption{Two Subfigures}
 	\label{fig:subfig} %% label for entire figure
 \end{figure}
 \end{lstlisting}
 生成图~\ref{fig:subfig}。
 表~\ref{tab:subfigref} 展示了用于如何引用图~\ref{fig:subfig} 中子图的命令。
+其中带 \texttt{*} 的命令 \cmd{ref*} 和 \cmd{subref*} 需要导入 \pkg{hyperref} 宏包，
+效果是生成没有超链接的引用。
 
 \begin{figure}
 	\centering
 	%%----start of first subfigure----
-	\subfloat[Small Box with a Long Caption]{
+	\subcaptionbox{Small Box with a Long Caption%
 		\label{fig:subfig:a} %% label for first subfigure
-		\includegraphics[width=1.0in]{graphic}}
+	}{\includegraphics[width=1.1in]{graphic}}
 	\hspace{1in}
 	%%----start of second subfigure----
-	\subfloat[Big Box]{
+	\subcaptionbox{Big Box%
 		\label{fig:subfig:b} %% label for second subfigure
-		\includegraphics[width=1.5in]{graphic}}
+	}{\includegraphics[width=1.5in]{graphic}}
 	\caption{Two Subfigures}
 	\label{fig:subfig} %% label for entire figure
 \end{figure}
 
+
 \begin{table}
 	\centering
-	\caption{图~\ref{fig:subfig} 的子图引用命令及其结果}
+	\caption{图~\ref{fig:subfig} 的子图引用命令及其结果}\label{tab:ref-subfig}
 	\begin{tabular}{lc}
 		\toprule
 		引用命令 & 输出 \\
 		\midrule
 		\cmdM{subref}{fig:subfig:a} & \subref{fig:subfig:a} \\
 		\cmdM{subref*}{fig:subfig:a} & \subref*{fig:subfig:a} \\
-		\cmdM{ref}{fig:subfig:a} & \subref*{fig:subfig:a} \\
+		\cmdM{ref}{fig:subfig:a} & \ref{fig:subfig:a} \\
+		\cmdM{ref*}{fig:subfig:a} & \ref*{fig:subfig:a} \\
 		\cmdM{subref}{fig:subfig:b} & \subref{fig:subfig:b} \\
 		\cmdM{subref*}{fig:subfig:b} & \subref*{fig:subfig:b} \\
 		\cmdM{ref}{fig:subfig:b} & \ref{fig:subfig:b} \\
+		\cmdM{ref*}{fig:subfig:b} & \ref*{fig:subfig:b} \\
 		\cmdM{ref}{fig:subfig} & \ref{fig:subfig} \\
+		\cmdM{ref*}{fig:subfig} & \ref*{fig:subfig} \\
 		\bottomrule
 	\end{tabular}
 \end{table}
 
-\subsubsection{子图中的小页环境}
+\subsubsection{并列子图的宽度}
 
-由于子图~\ref{fig:subfig:a} 只包含 \cmd{includegraphics} 命令，
-因此子图~\ref{fig:subfig:a} 的标题宽度取决于插入图片的宽度。
-如果子图中包含了小页环境，那么标题就可以和小页宽度一样了。
+使用 \cmd{subcaptionbox} 创建的子图宽度默认为插入内容的自然宽度。
+由于子图~\ref{fig:subfig:a} 只包含 \cmd{includegraphics} 插图命令，
+因此其标题宽度取决于插入图片的宽度。
+\cmd{subcaptionbox} 命令还提供了一个可选项用于控制子图的宽度，
+这样标题就可以和子图宽度一样了。
 例如，
 \begin{lstlisting}
 \begin{figure}
-	\subfloat[Small Box with a Long Caption]{
-		\label{fig:mini:subfig:a} %% label for first subfigure
-		\begin{minipage}[b]{0.45\linewidth}
-			\centering \includegraphics[width=1in]{graphic}
-		\end{minipage}}%
+	\centering
+	%%----start of first subfigure----
+	\subcaptionbox{Small Box with a Long Caption%
+		\label{fig:specwid:subfig:a} %% label for first subfigure
+	}[0.45\linewidth]{\includegraphics[width=1.1in]{graphic}}
 	\hfill
-	\subfloat[Big Box]{
-		\label{fig:mini:subfig:b} %% label for second subfigure
-		\begin{minipage}[b]{0.45\linewidth}
-			\centering \includegraphics[width=1.5in]{graphic}
-		\end{minipage}}
-	\caption{Minipages Inside Subfigures}
-	\label{fig:mini:subfig} %% label for entire figure
+	%%----start of second subfigure----
+	\subcaptionbox{Big Box%
+		\label{fig:specwid:subfig:b} %% label for second subfigure
+	}[0.45\linewidth]{\includegraphics[width=1.5in]{graphic}}
+	\caption{Two Subfigures}
+	\label{fig:specwid:subfig} %% label for entire figure
 \end{figure}
 \end{lstlisting}
-生成图~\ref{fig:mini:subfig}，其中包含了子图~\ref{fig:mini:subfig:a} 和~\ref{fig:mini:subfig:b}。
+生成图~\ref{fig:specwid:subfig}，
+其中包含了子图~\ref{fig:specwid:subfig:a} 和~\ref{fig:specwid:subfig:b}。
 
 \begin{figure}
-	\subfloat[Small Box with a Long Caption]{
-		\label{fig:mini:subfig:a} %% label for first subfigure
-		\begin{minipage}[b]{0.45\linewidth}
-			\centering \includegraphics[width=1in]{graphic}
-		\end{minipage}}%
-		\hfill
-		\subfloat[Big Box]{
-			\label{fig:mini:subfig:b} %% label for second subfigure
-			\begin{minipage}[b]{0.45\linewidth}
-				\centering \includegraphics[width=1.5in]{graphic}
-			\end{minipage}}
-			\caption{Minipages Inside Subfigures}
-			\label{fig:mini:subfig} %% label for entire figure
-		\end{figure}
-
-由于子图标题的宽度默认就是子图的宽度，
-因此图~\ref{fig:mini:subfig} 中子图标题的宽度大于图~\ref{fig:subfig} 中的子图标题。
-这是因为图~\ref{fig:subfig} 中的子图只包含图像，
-而图~\ref{fig:mini:subfig} 中的子图包含了宽度为 $0.5\text{\cmd{linewidth}}$ 的小页环境。
-
+	\centering
+	%%----start of first subfigure----
+	\subcaptionbox{Small Box with a Long Caption%
+		\label{fig:specwid:subfig:a} %% label for first subfigure
+	}[0.45\linewidth]{\includegraphics[width=1.1in]{graphic}}
+	\hfill
+	%%----start of second subfigure----
+	\subcaptionbox{Big Box%
+		\label{fig:specwid:subfig:b} %% label for second subfigure
+	}[0.45\linewidth]{\includegraphics[width=1.5in]{graphic}}
+	\caption{Two Subfigures}
+	\label{fig:specwid:subfig} %% label for entire figure
+\end{figure}
 
 \section{标题中分开的小页环境}
 
@@ -627,7 +628,20 @@ produces Figure 62, which has vertically-centered graphics.
 \end{figure}
 
 
-\section{The subfig package}
+\section{Subcaption 宏包}\label{sec:subcaption-pkg}
+
+本节简要介绍 \pkgi{subcaption} 宏包，更多用法请参考宏包文档\cite{subcaption-doc}。
+
+第~\ref{ssec:sidesubfigure} 节介绍了一个例子，
+其中使用 \pkg{subcaption} 宏包的 \cmd{subcaptionbox} 命令创建子图，
+并且使用 \cmd{ref}、\cmd{ref*} 以及 \pkg{subcaption} 的 \cmd{subref}、\cmd{subref*} 对整个图形和每一子图进行标签引用
+\footnote{
+	\cmd{ref*} 由 \pkg{hyperref} 宏包提供，\cmd{subref*} 同样需要 \pkg{hyperref} 宏包的支持。}，
+相应的效果见表~\ref{tab:ref-subfig}。
+
+\subsection{子浮动体的创建命令}
+
+\subsection{子浮动体的标题定制}
 
 \section{连续图形和连续子图}\label{sec:contfig}
 
