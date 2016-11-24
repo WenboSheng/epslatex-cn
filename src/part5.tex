@@ -630,18 +630,105 @@ produces Figure 62, which has vertically-centered graphics.
 
 \section{Subcaption 宏包}\label{sec:subcaption-pkg}
 
-本节简要介绍 \pkgi{subcaption} 宏包，更多用法请参考宏包文档\cite{subcaption-doc}。
-
 第~\ref{ssec:sidesubfigure} 节介绍了一个例子，
-其中使用 \pkg{subcaption} 宏包的 \cmd{subcaptionbox} 命令创建子图，
+其中使用 \pkgi{subcaption} 宏包的 \cmd{subcaptionbox} 命令创建子图，
 并且使用 \cmd{ref}、\cmd{ref*} 以及 \pkg{subcaption} 的 \cmd{subref}、\cmd{subref*} 对整个图形和每一子图进行标签引用
 \footnote{
 	\cmd{ref*} 由 \pkg{hyperref} 宏包提供，\cmd{subref*} 同样需要 \pkg{hyperref} 宏包的支持。}，
 相应的效果见表~\ref{tab:ref-subfig}。
 
+本节简要介绍 \pkgi{subcaption} 宏包，
+包括如何创建子浮动体以及如何进行标题定制。
+更多用法请参考宏包文档\cite{subcaption-doc}。
+
 \subsection{子浮动体的创建命令}
 
+\pkg{subcaption} 宏包依赖于 \pkg{caption} 宏包，使用时都要载入。
+\pkg{subcaption} 提供了三种方式可以创建子浮动体。
+
+\begin{description}
+	\item[\cmd{subcaption} 命令] 在 \cmd{parbox} 盒子或者 \env{minipage} 小页环境中使用 \cmdi{subcaption} 命令即可创建子浮动体。
+\begin{lstlisting}[escapechar=\%]
+\begin{figure}
+...
+\begin{minipage}{width}
+	...
+	\subcaption[%\metacmd{list entry}%]{%\metacmd{heading}%}
+\end{minipage}
+...
+\end{figure}
+\end{lstlisting}
+	\item[\env{subfigure} 和 \env{subtable} 环境] 
+	为方便起见，\pkg{subcaption} 宏包提供了 \envi{subfigure} 和 \envi{subtable} 两个环境用于创建子图和子表格，用法与 \env{minipage} 环境完全相同。
+	在其中使用 \cmd{caption} 命令可以直接创建子标题。例如
+\begin{lstlisting}[escapechar=\%]
+\begin{figure}
+...
+\begin{subfigure}[%\metacmd{pos}%]{%\metacmd{width}%}
+	...
+	\caption{heading}
+\end{subfigure}
+...
+\end{figure}
+\end{lstlisting}
+	使用 \env{subfigure} 和 \env{subtable} 环境的好处是可以分别为子图和子表格设置不同的标题格式，
+	同时也可以在环境的内部使用 \cmd{captionsetup} 命令单独设置格式。
+	
+	\item[\cmd{subcaptionbox} 命令] 
+	更为方便的是 \cmdi{subcaptionbox} 命令。语法为
+\begin{center}
+	\cmdOMOOM{subcaptionbox}{\metacmd{目录标题}}{\metacmd{标题}}{\metacmd{宽度}}{\metacmd{盒子内位置}}{\metacmd{内容}}
+\end{center}
+	其中，\metacmd{标题} 中可以加入 \cmd{label} 引用标签。
+	\metacmd{宽度} 为可选项，默认为 \metacmd{内容} 的自然宽度。
+	\metacmd{盒子内位置}表示\metacmd{内容} 在子浮动体内的对齐方式，
+	默认为 \opt{c} （居中 \cmd{centering}），
+	此外还可以是 \opt{r} （居左 \cmd{raggedright}）、
+	\opt{l} （居右\cmd{raggedleft}）和 \opt{s} （无对齐格式）。
+	
+	该命令创建的子浮动体按照首行的基线对齐，
+	相当于 \cmd{parbox} 盒子或者 \env{minipage} 环境的 \opt{[t]} 选项。
+	使用该命令的好处是无需指定宽度，即可按照自然宽度创建子浮动体，
+	当然也可以手动指定宽度。
+	相关例子见第~\ref{ssec:sidesubfigure} 节。
+\end{description}
+
+
 \subsection{子浮动体的标题定制}
+
+\pkg{subcaption} 宏包提供了 \opt{sub}、\opt{subfigure} 和 \opt{subtable} 三种标题类型。
+子浮动体的标题设置包括以下几种方式，其中后面的设置方式会覆盖前面的方式：
+\begin{itemize}
+	\item \pkg{caption} 宏包的设置。
+	包括全局设置 \cmdOM{usepackage}{\metacmd{options}}{caption} 以及导言区和各 \env{figure}、\env{table} 浮动体环境中的 \cmd{captionsetup} 命令设置等。
+	
+	\item 子浮动体标题类型 \opt{sub} 的默认设置，具体为
+\begin{lstlisting}
+margin=0pt,font+=small,labelformat=parens,labelsep=space,
+skip=6pt,list=false,hypcap=false
+\end{lstlisting}
+	其中各个选项的含义参见第~\ref{ssec:captioncmd} 节以及 \pkg{caption} 宏包文档\cite{caption-doc}。
+	
+	\item \opt{sub} 类型的全局设置
+	\begin{center}
+		\cmdOM{usepackage}{\metacmd{options}}{subcaption}
+	\end{center}
+	该命令等价于
+	\begin{center}
+		\cmdM{usepackage}{subcaption}
+		\cmdOM{captionsetup}{sub}{\metacmd{options}}
+	\end{center}
+	
+	\item \opt{subfigure} 和 \opt{subtable} 的设置
+	\begin{center}
+		\cmdOM{captionsetup}{subfigure}{\metacmd{options}}\\
+		\cmdOM{captionsetup}{subtable}{\metacmd{options}}
+	\end{center}
+	这两个类型的设置适用于 \env{subfigure} 和 \env{subtable} 环境中的标题。
+	
+	\item 局部的 \opt{sub} 类型设置，
+	例如在 \env{subfigure} 和 \env{subtable} 环境内的 \cmdOM{captionsetup}{sub}{\metacmd{options}}。
+\end{itemize}
 
 \section{连续图形和连续子图}\label{sec:contfig}
 

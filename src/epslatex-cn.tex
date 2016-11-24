@@ -19,35 +19,19 @@
 \usepackage{listings}
 \usepackage{makeidx}
 \usepackage{hologo}
-\usepackage{fancyvrb}
 \usepackage{array,booktabs}
 \usepackage{hyperref}
 
-\DefineShortVerb{\|}
 \graphicspath{{images/}}
 \def\pdfTeX{\hologo{pdfTeX}}
 \def\pdfLaTeX{\hologo{pdfLaTeX}}
-
+\def\HanTheThanh{\hologo{HanTheThanh}}
 \lstset{
 	basicstyle=\ttfamily,
 	commentstyle=\ttfamily\slshape,
 	language=LaTeX}
-
-% declared in main text of epslatex
-\DeclareCaptionStyle{BigLeft}{style=default, labelsep=period,
-	font=Large, labelfont=bold,
-	justification=RaggedRight,
-	singlelinecheck=false}
-\DeclareCaptionFont{BigAndBold}{\Large\bfseries}
-\DeclareCaptionLabelFormat{hash}{\bothIfFirst{#1}{ }{\#}#2}
-\DeclareCaptionLabelSeparator{arrow}{\quad\ensuremath{\Rightarrow}\quad}
-\DeclareCaptionFormat{reverse}{#3#2\ensuremath{\ll}#1\ensuremath{\gg}}
-\renewcommand\theContinuedFloat{\alph{ContinuedFloat}}
-
 % new column type in tabular with fixed width
 \newcolumntype{P}[1]{>{\setlength{\parindent}{2em}}p{#1}}
-
-\newcommand{\HanTheThanh}{{\fontencoding{T5}\selectfont H\`an Th\'\ecircumflex\ Th\`anh}}
 \newcommand{\file}[1]{\texttt{#1}}
 \newcommand{\prgname}[1]{\textsf{#1}}
 \newcommand{\pkg}[1]{\texttt{#1}}
@@ -59,6 +43,7 @@
 \newcommand{\cmdOM}[3]{\cmd{#1}\texttt{[#2]\{#3\}}} % \foo[bar1]{bar2}
 \newcommand{\cmdOOM}[4]{\cmd{#1}\texttt{[#2][#3]\{#4\}}} % \foo[bar1][bar2]{bar3}
 \newcommand{\cmdMOM}[4]{\cmd{#1}\texttt{\{#2\}[#3]\{#4\}}} % \foo{bar1}[bar2]{bar3}
+\newcommand{\cmdOMOOM}[6]{\cmd{#1}\texttt{[#2]\{#3\}[#4][#5]\{#6\}}}
 \newcommand{\opt}[1]{\texttt{#1}}
 \newcommand{\pkgi}[1]{\pkg{#1}%
 	\index{#1@{\textsf{#1} 宏包}}}
@@ -84,6 +69,15 @@
 			\setlength{\itemindent}{\parindent}%
 			\setlength{\parsep}{\parskip}}%
 	\item[]}{\end{list}}
+\DeclareCaptionStyle{BigLeft}{style=default, labelsep=period,
+	font=Large, labelfont=bold,
+	justification=RaggedRight,
+	singlelinecheck=false}
+\DeclareCaptionFont{BigAndBold}{\Large\bfseries}
+\DeclareCaptionLabelFormat{hash}{\bothIfFirst{#1}{ }{\#}#2}
+\DeclareCaptionLabelSeparator{arrow}{\quad\ensuremath{\Rightarrow}\quad}
+\DeclareCaptionFormat{reverse}{#3#2\ensuremath{\ll}#1\ensuremath{\gg}}
+\renewcommand\theContinuedFloat{\alph{ContinuedFloat}}
 
 \makeindex
 \includeonly{preface}
