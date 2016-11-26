@@ -15,6 +15,7 @@
 \usepackage{subcaption}
 \usepackage{sidecap}
 \usepackage{rotating}
+\usepackage{wrapfig}
 
 \usepackage{listings}
 \usepackage{makeidx}
@@ -41,9 +42,11 @@
 \newcommand{\cmdO}[2]{\cmd{#1}\texttt{[#2]}} % \foo[bar]
 \newcommand{\cmdMM}[3]{\cmd{#1}\texttt{\{#2\}\{#3\}}} % \foo{bar1}{bar2}
 \newcommand{\cmdOM}[3]{\cmd{#1}\texttt{[#2]\{#3\}}} % \foo[bar1]{bar2}
+\newcommand{\cmdMO}[3]{\cmd{#1}\texttt{\{#2\}[#3]}}
 \newcommand{\cmdOOM}[4]{\cmd{#1}\texttt{[#2][#3]\{#4\}}} % \foo[bar1][bar2]{bar3}
 \newcommand{\cmdMOM}[4]{\cmd{#1}\texttt{\{#2\}[#3]\{#4\}}} % \foo{bar1}[bar2]{bar3}
 \newcommand{\cmdOMOOM}[6]{\cmd{#1}\texttt{[#2]\{#3\}[#4][#5]\{#6\}}}
+\newcommand{\cmdMOMOM}[6]{\cmd{#1}\texttt{\{#2\}[#3]\{#4\}[#5]\{#6\}}}
 \newcommand{\opt}[1]{\texttt{#1}}
 \newcommand{\pkgi}[1]{\pkg{#1}%
 	\index{#1@{\textsf{#1} 宏包}}}

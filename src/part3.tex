@@ -755,7 +755,7 @@ EPS~格式的图形文件可以很容易的插入到~\LaTeX{}~文件中，
 并告诉 \prgname{dvips} 使用 \prgname{gif2eps} 来将 \file{file.gif} 转为 \file{eps} 文件。
 
 
-\subsection{GIF 的例子}
+\subsection{GIF 的例子}\label{ssec:gifexample}
 由于插入非 \file{eps} 格式的图形所需的命令依赖于操作系统和图形格式转换程序，
 在此提供两个 Unix 系统下常用的转换程序的例子。
 
@@ -836,7 +836,8 @@ convert file2.gif 'eps:-'
 并且保留 \cmdM{ExecuteOptions}{dvips} 这一行。
 
 ================================================
-\section{PSfrag宏包}\label{sec:psfrag}
+
+\section{在图像上添加\LaTeX{}标记}\label{sec:psfrag}
 
 目前很多绘图和分析软件都可以输出\file{eps}格式的图形，
 但是它们大都不能像 \LaTeX{} 一样支持符号和公式。
@@ -1298,53 +1299,76 @@ convert file2.gif 'eps:-'
 
 \section{多次使用同一图形的几种技巧}\label{sec:multigraph}
 
-当一幅图形在文档中被多次使用时，它的~EPS~代码将会多次出现在最后
-得到的~PS~文件中。特别地，譬如在文档的页眉或页脚使用标志或其它图形
-时，就会遇到这种情形。本章将介绍一些多次使用同一图形的技巧。
+在文档的页眉或页脚使用标志或其它图形时就会遇到多次使用同一图形的情况。
+特别地，当使用 \prgname{dvips} 处理文档时，
+如果多次使用同一 \file{eps} 图像，
+那么它的 \file{eps} 代码就会多次出现在得到的 \file{ps} 文件中。
+本节将介绍一些相关的技巧。
 
-一般来说，多次使用同一图形通常有以下四种方法：
+一般来说多次使用同一图形有以下一些方法：
 \begin{enumerate}
-\item 每次使用图形时均用~\cmd{includegraphics\{file.eps\}}。但这样做会
-      有两个问题：
-     \begin{enumerate}
-     \item 每次用到~\cmd{includegraphics}~时，~\LaTeX{}都得搜索和打开
-           一次图形文件。
-     \item 在最后生成的~PS~文件中，~EPS~图形代码多次出现，使生成的~PS~文件
-           变得很大。
-     \end{enumerate}
-\item 将~EPS~图形文件存放到一个~\LaTeX{}~盒子中，每当用到图形时就
-      调用这一个~\LaTeX{}~盒子来插入图形。这将使~\LaTeX{}~只需
-      搜索和打开一次图形文件即可。在~\LaTeX{}~文件的开头加入命令：
-      \begin{Verbatim}
-      \newsavebox{\mygraphic}
-      \sbox{\mygraphic}{%
-            \includegraphics{file.eps}}
-      \end{Verbatim}
-      每次使用图形时，用命令~\cmd{usebox\{\bs mygraphic\}}。图形的
-      缩放和旋转可用~\cmd{scalebox}~和~\cmd{rotatebox}~来得到。
-      不过，在最后生成的~PS~文件中，~EPS~图形代码仍会多次出现。
-      ~PS~文件的大小没有改变。
-\item 当~EPS~的图形是一个矢量图形时，可将此绘图的代码定义为
-      一个~\PS~命令，当用到图形时就调用这一个~~\PS~命令。
-      详见第~\ref{sec:defps}~节。因为在最后生成的~PS~文件中
-      只包含了一次~~EPS~的图形代码，所以~PS~文件会很小。
-      不过在打印时由于绘图命令一直存放在打印机的内存中，
-      很容易导致打印机的内存耗尽而无法打印。另外，使用这种
-      方法时，~\LaTeX{}~仍然得每次对图形文件进行搜索和打开操作。
-\item 像前面一种方法一样定义~\PS~绘图命令，但把它存放到一
-      个~\LaTeX{}~盒子中。这样不仅最后生成的~PS~文件很小，
-      而且~\LaTeX{}~也只需搜索和打开一次图形文件即可。
+	\item 每次使用图形时均用 \cmdM{includegraphics}{file}。
+	但是每次使用 \cmd{includegraphics} 时 \LaTeX{} 都得搜索和打开一次图形文件。
+	\item 将 \file{eps} 图形文件存放到一个 \LaTeX{} 盒子中，
+	每当用到图形时就调用这个 \LaTeX{} 盒子来插入图形。
+	这样 \LaTeX{} 只需搜索和打开一次图形文件即可。
+	在 \LaTeX{} 文件加入命令：
+\begin{lstlisting}
+\newsavebox{\mygraphic}
+\sbox{\mygraphic}{\includegraphics{file}}
+\end{lstlisting}
+	每次使用图形时，用命令 \cmdM{usebox}{\cmd{mygraphic}} 即可。
+	另外，将 \cmd{usebox} 命令放在 \cmd{scalebox} 或者 \cmd{resizebox} 中即可实现图形的缩放和旋转。
+	不过，
 \end{enumerate}
 
-\subsection{定义 \PS{} 命令}\label{ssec:defps}
+\subsection{在 DVIPS 模式下使用 Postscript 命令插入 EPS 文件}\label{ssec:defps}
 
-本节介绍如何定义一个~\PS~命令来完成一幅~EPS~矢量图形的绘图指令。
-这一方法不适合于那些包含位图的~EPS~图形。
+对于 \prgname{dvips} 模式下多次使用同一 \file{eps} 文件的文档，
+即使使用 \LaTeX{} 盒子避免多次读取同一图像文件，
+但是在最后生成的\file{ps} 文件中，\file{eps} 图形代码仍会多次出现，
+所以生成的 \file{ps} 文件仍然很大。
+对此有以下几种方法 \footnote{
+	用户还可以考虑使用 \pkgi{graphicx-psmin} 宏包。
+	该宏包可以使得多次使用的 PostScript 图像也仅需导入一次。
+	限于篇幅本文档不做介绍。}
+\begin{enumerate}
+	\item 当 \file{eps} 文件只包含矢量图形时，
+	可将此绘图的代码定义为一个PostScript命令，
+	当用到图形时就调用这一个PostScript命令\footnote{
+		尽管可以构建 PostScript 命令画矢量图，但这对于位图是不可能的。
+		位图在转成 \file{eps} 格式时，一般都使用 \opt{image} （或者 \opt{colorimage}） PostScript 运算符直接读取当前文件作为数据。
+		因此，该过程不可以使用 PostScript 直接画矢量图形。
+		当然，可以修改 \file{eps} 文件，使得图像数据作为 PostScript 字符串进行传递而不是直接读取二进制文件。
+		但是很难进行自动化操作，需要大量的手动编辑 PostScript。
+		由于大部分人并不是 PostScript 专家，所以手写 PostScript 并不在考虑范围内。
+		如果图像可以用 PostScript 矢量原语描述，
+		可以考虑使用 \prgname{kvec} 程序（见第~\ref{ssec:convertor} 节） 将图像转成矢量PostScript格式。}。
+	因为在最后生成的PostScript文件中只包含了一次\file{eps}的图形代码，
+	所以PostScript文件会很小。
+	不过需要注意的是，在打印时由于绘图命令一直存放在打印机的内存中，
+	很容易导致打印机的内存耗尽而无法打印。
+	另外，使用这种方法时，\LaTeX{} 仍然得每次对图形文件进行搜索和打开操作。
+	\item 像前面一种方法一样定义PostScript绘图命令，
+	但把它存放到一个 \LaTeX{} 盒子中。
+	这样不仅最后生成的~PS~文件很小，
+	而且 \LaTeX{} 也只需搜索和打开一次图形文件即可。
+\end{enumerate}
 
-为了将一~EPS~图形转化为一~\PS~命令，必须将~EPS~图形文件分为
-两个文件。其中一个定义了~\PS~字典和图形命令，另一个则含有
-图形文件信息和使用已定义的~\PS~命令。例如，一个用~\texttt{xfig}~生
-成的~EPS~文件有如下的形式：
+本节介绍如何定义PostScript命令来完成一幅 \file{eps} 矢量图的绘图指令。
+这一方法不适合于那些包含位图的 \file{eps} 图形。
+
+To convert the eps graphics into a PostScript command, the eps file must be
+broken into two files, one which defines the PostScript dictionary and the graphics
+commands, and another which includes the header information and the uses the
+previously-defined PostScript command. For example, an eps file created by Xfig
+has the form
+
+为了将 \file{eps} 图形转化为PostScript命令，
+必须将 \file{eps} 图形文件分为两个文件。
+其中一个定义了PostScript字典和图形命令，
+另一个则含有图形文件信息和使用已定义的PostScript命令。
+例如，一个用\prgname{Xfig}生成的 \file{eps} 文件有如下的形式：
 \begin{Verbatim}[xleftmargin=1cm]
 %!PS-Adobe-2.0 EPSF-2.0
 %%Title: /tmp/xfig-fig017255
@@ -1362,26 +1386,26 @@ $F2psBegin
 ...
 $F2psEnd
 \end{Verbatim}
-这里~...~代表没有列出的命令。一个~EPS~文件一般包括三部分：
+\file{eps} 文件一般包括三部分：
 \begin{enumerate}
-\item 以~\%~开始的~\texttt{header}~命令。
-\item \texttt{Prolog}~部分开始于
-      \begin{Verbatim}[xleftmargin=1cm]
-      /$F2psDict 200 dict def
-      \end{Verbatim}
+	\item 以 \texttt{\%} 开始的文件头命令。
+	\item \texttt{Prolog} 部分，开始于
+\begin{Verbatim}[xleftmargin=1cm]
+/$F2psDict 200 dict def
+\end{Verbatim}
       结束于
-      \begin{Verbatim}[xleftmargin=1cm]
-      %%EndProlog
-      \end{Verbatim}
-      \texttt{Prolog}~部分定义了~EPS~文件所使用的~\PS~字典中的
-      命令。在这个例子中，~\PS~字典名为~\texttt{\$F2psDict}，当然
-      不同的文件可有不同的名字。
-\item 最后一部分包含用来绘图的命令。
+\begin{Verbatim}[xleftmargin=1cm]
+%%EndProlog
+\end{Verbatim}
+	\texttt{Prolog} 部分在 PostScript 字典中定义了 \file{eps} 文件所使用的命令。
+    在这个例子中，PostScript 字典名为 \verb|$F2psDict|，
+    当然不同的文件可有不同的名字。
+	\item 最后一部分包含用来绘图的命令。
 \end{enumerate}
 
-假设上面的这个~EPS~文件名为~\texttt{file.eps}。新建两个文件，分别
-命名为~\texttt{file.h}~和~\texttt{file.ps}。其中~\texttt{file.h}~
-含有如下内容：
+假设上面的这个 \file{eps} 文件名为 \file{file.eps}。
+新建两个文件，分别命名为 \file{file.h} 和 \file{file.ps}。
+其中 \file{file.h} 含有如下内容：
 \begin{Verbatim}[xleftmargin=1cm]
 /$F2psDict 200 dict def
 $F2psDict begin
@@ -1390,10 +1414,9 @@ $F2psDict begin
 /MyFigure {
 $F2psBegin
 ...
-$F2psEnd }
-def
+$F2psEnd } def
 \end{Verbatim}
-~\texttt{file.ps}~含有如下内容：
+\file{file.ps} 含有如下内容：
 \begin{Verbatim}[xleftmargin=1cm]
 %!PS-Adobe-2.0 EPSF-2.0
 %%Title: /tmp/xfig-fig017255
@@ -1404,52 +1427,50 @@ def
 %%Pages: 0
 %%EndComments
 $F2psDict begin MyFigure end
+$
 \end{Verbatim}
 
-~\texttt{file.h}~中定义了~\PS~字典和命令~\texttt{/MyFigure}，
-~\texttt{file.ps}~则包含了~EPS~文件的~\texttt{header}~信息，
-并且使用了~~\texttt{file.h}~中定义的~\PS~命令。
-特别指出的是，~\texttt{file.ps}~中包含有
-~\texttt{\%!PS...}~行和~BoundingBox~行是非常重要的。
-这时，可像下面的例子一样在~\LaTeX{}~文件中使用这个图形了。
-\begin{Verbatim}[xleftmargin=1cm]
+\file{file.h} 中定义了 PostScript 字典和命令 \opt{/MyFigure}，
+\file{file.ps} 则包含了文件头部信息，并且使用了 \file{file.h} 中定义的 PostScript 命令。
+特别指出的是，\file{file.ps} 中包含有 \verb|%!PS...| 这一行和 BoundingBox 行，
+这是非常重要的。
+这时，可像下面的例子一样在 \LaTeX{} 文件中使用这个图形了。
+\begin{lstlisting}
 \documentclass{article}
 \usepackage{graphicx}
 \special{header=file.h}
 \begin{document}
-  ...
-  \includegraphics[width=2in]{file.ps}
-  ...
-  \includegraphics[totalheight=1in]{file.ps}
-  ...
+	...
+	\includegraphics[width=2in]{file.ps}
+	...
+	\includegraphics[totalheight=1in]{file.ps}
+	...
 \end{document}
-\end{Verbatim}
+\end{lstlisting}
 
-\noindent 注意原始图形文件~\texttt{file.eps}~并没有被使用。
-因为~\texttt{file.h}~中的~\PS~命令只被使用了一次，所以最后得到
-的~PS~文件很小。然而，每次插入图形的时候，~\LaTeX{}~都得
-搜索和读取~\texttt{file.ps}~一次。下面的命令将图形存放到
-一个~\LaTeX{}~盒子中，使得在~\LaTeX{}~只搜索和读取~\texttt{file.ps}~一次
-的情况下仍得到很小的~PS~文件。
-\begin{Verbatim}[xleftmargin=1cm]
+注意这里并没有使用原始图形文件 \file{file.eps} 并没有被使用。
+因为 \file{file.h} 中的 PostScript 命令只导入一次，
+所以最后得到的PostScript文件很小。
+然而，每次插入图形的时候，\LaTeX{} 都要搜索和读取一次 \file{file.ps}。
+下面的命令将图形存放到一个 \LaTeX{} 盒子中，
+使得在 \LaTeX{} 只搜索和读取一次 \file{file.ps} 的情况下仍得到很小的PostScript文件。
+\begin{lstlisting}[xleftmargin=1cm]
 \documentclass{article}
 \usepackage{graphicx}
 \special{header=file.h}
-
 \newsavebox{\mygraphic}
-  \sbox{\mygraphic}{%
-     \includegraphics[width=2in]{file.ps}}
-
+\sbox{\mygraphic}{\includegraphics[width=2in]{file.ps}}
 \begin{document}
-  ...
-  \usebox{\mygraphic}
-  ...
-  \resizebox*{1in}{!}{\usebox{\mygraphic}}
-  ...
+	...
+	\usebox{\mygraphic}
+	...
+	\resizebox*{1in}{!}{\usebox{\mygraphic}}
+	...
 \end{document}
-\end{Verbatim}
-所得的结果和上一个领子是一样的。
+\end{lstlisting}
+和上一个例子一样，最后会生成一幅宽度为2英寸的图像和一幅总高度为1英寸的图像。
 
+=========================================================
 \subsection{在页眉和页脚使用图形}\label{ssec:headgraph}
 
 在页眉和页脚使用图形的一个最容易的方法是使用~\pai{fancyhdr}（它是

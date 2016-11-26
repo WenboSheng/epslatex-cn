@@ -889,4 +889,186 @@ skip=6pt,list=false,hypcap=false
 	\label{fig:contfig:two}
 \end{figure}
 
+\section{图文混排}\label{sec:figintext}
+
+在使用外部图形时，通常的是将其置于一个 \env{figure} 环境中，
+由这一浮动环境来决定最后的位置是在页面的上方或下方。
+但有的时候，许多使用者往往希望将图形放置在一个正文方格内，
+或者置于页面的左右，也可能是在页面的的中间，四周包围者文本，
+甚至放在文字的下方作为背景，或重叠放置。
+这时，前面所介绍的只使用 \LaTeX{} 图形宏包套件就很难得到所希望的结果。
+本节将介绍两个有用的图形宏包 \pkgi{wrapfig} 和 \pkgi{picinpar}，
+可以让你很容易地得到上述特殊效果。
+
+除了本节所介绍的宏包外，还有一些宏包也可完成同样的工作。
+如 \pkgi{floatflt}\cite{floatflt-doc} 以及较新的\pkgi{cutwin}\cite{cutwin-doc} 也可用来将图形置于文本段落的一边。
+而所介绍的宏包中，也有未涉及的内容，
+进一步的研究可阅读这些宏包所附的帮助文件。
+
+\subsection{Wrapfig 宏包}\label{ssec:wrapfig}
+
+\begin{wrapfigure}{l}{25pt}
+	\textcolor{blue}{\resizebox{2em}{!}{\bfseries\texttt{W}}}
+\end{wrapfigure}
+\noindent \texttt{rapfig} 宏包提供了一个 \envi{wrapfigure} 环境\footnote{
+	\pkg{wrapfig} 也同时提供了一个 \envi{wraptable} 环境。}来排版窄小的图形，
+使得该图形位于文本的一边，并使文本在其边上折行。
+
+\env{wrapfigure}的用法为：
+\begin{flushleft}
+	\cmdMOMOM{begin}{wrapfigure}{\metacmd{行数}}{\metacmd{位置}}{\metacmd{外延长度}}{\metacmd{宽度}}\\
+	\qquad\metacmd{图内容}\\
+	\cmdM{end}{wrapfigure}
+\end{flushleft}
+
+这里\metacmd{行数}是指图形高度所占的文本行的数目。
+如果不给出此选项，\pkg{wrapfig}会自动计算。
+\metacmd{位置}是指图形相对于文本的位置，须给定下面四项的一个。
+其中大写字母选项允许图形浮动，而小写字母选项则严格地将图形放在代码所在位置。
+\begin{description}
+	\item [\opt{r,R}] 表示图形位于文本的左边。
+	\item [\opt{l,L}] 表示图形位于文本的右边。
+	\item [\opt{i,I}] 表示图形位于页面靠里的一边（用在\opt{twoside}双面格式里）。
+	\item [\opt{o,O}] 表示图形位于页面靠外的一边。
+\end{description}
+\metacmd{外延长度}是指图形超出文本边界的长度，缺省为 $0\pt$。
+如果大于 $0\pt$，图形则会产生超出版心的效果。
+\metacmd{宽度}则指图形的宽度。
+
+\begin{wrapfigure}{r}{4.5cm}
+	\includegraphics[width=4cm,clip]{tiger}
+\end{wrapfigure}
+在使用 \env{wrapfig} 环境进行图文绕排时需要注意下面几点：
+\begin{itemize}
+	\item 图文绕排通常需要多次手动定位。
+	由于会受到修改其它排版格式的影响，因此应当在最后定稿前进行调整。
+	\item \env{wrapfigure} 环境不能放置在跨页的地方。
+	\item 不能在任何列表环境中使用 \env{wrapfigure}。
+	\item 从美学角度讲，图文混排只应当用于普通文本。
+	章节标题、大块的公式与图形混排会很难看。
+	图形放在列表的左边也很糟糕。（排版仍会允许，只是结果很差）
+	如果是小型的公式则没有问题。
+	\item 最好是在段落之间使用 \env{wrapfigure} 环境，
+	如果想要在段落的内部使用，那么必须将 \env{wrapfigure} 环境放在可以自然断行的地方。
+	\item 如果将 \env{wrapfigure} 放在 \cmd{parbox} 或小页环境等分组中，
+	文本折行必须在这些分组前结束。
+	\item 在折行的文本中，\cmd{linewidth} 并没有改变。
+\end{itemize}
+
+而浮动的绕排图形只会出现在以下之处：
+\begin{itemize}
+	\item 段落开始的地方；
+	\item 当前页面有足够的空间，或者可以在下一页继续；
+	\item 文本不是标题或列表；
+	\item 文本没有环绕其它图形；
+	\item 正文中的文本，而不是小页环境。
+\end{itemize}
+
+\pkg{wrapfig} 还可用来放大段落的第一个字。
+本节的第一个字母 \texttt{W} 就是使用如下命令来得到的：
+\begin{lstlisting}
+\begin{wrapfigure}{l}{25pt}
+\textcolor{blue}{\resizebox{2em}{!}{\bfseries\texttt{W}}}
+\end{wrapfigure}
+\noindent\texttt{rapfig} 宏包提供了一个...
+\end{lstlisting}
+
+本节中的另一例子使用了如下命令：
+\begin{lstlisting}
+\begin{wrapfigure}{r}{4.5cm}
+\includegraphics[width=4cm,clip]{tiger}
+\end{wrapfigure}
+在使用 \env{wrapfig} 环境进行图文绕排时需要注意下面几点：...
+\end{lstlisting}
+
+
+\subsection{Picinpar 宏包}\label{ssec:picinpar}
+
+\pkgi{picinpar} 宏包定义了一个基本的环境 \envi{window}，
+还有两个变体 \envi{figwindow} 和 \envi{tabwindow}。
+允许在文本段落中打开一个“窗口”，在其中放入图形、文字和表格等。
+这里我们主要讨论将图形放入文本段落的用法，其它的用法可参考 \pkg{picinpar} 的说明。
+
+\begin{flushleft}
+\cmdMO{begin}{window}{\metacmd{下降行数}, \metacmd{水平位置}, \metacmd{内容}, \metacmd{内容说明}}\\
+\qquad\metacmd{绕排文字}\\
+\cmdM{end}{window}
+\end{flushleft}
+
+\begin{flushleft}
+	\cmdMO{begin}{figwindow}{\metacmd{下降行数}, \metacmd{水平位置}, \metacmd{图形}, \metacmd{图标题}}\\
+	\qquad\metacmd{绕排文字}\\
+	\cmdM{end}{figwindow}
+\end{flushleft}
+
+这里的\metacmd{下降行数}是指“窗口”开始前的行数。
+\metacmd{水平位置}是指在段落中“窗口”的位置，缺省为 \opt{l}，即居左。
+另外两种是 \opt{c}（居中）和 \opt{r}（居右）。
+第三个参数\metacmd{内容}是出现在“窗口”中的内容，
+这在 \env{figwindow} 中就是要插入的图形。
+第四个参数\metacmd{内容说明}则是对“窗口”内容的说明性文字，
+这在 \env{figwindow} 中就是图形的标题。
+下面是几个例子：
+
+\CJKfamily{zhkai}
+\begin{Verbatim}
+\begin{window}[2,c,{\fcolorbox{morelight}{yellow}{%
+		\shortstack{你在他乡 \\还 好 \\ 吗？}}},{}]
+	可是哈卜拉姆再聪明...可是我偏不喜欢。」
+\end{window}
+\end{Verbatim}
+
+\begin{window}[2,c,{\fcolorbox{morelight}{yellow}{%
+		\shortstack{你在他乡 \\还好 \\ 吗？}}},{}]
+	可是哈卜拉姆再聪明、再有学问，有一件事却是他不能解答的，因为包
+	罗万有的「可兰经」上也没有答案；如果你深深爱著的人，却深深的爱上了
+	别人，有甚麽法子？白马带著她一步步的回到中原。白马已经老了，只能慢
+	慢的走，但终是能回到中原的。江南有杨柳、桃花，有燕子、金鱼……汉人中
+	有的是英俊勇武的少年，倜傥潇洒的少年……但这个美丽的姑娘就像古高昌国
+	人那样固执：「那都是很好很好的，可是我偏不喜欢。」
+\end{window}
+
+\begin{Verbatim}
+\begin{figwindow}[1,r,{\mbox{%
+		\includegraphics[width=4cm]{tiger}}},{Tiger}]
+	可是哈卜拉姆再聪明...可是我偏不喜欢。」
+\end{figwindow}
+\end{Verbatim}
+
+\begin{figwindow}[1,r,{\mbox{%
+		\includegraphics[width=4cm,clip]{tiger}}},{Tiger}]
+	可是哈卜拉姆再聪明、再有学问，有一件事却是他不能解答的，因为包
+	罗万有的「可兰经」上也没有答案；如果你深深爱著的人，却深深的爱上了
+	别人，有甚麽法子？白马带著她一步步的回到中原。白马已经老了，只能慢
+	慢的走，但终是能回到中原的。江南有杨柳、桃花，有燕子、金鱼……汉人中
+	有的是英俊勇武的少年，倜傥潇洒的少年……但这个美丽的姑娘就像古高昌国
+	人那样固执：「那都是很好很好的，可是我偏不喜欢。」
+\end{figwindow}
+
+\begin{Verbatim}
+\begin{figwindow}[1,c,{\mbox{%
+		\includegraphics[width=3cm]{tiger}}},{Tiger}]
+	可是哈卜拉姆再聪明...可是我偏不喜欢。」
+\end{figwindow}
+\end{Verbatim}
+
+\begin{figwindow}[1,c,{\mbox{%
+		\includegraphics[width=3cm,clip]{tiger}}},{Tiger}]
+	可是哈卜拉姆再聪明、再有学问，有一件事却是他不能解答的，因为包
+	罗万有的「可兰经」上也没有答案；如果你深深爱著的人，却深深的爱上了
+	别人，有甚麽法子？白马带著她一步步的回到中原。白马已经老了，只能慢
+	慢的走，但终是能回到中原的。江南有杨柳、桃花，有燕子、金鱼……汉人中
+	有的是英俊勇武的少年，倜傥潇洒的少年……但这个美丽的姑娘就像古高昌国
+	人那样固执：「那都是很好很好的，可是我偏不喜欢。」
+\end{figwindow}
+\CJKfamily{zhsong}
+
+在使用 \pkg{picinpar} 时要注意以下几点：
+\begin{itemize}
+	\item 不要在 \env{window} 环境中使用 \cmd{samepage}。
+	\item 不要在 \env{window} 环境中使用 \cmd{footnote}，
+	代之用 \cmd{footnotemark} 标记角注，
+	而将角注的内容在 \env{window} 环境外用 \cmd{footnotetext} 加入。
+\end{itemize}
+
 \endinput

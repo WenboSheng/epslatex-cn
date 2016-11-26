@@ -675,17 +675,6 @@ text text text text text text...
 
 \subsection{图形与标题的间距}\label{ssec:capspace}
 
-19.3 Caption Vertical Spacing
-L
-A T E X assumes that captions are placed below the graphic, placing more vertical
-spacing above the caption than below it. As a result, the commands
-\begin{figure}
-	\centering
-	\caption{Caption Above Graphic}
-	\includegraphics[width=1in]{graphic}
-\end{figure}
-produce Figure 13, whose caption is placed quite close to the graphic.
-
 \LaTeX{} 假定图形的标题位于图形的下方，
 故而在标题上方保留了更多的空白。因此
 \begin{lstlisting}
@@ -753,22 +742,6 @@ produce Figure 13, whose caption is placed quite close to the graphic.
 
 \subsection{标题的标记}\label{ssec:captionlabel}
 
-19.4 Caption Label
-By default, L
-A T E X inserts a caption label such as “Figure 13: ” at the beginning of the
-the caption. The “Figure” portion can be changed by redefining the \figurename
-command. For example, the commands
-\begin{figure}
-	\centering
-	\includegraphics[width=1in]{graphic}
-	\renewcommand{\figurename}{Fig.}
-	\caption{This is the Caption}
-\end{figure}
-produce Figure 15. The caption font, the “:” delimiter, and other caption charac-
-teristics can be customized with the caption package (see Section 20 on Page 69).
-Graphic
-Fig. 15: This is the Caption
-
 缺省情况下，\LaTeX{} 会在图形的标题开头加上像~``Figure 13: ''~这样的标记。
 其中的 ``Figure'' 可以通过重定义 \cmdi{figurename} 来更改。例如，下面的命令
 \begin{lstlisting}
@@ -812,11 +785,6 @@ Fig. 15: This is the Caption
 \end{itemize}
 
 \subsection{将图形放于文档的最后}\label{ssec:endfloat}
-
-
-
-
-
 
 有些期刊要求将图表和正文文本分开排放。
 这时可用 \pkgi{endfloat} 宏包就可以将浮动体放置到文档的最后。
@@ -2279,7 +2247,7 @@ This is the text after the figure.
 
 \subsection{Sidewaysfigure 环境}\label{ssec:sidewaysfigure}
 
-\pkg{rotating} 宏包提供了 \env{sidewaysfigure} 环境生成横排的图形\footnote{
+\pkgi{rotating} 宏包提供了 \envi{sidewaysfigure} 环境生成横排的图形\footnote{
 	\pkg{rotating} 宏包还提供了一个 \envi{sidewaystable} 环境，
 	可以生成横排的表格。}。例如：
 \begin{lstlisting}
@@ -2322,7 +2290,7 @@ This is the text after the figure.
 
 用第~\ref{ssec:landscape} 节和第~\ref{ssec:sidewaysfigure} 节的方法得到的横排图形都是放在一单独的横排页上的。
 不过对于比较小的图形来说显然没有必要。
-这种情况下，可以利用 \env{rotating} 宏包中的 \cmd{rotcaption} 来得到小的横排图形。例如：
+这种情况下，可以利用 \pkgi{rotating} 宏包中的 \cmdi{rotcaption} 来得到小的横排图形。例如：
 \begin{lstlisting}
 \begin{figure}
 	\centering
@@ -2627,7 +2595,7 @@ This is the text after the figure.
 
 \begin{figure}
 	\centering
-	\fbox{\includegraphics[totalheight=2in]{file}}
+	\fbox{\includegraphics[totalheight=2in]{pend}}
 	\caption{图形在盒子中，但标题在盒子外}
 	\label{fig:boxed_graphic}
 \end{figure}
@@ -2734,9 +2702,8 @@ This is the text after the figure.
 	\label{fig:boxed_custom}
 \end{figure}
 
+
 \subsection{fancybox 宏包} \label{ssec:fancybox}
-
-
 
 在图~\ref{fig:boxed_graphic}、\ref{fig:boxed_figure}~和~\ref{fig:boxed_custom}~中，
 使用 \cmd{fbox} 命令将图形包围在标准的长方形框盒子中。
@@ -2832,289 +2799,6 @@ not be changed with the \setlength command. The values of \thicklines and
 \end{figure}
 
 
-
-=====================================
-\section{图文混排}
-
-在使用外部图形时，通常的是将其置于一个~\texttt{figure}~环境中，
-由这一浮动环境来决定最后的位置是在页面的上方或下方。
-但有的时候，许多使用者往往希望将图形放置在一个正文方格内，或者置
-于页面的左右，也可能是在页面的的中间，四周包围者文本，
-甚至放在文字的下方作为背景，或重叠放置。这时，前面所介绍的
-只使用~\LaTeX{}~图形宏包套件就很难得到所希望的结果。本章将介绍几个
-有用的图形宏包，可以让你很容易地得到上述特殊效果。
-
-本章介绍的几个图形宏包均可从~\texttt{CTAN}~下载。如果你使用的
-是~te\TeX{}~或~fp\TeX{}，那么这些宏包已包括在内了，你所做的只
-需是在文档中调用它们：
-\begin{Verbatim}[xleftmargin=1cm]
-\usepackage[选项]{宏包}
-\end{Verbatim}
-除了本章所介绍的宏包外，还有一些宏包也可完成同样的工作。
-如~\pai{floatflt}~也可用来将图形置于文本段落的一边。
-而所介绍的宏包中，也有未涉及的内容，进一步的研究
-可阅读这些宏包所附的帮助文件。
-
-\subsection{Wrapfig~~宏包}\label{ssec:wrapfig}
-
-\intextsep=0pt
-\begin{wrapfigure}{l}{25pt}
-	\textcolor{blue}{\mbox{\bfseries\texttt{\PartSize W}}}
-\end{wrapfigure} \noindent \texttt{rapfig}~宏包提供了一个
-~\ei{wrapfigure}~环境\footnote{\pai{wrapfig}~也
-	同时提供了一个~\ei{wraptable}~环境。}来排版窄小的图形，使得
-该图形位于文本的一边，并使文本在其边上折行。
-
-~\texttt{wrapfigure}的用法：
-
-\noindent{%
-	\color{morelight}{\shadowbox{\textcolor{blue}{\CJKfamily{kai}\texttt{%
-					\bs begin\{wrapfigure\}\{行数\}[位置][超出长度]\{宽度\}<图形>\bs end\{wrapfigure
-					\}}}}}}
-
-\noindent 这里{\CJKfamily{kai} 行数}是指图形高度所占的文本行的数目。
-如果不给出此选项，~\pai{wrapfig}~会自动计算。
-{\CJKfamily{kai} 位置}是指图形相对于文本的位置，须给定下面四项的一个。
-\begin{description}
-	\item [\texttt{[r],[R]}] 表示图形位于文本的左边。
-	\item [\texttt{[l],[L]}] 表示图形位于文本的右边。
-	\item [\texttt{[i],[R]}] 表示图形位于页面靠里的一边（用在双面格式里）。
-	\item [\texttt{[o],[O]}] 表示图形位于页面靠外的一边。
-\end{description}
-{\CJKfamily{kai} 超出长度}是指图形超出文本边界的长度，缺省为~0pt。
-{\CJKfamily{kai} 宽度}则指图形的宽度。~\textsf{wrapfig}~会自动计算
-图形的高度。不过，我们也可设定图形的高度，具体可见~\texttt{wrapfig.sty}~内
-的说明。
-
-\begin{wrapfigure}{r}{4.5cm}
-	\includegraphics [width=4cm,clip]{tiger}
-\end{wrapfigure}
-\mbox{}在使用~\textsf{wrapfig}~时需要注意下面几点：
-
-\begin{itemize}
-	\item 在~\texttt{wrapfigure}~后必须紧接着输入段落文字，否则会出错。
-	\item 不能在任何列表环境中使用~\texttt{wrapfigure}，也不能在
-	列表环境前后使用，除非两者之间有一空行或分段指令~\ci{par}。
-	\item 如果将~\texttt{wrapfigure}~放在~\cmd{parbox}~或小页环境
-	等分组中，文本折行必须在这些分组前结束。
-	\item 在双栏页版式中不能使用~\texttt{wrapfigure}。
-	\item 如果在~\texttt{wrapfigure}~中使用~\texttt{figure}~等
-	浮动体，它的编号有可能不正确。
-	\item 如果在~\texttt{wrapfigure}~中使用~\texttt{table}~等浮动体，
-	它上下方的横线可能被忽略，必须自己再加入。
-	\item 在折行的文本中，~\cmd{linewidth}~并没有改变。
-\end{itemize}
-
-\textsf{wrapfig}~还可用来放大段落的第一个字。本节的第一个字目~\texttt{W}~
-就是使用如下命令来得到的：
-\begin{Verbatim}[xleftmargin=1cm]
-\newcommand{\PartSize}{\fontsize{1.5cm}{1.5cm}\selectfont}
-\intextsep=0pt
-\begin{wrapfigure}{l}{25pt}
-\textcolor{blue}{\mbox{\texttt{\PartSize W}}}
-\end{wrapfigure}
-\noindent\texttt{rapfig}宏包提供了一个...
-\end{Verbatim}
-
-本节中的另一例子使用了如下命令：
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{wrapfigure}{r}{4.5cm}
-\includegraphics [width=4cm,clip]{tiger.ps}
-\end{wrapfigure}
-\mbox{}在使用\textsf{wrapfig}时需要注意下面几点：
-\end{Verbatim}
-
-\subsection{Picinpar~~宏包}\label{ssec:picinpar}
-
-\pai{picinpar}~宏包定义了一个基本的环境~\ei{window}，还有两个变体
-~\ei{figwindow}~和~\ei{tabwindow}。允许在文本段落中打开一个``窗口''，
-在其中放入图形、文字和表格等。这里我们主要讨论将图形放入文本段落
-的用法，其它的用法可参考~\textsf{picinpar}~的说明。
-
-\noindent{%
-	\color{morelight}{\shadowbox{\textcolor{blue}{\CJKfamily{kai}\texttt{%
-					\bs begin\{window\}[行数，对齐方式，内容，内容说明]\bs end\{window\}}}}}}
-
-\noindent{%
-	\color{morelight}{\shadowbox{\textcolor{blue}{\CJKfamily{kai}\texttt{%
-					\bs begin\{figwindow\}[行数，对齐方式，图形，标题]\bs end\{figwindow\}}}}}}
-
-\noindent 这里的{\CJKfamily{kai} 行数}是指``窗口''开始前的行数。
-{\CJKfamily{kai} 对齐方式}是指在段落中``窗口''的对齐方式。缺省为~\texttt{l}，
-即左对齐。另外两种是~\texttt{c}~：居中和~\texttt{r}~：右对齐。
-第三个参数是出现在``窗口''中的内容，这在~\texttt{figwindow}~中就是
-要插入的图形。第四个参数则是对``窗口''内容的说明性文字，这在
-~\texttt{figwindow}~中就是图形的标题。
-下面是几个例子：
-
-\begin{Verbatim}
-\begin{window}[2,c,{\fcolorbox{morelight}{\shortstack{%
-\color{yellow} 你在他乡 \\还 好 \\ 吗？}}},{}]
-可是哈卜拉姆再聪明……
-……可是我偏不喜欢。」
-\end{window}
-\end{Verbatim}
-
-\CJKfamily{kai}
-\begin{window}[2,c,{\fcolorbox{morelight}{yellow}{\CJKfamily{hei}{%
-				\shortstack{你在他乡 \\还好 \\ 吗？}}}},{}]
-	可是哈卜拉姆再聪明、再有学问，有一件事却是他不能解答的，因为包
-	罗万有的「可兰经」上也没有答案；如果你深深爱著的人，却深深的爱上了
-	别人，有甚麽法子？白马带著她一步步的回到中原。白马已经老了，只能慢
-	慢的走，但终是能回到中原的。江南有杨柳、桃花，有燕子、金鱼……汉人中
-	有的是英俊勇武的少年，倜傥潇洒的少年……但这个美丽的姑娘就像古高昌国
-	人那样固执：「那都是很好很好的，可是我偏不喜欢。」
-\end{window}
-
-\begin{Verbatim}
-\begin{figwindow}[1,r,{\mbox{%
-\includegraphics[width=4cm]{tiger.ps}}},{Tiger}]
-可是哈卜拉姆再聪明……
-……可是我偏不喜欢。」
-\end{window}
-\end{Verbatim}
-
-\begin{figwindow}[1,r,{\mbox{\includegraphics[width=4cm,clip]{tiger}}},%
-	{Tiger}]
-	可是哈卜拉姆再聪明、再有学问，有一件事却是他不能解答的，因为包
-	罗万有的「可兰经」上也没有答案；如果你深深爱著的人，却深深的爱上了
-	别人，有甚麽法子？白马带著她一步步的回到中原。白马已经老了，只能慢
-	慢的走，但终是能回到中原的。江南有杨柳、桃花，有燕子、金鱼……汉人中
-	有的是英俊勇武的少年，倜傥潇洒的少年……但这个美丽的姑娘就像古高昌国
-	人那样固执：「那都是很好很好的，可是我偏不喜欢。」
-\end{figwindow}
-
-\begin{Verbatim}
-\begin{figwindow}[1,c,{\mbox{%
-\includegraphics[width=3cm]{tiger.ps}}},{Tiger}]
-可是哈卜拉姆再聪明……
-……可是我偏不喜欢。」
-\end{window}
-\end{Verbatim}
-
-\begin{figwindow}[1,c,{\mbox{\includegraphics[width=3cm,clip]{tiger}}},%
-	{Tiger}]
-	可是哈卜拉姆再聪明、再有学问，有一件事却是他不能解答的，因为包
-	罗万有的「可兰经」上也没有答案；如果你深深爱著的人，却深深的爱上了
-	别人，有甚麽法子？白马带著她一步步的回到中原。白马已经老了，只能慢
-	慢的走，但终是能回到中原的。江南有杨柳、桃花，有燕子、金鱼……汉人中
-	有的是英俊勇武的少年，倜傥潇洒的少年……但这个美丽的姑娘就像古高昌国
-	人那样固执：「那都是很好很好的，可是我偏不喜欢。」
-\end{figwindow}
-
-\CJKfamily{song}
-
-在使用~\textsf{picinpar}~时要注意以下几点：
-\begin{itemize}
-	\item 不要在~\texttt{window}~环境中使用~\cmd{samepage}。
-	\item 不要在~\texttt{window}~环境中使用~\cmd{footnote}，代之在
-	用~\ci{footnotemark}~标记角注，而将
-	角注的内容在~\texttt{window}~环境外用~\ci{footnotetext}~来加入。
-	\item 当使用~pai{epic}~宏包时，要确保在调入~\textsf{epic}~之前
-	将它调入。
-\end{itemize}
-
-\subsection{Picins~宏包}\label{ssec:picins}
-
-\pai{picins}~宏包定义了一个命令~\ci{parpic}命令，允许将
-图形等~\LaTeX{}~对象放置在文本段落中。并且，设定适当的参数，
-可把该对象置于一带框的盒子，有阴影的盒子等等。~\cmd{parpic}~
-的用法如下：
-
-\noindent{%
-	\color{morelight}{\shadowbox{\textcolor{blue}{\CJKfamily{kai}\texttt{%
-					\bs parpic(宽度，高度)(水平偏移，垂直偏移)[选项][位置]\{图形\}}}}}}
-
-\noindent 上面除了{\CJKfamily{kai}图形}必须给出外，其余的均
-可省略。如果宽度和高度均未给出，那么图形将以它的自然大小来
-嵌入。{\CJKfamily{kai}选项}则可取以下的值：
-\begin{description}
-	\item [\CJKfamily{hei} 位置项] 只能为下面两个中的一个。
-	\begin{description}
-		\item [l] 将图形置于文本段落的左方（这也是缺省值）。
-		\item [r] 将图形置于文本段落的右方。
-	\end{description}
-	\item [\CJKfamily{hei} 外观项] 只能为下面五个中的一个，可与上述位置项
-	配合使用。
-	\begin{description}
-		\item [f] 将图形置于一个实框盒子中。
-		\item [d] 将图形置于一个虚框盒子中。
-		\item [o] 将图形置于一个圆角框盒子中。
-		\item [s] 将图形置于一个具有阴影效果的盒子中。
-		\item [x] 将图形置于一个具有立体效果的盒子中。
-	\end{description}
-\end{description}
-
-\noindent{\CJKfamily{kai}位置}仅当给定的宽度和高度与
-图形的实际大小相差很大的情况下才起作用。若水平或垂直偏移
-已给出，那么此项也不起作用。缺省位置是将图形置于盒子的中央。
-也可取以下的值：
-\begin{description}
-	\item [l] 将图形置于盒子的左方。
-	\item [r] 将图形置于盒子的右方。
-	\item [t] 将图形置于盒子的上方。
-	\item [b] 将图形置于盒子的下方。
-\end{description}
-
-另外，~\textsf{picins}~宏包还提供了一些命令来控制图形
-与文本的间距，图形外框的线宽等。详见~\textsf{picins}~宏包
-所附的说明。下面是几个例子。
-
-\CJKfamily{kai}
-\hspace{-1.5cm}\begin{minipage}[b]{.5\textwidth}
-	\parpic{\includegraphics[width=3cm,clip]{tiger}}
-	仅当给定的宽度和高度与
-	图形的实际大小相差很大的情况下才起作用。若水平或垂直偏移
-	已给出，那么此项也不起作用。缺省位置是将图形置于盒子的中央。
-	\par\vspace{0pt}
-\end{minipage}%
-\hspace{10pt}\begin{minipage}[b]{.5\textwidth}
-	\begin{Verbatim}
-	\parpic{%
-	\includegraphics[width=3cm]%
-	{tiger.ps}}
-	仅当给定的宽度和高度与...
-	\end{Verbatim}
-	\par\vspace{0pt}
-\end{minipage}
-
-\hspace{-1.5cm}\begin{minipage}[b]{.5\textwidth}
-	\parpic(3cm,3.5cm)[sr]{\includegraphics[width=2.5cm]{tiger}}
-	仅当给定的宽度和高度与
-	图形的实际大小相差很大的情况下才起作用。若水平或垂直偏移
-	已给出，那么此项也不起作用。缺省位置是将图形置于盒子的中央。
-	\par\vspace{0pt}
-\end{minipage}%
-\hspace{10pt}\begin{minipage}[b]{.5\textwidth}
-	\begin{Verbatim}
-	\parpic(3cm,3.5cm)[sr]{%
-	\includegraphics[width=2.5cm]%
-	{tiger.ps}}
-	仅当给定的宽度和高度与...
-	\end{Verbatim}
-	\par\vspace{0pt}
-\end{minipage}
-
-\hspace{-1.5cm}\begin{minipage}[b]{.5\textwidth}
-	\boxlength{10pt}%
-	\parpic(3.5cm,4cm)[xr]{\includegraphics[width=3cm]{tiger}}
-	仅当给定的宽度和高度与
-	图形的实际大小相差很大的情况下才起作用。若水平或垂直偏移
-	已给出，那么此项也不起作用。缺省位置是将图形置于盒子的中央。
-	\par\vspace{0pt}
-\end{minipage}%
-\hspace{10pt}\begin{minipage}[b]{.5\textwidth}
-	\begin{Verbatim}
-	\boxlength{10pt}%
-	\parpic(3.5cm,4cm)[xr]{%
-	\includegraphics[width=3cm]%
-	{tiger.ps}}
-	仅当给定的宽度和高度与...
-	\end{Verbatim}
-	\par\vspace{0pt}
-\end{minipage}
-
-\CJKfamily{song}
 
 
 \endinput
