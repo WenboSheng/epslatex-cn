@@ -1470,44 +1470,43 @@ $
 \end{lstlisting}
 和上一个例子一样，最后会生成一幅宽度为2英寸的图像和一幅总高度为1英寸的图像。
 
-=========================================================
+
 \subsection{在页眉和页脚使用图形}\label{ssec:headgraph}
 
-在页眉和页脚使用图形的一个最容易的方法是使用~\pai{fancyhdr}（它是
-旧的~\pai{fancyheadings}~的增强版本）。~\textsf{fancyhdr}~的用法和
-宏包说明详见文献~\cite{fancyhdr}。
+在页眉和页脚使用图形的一个最容易的方法是使用 \pkgi{fancyhdr}（
+它是旧的 \pkg{fancyheadings} 宏包的增强版本）。
+\pkg{fancyhdr} 的用法和宏包说明详见说明文档~\cite{fancyhdr-doc}。
 
-在~\LaTeX{}~文档中，页眉由左、中、右三部分组成。
-~\ci{fancyhead}~命令指定了页眉的形式和内容，并以~\texttt{L,C,R}~
-区分左、中、右区域。例如：
+在 \LaTeX{} 文档中，页眉由左、中、右三部分组成。
+\cmdi{fancyhead} 命令指定了页眉的形式和内容，并以 \opt{L,C,R} 区分左、中、右区域。
+例如：
 \begin{Verbatim}[xleftmargin=1cm]
 \pagestyle{fancy}
 \fancyhead[C]{我的文档}
 \end{Verbatim}
-使得页眉的中间部分印出``{\CJKfamily{kai} 我的文档}''，而
+使得页眉的中间部分印出“我的文档”。
 \begin{Verbatim}[xleftmargin=1cm]
 \pagestyle{fancy}
 \fancyhead[L,R]{\textbf{Confidential}}
 \end{Verbatim}
-使得页眉的左右都印出``\textbf{Confidential}''。如果没有
-指定~\texttt{L,C,R}~中的任何一个，那么由~\cmd{fancyhead}~定义
-的内容将在三个区域中都会印出。相似地，\ci{fancyfoot}~则用来
-定义页脚的左、中、右三个区域。
+使得页眉的左右都印出“\textbf{Confidential}”。
+如果没有指定 \opt{L,C,R}，那么在三个区域中都会印出由 \cmd{fancyhead} 定义的内容。
+所以，可以用 \cmdM{fancyhead}{} 来清空页眉。 
+相似地，\cmdi{fancyfoot} 则用来定义页脚的左、中、右三个区域。
 
-可以利用~\textsf{fancyhdr}~宏包中的命令来
-\marginpar{\CJKfamily{kai}\bfseries 页眉和页脚 \\ 的图形}
-在页眉和页脚上使用图形。例如，在用第~\ref{sec:defps}~节的方法将
-~EPS~文件~\texttt{file.eps}~分为~\texttt{file.h}~和~\texttt{file.ps}~后，
+
+可以利用 \pkg{fancyhdr} 宏包中的命令
+\marginpar{页眉和页脚 \\ 的图形}
+在页眉和页脚中插入图形。
+例如，在用第~\ref{ssec:defps}~节的方法将 \file{eps} 文件 \file{file.eps} 分为两个文件 \file{file.h} 和 \file{file.ps} 后，
 下面的命令
-\begin{Verbatim}
+\begin{lstlisting}
 \documentclass{article}
 \usepackage{fancyhdr,graphicx}
-\renewcommand{\headheight}{0.6in}% must be large enough for graphic
+\renewcommand{\headheight}{0.6in} %% must be large enough for graphic
 \renewcommand{\textheight}{7.5in}
-
 % Define PostScript graphics command
 \special{header=file.h}
-
 % Save graphics in LaTeX box
 \newsavebox{\mygraphic}
 \sbox{\mygraphic}{\includegraphics[totalheight=0.5in]{file.ps}}
@@ -1519,110 +1518,116 @@ $
 \renewcommand{\headrulewidth}{0.5pt}
 \renewcommand{\footrulewidth}{0pt}
 \begin{document}
-  ...
+	...
 \end{document}
-\end{Verbatim}
-将图形放置在每一使用~``fancy''~风格页的左上角，并且下面有一条宽为~0.5pt~
-的横线。此外，每页的页角的中央放置页码，但它的上方没有横线。
-这些设置不会影响~``plain''~风格的页面。
+\end{lstlisting}
+在每一页面风格为 \opt{fancy} 的页面上，图形会放置在页面的左上角，
+并且下面有一条宽为 $0.5\pt$的横线。
+此外，页角的中央放置页码，但它的上方没有横线。
+注意这些设置不会影响 \opt{plain} 风格的页面。
 
-当使用~\texttt{[twoside]}~排版选项时，
-\marginpar{\CJKfamily{kai}\bfseries 奇/偶页的 \\ 页眉}
-经常希望在奇数页和偶数页设置不同页眉和页脚，这时可使用
-~\texttt{O,E}~选项来区分奇数页和偶数页。如果没有给出
-~\texttt{O,E}~选项，则页眉和页脚的命令会应用到所有
-的页面中，无论是奇数页还是偶数页。例如：
-\begin{Verbatim}[xleftmargin=1cm]
+当使用 \opt{[twoside]} 文档类选项时，
+\marginpar{奇/偶页的 \\ 页眉}
+经常希望在奇数页和偶数页设置不同页眉和页脚，
+这时可使用 \opt{O,E} 选项来区分奇数页和偶数页。
+如果没有给出 \opt{O,E} 选项，那么命令会应用到所有的页面中，无论是奇数页还是偶数页。
+类似地，\cmd{fancyfoot} 命令的 \opt{O,E} 选项用于设置奇数页和偶数页的页脚。
+例如：
+\begin{lstlisting}
 \pagestyle{fancy}
 \fancyhead[LE]{我的文章}
 \fancyhead[RO]{我的名字}
 \fancyfoot[C]{\thepage}
-\end{Verbatim}
-在偶数页的左上角放置{\CJKfamily{kai} 我的文章}，在奇数页的
-右上角放置{\CJKfamily{kai} 我的名字}，页脚的中央则放置页码。
-而命令
-\begin{Verbatim}[xleftmargin=1cm]
-\pagestyle{fancy}
-\fancyhead[LE,RO]{\usebox{\mygraphic}}
-\fancyfoot[C]{\thepage}
-\end{Verbatim}
-使得偶数页的左上角和奇数页的右上角印出图形。
+\end{lstlisting}
+在偶数页的左上角放置“我的文章”，在奇数页的右上角放置“我的名字”，页脚的中央则放置页码。
 
-\cmd{fancyhead}~命令只对那些页面式样为~``fancy''~的页面起作用。
-\marginpar{\CJKfamily{kai}\bfseries 改变~Plain \\ 页面式样}
-即使用~\cmd{pagestyle\{fancy\}}~将文档的页面式样设置为~``fancy''~式样，
-一些页面，如封面，目录和每章的第一页仍为缺省的~``plain''~式样。
-
-改变~Plain''~页面式样的缺省设置可用~\ci{fancypagestyle}~命令来
-实现。例如将下面的命令加到上面的例子中可使得封面，目录等的页眉上也
-将会有图形印出。
-\begin{Verbatim}[xleftmargin=1cm]
-\fancypagestyle{plain}{%
-  \fancyhead{} % clear all header fields
-  \fancyhead[L]{\usebox{\mygraphic}}
-  \fancyfoot{} % clear all footer fields
-  \fancyfoot[C]{\thepage}
-  \renewcommand{\headrulewidth}{0.5pt}
-  \renewcommand{\footrulewidth}{0pt}}
-\end{Verbatim}
-
-当使用~\texttt{[twoside]}~排版选项时，将上面的
-\begin{Verbatim}[xleftmargin=1cm]
+在之前例子中将
+\begin{lstlisting}
 \fancyhead[L]{\usebox{\mygraphic}}
-\end{Verbatim}
+\end{lstlisting}
 替换为
-\begin{Verbatim}[xleftmargin=1cm]
+\begin{lstlisting}
 \fancyhead[LE,RO]{\usebox{\mygraphic}}
-\end{Verbatim}
-则在每一页的页眉上都放置上图形。
+\end{lstlisting}
+那么图像将出现在所有\opt{fancy} 风格页面的页眉外侧，即奇数页的右侧和偶数页的左侧。
+
+\cmd{fancyhead}~命令只对那些页面样式为 \opt{fancy} 的页面起作用。
+\marginpar{ 改变 \opt{plain} \\ 页面样式}
+即使用 \cmdM{pagestyle}{fancy} 将文档的页面样式设置为 \opt{fancy}，
+但封面、目录和每章的第一页等页面仍为缺省的 \opt{plain} 样式。
+
+改变 \opt{plain} 样式的缺省设置可用 \cmdi{fancypagestyle} 命令来实现。
+例如将下面的命令加到上面的例子中可使得 \opt{plain} 样式页面的页眉上也印出图形。
+
+\begin{lstlisting}
+\fancypagestyle{plain}{%
+	\fancyhead{} % clear all header fields
+	\fancyhead[L]{\usebox{\mygraphic}}
+	\fancyfoot{} % clear all footer fields
+	\fancyfoot[C]{\thepage}
+	\renewcommand{\headrulewidth}{0.5pt}
+	\renewcommand{\footrulewidth}{0pt}}
+\end{lstlisting}
+
+当使用 \opt{[twoside]} 文档类选项时，将上面的
+\begin{lstlisting}
+\fancyhead[L]{\usebox{\mygraphic}}
+\end{lstlisting}
+替换为
+\begin{lstlisting}
+\fancyhead[LE,RO]{\usebox{\mygraphic}}
+\end{lstlisting}
+则每一页的页眉的外侧都印出图形。
+
 
 \subsection{在背景中使用图形水印}\label{ssec:watermark}
 
-有时在排版时会遇到在背景中使用图形水印的情况。如同上节讨论的那样，
-也可用~\textsf{fancyhdr}~来实现。下面的例子中利用~\textsf{fancyhdr}~
-宏包中的命令，在每一页都用图形~\texttt{file.eps}~作为背景。
+除了在页眉页脚处插入图像外，\pkg{fancyhdr} 宏包还可以将图像放在文本下层，
+这样可以用于创建logo或者水印。
 
-\begin{Verbatim}
+下面的例子将 \file{file.eps} 图像放在每一页上（包括 \opt{fancy} 和 \opt{plain} 页面样式）。
+\begin{lstlisting}
 \documentclass{article}
 \usepackage{graphicx,fancyhdr}
 %%% store graphics in a box
 \newsavebox{\mygraphic}
-  \sbox{\mygraphic}{%
-    \includegraphics[keepaspectratio, height=0.8\textheight,%
-                     width=0.8\textwidth]{file.eps}}
+\sbox{\mygraphic}{\includegraphics[keepaspectratio,
+	height=0.8\textheight,
+	width=0.8\linewidth]{file.eps}}
 \pagestyle{fancy}
 \fancyhead{}
 \fancyhead[C]{\setlength{\unitlength}{1in}
-              \begin{picture}(0,0)
-              \put(-2.2,-6){\usebox{\mygraphic}}
-              \end{picture}}
+	\begin{picture}(0,0)
+	\put(-2.2,-6){\usebox{\mygraphic}}
+	\end{picture}}
 \fancypagestyle{plain}{%
-  \fancyhead{}%
-  \fancyhead[C]{\setlength{\unitlength}{1in}
-                \begin{picture}(0,0)
-                \put(-2.2,-6){\usebox{\mygraphic}}
-                \end{picture}}}
+	\fancyhead{}%
+	\fancyhead[C]{\setlength{\unitlength}{1in}
+		\begin{picture}(0,0)
+		\put(-2.2,-6){\usebox{\mygraphic}}
+		\end{picture}}}
 \begin{document}
-  ...
+	...
 \end{document}
-\end{Verbatim}
+\end{lstlisting}
+在这个例子中，图像的左下角位于页眉中心下方~6~英寸，偏左 $2.2$ 英寸的地方。
+可以通过改变这两个数字调整图像的位置。
 
-在上面的例子中，图形的放置位置在页眉中央下方~6~英寸，偏左~2.2~英寸
-的地方。可通过改变上述参数来改变图形的放置位置。
+因为页眉在正文文本之前排出，所以正文文本会覆盖图形，从而得到水印的效果。
+反之，因为页脚在正文文本之后排出，
+所以若在页脚中使用图形会覆盖正文文本。
+如果 \file{file.eps} 是矢量图而不是位图，
+可用第~\ref{ssec:defps}~节的方法来使得最后生成的 PostScript 文件较为小些。
 
-因为页眉在正文文本之前排出，所以正文文本会出现在图形的上方，
-从而得到水印的效果。反之，因为页脚在正文文本之后排出，
-所以若在页脚中使用图形会覆盖正文文本。如果~\texttt{file.eps}~
-是一矢量图形，可用第~\ref{sec:defps}~节的方法来使得最后生成的
-~PS~文件较为小些。
+\subsubsection{使用 eso-pic 宏包}\label{sssec:esopic}
 
-另一种得到图形水印效果的方法是使用~\pai{eco-pic}~宏包。
-该宏包可从~\texttt{CTAN}~下载。它提供命令~\ci{AddToShipoutPicture}~
-把任何~\LaTeX{}~
-图形环境先于正文文本排出，从而得到水印的效果。
-使用~\textsf{eso-pic}~的例子：
+另一种得到图形水印效果的方法是使用 \pkgi{eso-pic} 宏包。
+它定义一个长度为零的 \env{picture} 环境，基点位于页面的左下角。
 
-\begin{Verbatim}
+它提供命令 \cmdi{AddToShipoutPicture} 把任何 \LaTeX{} 图形环境先于正文文本排出，从而得到水印的效果。
+以下是一个使用 \pkg{eso-pic} 的例子：
+
+\begin{lstlisting}
 \begin{document}
 \usepackage{graphicx}
 \usepackage{eso-pic}
@@ -1633,17 +1638,16 @@ $
     \includegraphics[keepaspectratio, height=\textheight,%
                      width=\textwidth]{file.eps}}
 \AddToShipoutPicture{
-    put(0,0){\makebox(0,0)[bl]{\usebox{\mygraphic}}}
+    \put(0,0){\usebox{\mygraphic}}}
 \begin{document}
   ...
 \end{document}
-\end{Verbatim}
+\end{lstlisting}
 
-上面的例子中，将~EPS~图形放大到与正文一样大小，然后存放到
-一个~\LaTeX{}~盒子中。在每一页中将此盒子放置在正文的下方。
-
-\clearpage
-\vbox to .5\textheight{\mbox{}}
-\clearpage
+上面的例子中，将 \file{eps} 图形放大到与正文一样大小，
+然后存放到一个 \LaTeX{} 盒子中。
+在每一页中将此盒子放置在正文的底层。
+更多命令和选项请参考宏包说明文档 \cite{eso-pic-doc}。
+此外，实现水印效果的宏包还有 \pkg{background} \cite{background-doc}、\pkg{xwatermark} \cite{xwatermark-doc} 等，详细说明请参考相关文档。
 
 \endinput
