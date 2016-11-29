@@ -835,116 +835,107 @@ convert file2.gif 'eps:-'
 \end{lstlisting}
 并且保留 \cmdM{ExecuteOptions}{dvips} 这一行。
 
-================================================
 
-\section{在图像上添加\LaTeX{}标记}\label{sec:psfrag}
+\section{在图像上添加\LaTeX{}标记}\label{sec:graphics-text}
+
+\subsection{PSgrag 宏包}\label{ssec:psfrag}
 
 目前很多绘图和分析软件都可以输出\file{eps}格式的图形，
 但是它们大都不能像 \LaTeX{} 一样支持符号和公式。
 \pkgi{PSfrag} 宏包允许用 \LaTeX{} 的文本和公式来替代 \file{eps} 图形文件中的字符。
 
-\pkg{PSfrag} 3.0 是1996年发布的版本，几乎是被完全重新写过。
-以前的版本则需要借助预处理程序（\prgname{ps2frag}~或~\prgname{ps2psfrag}）
-来识别和记录 \file{eps} 图形文件中的文本。
+\pkg{PSfrag} 3.0 是1996年发布的完全重写版本。
+以前的版本则需要借助预处理程序（\prgname{ps2frag} 或 \prgname{ps2psfrag}）
+来识别和标记 \file{eps} 图形文件中的文本。
 而\pkg{PSfrag} 3.0 不需要借助预处理程序，
 也不需要像 \prgname{perl} 或 \prgname{ghostscript} 等外部程序。
 \pkg{PSfrag} 3.0 只需要较近版本的 \LaTeX{} 和图形宏包套件。
 参考文献 \cite{psfrag-doc} 给出了\pkg{PSfrag} 3.0 的详细说明。
 
+\pkg{PSfrag} 的另一优势是支持压缩的 \file{eps} 图形。
+不过，\cmd{tex} 命令（见第~\ref{sssec:latextext}~节）
+不能用于在压缩的 \file{eps} 图形中嵌入 \LaTeX{} 文本。
 
-
-
-
-
-新版的~\textsf{PSfrag 3.0}~的另一优势是支持压缩的~EPS~图形。不过，
-~\ci{tex}~命令（见第~\ref{sec:latextext}~节）不能被用来在压缩的~EPS~图形
-中嵌入~\LaTeX{}~文本。
-
-为使用~\textsf{PSfrag}，生成一~EPS~图形文件，然后按照以下步骤：
+使用\pkg{PSfrag} 的步骤是：
 \begin{enumerate}
-\item 在~\LaTeX{}~文档的导言区中加入：\cmd{usepackage\{psfrag\}}。
-\item 在~\LaTeX{}~文档中，使用~\ci{psfrag}~命令来指明那些~EPS~图形
-      中的文本将被什么样的~\LaTeX{}~文本所替代。这些替换会在同一环境
-      下后面的任何~\cmd{includegraphics}~命令中执行。
-\item 像通常一样使用~\cmd{includegraphics}
+	\item 在 \LaTeX{} 文档的导言区中加入：\cmdM{usepackage}{psfrag}。
+	\item 在文档中使用 \cmd{psfrag} 命令来指明要替换的 \file{eps} 文本以及取而代之的 \LaTeX{} 字符串。
+	同一环境下之后的任何 \cmd{includegraphics} 命令中会执行这些替换。
+	\item 像通常一样使用 \cmd{includegraphics} 即可。
 \end{enumerate}
 
-\cmd{psfrag}~命令的用法如下：
+\cmdi{psfrag} 命令的用法如下：
+\begin{lstlisting}
+\psfrag{PStext}[posn][PSposn][scale][rot]{text}
+\end{lstlisting}
+其中选项说明见表~\ref{tab:psfrag}。
 
-{\large\hspace{1cm}
-\color{morelight}{\shadowbox{\textcolor{blue}{\texttt{%
-\bs psfrag\{PStext\}[posn][PSposn][scale][rot]\{text\}}}}}}
-
-\noindent上面命令中的参数的说明见表~\ref{tab:psfrag}。~\texttt{posn}~
-和~\texttt{PSposn}~选项可为第~\pageref{fig:rotatepoint}~页图~
-\ref{fig:rotatepoint}~所示的~12~个点中的一个。如果没有给出，则
-缺省为~\texttt{[Bl]}。空的选项则设定为~\texttt{c}~（如~\texttt{[]}~
-就等于~\texttt{[c]}，~\texttt{[l]}~就等于~\texttt{[lc]}）。
-可参考~\cite{psfrag}~中各种位置组合的例子。
+选项 \opt{posn} 和 \opt{PSposn} 可以是第~\pageref{fig:rotatepoint}~页图~\ref{fig:rotatepoint}~所示的~12~个点中的一个（例如 \opt{[tl]}、\opt{[br]}、\opt{[cc]}）。
+如果没有给出，默认点是 \opt{[Bl]}。
+缺失字母默认为 \opt{c}，例如 \opt{[]} 和 \opt{[c]} 都等价于 \opt{[cc]}，
+\opt{[l]} 等价于 \opt{[lc]}。
+可参考 \cite{psfrag-doc} 中各种位置组合的例子。
 
 \begin{table}
-\newcommand{\tbltt}[1]{\textcolor{cyan}{\texttt{#1}}}
-\renewcommand{\arraystretch}{1.2}
 \centering
-\topcaption{\textsf{PSfrag} Options}\label{tab:psfrag}
-
-\begin{tabular}{>{\columncolor{morelight}}l|>{\CJKfamily{kai}}m{10cm}|}
-
-\cline{2-2}
-\tbltt{PStext} & EPS~图形中被替换的文本。\\
-\cline{2-2}
-\tbltt{posn}  & （可选项，缺省为~\textsl{[Bl]}）放置点相对于
-             ~\LaTeX{}~文本的参考位置。 \\
-\cline{2-2}
-\tbltt{PSposn} & （可选项，缺省为~\textsl{[Bl]}）放置点相对于
-                  现存的~EPS~文本的参考位置。 \\
-\cline{2-2}
-\tbltt{scale} & （可选项，缺省为~1~）~\LaTeX{}~文本的缩放因子。
-                 为得到最好的效果，建议不使用这一选项，而使用
-                 ~\LaTeX{}~的字体命令如~\cmd{small}~和~\cmd{large}~等。\\
-\cline{2-2}
-\tbltt{rot}  & （可选项，缺省为零）当给出一个角度时，此角度即为
-                新的~\LaTeX{}~文本相对于旧的~EPS~图形中文本的角度。
-                它以度为单位并且逆时针方向为正。此选项对处理那些
-                由只允许水平方向的文本的应用软体生成的~EPS~图形时
-                特别有用。 \\
-\cline{2-2}
-\tbltt{text} &  用来替换旧的~EPS~图形中文本的~\LaTeX{}~文本。
-                如同通常的~\LaTeX{}~文本，数学公式必须放在美元符号对
-                中。如：~\verb+$\frac{1}{2}$+~或~\verb+$x^2$+。\\
-\cline{2-2}
+\caption{\pkg{PSfrag} 选项}\label{tab:psfrag}
+\begin{tabular}{>{\ttfamily}lp{0.7\textwidth}}
+\toprule
+{PStext} & \file{eps} 图形中被替换的文本。\\
+\midrule
+{posn}  & （可选项，缺省为~\opt{[Bl]}）放置点相对于 \LaTeX{} 文本的参考位置。 \\
+\midrule
+{PSposn} & （可选项，缺省为~\opt{[Bl]}）放置点相对于现有 \file{eps} 文本的参考位置。 \\
+\midrule
+{scale} & （可选项，缺省为1） \LaTeX{} 文本的缩放因子。
+	为得到最好的效果，建议不使用这一选项，
+	而使用 \cmd{small} 和 \cmd{large} 等 \LaTeX{} 字体命令。\\
+\midrule
+{rot}  & （可选项，缺省为零）当给出一个角度时，
+	此角度即为新的 \LaTeX{} 文本相对于旧的 \file{eps} 图形中文本的角度。
+	它以度为单位并且逆时针方向为正。
+	此选项特别适用于应用软件只能生成包含水平方向文本的 \file{eps} 图像的情形。\\
+\midrule
+{text} &  用来插入 \file{eps} 图像的 \LaTeX{} 文本。
+	如同通常的~\LaTeX{}~文本，数学公式必须放在美元符号对
+	中。如 \verb+$\frac{1}{2}$+ 或 \verb+$x^2$+。\\
+\bottomrule
 \end{tabular}
 \end{table}
 
-\noindent注意~\cmd{psfrag}~只匹配整个字符串，如下面的命令
-\begin{Verbatim}[xleftmargin=1cm]
+需要注意的是 \cmd{psfrag} 只匹配整个字符串，例如下面的命令
+\begin{lstlisting}
 \psfrag{pi}{$\pi$}
-\end{Verbatim}
-用~$\pi$~替换~\texttt{pi}。但却不会替换~EPS~文件中的其它像~\texttt{pi/2}~
-或~\texttt{2pi}~这样的字符串。对于这样的字符串必须分别使用~\cmd{pafrag}~命令。
+\end{lstlisting}
+用 $\pi$ 替换 \opt{pi}，但不会影响其它像 \texttt{pi/2} 或 \texttt{2pi} 这样的 \file{eps} 字符串。对于必须各自使用 \cmd{psfrag} 命令。
 
-如果所替换~EPS~中字符串不是完整的置于一~PS~命令中，~\textsf{PSfrag}~将
-不起作用。在一些应用软件生成的~EPS~图形中，为达到特殊的字符间距，将一
-字符串分隔为几个子串或单个的字符。例如，~\texttt{Corel Draw}~用如下
-的~EPS~代码来放置字符串~``Hello World''：
+如果所替换的 \file{eps} 字符串不是完整的置于一个 PostScript命令中，
+\marginpar{间距问题}
+那么 \cmd{PSfrag} 将不起作用。
+在一些应用软件生成的 \file{eps} 图形中，为达到特殊的字符间距，
+将一字符串分隔为几个子串或单个的字符。
+例如，Corel Draw 可以用如下的 \file{eps} 代码来放置字符串“Hello World”：
 \begin{Verbatim}[xleftmargin=1cm]
 0 0 (Hello W) @t
 1080 0 (orld) @t
 \end{Verbatim}
-由于~\textsf{PSfrag}~把它看作是两个不相干的字符串~``Hello W''~和~``orld''，
-所以任何对~``Hello World''~的替换都不起作用。如果不能在应用软件中
-取消这种对字符间距的处理，使用~Courier~或其它单一间距的字体一般
-可防止这种情况。如果确实无法避免这种情况，那么只能对单个字符进行替换。
+由于 \pkg{PSfrag} 将其视为是两个不相干的字符串“Hello W”和“orld”，
+所以任何对“Hello World”的替换都不起作用。
+如果不能在应用软件中手动取消这种对字符间距的处理，
+一般可以使用 Courier 或其它等宽字体来阻止这种情况\footnote{%
+	为了避免字符间距，可能需要在创建文本之前设置Courier字体。
+	先穿件文本在将其转成Courier字体可能仍然会有字符间距。}。
+如果确实无法避免这种情况，那么只能对单个字符进行替换。
 
-\subsection{Psfrag~~使用例一}\label{ssec:psfragex1}
+\subsubsection{PSfrag 使用例\#1}\label{sssec:psfragex1}
 
 命令
-\begin{Verbatim}[xleftmargin=1cm]
+\begin{lstlisting}
 \includegraphics{pend.eps}
-\end{Verbatim}
-只是插入~EPS~图形而没有任何~\textsf{PSfrag}~替换，见图~\ref{fig:nopsfrag}。
+\end{lstlisting}
+只是插入 \file{eps} 图形而没有任何 \pkg{psfrag} 替换，见图~\ref{fig:nopsfrag}。
 而下面的命令
-\begin{Verbatim}[xleftmargin=1cm]
+\begin{lstlisting}
 \psfrag{q1}{$\theta_1$}
 \psfrag{q2}{$\theta_2$}
 \psfrag{L1}{$L_1$}
@@ -952,32 +943,31 @@ convert file2.gif 'eps:-'
 \psfrag{P1}[][]{$P_1$}
 \psfrag{P2}[][]{\large $P_2$}
 \includegraphics{pend.eps}
-\end{Verbatim}
-插入~EPS~图形，并使用~\textsf{PSfrag}~对~EPS~图形中的字符串进行替换，
-见图~\ref{fig:psfragex1}。前面四个~\cmd{psfrag}~命令中，新的~\LaTeX{}~
-字符串的左基线点对应于旧的~EPS~字符串的左基线点，后面两个~\cmd{psfrag}~命令中
-使用~\texttt{[][]}~选项使得新的~\LaTeX{}~字符串的中心对应于旧的~EPS~字符串的
-中心。注意并不是所有的~EPS~字符串都被替换了，如在图~\ref{fig:psfragex1}~中
-~\texttt{N}~就没有被替换。
+\end{lstlisting}
+在插入 \file{eps} 图形的同时使用 \pkg{psfrag} 对 \file{eps} 图形中的字符串进行替换，
+见图~\ref{fig:psfragex1}。
+前四个 \cmd{psfrag} 命令中，新的 \LaTeX{} 字符串的左基线点对应于旧的 \file{eps} 字符串的左基线点，
+后面两个 \cmd{psfrag} 命令中使用 \opt{[][]} 选项使得新的 \LaTeX{} 字符串的中心对应于旧的 \file{eps} 字符串的中心。
+注意并不是所有的 \file{eps} 字符串都被替换，
+如在图~\ref{fig:psfragex1}~中 \texttt{N} 就没有被替换。
 
 \begin{figure}
-\hspace{-1.5cm}
-\begin{minipage}[t]{.7\textwidth}
+\begin{minipage}[t]{.5\textwidth}
 \vspace{0pt}
 \centering
-\includegraphics[width=.6\textwidth]{pend}
+\includegraphics[width=.9\textwidth]{pend}
 \caption{Without PSfrag Replacement}\label{fig:nopsfrag}
 \end{minipage}%
-\hspace{-3cm}
-\begin{minipage}[t]{.7\textwidth}
+\begin{minipage}[t]{.5\textwidth}
 \vspace{0pt}
-\ifpdf
 \centering
-\includegraphics[width=.6\textwidth]{psfrag-ex1}
+\ifxetex
+\includegraphics[width=.9\textwidth]{psfrag-ex1}
+\ifpdf
+\includegraphics[width=.9\textwidth]{psfrag-ex1}
 \else
 \ifdvipdfm
-\centering
-\includegraphics[width=.6\textwidth]{psfrag-ex1}
+\includegraphics[width=.9\textwidth]{psfrag-ex1}
 \else
 \psfrag{q1}{$\theta_1$}
 \psfrag{q2}{$\theta_2$}
@@ -985,15 +975,15 @@ convert file2.gif 'eps:-'
 \psfrag{L2}{$L_2$}
 \psfrag{P1}[][]{$P_1$}
 \psfrag{P2}[][]{\large $P_2$}
-\centering
 \includegraphics[width=.6\textwidth]{pend.eps}
+\fi
 \fi
 \fi
 \caption{With PSfrag Replacement}\label{fig:psfragex1}
 \end{minipage}
 \end{figure}
-
-\subsection{Psfrag~~使用例二}\label{ssec:psfragex2}
+===============================================================
+\subsubsection{Psfrag~~使用例二}\label{sssec:psfragex2}
 
 这个例子演示了~\ci{shortstack}, \ci{colorbox}~和~\ci{fcolorbox}~等命令如
 何与~\cmd{psfrag}~一起使用。
@@ -1093,14 +1083,14 @@ convert file2.gif 'eps:-'
 \caption{PSfrag~{\CJKfamily{hei}中使用中文的例子}}\label{fig:psfragex3}
 \end{figure}
 
-\subsection{EPS 图形中的 \LaTeX{} 文本}\label{ssec:latextext}
+\subsubsection{EPS 图形中的 \LaTeX{} 文本}\label{sssec:latextext}
 
 在使用~\textsf{PSfrag}~宏包时，~\cmd{psfrag}~命令是最常使用也是
 推荐使用的。它的具体用法已在前面几节中介绍过了。此外，~\textsf{PSfrag}~
 宏包还提供~\ci{tex}~来直接将~\LaTeX{}~文本嵌入到~EPS~中。不过，它的
 效率要比~\cmd{psfrag}~低。有关~\cmd{tex}~的详细信息可参见~\cite{psfrag}。
 
-\subsection{图形和文本的缩放}\label{ssec:psfragscale}
+\subsubsection{图形和文本的缩放}\label{sssec:psfragscale}
 
 如果一幅使用了~\textsf{PSfrag}~的图形被缩放，那么~\textsf{PSfrag}~
 所替换的文本也相应的被缩放。因此，使用~\textsf{graphicx}~包时的一些
@@ -1138,7 +1128,7 @@ convert file2.gif 'eps:-'
 
 \clearpage
 
-\subsection{Psfrag 的不兼容性}\label{ssec:psfragcomp}
+\subsubsection{Psfrag 的不兼容性}\label{sssec:psfragcomp}
 
 虽然~\textsf{PSfrag 3.0}~比其以前的版本有很多优越性，但它却
 与~\texttt{Xfig}~生成的使用了填充模式对象的~EPS~图形不兼容。
@@ -1172,130 +1162,135 @@ convert file2.gif 'eps:-'
 
 \subsection{Overpic 宏包}\label{ssec:overpic}
 
-尽管~\textsf{PSfrag}~的功能十分强大，使用起来也很方便，但对于非~EPS~图形
-或标记并非标准的字符串的~EPS~图来说，它就不能被使用。此外，由于像一些新
-的~\TeX{}~软件如~pdf\LaTeX{}~等不能直接使用~EPS~图形，也限制了~\textsf{PSfrag}~
-的使用。本节所介绍的~\pai{overpic}~宏包允许直接将~\LaTeX{}~对象放置到
-一幅图形上，而不是通过对图形上已有的标记进行替换来实现。这样，虽然在定位
-时要麻烦一些，却可以在一些不能使用~\textsf{PSfrag}~的情况下得到同样的效果。
+尽管 \pkg{PSfrag} 的功能十分强大，使用起来也很方便，
+但只适用于 \file{eps} 图像并使用 \prgname{dvips} 引擎。
+但对于非 \file{eps} 图形或标记并非标准字符串的 \file{eps} 图来说，
+它就不能被使用。
+此外，一些 \TeX{} 程序如 \prgname{dvipdfm(x)} \pdfLaTeX{} 等不能直接使用PostScript 替换，
+也限制了 \pkg{PSfrag} 的使用。
+本节所介绍的 \pkgi{overpic} 宏包允许直接将 \LaTeX{} 对象放置到一幅图形上，
+而不是通过对图形上已有的标记进行替换来实现。
+这样，虽然在定位时要麻烦一些，
+却可以在一些不能使用 \pkg{PSfrag} 的情况下得到同样的效果。
 
-~\textsf{overpic}~宏包中定义了一个~\ei{overpic}~环境，它有效地将
-~\ei{picture}~环境和~\cmd{includegraphics}~命令结合起来。
-使得~\ei{picture}~环境的维数和插入的~EPS~图形的维数相同。
-这样就可以很容易地把~\LaTeX{}~的命令放到图形上的任何指定位置。
+\pkg{overpic} 宏包中定义了一个 \envi{overpic} 环境，
+能够有效地将 \env{picture} 环境和 \cmd{includegraphics} 命令结合起来。
+这样使得 \env{picture} 环境和插入图像的大小相同，
+进而可以很容易地把 \LaTeX{} 的命令放到图形上的任何指定位置。
 同时，还可以在图形上加上标尺以方便定位。
 
-\noindent{%
-\color{morelight}{\shadowbox{\textcolor{blue}{\CJKfamily{kai}\texttt{%
-\bs begin\{overpic\}[选项]\{图形\}<\LaTeX{} 对象>\bs end\{overpic\}}}}}}
+\env{overpic} 环境的用法为
+\begin{lstlisting}[escapechar=\%]
+%\cmdMOM{begin}{overpic}{\metacmd{选项}}{\metacmd{图形}}%
+	%\metacmd{\LaTeX{} 对象}%
+%\cmdM{end}{overpic}%
+\end{lstlisting}
+这里的\metacmd{选项}可以是 \cmd{includegraphics} 的可选项，此外还包括
+\begin{itemize}
+	\item \opt{grid} 是否加标尺。
+	\item \opt{tics=} 标尺的刻度值。
+	\item \opt{unit=} 标尺的单位。
+\end{itemize}
 
-这里的选项可为~\texttt{scale, grid, tics, unit}~等。分别表示对图形
-进行缩放，加标尺，设定度量单位等。在调入~textsf{overpic}~宏包
-时，若使用参数~\texttt{abs}，即
-\begin{Verbatim}[xleftmargin=1cm]
+在调入 \pkg{overpic} 宏包时，若使用参数 \opt{abs}，即
+\begin{lstlisting}
 \usepackage[abs]{overpic}
-\end{Verbatim}
-则在~\texttt{overpic}~环境中使用绝对位置。即放置~\LaTeX{}~对象的
-位置以实际度量来定位。若使用
-\begin{Verbatim}[xleftmargin=1cm]
-\usepackage{overpic}
-\end{Verbatim}
-则在~\texttt{overpic}~环境中使用相对位置。即放置~\LaTeX{}~对象的
-位置以其相对于图形大小的百分比来定位。下面是几个例子（使用相对位置）：
+\end{lstlisting}
+则在 \env{overpic} 环境中使用绝对位置，
+即放置 \LaTeX{} 对象的位置以实际度量来定位。
+此时 \env{overpic} 选项的默认值为 \opt{tics=10}，\opt{unit=\cmd{unitlength}}\footnote{%
+	\cmdi{unitlength} 为 \env{picture} 环境的长度单位，在 \LaTeX{} 中默认设置为 $1\pt$。}
 
-\CJKfamily{kai}
 
-\vspace{1cm}
+若使用
+\begin{lstlisting}
+\usepackage[percent]{overpic}%默认值，等价于\usepackage{overpic}
+\end{lstlisting}
+或者
+\begin{lstlisting}
+\usepackage[permil]{overpic}
+\end{lstlisting}
+则在 \env{overpic} 环境中使用相对位置，
+即放置 \LaTeX{} 对象的位置以其相对于图形大小的百分比来定位。
+对于 \opt{percent} 宏包选项（默认值），相关设置为 \opt{tics=10}，
+\opt{unit} 为图像较长一边长度的 $1/100$；
+对于 \opt{permil} 宏包选项，相关设置为 \opt{tics=100}，
+\opt{unit} 为图像较长一边长度的 $1/1000$。
+下面是几个例子（使用默认的 \opt{percent} 相对位置）：
 
-\hspace{-1cm}\begin{minipage}[b]{.5\textwidth}
-\begin{overpic}[scale=.25,grid,tics=10]{golfer}
+
+\begin{minipage}[b]{.4\textwidth}
+\begin{overpic}[width=\linewidth,grid,tics=10]{golfer}
   \end{overpic}
 \par\vspace{0pt}
 \end{minipage}%
-\hspace{-1cm}\begin{minipage}[b]{.5\textwidth}
-\begin{Verbatim}
-\begin{overpic}[scale=.25,grid,tics=10]%
-               {golfer.ps}
+\begin{minipage}[b]{.6\textwidth}
+\begin{lstlisting}
+\begin{overpic}[width=\linewidth,grid,tics=10]%
+               {golfer}
 \end{overpic}
-\end{Verbatim}
+\end{lstlisting}
 \par\vspace{0pt}
 \end{minipage}
 
-\hspace{-1cm}\begin{minipage}[b]{.5\textwidth}
-\begin{overpic}[scale=.25]{golfer}
+\begin{minipage}[b]{.4\textwidth}
+\begin{overpic}[width=\linewidth]{golfer}
+  \put(5,50){\LaTeX}
+  \put(5,40){\color{red}外部图形}
+  \put(55,10){%
+    \includegraphics[scale=.06]%
+                    {golfer}}
+\end{overpic}
+\par\vspace{0pt}
+\end{minipage}%
+\begin{minipage}[b]{.6\textwidth}
+\begin{lstlisting}
+\begin{overpic}[width=\linewidth]{golfer}
   \put(5,50){\LaTeX}
   \put(5,40){\color{red}外部图形}
   \put(55,10){%
     \includegraphics[scale=.07]%
                     {golfer}}
-\end{overpic}
-\par\vspace{0pt}
-\end{minipage}%
-\hspace{-1cm}\begin{minipage}[b]{.5\textwidth}
-\begin{Verbatim}
-\begin{overpic}[scale=.25]{golfer.ps}
-  \put(5,50){\LaTeX}
-  \put(5,40){\color{red}外部图形}
-  \put(55,10){%
-    \includegraphics[scale=.07]%
-                    {golfer.ps}}
-\end{Verbatim}
+\end{lstlisting}
 \par\vspace{0pt}
 \end{minipage}
 
-\CJKfamily{song}
 
-对于第~\ref{sec:psfragex2}~节中的例子，现在使用~\textsf{overpic}~
-来得到同样的结果。首先可使用~\texttt{grid}~和~\texttt{tics}~选项
-来确定放置~\LaTeX{}~对象的位置（这样做只是为了能够得到更精确的放置
-位置，在定位后就可将~\texttt{grid}~和~\texttt{tics}~选项
-去掉）。
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{overpic}[scale=1.2,grid,tics=5]{mass.eps}
+对于第~\ref{sssec:psfragex2}~节中的例子，
+现在使用 \pkg{overpic} 宏包来得到同样的结果。
+首先可使用 \opt{grid} 和 \opt{tics} 选项来确定放置 \LaTeX{} 对象的位置
+（这样做只是为了能够得到更精确的放置位置，
+在定位后就可将 \opt{grid} 和 \opt{tics} 选项去掉）。
+\begin{lstlisting}
+\begin{overpic}[scale=1.2,grid,tics=5]{mass}
   \end{overpic}
-\end{Verbatim}
+\end{lstlisting}
 
-\ifpdf
 \begin{center}
 \begin{overpic}[scale=1.2,grid,tics=5]{mass}
   \end{overpic}
 \end{center}
-\else
-\begin{center}
-\begin{overpic}[scale=0.8,grid,tics=5]{mass}
-  \end{overpic}
-\end{center}
-\fi
 
-根据上图来将所需的~\LaTeX{}~对象放到图形上的合适位置。
-\begin{Verbatim}[xleftmargin=1cm]
-\begin{overpic}[scale=1.2]{mass.eps}
+根据上图来将所需的 \LaTeX{} 对象放到图形上的合适位置。
+\begin{lstlisting}
+\begin{overpic}[scale=1.2]{mass}
   \put(25,8){\fcolorbox{black}{white}{基础部分}}
   \put(31,64){\colorbox{white}{$q_1$}}
-  \put(65,65){\colorbox{white}{\shortstack{水力\\ 驱动}}}
+  \put(65,65){\colorbox{white}{\shortstack{水力 \\ 驱动}}}
 \end{overpic}
-\end{Verbatim}
+\end{lstlisting}
 结果如图~\ref{fig:overpic:psfrag}所示。
 
-\ifpdf
 \begin{center}
-\begin{overpic}[scale=1.2]{mass}
-  \put(25,8){\fcolorbox{black}{white}{\CJKfamily{kai}基础部分}}
-  \put(31,64){\colorbox{white}{$q_1$}}
-  \put(65,65){\colorbox{white}{\shortstack{\CJKfamily{kai} 水力\\ \CJKfamily{kai} 驱动}}}
-\end{overpic}
-\figcaption{Overpic example}\label{fig:overpic:psfrag}
+	\CJKfamily{zhkai}
+	\begin{overpic}[scale=1.2]{mass}
+	  \put(25,8){\fcolorbox{black}{white}{基础部分}}
+	  \put(31,64){\colorbox{white}{$q_1$}}
+	  \put(65,65){\colorbox{white}{\shortstack{水力 \\ 驱动}}}
+	\end{overpic}
+	\captionof{figure}{Overpic example}\label{fig:overpic:psfrag}
 \end{center}
-\else
-\begin{center}
-\begin{overpic}[scale=0.8]{mass}
-  \put(25,8){\fcolorbox{black}{white}{\CJKfamily{kai}基础部分}}
-  \put(31,64){\colorbox{white}{$q_1$}}
-  \put(65,65){\colorbox{white}{\shortstack{\CJKfamily{kai} 水力\\ \CJKfamily{kai} 驱动}}}
-\end{overpic}
-\figcaption{Overpic example}\label{fig:overpic:psfrag}
-\end{center}
-\fi
+
 
 \section{多次使用同一图形的几种技巧}\label{sec:multigraph}
 
