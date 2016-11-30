@@ -1,22 +1,28 @@
 % epslatex-cn
 
-\documentclass[oneside]{ctexart}
+\documentclass[oneside,UTF8]{ctexart}
 \usepackage{amsmath}
 \usepackage{nicefrac}
 \usepackage{lmodern}
-\usepackage[T1,T5]{fontenc}
 \usepackage{textcomp}
+\usepackage[style=numeric,sorting=nty]{biblatex}
 
 \usepackage{placeins}
 \usepackage{fancybox}
-\usepackage{xcolor}
+\usepackage[cymk,rgb]{xcolor}
 \usepackage{lscape}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{sidecap}
 \usepackage{rotating}
 \usepackage{wrapfig}
+\usepackage{picinpar}
+\usepackage{psfrag}
+\usepackage{overpic}
 
+\usepackage{cprotect}
+\usepackage{fancyvrb}
+\usepackage{verbatim}
 \usepackage{listings}
 \usepackage{makeidx}
 \usepackage{hologo}
@@ -28,9 +34,10 @@
 \def\pdfLaTeX{\hologo{pdfLaTeX}}
 \def\HanTheThanh{\hologo{HanTheThanh}}
 \lstset{
-	basicstyle=\ttfamily,
+	basicstyle=\ttfamily\small,
 	commentstyle=\ttfamily\slshape,
-	language=LaTeX}
+	language=[LaTeX]{TeX},
+	xleftmargin=1em}
 % new column type in tabular with fixed width
 \newcolumntype{P}[1]{>{\setlength{\parindent}{2em}}p{#1}}
 \newcommand{\file}[1]{\texttt{#1}}
@@ -62,6 +69,18 @@
 \newcommand{\pt}{\ensuremath{\,\mathtt{pt}}}
 \newcommand{\metacmd}[1]{{\rm\textlangle\it#1\rm\textrangle}}
 
+% store some graphics for accelerating compiling
+\newsavebox{\boxgraphic}
+\newsavebox{\boxgraphictwo}
+\newsavebox{\boxw}
+\newsavebox{\boxrosette}
+\newsavebox{\boxrosettebox}
+\sbox{\boxgraphic}{\includegraphics{graphic.eps}}
+\sbox{\boxgraphictwo}{\includegraphics{graphic2.pdf}}
+\sbox{\boxw}{\includegraphics{w.eps}}
+\sbox{\boxrosette}{\includegraphics{rosette.eps}}
+\sbox{\boxrosettebox}{\includegraphics{rosettebox.eps}}
+
 %% cmd and env defined in epslatex
 \newenvironment{narrow}[2]{%
 	\begin{list}{}{%
@@ -73,7 +92,7 @@
 			\setlength{\parsep}{\parskip}}%
 	\item[]}{\end{list}}
 \DeclareCaptionStyle{BigLeft}{style=default, labelsep=period,
-	font=Large, labelfont=bold,
+	font=Large, labelfont=bf,
 	justification=RaggedRight,
 	singlelinecheck=false}
 \DeclareCaptionFont{BigAndBold}{\Large\bfseries}
@@ -82,8 +101,25 @@
 \DeclareCaptionFormat{reverse}{#3#2\ensuremath{\ll}#1\ensuremath{\gg}}
 \renewcommand\theContinuedFloat{\alph{ContinuedFloat}}
 
+%% Highlight color definition, from Wanglei's epslatex-cn, ver 2000
+\definecolor{highlightcolor}{rgb}{1,1,0.8}
+\definecolor{mygreen}{rgb}{0,0.5,0}
+\definecolor{RoyalBlue}{cmyk}{1,0.50,0,0}
+\definecolor{light}{cmyk}{0,0,0,0.50}
+\definecolor{morelight}{cmyk}{0,0,0,0.20}
+\definecolor{Newlight}{cmyk}{0,0,0,0.20}
+\definecolor{SkyBlue}{cmyk}{0.62,0,0.12,0}
+\definecolor{NiceColor}{rgb}{0.21,0.42,0.73}
+\definecolor{PartColor}{cmyk}{0.12,0.59,0,0}
+\definecolor{VerbatimColor}{cmyk}{0.45,0.86,0,0}
+\definecolor{PageColor}{rgb}{0.21,0.42,0.73}
+
+
+
+\addbibresource{ref.bib}
+
 \makeindex
-\includeonly{preface}
+\includeonly{part1}
 \begin{document}
 
 \include{preface}
@@ -100,7 +136,7 @@
 
 \include{part5}
 
-\include{bib}
+\printbibliography[title={参考文献}, heading=bibnumbered]
 %\makeindex
 \printindex
 \end{document}

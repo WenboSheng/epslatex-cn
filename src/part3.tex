@@ -128,17 +128,17 @@ World
 得到
 
 \begin{center}
-	\includegraphics[totalheight=1in]{rosette}
-	\includegraphics[angle=45,totalheight=1in]{rosette}
-	\includegraphics[angle=90,totalheight=1in]{rosette}
+	\resizebox*{!}{1in}{\usebox{\boxrosette}}
+	\resizebox*{!}{1in}{\rotatebox{45}{\usebox{\boxrosette}}}
+	\resizebox*{!}{1in}{\rotatebox{90}{\usebox{\boxrosette}}}
 \end{center}
 尽管看上去图形的大小不一有点奇怪，
 但在看过它们的~BoundingBox~后就会明白了。
 
 \begin{center}
-	\includegraphics[totalheight=1in]{rosettebox}
-	\includegraphics[angle=45,totalheight=1in]{rosettebox}
-	\includegraphics[angle=90,totalheight=1in]{rosettebox}
+	\resizebox*{!}{1in}{\usebox{\boxrosettebox}}
+	\resizebox*{!}{1in}{\rotatebox{45}{\usebox{\boxrosettebox}}}
+	\resizebox*{!}{1in}{\rotatebox{90}{\usebox{\boxrosettebox}}}
 \end{center}
 每一幅图像的结果是旋转后的BoundingBox 为1英寸高。
 缩放功能改变的是BoundingBox 的大小，而不是实际看到图像的大小。
@@ -160,16 +160,16 @@ World
 得到
 
 \begin{center}
-   \includegraphics[totalheight=1in]{rosette}
-   \includegraphics[totalheight=1in,angle=-45]{rosette}
-   \includegraphics[totalheight=1in,angle=-90]{rosette}
+	\resizebox*{!}{1in}{\usebox{\boxrosette}}
+	\rotatebox{-45}{\resizebox*{!}{1in}{\usebox{\boxrosette}}}
+	\rotatebox{-90}{\resizebox*{!}{1in}{\usebox{\boxrosette}}}
 \end{center}
 当然，这种现象仍可用图形的~BoundingBox~来解释。
 
 \begin{center}
-   \includegraphics[totalheight=1in]{rosettebox}
-   \includegraphics[totalheight=1in,angle=-45]{rosettebox}
-   \includegraphics[totalheight=1in,angle=-90]{rosettebox}
+	\resizebox*{!}{1in}{\usebox{\boxrosettebox}}
+	\rotatebox{-45}{\resizebox*{!}{1in}{\usebox{\boxrosettebox}}}
+	\rotatebox{-90}{\resizebox*{!}{1in}{\usebox{\boxrosettebox}}}
 \end{center}
 在这种情况下，我们可以看到图形对象的参考点（左下角）是处于同一水平线上的。
 如果希望是中间对齐，那么可以用 \cmd{includegraphics} 的 \opt{origin} 选项。
@@ -183,9 +183,9 @@ World
 这次所有图形都是中间对齐的。
 
 \begin{center}
-   \includegraphics[totalheight=1in]{rosette}
-   \includegraphics[totalheight=1in,origin=c,angle=-45]{rosette}
-   \includegraphics[totalheight=1in,origin=c,angle=-90]{rosette}
+	\resizebox*{!}{1in}{\usebox{\boxrosette}}
+	\rotatebox[origin=c]{-45}{\resizebox*{!}{1in}{\usebox{\boxrosette}}}
+	\rotatebox[origin=c]{-90}{\resizebox*{!}{1in}{\usebox{\boxrosette}}}
 \end{center}
 
 \subsubsection{第二个例子}
@@ -199,9 +199,9 @@ World
 \end{lstlisting}
 将右边的图形绕它的左下角旋转，得到如下结果：
 \begin{center}
-	\includegraphics[width=1in]{graphic}
+	\resizebox{1in}{!}{\usebox{\boxgraphic}}
 	\hspace{1in}
-	\includegraphics[width=1in,angle=-90]{graphic}
+	\rotatebox{-90}{\resizebox{1in}{!}{\usebox{\boxgraphic}}}
 \end{center}
 
 要想使图形的底部对齐，使用下面的命令：
@@ -214,9 +214,9 @@ World
 \end{lstlisting}
 上述命令让右边的图形绕它的右下角旋转，得到如下结果：
 \begin{center}
-	\includegraphics[width=1in]{graphic}
+	\resizebox{1in}{!}{\usebox{\boxgraphic}}
 	\hspace{1in}
-	\includegraphics[width=1in,origin=br,angle=-90]{graphic}
+	\rotatebox[origin=br]{-90}{\resizebox{1in}{!}{\usebox{\boxgraphic}}}
 \end{center}
 
 \subsection{小页环境的垂直对齐}\label{ssec:minivalign}
@@ -268,14 +268,14 @@ World
 \begin{center}
 	\begin{minipage}[t]{.25\linewidth}
 		\centering
-		\includegraphics[width=1in]{graphic}
+		\resizebox{1in}{!}{\usebox{\boxgraphic}}
 	\end{minipage}%
 	\begin{minipage}[t]{.25\linewidth}
 		\centering
-		\includegraphics[width=1in,angle=-45]{graphic}
+		\rotatebox{-45}{\resizebox{1in}{!}{\usebox{\boxgraphic}}}
 	\end{minipage}
 \end{center}
-\caption{带 minipage with \opt{[b]} or \opt{[t]} 选项的 \env{minipage} 环境}
+\caption{带 \opt{[b]} or \opt{[t]} 选项的 \env{minipage} 环境}
 \label{fig:minipagesamp-1}
 \end{figure}
 
@@ -310,12 +310,12 @@ World
 \begin{center}
 	\begin{minipage}[b]{.25\linewidth}
 		\centering
-		\includegraphics[width=1in]{graphic}
+		\resizebox{1in}{!}{\usebox{\boxgraphic}}
 		\par\vspace{0pt}
 	\end{minipage}%
 	\begin{minipage}[b]{.25\linewidth}
 		\centering
-		\includegraphics[width=1in,angle=-45]{graphic}
+		\rotatebox{-45}{\resizebox{1in}{!}{\usebox{\boxgraphic}}}
 		\par\vspace{0pt}
 	\end{minipage}
 \end{center}
@@ -350,12 +350,12 @@ World
 	\begin{minipage}[t]{.25\linewidth}
 		\vspace{0pt}
 		\centering
-		\includegraphics[width=1in]{graphic}
+		\resizebox{1in}{!}{\usebox{\boxgraphic}}
 	\end{minipage}%
 	\begin{minipage}[t]{.25\linewidth}
 		\vspace{0pt}
 		\centering
-		\includegraphics[width=1in,angle=-45]{graphic}
+		\rotatebox{-45}{\resizebox{1in}{!}{\usebox{\boxgraphic}}}
 	\end{minipage}
 \end{center}
 \caption{顶部对齐的小页环境}\label{fig:minipagesamp-3}
@@ -409,12 +409,6 @@ World
 	\includegraphics{right.eps}
 	\caption{两幅堆叠的图像}\label{fig:leftrightoverlay}
 \end{figure}
-
-\subsection{Overpic 宏包}
-另一种堆叠图像的方法是使用 \pkgi{overpic} 宏包。
-该宏包定义了一个图形环境，使得大小就是插图的尺寸大小。
-相关细节参考 \pkg{overpic} 宏包文档~\cite{overpic-doc}。
-
 
 \section{使用子目录}\label{sec:subdir}
 
@@ -504,13 +498,6 @@ TEXINPUTS="/dir1:/dir2:"; export TEXINPUTS
 因此，可能会找不到该文件（见第~\ref{ssec:dvips}~节）。
 
 
-
-
-
-
-
-
-
 \subsection{临时改变 \TeX{} 的搜索路径}\label{ssec:temptexpath}
 
 本节讲述如何使用 Unix shell 临时修改 \TeX{} 搜索路径，
@@ -593,11 +580,11 @@ latex_paper file.tex
 	\includegraphics{file.eps}
 	\end{lstlisting}
 	将使 \cmd{includegraphics} 命令试图打开下列文件：
-	\begin{Verbatim}[xleftmargin=1.5cm]
-	file.eps
-	dir1/file.eps
-	dir2/file.eps
-	\end{Verbatim}
+\begin{Verbatim}[xleftmargin=1.5cm]
+file.eps
+dir1/file.eps
+dir2/file.eps
+\end{Verbatim}
 	每一次打开文件的尝试都会消耗池空间。
 	应该用更改 \TeX{} 搜索路径的办法来替代使用命令 \cmd{graphicspath}。
 	
@@ -607,13 +594,13 @@ latex_paper file.tex
 	\includegraphics{file}
 	\end{lstlisting}
 	将使 \cmd{includegraphics} 命令试图打开下列文件：
-	\begin{Verbatim}[xleftmargin=1.5cm]
-	file.eps
-	file.ps
-	file.eps.gz
-	file.ps.gz
-	file.eps.Z
-	\end{Verbatim}
+\begin{Verbatim}[xleftmargin=1.5cm]
+file.eps
+file.ps
+file.eps.gz
+file.ps.gz
+file.eps.Z
+\end{Verbatim}
 	若是再加上使用~\cmd{graphicspath}，会导致效率特别低。
 	
 	最好将 \cmd{DeclareGraphicsExtensions} 中定义的扩展名列表减到最小，
@@ -963,6 +950,7 @@ convert file2.gif 'eps:-'
 \centering
 \ifxetex
 \includegraphics[width=.9\textwidth]{psfrag-ex1}
+\else
 \ifpdf
 \includegraphics[width=.9\textwidth]{psfrag-ex1}
 \else
@@ -982,62 +970,59 @@ convert file2.gif 'eps:-'
 \caption{With PSfrag Replacement}\label{fig:psfragex1}
 \end{minipage}
 \end{figure}
-===============================================================
-\subsubsection{Psfrag~~使用例二}\label{sssec:psfragex2}
 
-这个例子演示了~\ci{shortstack}, \ci{colorbox}~和~\ci{fcolorbox}~等命令如
-何与~\cmd{psfrag}~一起使用。
+\subsubsection{PSfrag 使用例\#2}\label{sssec:psfragex2}
+
+这个例子演示了 \cmdi{shortstack}, \cmdi{colorbox} 和 \cmdi{fcolorbox} 等命令如何与 \cmd{psfrag} 一起使用。
 
 \begin{description}
-\item[\cmd{shortstack}] 这一命令允许将文本竖直放置，每行用~\verb+\\+~
-     分开。可用来使用多行文本替换~EPS~图中的一行文本。
-\item[\cmd{colorbox}] \pai{color}~宏包所提供的一个命令，它在所作用的
-     对象背后放置一长方形的彩色区域作为背景。此背景超出对象的部分的大小
-     由长度~\ci{fboxsep}~控制。例如：
-     \begin{Verbatim}[formatcom=\color{VerbatimColor}\CJKfamily{kai}]
-         \colorbox{yellow}{文本}
-     \end{Verbatim}
-     在{\colorbox{yellow}{\CJKfamily{kai}文本}}后放置了一长方形的黄色背景。
-     有关~\cmd{colorbox}~的详细说明可参考文献~\cite{grfguide}。
+\item[\cmd{shortstack}] 这一命令允许将文本竖直放置，每行用 \cmd{\cmd{}}分开。
+	可用来使用多行文本替换图中的单行文本。
+\item[\cmd{colorbox}] \pkgi{color} 宏包所提供的一个命令，
+	它在所作用的对象背后放置长方形的彩色区域作为背景。
+	此背景超出对象的部分的大小由长度 \cmdi{fboxsep} 控制。例如：
+\begin{lstlisting}
+\colorbox{yellow}{文本}
+\end{lstlisting}
+	在{\colorbox{yellow}{文本}}后放置了一长方形的黄色背景。
+	有关\cmd{colorbox} 的详细说明可参考文献~\cite{grfguide}。
 
-     在使用~\textsf{PSfrag}~时，~\cmd{colorbox}~常常用来放置那些由于
-     线条或阴影而被遮挡的文本。通过将这些文本的背景色设为白色，防止
-     它们被图形所遮挡。
-\item[\cmd{fcolorbox}] 这一命令（也由~\textsf{color}~宏包所提供）与
-     ~\cmd{colorbox}~类似，只是为背景加上了一个边框。如命令
-     \begin{Verbatim}[formatcom=\color{VerbatimColor}\CJKfamily{kai}]
-         \fcolorbox{black}{yellow}{文本}
-     \end{Verbatim}
-     在{\fcolorbox{black}{yellow}{\CJKfamily{kai}文本}}后放置了一长方形的
-    带有黑色边框的黄色背景。
+	在使用 \pkg{PSfrag}~时，\cmd{colorbox} 常常用来放置那些由于线条或阴影而被遮挡的文本。
+	通过将这些文本的背景色设为白色，防止它们被图形所遮挡。
+\item[\cmd{fcolorbox}] 命令（也由 \pkg{color} 宏包所提供）与 \cmd{colorbox} 类似，
+	只是为背景加上了一个边框。例如命令
+\begin{Verbatim}
+\fcolorbox{black}{yellow}{文本}
+\end{Verbatim}
+	在{\fcolorbox{black}{yellow}{文本}}后放置了一长方形带有黑色边框的黄色背景。
 
-     这里边框的宽度由~\ci{fboxrule}~控制，边框和对象之间的间隔大小
-     则由~\cmd{fboxsep}~控制。
+	这里边框的宽度由 \cmdi{fboxrule} 控制，边框和对象之间的间隔大小则由 \cmd{fboxsep} 控制。
 \end{description}
 
+
 \begin{figure}
-\hspace{-1.5cm}
-\begin{minipage}[b]{.7\textwidth}
+\begin{minipage}[b]{.5\textwidth}
 \centering
-\includegraphics[width=.6\textwidth]{mass}
-\caption{Without PSfrag Replacement}\label{fig:nopsfragex1}
+\includegraphics[width=.9\textwidth]{mass}
+\caption{Without PSfrag Replacement}\label{fig:nopsfragex2}
 \par\vspace{0pt}
 \end{minipage}%
-\hspace{-3cm}
-\begin{minipage}[b]{.7\textwidth}
-\ifpdf
+\begin{minipage}[b]{.5\textwidth}
 \centering
-\includegraphics[width=.6\textwidth]{psfrag-ex2}
+\ifxetex
+\includegraphics[width=.9\textwidth]{psfrag-ex2}
+\else
+\ifpdf
+\includegraphics[width=.9\textwidth]{psfrag-ex2}
 \else
 \ifdvipdfm
-\centering
-\includegraphics[width=.6\textwidth]{psfrag-ex2}
+\includegraphics[width=.9\textwidth]{psfrag-ex2}
 \else
 \psfrag{q1}[][]{\colorbox{white}{$q_1$}}
 \psfrag{base}{\fcolorbox{black}{white}{Base}}
 \psfrag{Actuator}[l][l]{\shortstack{Hydraulic\\ Actuator}}
-\centering
-\includegraphics[width=.6\textwidth]{mass.eps}
+\includegraphics[width=.9\textwidth]{mass.eps}
+\fi
 \fi
 \fi
 \caption{With PSfrag Replacement}\label{fig:psfragex2}
@@ -1045,39 +1030,44 @@ convert file2.gif 'eps:-'
 \end{minipage}
 \end{figure}
 
-图~\ref{fig:nopsfragex1}~和图~\ref{fig:psfragex2}~显示了这些命令与
-~\textsf{PSfrag}~配合使用的效果。图~\ref{fig:nopsfragex1}~是没有
-使用~\textsf{PSfrag}~的原始图形，而图~\ref{fig:psfragex2}~则是
-使用如下命令的结果。
-\begin{Verbatim}[xleftmargin=1cm]
+图~\ref{fig:nopsfragex2}~是没有使用 \pkg{PSfrag} 的原始图形，
+而图~\ref{fig:psfragex2}~则是使用如下命令的结果。
+\begin{lstlisting}
 \psfrag{q1}[][]{\colorbox{white}{$q_1$}}
 \psfrag{base}{\fcolorbox{black}{white}{Base}}
 \psfrag{Actuator}[l][l]{\shortstack{Hydraulic\\ Actuator}}
 \includegraphics{mass.eps}
-\end{Verbatim}
+\end{lstlisting}
 
 下面的例子使用了中文，结果如图~\ref{fig:psfragex3}。
-\begin{Verbatim}[xleftmargin=1cm,formatcom=\color{VerbatimColor}\CJKfamily{kai}]
+注意，由于最新的\pkg{ctex}宏集不支持 \prgname{dvips}，
+需要手动使用\pkg{CJK}。
+\begin{lstlisting}
+%\usepackage{CJKutf8}
+\begin{CJK}{UTF8}{gkai}
 \psfrag{q1}[][]{\colorbox{white}{$q_1$}}
 \psfrag{base}{\fcolorbox{black}{white}{基础部分}}
 \psfrag{Actuator}[l][l]{\shortstack{水力\\ 驱动器}}
 \includegraphics{mass.eps}
-\end{Verbatim}
+\end{CJK}
+\end{lstlisting}
 
 \begin{figure}
-\ifpdf
 \centering
+\ifxetex
+\includegraphics[width=.45\textwidth]{psfrag-ex3}
+\else
+\ifpdf
 \includegraphics[width=.45\textwidth]{psfrag-ex3}
 \else
 \ifdvipdfm
-\centering
 \includegraphics[width=.45\textwidth]{psfrag-ex3}
 \else
 \psfrag{q1}[][]{\colorbox{white}{$q_1$}}
 \psfrag{base}{\fcolorbox{black}{white}{\CJKfamily{kai} 基础部分}}
 \psfrag{Actuator}[l][l]{\shortstack{\CJKfamily{kai} 水力\\ \CJKfamily{kai} 驱动器}}
-\centering
 \includegraphics[width=.45\textwidth]{mass.eps}
+\fi
 \fi
 \fi
 \caption{PSfrag~{\CJKfamily{hei}中使用中文的例子}}\label{fig:psfragex3}
@@ -1085,80 +1075,85 @@ convert file2.gif 'eps:-'
 
 \subsubsection{EPS 图形中的 \LaTeX{} 文本}\label{sssec:latextext}
 
-在使用~\textsf{PSfrag}~宏包时，~\cmd{psfrag}~命令是最常使用也是
-推荐使用的。它的具体用法已在前面几节中介绍过了。此外，~\textsf{PSfrag}~
-宏包还提供~\ci{tex}~来直接将~\LaTeX{}~文本嵌入到~EPS~中。不过，它的
-效率要比~\cmd{psfrag}~低。有关~\cmd{tex}~的详细信息可参见~\cite{psfrag}。
+在使用 \pkg{PSfrag} 宏包时，\cmd{psfrag} 命令是最常使用也是推荐使用的。
+它的具体用法已在前面几小节中介绍过了。
+此外，\pkg{PSfrag} 宏包还提供 \cmd{tex} 直接将 \LaTeX{} 文本嵌入到 \file{eps} 中。
+不过，它的效率要比 \cmd{psfrag} 低。
+有关 \cmd{tex} 的详细信息可参见 \cite{psfrag-doc}。
 
 \subsubsection{图形和文本的缩放}\label{sssec:psfragscale}
 
-如果一幅使用了~\textsf{PSfrag}~的图形被缩放，那么~\textsf{PSfrag}~
-所替换的文本也相应的被缩放。因此，使用~\textsf{graphicx}~包时的一些
-细节有可能影响到这些文本的大小。
+如果缩放一幅使用了 \pkg{PSfrag} 的图形，那么其中 \pkg{PSfrag} 所替换的文本也相应的被缩放。
+因此，使用 \pkg{graphicx} 包时的一些细节有可能影响到这些文本的大小。
 
 \begin{itemize}
-\item 当使用~\texttt{width, height}~或~\texttt{totalheight}~来
-      指定图形的大小，如
-      \begin{Verbatim}[xleftmargin=1cm]
-      \includegraphics[width=3in]{file.eps}
-      \end{Verbatim}
-      这时~\textsf{PSfrag}~所替换的文本在~\texttt{file.eps}~被缩放到~3~
-      英寸后才加入。相反，
-      \begin{Verbatim}[xleftmargin=1cm]
-      \resizebox{3in}{!}{\includegraphics{file.eps}}
-      \end{Verbatim}
-      则是将图形~\texttt{file.eps}~以它的自然大小插入，进行~\textsf{PSfrag}~替换，
-      然后再将图形和所替换的文本一起缩放到~3~英寸。
+\item 当使用~\opt{width}、\opt{height} 或 \opt{totalheight} 指定图形的大小时，如
+\begin{lstlisting}
+\includegraphics[width=3in]{file.eps}
+\end{lstlisting}
+      \pkg{PSfrag} 会在缩放之后再插入文字。相反地，
+\begin{lstlisting}
+\resizebox{3in}{!}{\includegraphics{file.eps}}
+\end{lstlisting}
+      则先将图像以它的自然大小插入，然后进行 \pkg{PSfrag}替换，
+      最后再将图形和所替换的文本一起缩放。
+      
 \item 相似地，当缩放选项在旋转选项之前时，
-      \begin{Verbatim}[xleftmargin=1cm]
-      \includegraphics[width=3in,angle=30]{file.eps}
-      \end{Verbatim}
+\begin{lstlisting}
+\includegraphics[width=3in,angle=30]{file.eps}
+\end{lstlisting}
       缩放选项会得到预期的效果。然而，当它在旋转选项之后时，
-      \begin{Verbatim}[xleftmargin=1cm]
-      \includegraphics[angle=30,width=3in]{file.eps}
-      \end{Verbatim}
-      图形~\texttt{file.eps}~会先以其自然大小插入，然后被旋转，
-      接着被缩放到~3~英寸，因为~\textsf{PSfrag}~的替换是在图形
-      被插入时发生的，所以第二个命令中的替换文本会被缩放，而第一个命令中
-      的替换文本不会被缩放。如果图形的自然大小和被缩放后的大小差别
-      很大的话，这两个命令得到的结果会大不相同。
+\begin{lstlisting}
+\includegraphics[angle=30,width=3in]{file.eps}
+\end{lstlisting}
+      图像会先以其自然大小插入，然后被旋转，接着进行缩放。
+      因为 \pkg{PSfrag} 的替换是在图形被插入时发生的，
+      所以第二个命令中的替换文本会被缩放，而第一个命令中的替换文本不会被缩放。
+      如果图形的自然大小和被缩放后的大小差别很大的话，这两个命令得到的结果会大不相同。
 \end{itemize}
+参见~\cite{psfrag-doc}~以获取关于 \pkg{PSfrag} 文本缩放的详细说明。
 
-参见~\cite{psfrag}~以获取关于~\textsf{PSfrag}~的详细说明。
+\subsubsection{PSfrag和 \pdfTeX{}}
 
-\clearpage
-
-\subsubsection{Psfrag 的不兼容性}\label{sssec:psfragcomp}
-
-虽然~\textsf{PSfrag 3.0}~比其以前的版本有很多优越性，但它却
-与~\texttt{Xfig}~生成的使用了填充模式对象的~EPS~图形不兼容。
-~\textsf{PSfrag}~包中的~\texttt{readme.xfg}~描述了这种不兼容性。
-关于此问题的解决办法将在第~\ref{subsec:xfigfile}~节中加以讨论。
-
-\textsf{PSfrag}~包中的另一文件~\texttt{readme.sem}~描述了~\textsf{PSfrag}~
-和~\textsf{Seminar}~宏包之间的不兼容性。值得庆幸的是，在~\texttt{CTAN}~
-的最新版本的~\textsf{Seminar}~宏包已消除了这一不兼容性。
-
-\subsubsection{Xfig EPS~文件}\label{sssec:xfigfile}
-
-~\texttt{Xfig}~生成的使用了~``pattern fill''~的~EPS~图形文件在
-与~\textsf{PSfrag}~配合使用时会遇到问题。问题的原因在于~\texttt{Xfig}~
-和~\textsf{PSfrag}~都对~\PS~命令~\texttt{show}~进行重新定义。
-按说这种重新定义不应该互相冲突，事实上却非如此。
-
-尽管~\textsf{PSfrag}~的维护者们还没有确定一个长远的解决办法，但是
-下面所提供的方法似乎可以解决这一问题。
+\pkg{psfrag} 不能在 \pdfTeX{} 模式下使用。
+如果需要进行 \pkg{psfrag} 替换，
+一种解决办法是使用 \LaTeX{}-\file{dvi}-PostScript-\file{pdf} 编译途径。
+这样虽然可以使用 \pkg{psfrag} 替换，然而同时也失去了 \pdfTeX{} 提供的优势。
+另外一种方法是在 \pdfTeX{} 中间接地使用 \pkg{psfrag}，
+这样既可以进行 \pkg{psfrag} 替换，又可以利用 \pdfTeX{} 的优势，
+不过，这种方法比较费时费力。
 \begin{enumerate}
-\item 在~EPS~文件中，找到~\texttt{/PATfill}~命令。
-\item 在~\texttt{/PATfill}~命令的定义中，找到~\texttt{show}~命令。
-      这里~\texttt{show}~命令只会出现一次。
-\item 将~\texttt{show}~用~\texttt{oldshow}~来替代（\texttt{oldshow}~
-      置于~\texttt{XFig}~存放~``old''~版本的显示机制的地方，在它
-      因自己的目的来重定义~\texttt{show}~之前。）。
+	\item 对于每一个要使用 \pkg{psfrag} 的图像，分别创建包含 \pkg{psfrag} 命令和 \cmd{includegraphics} 命令的 \LaTeX{} 文件。
+	其中注意使用 \cmdM{pagestyle}{empty} 以禁止页码的出现。
+	假设这些 \LaTeX{} 文件为
+\begin{verbatim}
+		GraphicFrag00.tex
+		GraphicFrag01.tex
+		...
+\end{verbatim}
+	\item 在操作系统的命令行中执行以下步骤\footnote{%
+		这里使用 \TeX Live 自带的 \prgname{ps2eps} 程序代替原文中的第三方程序 \prgname{epstool}。
+		——译注}：
+\begin{lstlisting}[language=bash]
+latex GraphicFrag00.tex
+dvips -E GraphicFrag00
+ps2eps -B GraphicFrag00.ps
+epstopdf GraphicFrag00.eps
+\end{lstlisting}
+	第一行命令创建文件 \file{GraphicFrag00.dvi}。
+	第二行命令创建 \file{GraphicFrag00.ps}。
+	第三行命令为该 \file{ps} 文件计算 BoundingBox，并将BoundingBox和 \file{GraphicFrag00.ps} 的内容导入 \file{GraphicFrag00.eps}。
+	最后一行命令将 \file{GraphicFrag00.eps} 转成 \file{pdf} 格式。
+	\item 重复第二步的内容依次处理 \file{GraphicFrag01.tex} 等等。
+	\item 在原来的 \LaTeX{} 文件中使用 \cmd{includegraphics} 命令导入生成的 \file{pdf} 图像
+\begin{verbatim}
+GraphicFrag00.pdf
+GraphicFrag01.pdf
+...
+\end{verbatim}
+	\item 使用 \prgname{pdflatex} 处理 \LaTeX{} 文件。
 \end{enumerate}
-如果你发现~\textsf{PSfrag}~或~\texttt{Xfig}~对此有另外的解决办法，
-请和~\textsf{PSfrag}~的维护者们联系（\href{mailto:psfrag@rascals.stanford.edu}%
-{psfrag@rascals.stanford.edu}）。
+
 
 \subsection{Overpic 宏包}\label{ssec:overpic}
 
@@ -1276,7 +1271,7 @@ convert file2.gif 'eps:-'
 \begin{overpic}[scale=1.2]{mass}
   \put(25,8){\fcolorbox{black}{white}{基础部分}}
   \put(31,64){\colorbox{white}{$q_1$}}
-  \put(65,65){\colorbox{white}{\shortstack{水力 \\ 驱动}}}
+  \put(65,65){\colorbox{white}{\shortstack{水力 \\ 驱动器}}}
 \end{overpic}
 \end{lstlisting}
 结果如图~\ref{fig:overpic:psfrag}所示。
@@ -1286,7 +1281,7 @@ convert file2.gif 'eps:-'
 	\begin{overpic}[scale=1.2]{mass}
 	  \put(25,8){\fcolorbox{black}{white}{基础部分}}
 	  \put(31,64){\colorbox{white}{$q_1$}}
-	  \put(65,65){\colorbox{white}{\shortstack{水力 \\ 驱动}}}
+	  \put(65,65){\colorbox{white}{\shortstack{水力 \\ 驱动器}}}
 	\end{overpic}
 	\captionof{figure}{Overpic example}\label{fig:overpic:psfrag}
 \end{center}
@@ -1352,12 +1347,6 @@ convert file2.gif 'eps:-'
 
 本节介绍如何定义PostScript命令来完成一幅 \file{eps} 矢量图的绘图指令。
 这一方法不适合于那些包含位图的 \file{eps} 图形。
-
-To convert the eps graphics into a PostScript command, the eps file must be
-broken into two files, one which defines the PostScript dictionary and the graphics
-commands, and another which includes the header information and the uses the
-previously-defined PostScript command. For example, an eps file created by Xfig
-has the form
 
 为了将 \file{eps} 图形转化为PostScript命令，
 必须将 \file{eps} 图形文件分为两个文件。

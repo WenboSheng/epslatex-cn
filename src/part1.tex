@@ -37,11 +37,11 @@
 类似 \pkg{psfig} 的句法，
 \pkg{graphicx} 版的 \cmd{includegraphis} 采用“命名参数（named arguments）”。
 这使用起来比较简单方便，却违反了 \LaTeX{} 关于可选参数放置位置的语法指南方针。
-作为折中方案，就有了两种版本的 \cmd{includegraphis}。
+作为折中方案，就有了两种版本的 \cmd{includegraphics}。
 其中，\pkg{graphics} 的版本遵从 \LaTeX{} 的语法规则，
 而\pkg{graphicx} 的版本则采用更为简便的命名参数。
-\pkg{graphicx} 版本的 \cmd{includegraphis} 支持图形的缩放和旋转，
-而 \pkg{graphics} 版本的 \cmd{includegraphis} 则必须被置于 \cmd{scalebox} 或 \cmd{rotatebox} 才能达到同样的效果。
+\pkg{graphicx} 版本的 \cmd{includegraphics} 支持图形的缩放和旋转，
+而 \pkg{graphics} 版本的 \cmd{includegraphics} 则必须被置于 \cmd{scalebox} 或 \cmd{rotatebox} 才能达到同样的效果。
 
 本文档使用 \pkg{graphicx} 宏包，因为它的句法比 \pkg{graphics} 宏包更加简便易用。
 其实这两个宏包具有相同的功能，本文档中的例子同样可以用 \pkg{graphics} 宏包完成，
@@ -140,7 +140,6 @@ $\text{整体高度} = \text{高度} + \text{深度}$。
 \end{figure}
 
 \section{Encapsulated PostScript}\label{sec:eps}
-PostScript 语言描述图像和文本。
 
 PostScript 语言能够用来描述图形和文本。
 它既可在传统的PostScript （\file{ps}）文件中来描述多页文档，也用于 Encapsulated PostScript  （\file{eps}）文件中来描述插入文档的图像。

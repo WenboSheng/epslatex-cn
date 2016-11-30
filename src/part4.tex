@@ -48,7 +48,7 @@
 	
 	\item \LaTeX{} 允许图形浮动到当前页的顶部，
 	这样会使图形在引述它的文本前出现。
-	不喜欢这样做的用户可以使用~\pkgi{flafter}宏包。
+	不喜欢这样做的用户可以使用~\pkgi{flafter} 宏包。
 	无需使用特殊的命令，只要简单地调入该宏包 \cmdM{usepackage}{flafter} 即可。
 	
 	\item 要确保图形的浮动不超过某一特定点，可调入 \pkgi{placeins} 宏包，
@@ -81,8 +81,8 @@
 	\cmd{label} 命令必须紧接着 \cmd{caption} 命令给出。
 	如果放在之前的话，那么 \cmd{ref} 会引用上一个可引用对象（通常是所在章节或者是之前的图形）。
 	
-	\item 如果一\env{figure} 图形环境中没有使用 \cmd{caption} 命令，
-	那么它将是一个没有编号的浮动图形。
+	\item 如果 \env{figure} 图形环境中没有使用 \cmd{caption} 命令，
+	那么就是一个没有编号的浮动图形。
 	
 	\item 如果一图形环境中使用了多个 \cmd{caption} 命令，
 	那么它将生成多个一起浮动的图形。
@@ -101,7 +101,7 @@
 	\item \env{figure} 图形环境只能用于段落外模式，不能在段落中使用。
 	因此不能放在任何的盒子中（例如 \cmd{parbox} 或 \env{minipage}）。
 	
-	\item 若一 \env{figure} 图形环境被置于一正文段落中，例如
+	\item 若 \env{figure} 图形环境被置于正文段落中，例如
 \begin{lstlisting}
 ....text text text text text text 
 \begin{figure} 
@@ -119,7 +119,7 @@ text text text text text text...
 \end{lstlisting}
 更为方便的做法是在文档的导言区定义如下命令
 \begin{lstlisting}
-\newcommand\Figpage[1]{第~\pageref*{#1} 页的图~\ref*{#1}
+\newcommand\Figpage[1]{第~\pageref*{#1} 页的图~\ref*{#1}}
 \end{lstlisting}
 然后引用代码就可以用 \cmdM{Figpage}{fig:graph} 来简化。
 
@@ -156,7 +156,8 @@ text text text text text text...
 由于图形编号数字相对较小，会给点击超链接带来困难，
 因此，如下定义的命令会让点击超链接更加容易
 \begin{lstlisting}
-\newcommand\Figlink[1]{\hyperref[#1]{第~\pageref{fig:graph} 页的图~\ref{fig:graph}}
+\newcommand\Figlink[1]{%
+	\hyperref[#1]{第~\pageref{fig:graph} 页的图~\ref{fig:graph}}
 \end{lstlisting}
 使用 \cmd{Figlink} 命令会将“图~17”这样的引用整个地放在超链接里面。
 
@@ -383,7 +384,7 @@ text text text text text text...
 \begin{table}[htp]
 	\centering\kaishu
 	\caption{浮动位置计数器}\label{tab:floatcounter}
-	\begin{tabular}{>{\ttfamily}l P{0.7\textwidth} }
+	\begin{tabular}{>{\ttfamily}l p{0.7\textwidth} }
 		\toprule
 		topnumber & 可以位于文本页顶部的浮动体的最大数目（缺省值为 2）。\\
 		\hline
@@ -511,14 +512,14 @@ text text text text text text...
 	\centering
 	\caption{Suppressfloats 的选项}\label{tab:suppressfloat}
 	
-	\begin{tabular}{>{\ttfamily}l P{0.7\textwidth}}
+	\begin{tabular}{>{\ttfamily}l p{0.7\textwidth}}
 		\toprule
 		\cmd{suppressfloats}\opt{[t]} & 阻止当前页的顶部出现其它的浮动体。 \\
 		\hline
 		\cmd{suppressfloats}\opt{[b]} & 阻止当前页的底部出现其它的浮动体。 \\
 		\hline
 		\cmd{suppressfloats} & 同时阻止当前页的顶部和底部出现其它的浮动体。 \\
-		\cline{2-2}
+		\bottomrule
 	\end{tabular}
 \end{table}
 
@@ -1059,7 +1060,7 @@ text text text text text text...
 \multicolumn{2}{l}{\cmdM{clearcaptionsetup}{\metacmd{float type}}}
 & 更改标题因子为默认值 \\
 例 & \cmdM{clearcaptionsetup}{figure} & 重置图形标题选项为默认值 \\
-& \cmdM{clearcaptionsetup}{table} & 重置表格标题选项为默认值
+& \cmdM{clearcaptionsetup}{table} & 重置表格标题选项为默认值 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1254,7 +1255,7 @@ text text text text text text...
 
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics{graphic2}
+	\usebox{\boxgraphictwo}
 	\captionsetup{font={default,Large,bf}}
 	\captionof{figure}{This is Caption Font Example \#1}
 	\label{fig:caption-font-ex1}
@@ -1283,7 +1284,7 @@ text text text text text text...
 
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics{graphic2}
+	\usebox{\boxgraphictwo}
 	\captionsetup{font=default, textfont={scriptsize,sf}}
 	\captionof{figure}{This is Caption Font Example \#2}
 	\label{fig:caption-font-ex2}
@@ -1305,7 +1306,7 @@ text text text text text text...
 
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics{graphic2}
+	\usebox{\boxgraphictwo}
 	\captionsetup{font={default,Large}, labelfont=bf, textfont=sl}
 	\captionof{figure}{This is Caption Font Example \#3}
 	\label{fig:caption-font-ex3}
@@ -1343,7 +1344,7 @@ text text text text text text...
 
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics{graphic2}
+	\usebox{\boxgraphictwo}
 	\captionsetup{skip=1cm}
 	\captionof{figure}{Vertical Spacing Example \#1}
 	\label{fig:caption-skip-ex1}
@@ -1359,10 +1360,7 @@ text text text text text text...
 \caption{Vertical Spacing Example \#2}
 \end{lstlisting}
 如表~\ref{tab:caption-skip-ex2} 所示，标题下方的间距为1厘米\footnote{
-	实际上该设置等价于
-	\begin{lstlisting}
-	\captionsetup{skip=1cm}
-	\end{lstlisting}
+	实际上该设置等价于 \cmdM{captionsetup}{skip=1cm}。
 	这是因为当在 \env{tabular} 表格环境或者 \cmd{includegraphics} 插入命令之前使用 \cmd{caption} 时，
 	默认选项 \opt{position=auto} 会自动判断为 \opt{top}。}。
 
@@ -1414,7 +1412,7 @@ text text text text text text...
 		a & b \\ \hline
 		c & d \\ \hline
 	\end{tabular}\\
-	\includegraphics{graphic2}
+	\usebox{\boxgraphictwo}
 	\captionof{figure}{Figure for Vertical Spacing Example \#3}
 	\label{fig:caption-skip-ex3}
 \end{minipage}
@@ -1435,7 +1433,7 @@ text text text text text text...
 
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics{graphic2}
+	\usebox{\boxgraphictwo}
 	\captionsetup{labelformat=simple}
 	\captionof{figure}{This is Caption Label Example \#1}
 	\label{fig:caption-label-ex1}
@@ -1454,7 +1452,7 @@ text text text text text text...
 
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics{graphic2}
+	\usebox{\boxgraphictwo}
 	\captionsetup{labelformat=parens}
 	\captionof{figure}{This is Caption Label Example \#2}
 	\label{fig:caption-label-ex2}
@@ -1473,7 +1471,7 @@ text text text text text text...
 
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics{graphic2}
+	\usebox{\boxgraphictwo}
 	\captionsetup{labelformat=empty, labelsep=none}
 	\captionof{figure}{This is Caption Label Example \#3}
 	\label{fig:caption-label-ex3}
@@ -1489,10 +1487,9 @@ text text text text text text...
 \end{lstlisting}
 如图~\ref{fig:caption-label-ex4} 所示，标题分隔符由默认的冒号改为句点。
 
-
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics{graphic2}
+	\usebox{\boxgraphictwo}
 	\captionsetup{labelformat=default, labelsep=period}
 	\captionof{figure}{This is Caption Label Example \#4}
 	\label{fig:caption-label-ex4}
@@ -1511,7 +1508,7 @@ text text text text text text...
 
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics{graphic2}
+	\usebox{\boxgraphictwo}
 	\captionsetup{labelformat=default, labelsep=newline}
 	\captionof{figure}{This is Caption Label Example \#5}
 	\label{fig:caption-label-ex5}
@@ -1531,7 +1528,7 @@ text text text text text text...
 
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics{graphic2}
+	\usebox{\boxgraphictwo}
 	\captionsetup{width=3in}
 	\captionof{figure}{This is an example of customizing the caption width}
 	\label{fig:caption-format-ex1}
@@ -1585,7 +1582,7 @@ Caption with default format and raggedleft justification.}
 \begin{figure}[tp]
 	\centering
 	\begin{minipage}{0.45\linewidth}
-		\includegraphics{graphic2}
+		\usebox{\boxgraphictwo}
 		\captionsetup{format=default,justification=justified}
 		\caption{Caption with default format and justified justification.
 			Caption with default format and justified justification.
@@ -1593,7 +1590,7 @@ Caption with default format and raggedleft justification.}
 		\label{fig:caption-format-ex2-justified}
 	\end{minipage}\\[1em]
 	\begin{minipage}{0.45\linewidth}
-		\includegraphics{graphic2}
+		\usebox{\boxgraphictwo}
 		\captionsetup{format=default,justification=centering}
 		\caption{Caption with default format and centering justification.
 			Caption with default format and centering justification.
@@ -1601,7 +1598,7 @@ Caption with default format and raggedleft justification.}
 		\label{fig:caption-format-ex2-centering}
 	\end{minipage}\hfill
 	\begin{minipage}{0.45\linewidth}
-		\includegraphics{graphic2}
+		\usebox{\boxgraphictwo}
 		\captionsetup{format=default,justification=centerlast}
 		\caption{Caption with default format and centerlast justification.
 			Caption with default format and centerlast justification.
@@ -1609,7 +1606,7 @@ Caption with default format and raggedleft justification.}
 		\label{fig:caption-format-ex2-centerlast}
 	\end{minipage}\\[1em]
 	\begin{minipage}{0.45\linewidth}
-		\includegraphics{graphic2}
+		\usebox{\boxgraphictwo}
 		\captionsetup{format=default,justification=centerfirst}
 		\caption{Caption with default format and centerfirst justification.
 			Caption with default format and centerfirst justification.
@@ -1617,7 +1614,7 @@ Caption with default format and raggedleft justification.}
 		\label{fig:caption-format-ex2-centerfirst}
 	\end{minipage}\hfill
 	\begin{minipage}{0.45\linewidth}
-		\includegraphics{graphic2}
+		\usebox{\boxgraphictwo}
 		\captionsetup{format=default,justification=raggedright}
 		\caption{Caption with default format and raggedright justification.
 			Caption with default format and raggedright justification.
@@ -1625,7 +1622,7 @@ Caption with default format and raggedleft justification.}
 		\label{fig:caption-format-ex2-raggedright}
 	\end{minipage}\\[1em]
 	\begin{minipage}{0.45\linewidth}
-		\includegraphics{graphic2}
+		\usebox{\boxgraphictwo}
 		\captionsetup{format=default,justification=RaggedRight}
 		\caption{Caption with default format and RaggedRight justification.
 			Caption with default format and RaggedRight justification.
@@ -1633,7 +1630,7 @@ Caption with default format and raggedleft justification.}
 		\label{fig:caption-format-ex2-RaggedRight}
 	\end{minipage}\hfill
 	\begin{minipage}{0.45\linewidth}
-		\includegraphics{graphic2}
+		\usebox{\boxgraphictwo}
 		\captionsetup{format=default,justification=raggedleft}
 		\caption{Caption with default format and raggedleft justification.
 			Caption with default format and raggedleft justification.
@@ -1691,7 +1688,7 @@ Caption with hang format and raggedleft justification.}
 \begin{figure}[tp]
 	\centering
 	\begin{minipage}{0.45\linewidth}
-		\includegraphics{graphic2}
+		\usebox{\boxgraphictwo}
 		\captionsetup{format=hang,indention=0pt,justification=justified}
 		\caption{Caption with hang format and justified justification.
 			Caption with hang format and justified justification.
@@ -1699,7 +1696,7 @@ Caption with hang format and raggedleft justification.}
 		\label{fig:caption-format-ex3-justified}
 	\end{minipage}\\[1em]
 	\begin{minipage}{0.45\linewidth}
-		\includegraphics{graphic2}
+		\usebox{\boxgraphictwo}
 		\captionsetup{format=hang,indention=0pt,justification=justified}
 		\caption{Caption with hang format and justified justification.
 			Caption with hang format and justified justification.
@@ -1707,7 +1704,7 @@ Caption with hang format and raggedleft justification.}
 		\label{fig:caption-format-ex3-centering}
 	\end{minipage}\hfill
 	\begin{minipage}{0.45\linewidth}
-		\includegraphics{graphic2}
+		\usebox{\boxgraphictwo}
 		\captionsetup{format=hang,indention=0pt,justification=centerlast}
 		\caption{Caption with hang format and centerlast justification.
 			Caption with hang format and centerlast justification.
@@ -1715,7 +1712,7 @@ Caption with hang format and raggedleft justification.}
 		\label{fig:caption-format-ex3-centerlast}
 	\end{minipage}\\[1em]
 	\begin{minipage}{0.45\linewidth}
-		\includegraphics{graphic2}
+		\usebox{\boxgraphictwo}
 		\captionsetup{format=hang,indention=0pt,justification=centerfirst}
 		\caption{Caption with hang format and centerfirst justification.
 			Caption with hang format and centerfirst justification.
@@ -1723,7 +1720,7 @@ Caption with hang format and raggedleft justification.}
 		\label{fig:caption-format-ex3-centerfirst}
 	\end{minipage}\hfill
 	\begin{minipage}{0.45\linewidth}
-		\includegraphics{graphic2}
+		\usebox{\boxgraphictwo}
 		\captionsetup{format=hang,indention=0pt,justification=raggedright}
 		\caption{Caption with hang format and raggedright justification.
 			Caption with hang format and raggedright justification.
@@ -1731,7 +1728,7 @@ Caption with hang format and raggedleft justification.}
 		\label{fig:caption-format-ex3-raggedright}
 	\end{minipage}\\[1em]
 	\begin{minipage}{0.45\linewidth}
-		\includegraphics{graphic2}
+		\usebox{\boxgraphictwo}
 		\captionsetup{format=hang,indention=0pt,justification=RaggedRight}
 		\caption{Caption with hang format and RaggedRight justification.
 			Caption with hang format and RaggedRight justification.
@@ -1739,7 +1736,7 @@ Caption with hang format and raggedleft justification.}
 		\label{fig:caption-format-ex3-RaggedRight}
 	\end{minipage}\hfill
 	\begin{minipage}{0.45\linewidth}
-		\includegraphics{graphic2}
+		\usebox{\boxgraphictwo}
 		\captionsetup{format=hang,indention=0pt,justification=raggedleft}
 		\caption{Caption with hang format and raggedleft justification.
 			Caption with hang format and raggedleft justification.
@@ -1778,7 +1775,7 @@ singlelinecheck=true}
 例如，在导言区中使用如下 \cmd{DeclareCaptionStyle} 命令
 \begin{lstlisting}
 \DeclareCaptionStyle{BigLeft}{style=default, labelsep=period,
-font=Large, labelfont=bold,
+font=Large, labelfont=bf,
 justification=RaggedRight,
 singlelinecheck=false}
 \end{lstlisting}
@@ -1791,7 +1788,7 @@ singlelinecheck=false}
 
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics{graphic2}
+	\usebox{\boxgraphictwo}
 	\captionsetup{style=BigLeft}
 	\captionof{figure}{This Caption uses BigLeft Style}
 	\label{fig:caption-style-BigLeft}
@@ -1828,7 +1825,7 @@ singlelinecheck=false}
 
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics{graphic2}
+	\usebox{\boxgraphictwo}
 	\captionsetup{font=BigAndBold}
 	\captionof{figure}{This Caption uses a Custom Font}
 	\label{fig:caption-font-BigAndBold}
@@ -1864,7 +1861,7 @@ singlelinecheck=false}
 
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics{graphic2}
+	\usebox{\boxgraphictwo}
 	\captionsetup{labelformat=hash}
 	\captionof{figure}{This Caption has a Custom Label Format}
 	\label{fig:caption-labelformat-hash}
@@ -1889,10 +1886,10 @@ singlelinecheck=false}
 
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics{graphic2}
+	\usebox{\boxgraphictwo}
 	\captionsetup{labelsep=arrow}
 	\captionof{figure}{This Caption has a Custom Label Separator}
-	\label{fig:caption-labelformat-hash}
+	\label{fig:caption-labelformat-arrow}
 \end{minipage}
 
 \vskip2em\hrule
@@ -1917,8 +1914,8 @@ singlelinecheck=false}
 
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics{graphic2}
-	\captionsetup{format=reverse,labelsep=empty}
+	\usebox{\boxgraphictwo}
+	\captionsetup{format=reverse,labelsep=none}
 	\captionof{figure}{This Caption has a Custom Format}
 	\label{fig:caption-format-reverse}
 \end{minipage}
@@ -1963,7 +1960,7 @@ This is the text after the figure.
 可得到一幅不浮动的图形。对于不浮动的图形，需要注意下面几点：
 \begin{itemize}
 	\item 需要使用 \env{minipage} 小页环境来防止在图形中出现分页的情况。
-	\item 命令 \cmdM{\cmd{}}{\cmd{intextsep}} 开始新的一行并在图形的前后加上垂直的空白。
+	\item 命令 \cmdO{\cmd{}}{\cmd{intextsep}} 开始新的一行并在图形的前后加上垂直的空白。
 	\cmd{intextsep}~（见第~\ref{ssec:vspace}~节）可以使用任意大小的空白，
 	目的是使不浮动的图形具有与浮动图形相同的上下间距。
 	\item 正常情况下，浮动图形是按照它们在 \LaTeX{} 源文件中的顺序一一被放置的。
@@ -2052,7 +2049,7 @@ This is the text after the figure.
 所以无法直接得到浮动的边注图形。
 这时，可以用第~\ref{sec:nonfloat}~节定义的 \cmd{captionof} 命令来构造非浮动的边注图形。
 \marginpar{\centering
-	\includegraphics[width=\marginparwidth]{graphic}%
+	\resizebox{\marginparwidth}{!}{\usebox{\boxgraphic}}%
 	\captionof{figure}{这是边注图形}
 	\label{fig:marginal:fig} }
 例如，图~\ref{fig:marginal:fig} 就由下面的命令来得到：
@@ -2240,7 +2237,7 @@ This is the text after the figure.
 \begin{landscape} 
 	\begin{figure} 
 		\centering
-		\includegraphics[width=4in]{graphic}
+		\resizebox{4in}{!}{\usebox{\boxgraphic}}
 		\caption{Landscape Figure}\label{fig:landscape}
 	\end{figure} 
 \end{landscape}
@@ -2261,7 +2258,7 @@ This is the text after the figure.
 
 \begin{sidewaysfigure}
 	\centering
-	\includegraphics[width=4in]{graphic}
+	\resizebox{4in}{!}{\usebox{\boxgraphic}}
 	\caption{Sidewaysfigure Figure}\label{fig:sidewaysfigure}
 \end{sidewaysfigure}
 
@@ -2314,7 +2311,8 @@ This is the text after the figure.
 \begin{figure}
 	\centering
 	\begin{minipage}[c]{1in}
-		\hfill\includegraphics[width=2in,angle=90]{graphic}
+		\hfill
+		\rotatebox{90}{\resizebox{2in}{!}{\usebox{\boxgraphic}}}
 	\end{minipage}%
 	\hspace{0.2in}%
 	\begin{minipage}[c]{0.5in}
@@ -2352,7 +2350,7 @@ This is the text after the figure.
 会生成图~\ref{fig:sidecap}。
 
 \begin{SCfigure} 
-	\includegraphics[width=3in]{graphic}
+	\resizebox{3in}{!}{\usebox{\boxgraphic}}
 	\caption{This is a SCfigure}
 	\label{fig:sidecap}
 \end{SCfigure}
@@ -2414,7 +2412,7 @@ This is the text after the figure.
 	\end{minipage}%
 	\begin{minipage}[c]{.45\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{graphic}
+		\resizebox{\linewidth}{!}{\usebox{\boxgraphic}}
 	\end{minipage}
 \end{figure}
 
@@ -2758,17 +2756,6 @@ This is the text after the figure.
 	\end{tabular}
 \end{table}
 
-
-Like \fbox, the separation between these boxes and their contents is controlled
-by the L
-A T E X length \fboxsep. The length \shadowsize is set with the \setlength
-command, as was done for \fboxrule and \fboxsep in Section 27.3 on Page 101.
-The lines for \ovalbox and \Ovalbox have thicknesses corresponding to the picture
-environment’s \thicklines and \thinlines, which are not lengths and thus can-
-not be changed with the \setlength command. The values of \thicklines and
-\thinlines depend on the size and style of the current font. Typical values are
-0.8 pt for \thicklines and 0.4 pt for \thinlines. For example, the commands
-
 如同 \cmd{fbox} 命令一样，这些盒子命令中的内容与边框间距由 \LaTeX{} 长度 \cmd{fboxsep} 控制。
 与第~\ref{ssec:customizefbox} 节中的 \cmd{fboxrule} 和 \cmd{fboxsep} 相同，
 长度 \cmd{shadowsize} 也可用 \cmd{setlength} 命令来设定。
@@ -2797,8 +2784,6 @@ not be changed with the \setlength command. The values of \thicklines and
 			\label{fig:boxed_fancy}
 	\end{minipage} }
 \end{figure}
-
-
 
 
 \endinput

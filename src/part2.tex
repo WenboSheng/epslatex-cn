@@ -6,8 +6,8 @@
 
 \section{图像文件加载}\label{sec:graphicsinclusion}
 
-导入图像需要使用 \pkg{graphicx} 宏包的\cmd{includegraphics} 命令，语法为
-\begin{lstlisting}[language=LaTeX,frame=shadowbox]
+导入图像需要使用 \pkg{graphicx} 宏包的 \cmd{includegraphics} 命令，语法为
+\begin{lstlisting}[frame=shadowbox]
 \includegraphics[选项]{文件}
 \end{lstlisting}
 这里\emph{选项} 在表~\ref{tab:opt}、\ref{tab:cropopt}、\ref{tab:boolopt} 中列出。
@@ -42,12 +42,12 @@
 \subsection{DVIPS 模式下图像加载}
 \prgname{dvips} 模式下支持最好的图像格式是 \file{eps}。
 当使用 \prgname{latex} 编译文件时，下面的命令
-\begin{lstlisting}[language=LaTeX]
+\begin{lstlisting}
 \includegraphics{file.eps}
 \end{lstlisting}
 会从 \file{file.eps} 文件中按照自然大小导入图像。
 如果文件名没有扩展名，
-\begin{lstlisting}[language=LaTeX]
+\begin{lstlisting}
 \includegraphics{file}
 \end{lstlisting}
 那么 \cmd{includegraphics} 会按照 \cmd{DeclareGraphicsExtensions} 扩展名列表中自动加上扩展名
@@ -56,7 +56,7 @@
 \subsection[pdfLaTeX 模式下的图像加载]{\pdfLaTeX{} 模式下的图像加载}
 \pdfTeX{} 支持直接导入 \file{pdf}、\file{png}、\file{jpeg} 和 MetaPost 图像。
 当使用 \prgname{pdflatex} 编译时，下面的命令
-\begin{lstlisting}[language=LaTeX]
+\begin{lstlisting}
 \includegraphics{file.pdf}
 \includegraphics{file.png}
 \includegraphics{file.jpg}
@@ -67,7 +67,7 @@
 \file{jpeg} 文件 \file{file.jpg}
 以及 MetaPost 文件 \file{file.mps}。
 如果文件名没有扩展名
-\begin{lstlisting}[language=LaTeX]
+\begin{lstlisting}
 \includegraphics{file.eps}
 \end{lstlisting}
 那么 \cmd{includegraphics} 会按照 \cmd{DeclareGraphicsExtensions} 扩展名列表中自动加上扩展名
@@ -85,10 +85,7 @@
 使用如下步骤会调整这些，这样一份文档可以同时由 \LaTeX{} 和 \pdfLaTeX{} 编译。
 \begin{enumerate}
 	\item 对于每一份要导入的图像都创建两个副本\footnote{
-		有时使用 \prgname{PurifyEPS} （见 \pageref{ssec:purifyeps} 页的第~\ref{ssec:purifyeps} 节） 可以创建一个文件并可以同时供 \LaTeX{} 和 \pdfLaTeX{} 使用。
-		 Sometimes PurifyEPS (see Section 5.5 on Page 17) can be used to create a single file that can
-		 be used by both L
-		 A T E X and pdfL A T E X.}：
+		有时使用 \prgname{PurifyEPS} （见 \pageref{ssec:purifyeps} 页的第~\ref{ssec:purifyeps} 节） 可以创建一个文件并可以同时供 \LaTeX{} 和 \pdfLaTeX{} 使用。}：
 	\begin{enumerate}
 		\item 一份 \file{eps} 版本，当使用 \prgname{latex} 编译时会导入。
 		\item 一份 \file{png}、\file{pdf}、\file{jpeg} 或者 MetaPost 版本，
@@ -100,7 +97,7 @@
 	
 	\item 当使用 \cmd{includegraphics} 命令插图时，
 	不要指定扩展名。例如
-\begin{lstlisting}[language=LaTeX]
+\begin{lstlisting}
 \includegraphics{graphic}
 \end{lstlisting}
 	定义在 \file{dvips.def} 中的默认扩展名列表会使得 \LaTeX{} 导入图像 \file{eps} 版本，
@@ -123,7 +120,7 @@
 
 例如，为了精简扩展名列表（见第~\ref{ssec:deextension} 节），
 可以用 \cmd{ifpdf} 命令来定制
-\begin{lstlisting}[language=LaTeX]
+\begin{lstlisting}
 \usepackage{ifpdf}
 ...
 \ifpdf
@@ -135,7 +132,7 @@
 
 如果用户想要基于条件代码来使用不同的 \cmd{documentclass} 选项，
 使用如下代码可以在 \cmd{documentclass} 之前定义 \cmd{ifpdf}
-\begin{lstlisting}[language=LaTeX]
+\begin{lstlisting}
 \RequirePackage{ifpdf}
 \ifpdf
 \documentclass[pdftex]{article}
@@ -210,8 +207,8 @@
 \end{lstlisting}
 会生成如下结果
 \begin{center}
-	\includegraphics[angle=90,totalheight=1cm]{graphic}
-	\includegraphics[totalheight=1cm,angle=90]{graphic}
+	\resizebox*{!}{1cm}{\rotatebox{90}{\usebox{\boxgraphic}}}
+	\rotatebox{90}{\resizebox*{!}{1cm}{\usebox{\boxgraphic}}}
 \end{center}
 第一个盒子是先旋转了90度，然后缩放使得整体高度为1厘米。
 第二个盒子先缩放使得整体高度为1厘米，然后再旋转90度。
@@ -303,7 +300,7 @@
 \newcommand{\HR}{\rule{1em}{0.4pt}}
 \end{lstlisting}
 
-\ifpdf\else %因为使用pdflatex不支持clip.所以省去。
+\ifxetex\relax\else\ifpdf\relax\else %因为使用pdflatex不支持clip.所以省去。
 在下面的几个例子中可以看到使用\opt{bb,clip,viewport} 和\opt{trim}的效果。
 
 \hspace{-1cm}\begin{minipage}[c]{.5\textwidth}
@@ -358,50 +355,52 @@
 	\end{Verbatim}
 	\par\vspace{0pt}
 \end{minipage}
-\fi
+\fi\fi
 
 在下面的几个例子中，可以比较以下使用 \opt{scale,width,height,angle} 以及 \opt{keepaspectratio} 选项及其不同的顺序所得到的不同效果。
 
 \begin{minipage}[t]{.45\textwidth}
 	\vspace{0pt}
 	左\HR\fbox{%
-		\includegraphics[scale=.5]{w}}\HR 右
+		\scalebox{0.5}{\usebox{\boxw}}}\HR 右
 \end{minipage}%
-\hspace{-.5cm}\begin{minipage}[t]{.5\textwidth}
+\hspace{-.5cm}
+\begin{minipage}[t]{.5\textwidth}
 	\vspace{0pt}
-	\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例一},labelposition=topline]
-	左\HR\fbox{%
-	\includegraphics
-	[scale=.5]{w.eps}%
-	\HR 右
-	\end{Verbatim}
+\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例一},labelposition=topline]
+左\HR\fbox{%
+\includegraphics
+[scale=.5]{w.eps}%
+\HR 右
+\end{Verbatim}
 \end{minipage}
 
 \begin{minipage}[c]{.45\textwidth}
 	左\HR\fbox{%
-		\includegraphics[width=10mm]{w}}\HR 右
+		\resizebox{10mm}{!}{\usebox{\boxw}}}\HR 右
 \end{minipage}%
-\hspace{-.5cm}\begin{minipage}[c]{.5\textwidth}
-	\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例二},labelposition=topline]
-	左\HR\fbox{%
-	\includegraphics%
-	[width=10mm]{w.eps}%
-	\HR 右
-	\end{Verbatim}
+\hspace{-.5cm}
+\begin{minipage}[c]{.5\textwidth}
+\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例二},labelposition=topline]
+左\HR\fbox{%
+\includegraphics%
+[width=10mm]{w.eps}%
+\HR 右
+\end{Verbatim}
 \end{minipage}
 
 \begin{minipage}[c]{.45\textwidth}
 	左\HR\fbox{%
-		\includegraphics[height=20mm,width=30mm]%
-		{w}}\HR 右
+		\resizebox{20mm}{30mm}{\usebox{\boxw}}}\HR 右
 \end{minipage}%
-\hspace{-.5cm}\begin{minipage}[c]{.5\textwidth}
-	\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例三},labelposition=topline]
-	左\HR\fbox{%
-	\includegraphics
-	[height=20mm,width=30mm]%
-	{w.eps}}\HR 右
-	\end{Verbatim}
+\hspace{-.5cm}
+\begin{minipage}[c]{.5\textwidth}
+\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例三},labelposition=topline]
+左\HR\fbox{%
+\includegraphics
+[height=20mm,width=30mm]%
+{w.eps}}\HR 右
+\end{Verbatim}
 \end{minipage}
 
 \begin{minipage}[c]{.45\textwidth}
@@ -409,85 +408,89 @@
 		\includegraphics[height=20mm,width=30mm,%
 		keepaspectratio]{w}}\HR 右
 \end{minipage}%
-\hspace{-.5cm}\begin{minipage}[c]{.5\textwidth}
-	\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例四},labelposition=topline]
-	左\HR\fbox{%
-	\includegraphics
-	[height=20mm,width=30mm,%
-	keepaspectratio]{w.eps}}%
-	\HR 右
-	\end{Verbatim}
+\hspace{-.5cm}
+\begin{minipage}[c]{.5\textwidth}
+\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例四},labelposition=topline]
+左\HR\fbox{%
+\includegraphics
+[height=20mm,width=30mm,%
+keepaspectratio]{w.eps}}%
+\HR 右
+\end{Verbatim}
 \end{minipage}
 
 \begin{minipage}[c]{.45\textwidth}
 	左\HR\fbox{%
-		\includegraphics[angle=-45]{w}}\HR 右
+		\rotatebox{-45}{\usebox{\boxw}}}\HR 右
 \end{minipage}%
-\hspace{-.5cm}\begin{minipage}[c]{.5\textwidth}
-	\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例五},labelposition=topline]
-	左\HR\fbox{%
-	\includegraphics
-	[angle=-45]{w.eps}}%
-	\HR 右
-	\end{Verbatim}
+\hspace{-.5cm}
+\begin{minipage}[c]{.5\textwidth}
+\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例五},labelposition=topline]
+左\HR\fbox{%
+\includegraphics
+[angle=-45]{w.eps}}%
+\HR 右
+\end{Verbatim}
 \end{minipage}
 
 \begin{minipage}[c]{.45\textwidth}
 	左\HR\fbox{%
-		\includegraphics[angle=-45,width=30mm]%
-		{w}}\HR 右
+		\resizebox{30mm}{!}{\rotatebox{-45}{\usebox{\boxw}}}}\HR 右
 \end{minipage}%
-\hspace{-.5cm}\begin{minipage}[c]{.5\textwidth}
-	\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例六},labelposition=topline]
-	左\HR\fbox{%
-	\includegraphics
-	[angle=-45,width=30mm]%
-	{w.eps}}\HR 右
-	\end{Verbatim}
+\hspace{-.5cm}
+\begin{minipage}[c]{.5\textwidth}
+\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例六},labelposition=topline]
+左\HR\fbox{%
+\includegraphics
+[angle=-45,width=30mm]%
+{w.eps}}\HR 右
+\end{Verbatim}
 \end{minipage}
 
-\hspace{-1cm}\begin{minipage}[c]{.45\textwidth}
+\hspace{-1cm}
+\begin{minipage}[c]{.45\textwidth}
 	左\HR\fbox{%
-		\includegraphics[width=30mm,angle=-45]%
-		{w}}\HR 右
+		\rotatebox{-45}{\resizebox{30mm}{!}{\usebox{\boxw}}}}\HR 右
 \end{minipage}%
 \begin{minipage}[c]{.5\textwidth}
-	\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例七},labelposition=topline]
-	左\HR\fbox{%
-	\includegraphics
-	[width=30mm,angle=-45]%
-	{w.eps}}\HR 右
-	\end{Verbatim}
+\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例七},labelposition=topline]
+左\HR\fbox{%
+\includegraphics
+[width=30mm,angle=-45]%
+{w.eps}}\HR 右
+\end{Verbatim}
 \end{minipage}
 
 \begin{minipage}[c]{.45\textwidth}
 	左\HR\fbox{%
-		\includegraphics[angle=-60,totalheight=15mm]{w}}%
+		\resizebox*{!}{15mm}{\rotatebox{-60}{\usebox{\boxw}}}}%
 	\HR 右
 \end{minipage}%
-\hspace{-.5cm}\begin{minipage}[c]{.5\textwidth}
-	\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例八},labelposition=topline]
-	左\HR\fbox{%
-	\includegraphics
-	[angle=-60,totalheight=15mm]%
-	{w.eps}}%
-	\HR 右
-	\end{Verbatim}
+\hspace{-.5cm}
+\begin{minipage}[c]{.5\textwidth}
+\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例八},labelposition=topline]
+左\HR\fbox{%
+\includegraphics
+[angle=-60,totalheight=15mm]%
+{w.eps}}%
+\HR 右
+\end{Verbatim}
 \end{minipage}
 
 \begin{minipage}[c]{.45\textwidth}
 	左\HR\fbox{%
-		\includegraphics[angle=-60,totalheight=20mm,width=30mm]{w}}%
+		\resizebox*{30mm}{20mm}{\rotatebox{-60}{\usebox{\boxw}}}}%
 	\HR 右
 \end{minipage}%
-\hspace{-.5cm}\begin{minipage}[c]{.5\textwidth}
-	\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例九},labelposition=topline]
-	左\HR\fbox{%
-	\includegraphics
-	[angle=-60,totalheight=20mm,%
-	width=30mm]{w.eps}}%
-	\HR 右
-	\end{Verbatim}
+\hspace{-.5cm}
+\begin{minipage}[c]{.5\textwidth}
+\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例九},labelposition=topline]
+左\HR\fbox{%
+\includegraphics
+[angle=-60,totalheight=20mm,%
+width=30mm]{w.eps}}%
+\HR 右
+\end{Verbatim}
 \end{minipage}
 
 \begin{minipage}[c]{.45\textwidth}
@@ -495,7 +498,8 @@
 		\includegraphics[angle=-60,totalheight=20mm,width=30mm,keepaspectratio]{w}}%
 	\HR 右
 \end{minipage}%
-\hspace{-.5cm}\begin{minipage}[c]{.5\textwidth}
+\hspace{-.5cm}
+\begin{minipage}[c]{.5\textwidth}
 \begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例十},labelposition=topline]
 	左\HR\fbox{%
 	\includegraphics
@@ -545,28 +549,28 @@
 以保持原始的宽高比进行缩放。
 如果缩放因子为负值，则对对象进行翻转。下面是几个例子
 
-\hspace{-1.5cm}\begin{minipage}[b]{.5\textwidth}
+\hspace{-1.5cm}
+\begin{minipage}[b]{.5\textwidth}
 	\begin{center}
-		\color{blue}{\CJKfamily{kai}
-			\scalebox{2}{%
-				这是放大的文字} \\
+		\color{blue}{\CJKfamily{zhkai}
+			\scalebox{2}{这是放大的文字} \\
 			这是正常的文字 \\
-			\scalebox{.5}{%
-				这是缩小的文字}}
+			\scalebox{.5}{这是缩小的文字}}
 	\end{center}
 	\par\vspace{0pt}
 \end{minipage}%
 \begin{minipage}[b]{.5\textwidth}
-	\begin{Verbatim}[formatcom=\color{VerbatimColor}\CJKfamily{kai}]
-	\scalebox{2}{这是放大的文字} \\
-	这是正常的文字  \\
-	\scalebox{.5}{这是缩小的文字}
-	\end{Verbatim}
-	\par\vspace{0pt}
+\begin{lstlisting}
+\scalebox{2}{这是放大的文字} \\
+这是正常的文字  \\
+\scalebox{.5}{这是缩小的文字}
+\end{lstlisting}
+\par\vspace{0pt}
 \end{minipage}
 
-\hspace{-1.5cm}\begin{minipage}[b]{.5\textwidth}
-	\color{blue}{\CJKfamily{kai}
+\hspace{-1.5cm}
+\begin{minipage}[b]{.5\textwidth}
+	\color{blue}{\CJKfamily{zhkai}
 		\framebox{\scalebox{2}{%
 				\parbox{.5in}{放大 \\ 和 \\ 缩小}}}
 		\framebox{\scalebox{2}[1.5]{%
@@ -574,16 +578,17 @@
 	\par\vspace{0pt}
 \end{minipage}%
 \begin{minipage}[b]{.5\textwidth}
-	\begin{Verbatim}[formatcom=\color{VerbatimColor}\CJKfamily{kai}]
-	\framebox{\scalebox{2}{%
-	\parbox{.5in}{放大 \\ 和 \\ 缩小}}}
-	\framebox{\scalebox{2}[1.5]{%
-	\parbox{.5in}{放大 \\ 和 \\ 缩小}}}
-	\end{Verbatim}
-	\par\vspace{0pt}
+\begin{lstlisting}
+\framebox{\scalebox{2}{%
+\parbox{.5in}{放大 \\ 和 \\ 缩小}}}
+\framebox{\scalebox{2}[1.5]{%
+\parbox{.5in}{放大 \\ 和 \\ 缩小}}}
+\end{lstlisting}
+\par\vspace{0pt}
 \end{minipage}
 
-\hspace{-1.5cm}\begin{minipage}[b]{.5\textwidth}
+\hspace{-1.5cm}
+\begin{minipage}[b]{.5\textwidth}
 	\begin{center}
 		\color{blue}{\texttt{%
 				China? \scalebox{-1}[1]{China?} \\
@@ -594,13 +599,13 @@
 	\par\vspace{0pt}
 \end{minipage}%
 \begin{minipage}[b]{.5\textwidth}
-	\begin{Verbatim}
-	China? \scalebox{-1}[1]{China?} \\
-	China? \scalebox{1}[-1]{China?} \\
-	China? \scalebox{-1}[-1]{China?} \\
-	China? \scalebox{-1}{China?}}
-	\end{Verbatim}
-	\par\vspace{0pt}
+\begin{lstlisting}
+China? \scalebox{-1}[1]{China?} \\
+China? \scalebox{1}[-1]{China?} \\
+China? \scalebox{-1}[-1]{China?} \\
+China? \scalebox{-1}{China?}}
+\end{lstlisting}
+\par\vspace{0pt}
 \end{minipage}
 
 \subsection{resizebox 命令}\label{ssec:resizebox}
@@ -636,7 +641,7 @@
 
 \hspace{-1.5cm}\begin{minipage}[b]{.5\textwidth}
 	\begin{center}
-		\color{blue}{\CJKfamily{kai}
+		\color{blue}{\CJKfamily{zhkai}
 			\framebox{\resizebox{5mm}{!}{%
 					\parbox{14mm}{选项 \\ 角度 \\ 对象}}}
 			\framebox{\resizebox{!}{10mm}{%
@@ -645,29 +650,30 @@
 	\end{center}
 \end{minipage}%
 \hspace{-1cm}\begin{minipage}[b]{.5\textwidth}
-	\begin{Verbatim}[formatcom=\color{VerbatimColor}\CJKfamily{kai}]
-	\framebox{\resizebox{5mm}{!}{%
-	\parbox{14mm}{选项 \\ 角度 \\ 对象}}}
-	\framebox{\resizebox{!}{10mm}{%
-	\parbox{14mm}{选项 \\ 角度 \\ 对象}}}
-	\end{Verbatim}
-	\par\vspace{0pt}
+\begin{lstlisting}
+\framebox{\resizebox{5mm}{!}{%
+\parbox{14mm}{选项 \\ 角度 \\ 对象}}}
+\framebox{\resizebox{!}{10mm}{%
+\parbox{14mm}{选项 \\ 角度 \\ 对象}}}
+\end{lstlisting}
+\par\vspace{0pt}
 \end{minipage}
 
-\hspace{-2cm}\begin{minipage}[b]{.5\textwidth}
+\hspace{-2cm}
+\begin{minipage}[b]{.5\textwidth}
 	\begin{center}
-		\color{blue}{\CJKfamily{kai}
+		\color{blue}{\CJKfamily{zhkai}
 			\resizebox*{2cm}{3cm}{\LaTeX{}~图形} \\
 			\resizebox*{2cm}{1cm}{\LaTeX{}~图形}}
 		\par\vspace{0pt}
 	\end{center}
 \end{minipage}%
 \begin{minipage}[b]{.5\textwidth}
-	\begin{Verbatim}[formatcom=\color{VerbatimColor}\CJKfamily{kai}]
-	\resizebox*{2cm}{3cm}{\LaTeX{}~图形} \\
-	\resizebox*{2cm}{1cm}{\LaTeX{}~图形}
-	\end{Verbatim}
-	\par\vspace{0pt}
+\begin{lstlisting}
+\resizebox*{2cm}{3cm}{\LaTeX{}~图形} \\
+\resizebox*{2cm}{1cm}{\LaTeX{}~图形}
+\end{lstlisting}
+\par\vspace{0pt}
 \end{minipage}
 
 \subsection{rotatebox 命令}\label{ssec:rotatebox}
@@ -709,26 +715,27 @@
 
 下面是一个例子：
 
-\hspace{-1.5cm}\begin{minipage}[b]{.5\textwidth}
+\hspace{-1.5cm}
+\begin{minipage}[b]{.5\textwidth}
 	\begin{center}
 		\setlength{\fboxsep}{0mm}
 		\newcommand{\MyRot}[1]{%
 			\fbox{\rotatebox{#1}{旋转~$#1^\circ$}}}
-		\color{blue}{\CJKfamily{kai}
+		\color{blue}{\CJKfamily{zhkai}
 			\MyRot{0} \MyRot{45} \MyRot{90}
 			\MyRot{135} \MyRot{180} \MyRot{225}}
 	\end{center}
 	\par\vspace{0pt}
 \end{minipage}%
 \begin{minipage}[b]{.5\textwidth}
-	\begin{Verbatim}[formatcom=\color{VerbatimColor}\CJKfamily{kai}]
-	\setlength{\fboxsep}{0mm}
-	\newcommand{\MyRot}[1]{%
-	\fbox{\rotatebox{#1}{旋转~$#1^\circ$}}}
-	\MyRot{0} \MyRot{45} \MyRot{90}
-	\MyRot{135} \MyRot{180} \MyRot{225}
-	\end{Verbatim}
-	\par\vspace{0pt}
+\begin{lstlisting}
+\setlength{\fboxsep}{0mm}
+\newcommand{\MyRot}[1]{%
+\fbox{\rotatebox{#1}{旋转~$#1^\circ$}}}
+\MyRot{0} \MyRot{45} \MyRot{90}
+\MyRot{135} \MyRot{180} \MyRot{225}
+\end{lstlisting}
+\par\vspace{0pt}
 \end{minipage}
 
 
@@ -773,7 +780,7 @@
 
 如果 \pkg{graphicx} 宏包使用 \prgname{pdftex} 驱动，
 那么默认会使用下列图形文件扩展名（在 \file{pdftex.def} 中定义）
-\footnote{
+\cprotect\footnote{
 	实际上在最新版本（2016年）中，\file{dvips.def} 中定义扩展名的方式为
 \begin{lstlisting}
 %\def\Gin@extensions{.eps,.ps,.eps.gz,.ps.gz,.eps.Z,.mps}

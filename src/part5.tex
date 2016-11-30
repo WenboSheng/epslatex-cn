@@ -45,27 +45,13 @@
 
 \begin{figure} 
 	\centering 
-	\includegraphics[width=1in]{graphic}% 
+	\resizebox{1in}{!}{\usebox{\boxgraphic}}% 
 	\hspace{1in}% 
-	\includegraphics[width=2in]{graphic} 
+	\resizebox{2in}{!}{\usebox{\boxgraphic}}
 	\caption{一个 \env{figure} 环境中的两幅图像}\label{fig:sidegraphics}
 \end{figure}
 
 \subsubsection{使用并列的小页环境}
-
-Placing the \includegraphics commands inside minipage environments provides
-the user more control over the graphics’ vertical placement. For example
-\begin{figure}
-	\centering
-	\begin{minipage}[c]{0.5\linewidth}
-		\centering \includegraphics[width=1in]{graphic}
-	\end{minipage}%
-	\begin{minipage}[c]{0.5\linewidth}
-		\centering \includegraphics[width=2in]{graphic}
-	\end{minipage}
-	\caption{Centers Aligned Vertically}
-\end{figure}
-produces Figure 62, which has vertically-centered graphics.
 
 将 \cmd{includegraphics} 命令放到小页环境中可以更好地控制图形的对齐方式。例如：
 \begin{lstlisting}
@@ -85,10 +71,12 @@ produces Figure 62, which has vertically-centered graphics.
 \begin{figure} 
 	\centering 
 	\begin{minipage}[c]{0.5\textwidth} 
-		\centering \includegraphics[width=1in]{graphic} 
+		\centering
+		\resizebox{1in}{!}{\usebox{\boxgraphic}} 
 	\end{minipage}% 
 	\begin{minipage}[c]{0.5\textwidth} 
-		\centering \includegraphics[width=2in]{graphic} 
+		\centering
+		\resizebox{2in}{!}{\usebox{\boxgraphic}} 
 	\end{minipage} 
 	\caption{中间对齐的图像} \label{fig:minipagegraphics}
 \end{figure}
@@ -137,14 +125,14 @@ produces Figure 62, which has vertically-centered graphics.
 	%%----start of first figure----
 	\begin{minipage}[t]{0.4\linewidth}
 		\centering
-		\includegraphics[width=1in]{graphic}
+		\resizebox{1in}{!}{\usebox{\boxgraphic}}
 		\caption{Small Box} \label{fig:side:a}
 	\end{minipage}%
 	\hspace{1cm}%
 	%%----start of second figure----
 	\begin{minipage}[t]{0.4\linewidth}
 		\centering
-		\includegraphics[width=1.5in]{graphic}
+		\resizebox{1.5in}{!}{\usebox{\boxgraphic}}
 		\caption{Big Box} \label{fig:side:b}
 	\end{minipage}
 \end{figure}
@@ -165,7 +153,7 @@ produces Figure 62, which has vertically-centered graphics.
 	此外，标题的宽度也可以用 \pkg{caption} 宏包的 \opt{margin} 或 \opt{width} 关键字进行控制
 	（参见表~\ref{tab:caption-formatopt}）。
 	
-	\item 紧接着 \cmdM{begin{figure} 的 \cmd{centering} 命令使得两个小页以及之间的空白在 \env{figure} 环境中居中放置。
+	\item 紧接着 \cmdM{begin}{figure} 的 \cmd{centering} 命令使得两个小页以及之间的空白在 \env{figure} 环境中居中放置。
 		
 	\item 小页内部的 \cmd{centering} 命令使得图像在小页环境内部居中放置。
 \end{itemize}
@@ -204,12 +192,12 @@ produces Figure 62, which has vertically-centered graphics.
 	%%----start of first subfigure----
 	\subcaptionbox{Small Box with a Long Caption%
 		\label{fig:subfig:a} %% label for first subfigure
-	}{\includegraphics[width=1.1in]{graphic}}
+	}{\resizebox{1.1in}{!}{\usebox{\boxgraphic}}}
 	\hspace{1in}
 	%%----start of second subfigure----
 	\subcaptionbox{Big Box%
 		\label{fig:subfig:b} %% label for second subfigure
-	}{\includegraphics[width=1.5in]{graphic}}
+	}{\resizebox{1.5in}{!}{\usebox{\boxgraphic}}}
 	\caption{Two Subfigures}
 	\label{fig:subfig} %% label for entire figure
 \end{figure}
@@ -268,12 +256,12 @@ produces Figure 62, which has vertically-centered graphics.
 	%%----start of first subfigure----
 	\subcaptionbox{Small Box with a Long Caption%
 		\label{fig:specwid:subfig:a} %% label for first subfigure
-	}[0.45\linewidth]{\includegraphics[width=1.1in]{graphic}}
+	}[0.45\linewidth]{\resizebox{1.1in}{!}{\usebox{\boxgraphic}}}
 	\hfill
 	%%----start of second subfigure----
 	\subcaptionbox{Big Box%
 		\label{fig:specwid:subfig:b} %% label for second subfigure
-	}[0.45\linewidth]{\includegraphics[width=1.5in]{graphic}}
+	}[0.45\linewidth]{\resizebox{1.5in}{!}{\usebox{\boxgraphic}}}
 	\caption{Two Subfigures}
 	\label{fig:specwid:subfig} %% label for entire figure
 \end{figure}
@@ -314,14 +302,14 @@ produces Figure 62, which has vertically-centered graphics.
 	%%----start of first figure----
 	\begin{minipage}[t]{.4\linewidth}
 		\centering
-		\includegraphics[width=2cm]{graphic}
+		\resizebox{2cm}{!}{\usebox{\boxgraphic}}
 		\caption{Box with a Long Caption}\label{fig:mininonrot} 
 	\end{minipage}%
 	\hspace{1cm}%
 	%%----start of second figure----
 	\begin{minipage}[t]{.4\linewidth}
 		\centering
-		\includegraphics[width=2cm,angle=-30]{graphic}
+		\rotatebox{-30}{\resizebox{2cm}{!}{\usebox{\boxgraphic}}}
 		\caption{Rotated Box}\label{fig:minirot} 
 	\end{minipage}%
 \end{figure}
@@ -361,13 +349,13 @@ produces Figure 62, which has vertically-centered graphics.
 	%%----start of first figure graphics----
 	\begin{minipage}[b]{.4\linewidth}
 		\centering
-		\includegraphics[width=2cm]{graphic}
+		\resizebox{2cm}{!}{\usebox{\boxgraphic}}
 	\end{minipage}%
 	\hspace{1cm}%
 	%%----start of second figure graphics----
 	\begin{minipage}[b]{.4\linewidth}
 		\centering
-		\includegraphics[width=2cm,angle=-30]{graphic}
+		\rotatebox{-30}{\resizebox{2cm}{!}{\usebox{\boxgraphic}}}
 	\end{minipage}\\[-10pt]
 	%%----start of first figure caption----
 	\begin{minipage}[t]{.4\linewidth}
@@ -427,7 +415,7 @@ produces Figure 62, which has vertically-centered graphics.
 \begin{figure}[htb]
 	\begin{minipage}[b]{0.5\linewidth}
 		\centering
-		\includegraphics[width=0.8\linewidth]{graphic}
+		\resizebox{0.8\linewidth}{!}{\usebox{\boxgraphic}}
 		\caption{This is a Figure by a Table}
 		\label{fig:by:table}
 	\end{minipage}%
@@ -462,14 +450,14 @@ produces Figure 62, which has vertically-centered graphics.
 （参见第~\ref{ssec:unprocessfig} 节）。
 
 
-\section{堆叠的图形和子图}
+\section{堆叠的图形和子图}\label{sec:stackedfigs}
 
 第~\ref{sec:sidebyside}~节介绍了一系列方法创建并列图形。
 这些方法的原理都是将对象（图形、小页、子浮动体等）依次排列在一条直线上。
 当使用 \cmd{\cmd{}} 显式断行时，相同的方法也可以生成堆叠的图形。
 此外还可以通过 \cmd{\cmd{}} 命令的可选参数（例如 \cmd{\cmd{}}\opt{[20pt]}）指定竖直间距。
 
-\subsection{堆叠的图形}
+\subsection{堆叠的图形}\label{ssec:stackedfigs}
 
 第~\ref{sec:sidebyside}~节介绍了如何创建并列图形。
 本节的内容表明，添加断行可以生成多行图形。
@@ -524,7 +512,7 @@ produces Figure 62, which has vertically-centered graphics.
 	%%----start of first figure----
 	\begin{minipage}[t]{0.25\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{graphic}
+		\resizebox{\linewidth}{!}{\usebox{\boxgraphic}}
 		\caption{First Stacked Figure}
 		\label{fig:stacked:first}
 	\end{minipage}%
@@ -532,14 +520,14 @@ produces Figure 62, which has vertically-centered graphics.
 	%%----start of second figure----
 	\begin{minipage}[t]{0.25\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{graphic}
+		\resizebox{\linewidth}{!}{\usebox{\boxgraphic}}
 		\caption{Second Stacked Figure}
 		\label{fig:stacked:second}
 	\end{minipage}\\[20pt]
 	%%----start of third figure----
 	\begin{minipage}[t]{0.25\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{graphic}
+		\resizebox{\linewidth}{!}{\usebox{\boxgraphic}}
 		\caption{Third Stacked Figure}
 		\label{fig:stacked:third}
 	\end{minipage}%
@@ -547,7 +535,7 @@ produces Figure 62, which has vertically-centered graphics.
 	%%----start of fourth figure----
 	\begin{minipage}[t]{0.25\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{graphic}
+		\resizebox{\linewidth}{!}{\usebox{\boxgraphic}}
 		\caption{Fourth Stacked Figure}
 		\label{fig:stacked:fourth}
 	\end{minipage}%
@@ -555,43 +543,44 @@ produces Figure 62, which has vertically-centered graphics.
 	%%----start of fifth figure----
 	\begin{minipage}[t]{0.25\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{graphic}
+		\resizebox{\linewidth}{!}{\usebox{\boxgraphic}}
 		\caption{Fifth Stacked Figure}
 		\label{fig:stacked:fifth}
 	\end{minipage}%
 \end{figure}
 
-\subsection{堆叠的子图}
+\subsection{堆叠的子图}\label{ssec:stackedsubfigs}
 
 第~\ref{sec:sidesubfigure}~节介绍了如何创建并列的子图。
 本节的内容表明，添加断行可以生成多行子图。
 例如下列代码
+
+%	%%----start of first subfigure----
+%	\subcaptionbox{Small Box with a Long Caption%
+%		\label{fig:subfig:a} %% label for first subfigure
+%	}{\includegraphics[width=1.1in]{graphic}}
+
 \begin{lstlisting}
 \begin{figure}
 	\centering
 	%%----start of first subfigure----
-	\subfloat[First Subfigure]{
-		\label{fig:stacksub:a} %% label for first subfigure
-		\includegraphics[width=0.25\linewidth]{graphic}}
+	\subcaptionbox{First Subfigure\label{fig:stacksub:a}}%% label for first subfigure
+		{\includegraphics[width=0.25\linewidth]{graphic}}
 	\hspace{0.1\linewidth}
 	%%----start of second subfigure----
-	\subfloat[Second Subfigure]{
-		\label{fig:stacksub:b} %% label for second subfigure
-		\includegraphics[width=0.25\linewidth]{graphic}}\\[20pt]
+	\subcaptionbox{Second Subfigure\label{fig:stacksub:b}}%% label for second subfigure
+		{\includegraphics[width=0.25\linewidth]{graphic}}\\[20pt]
 	%%----start of third subfigure----
-	\subfloat[Third Subfigure]{
-		\label{fig:stacksub:c} %% label for third subfigure
-		\includegraphics[width=0.25\linewidth]{graphic}}
+	\subcaptionbox{Third Subfigure\label{fig:stacksub:c}}%% label for third subfigure
+		{\includegraphics[width=0.25\linewidth]{graphic}}
 	\hspace{0.1\linewidth}
 	%%----start of fourth subfigure----
-	\subfloat[Fourth Subfigure]{
-		\label{fig:stacksub:d} %% label for fourth subfigure
-		\includegraphics[width=0.25\linewidth]{graphic}}
+	\subcaptionbox{Fourth Subfigure\label{fig:stacksub:d}}%% label for fourth subfigure
+		{\includegraphics[width=0.25\linewidth]{graphic}}
 	\hspace{0.1\linewidth}
 	%%----start of fifth subfigure----
-	\subfloat[Fifth Subfigure]{
-		\label{fig:stacksub:e} %% label for fifth subfigure
-		\includegraphics[width=0.25\linewidth]{graphic}}
+	\subcaptionbox{Fifth Subfigure\label{fig:stacksub:e}}%% label for fifth subfigure
+		{\includegraphics[width=0.25\linewidth]{graphic}}
 	\caption{Five Subfigures}
 	\label{fig:stacksub} %% label for entire figure
 \end{figure}
@@ -601,32 +590,26 @@ produces Figure 62, which has vertically-centered graphics.
 \begin{figure}
 	\centering
 	%%----start of first subfigure----
-	\subfloat[First Subfigure]{
-		\label{fig:stacksub:a} %% label for first subfigure
-		\includegraphics[width=0.25\linewidth]{graphic}}
+	\subcaptionbox{First Subfigure\label{fig:stacksub:a}}%% label for first subfigure
+		{\resizebox{0.25\linewidth}{!}{\usebox{\boxgraphic}}}
 	\hspace{0.1\linewidth}
 	%%----start of second subfigure----
-	\subfloat[Second Subfigure]{
-		\label{fig:stacksub:b} %% label for second subfigure
-		\includegraphics[width=0.25\linewidth]{graphic}}\\[20pt]
+	\subcaptionbox{Second Subfigure\label{fig:stacksub:b}}%% label for second subfigure
+		{\resizebox{0.25\linewidth}{!}{\usebox{\boxgraphic}}}\\[20pt]
 	%%----start of third subfigure----
-	\subfloat[Third Subfigure]{
-		\label{fig:stacksub:c} %% label for third subfigure
-		\includegraphics[width=0.25\linewidth]{graphic}}
+	\subcaptionbox{Third Subfigure\label{fig:stacksub:c}}%% label for third subfigure
+		{\resizebox{0.25\linewidth}{!}{\usebox{\boxgraphic}}}
 	\hspace{0.1\linewidth}
 	%%----start of fourth subfigure----
-	\subfloat[Fourth Subfigure]{
-		\label{fig:stacksub:d} %% label for fourth subfigure
-		\includegraphics[width=0.25\linewidth]{graphic}}
+	\subcaptionbox{Fourth Subfigure\label{fig:stacksub:d}}%% label for fourth subfigure
+		{\resizebox{0.25\linewidth}{!}{\usebox{\boxgraphic}}}
 	\hspace{0.1\linewidth}
 	%%----start of fifth subfigure----
-	\subfloat[Fifth Subfigure]{
-		\label{fig:stacksub:e} %% label for fifth subfigure
-		\includegraphics[width=0.25\linewidth]{graphic}}
+	\subcaptionbox{Fifth Subfigure\label{fig:stacksub:e}}%% label for fifth subfigure
+		{\resizebox{0.25\linewidth}{!}{\usebox{\boxgraphic}}}
 	\caption{Five Subfigures}
 	\label{fig:stacksub} %% label for entire figure
 \end{figure}
-
 
 \section{Subcaption 宏包}\label{sec:subcaption-pkg}
 
@@ -864,12 +847,12 @@ skip=6pt,list=false,hypcap=false
 	%%----start of first subfigure----
 	\subcaptionbox{%
 		First Subfigure\label{fig:contfig:subone}}{%
-		\includegraphics[width=3cm]{graphic}}
+		\resizebox{3cm}{!}{\usebox{\boxgraphic}}}
 	\hspace{1cm}
 	%%----start of second subfigure----
 	\subcaptionbox{%
 		Second Subfigure\label{fig:contfig:subtwo}}{%
-		\includegraphics[width=3cm]{graphic}}
+		\resizebox{3cm}{!}{\usebox{\boxgraphic}}}
 	\caption{Two Subfigures}
 	\label{fig:contfig:one}
 \end{figure}
@@ -879,12 +862,12 @@ skip=6pt,list=false,hypcap=false
 	%%----start of third subfigure----
 	\subcaptionbox{%
 		Third Subfigure\label{fig:contfig:subthree}}{%
-		\includegraphics[width=3cm]{graphic}}
+		\resizebox{\linewidth}{!}{\usebox{\boxgraphic}}}
 	\hspace{1cm}
 	%%----start of fourth subfigure----
 	\subcaptionbox{%
 		Fourth Subfigure\label{fig:contfig:subfour}}{%
-		\includegraphics[width=3cm]{graphic}}
+		\resizebox{\linewidth}{!}{\usebox{\boxgraphic}}}
 	\caption{Two Additional Subfigures}
 	\label{fig:contfig:two}
 \end{figure}
