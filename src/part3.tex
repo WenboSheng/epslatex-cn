@@ -495,7 +495,7 @@ TEXINPUTS="/dir1:/dir2:"; export TEXINPUTS
 当 \LaTeX{} 在 \TeX{} 搜索路径中寻找文件时，不会将目录名也写到 \file{dvi} 文件中。
 对于旧版本的 \prgname{dvips} 和 \prgname{xdvi} 而言，
 由于没有搜索\TeX{}~的搜索路径的功能，
-因此，可能会找不到该文件（见第~\ref{ssec:dvips}~节）。
+因此，可能会找不到该文件（见第~\ref{ssec:path-dvips}~节）。
 
 
 \subsection{临时改变 \TeX{} 的搜索路径}\label{ssec:temptexpath}
@@ -615,7 +615,7 @@ file.eps.Z
 
 \section{在 DVIPS 中使用压缩EPS文件和非 EPS 文件}\label{sec:dvips-noneps}
 
-正如第~\ref{sec:intro} 节所述，在 \prgname{dvips} 模式下，
+正如第~\ref{sec:introduction} 节所述，在 \prgname{dvips} 模式下，
 \LaTeX{} 图像插入的任务是由 \file{dvi} 程序负责。
 这就意味着，\LaTeX{} 文档可以使用任何 \file{dvi} 程序支持的图像格式。
 尽管事实上所有的 \file{dvi}-\file{ps} 转换程序都支持 \file{eps} 图像，
@@ -1070,7 +1070,7 @@ convert file2.gif 'eps:-'
 \fi
 \fi
 \fi
-\caption{PSfrag~{\CJKfamily{hei}中使用中文的例子}}\label{fig:psfragex3}
+\caption{PSfrag~{\CJKfamily{zhhei}中使用中文的例子}}\label{fig:psfragex3}
 \end{figure}
 
 \subsubsection{EPS 图形中的 \LaTeX{} 文本}\label{sssec:latextext}
@@ -1113,7 +1113,7 @@ convert file2.gif 'eps:-'
 \end{itemize}
 参见~\cite{psfrag-doc}~以获取关于 \pkg{PSfrag} 文本缩放的详细说明。
 
-\subsubsection{PSfrag和 \pdfTeX{}}
+\subsubsection{PSfrag和 \pdfTeX{}}\label{sssec:psfrag-pdftex}
 
 \pkg{psfrag} 不能在 \pdfTeX{} 模式下使用。
 如果需要进行 \pkg{psfrag} 替换，

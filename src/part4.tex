@@ -58,7 +58,7 @@
 	这两种情况都是应当尽量避免的。
 \end{enumerate}
 
-\subsection{创建浮动图形}\label{ssec:creatfloatfig}
+\subsection{创建浮动图形}\label{ssec:createfloatfig}
 可以通过把命令置于一个 \envi{figure} 环境中来生成浮动图形。
 在图形环境中的所有内容都会被保持在一起，
 浮动到合适的位置以保证得到最好的分页结果。
@@ -528,7 +528,7 @@ text text text text text text...
 
 \subsection{图形的间距}\label{ssec:vspace}
 
-表~\ref{tab:figlength}~中给出的长度控制着两幅图形之间或图形与正文的间距。
+表~\ref{tab:figlength-textpage}~中给出的长度控制着两幅图形之间或图形与正文的间距。
 与其它大部分的~\LaTeX{}~长度不同的是，这三个都是橡皮长度，
 这就使得可以通过缩短或拉伸获得更好的排版页面。
 这些长度可用 \cmd{setlength} 命令来设定。例如：
@@ -755,7 +755,7 @@ text text text text text text...
 \end{lstlisting}
 得到如图~\ref{fig:figname}~的结果。
 至于标题文本的字体，分隔符~``:''~以及其它标题属性的修改可用~\pkg{caption}~宏包
-（见第~\ref{sec:caption}~节）来完成。
+（见第~\ref{sec:caption-pkg}~节）来完成。
 
 \begin{figure} 
 	\centering 
@@ -885,9 +885,9 @@ text text text text text text...
 关于 \pkg{caption} 宏包有几个方面：
 \begin{itemize}
 	\item 3.x 版本的 \cmd{caption} 命令可以生成标题，
-	这将在第~\ref{ssub:caption-cmd} 节介绍并在表~\ref{tab:caption-cmd}　列出。
+	这将在第~\ref{ssec:caption-cmd} 节介绍并在表~\ref{tab:caption-cmd}　列出。
 	
-	\item 第~\ref{ssub:caption-custom} 节介绍了两种如何定制标题选项的方法。
+	\item 第~\ref{ssec:caption-custom} 节介绍了两种如何定制标题选项的方法。
 	其中选项主要有四种类型：
 	\begin{description}
 		\item[字体选项] 用于定制标题中的字体\footnote{%
@@ -912,7 +912,7 @@ text text text text text text...
 		相关例子在第~\ref{sssec:caption-formatopt} 节。
 	\end{description}
 	为了方便查询，关于 \pkg{caption} 宏包选项的表格集中列于 \pageref{tab:caption-fontopt}--\pageref{tab:caption-formatopt} 页。
-	相关例子集中列于第~\ref{ssec:caption-example} 节。
+	相关例子集中列于第~\ref{ssec:caption-ex} 节。
 	
 	\item 用户可以定义一组标题选项，称之为\emph{标题样式}。
 	之后可以用 \opt{style=} 选项指定所有的选项。
@@ -990,7 +990,7 @@ text text text text text text...
 	在图表目录中不创建相应条目。\\
 	\cmd{ContinuedFloat} &
 	允许多个 \cmd{caption} 命令使用同一个图形编号。
-	参考第~\ref{ssec:continuedfloat} 节和第~\ref{sec:continuedfig-subfig} 节。\\
+	参考第~\ref{ssec:continuedfloat} 节。\\
 	\bottomrule
 \end{tabular}
 \end{sidewaystable}
@@ -1000,7 +1000,7 @@ text text text text text text...
 
 正如第~\ref{ssec:caption-overview} 提到的，
 利用 \pkg{caption} 宏包可以定制标题的字体、间距、标签和格式。
-表~\ref{tab:captionsetupcmd}--\ref{tab:caption-formatopt} 列出了相应的选项。
+表~\ref{tab:caption-setupcmd}--\ref{tab:caption-formatopt} 列出了相应的选项。
 这些选项可以通过以下两种方式之一来指定。
 
 \begin{description}
@@ -1024,7 +1024,7 @@ text text text text text text...
 \end{lstlisting}
 	会使得当前环境中接下来的左右标题左右缩进 $10\pt$，标题的全部（标签和文本）使用 \texttt{small} 字号，
 	并且标签字体加粗。
-	表~\ref{tab:captionsetupcmd} 介绍了 \cmdi{captionsetup} 和 \cmdi{clercaptionsetup} 命令。
+	表~\ref{tab:caption-setupcmd} 介绍了 \cmdi{captionsetup} 和 \cmdi{clercaptionsetup} 命令。
 \end{description}
 
 相比于在 \cmd{usepackage} 命令中指定可选项，使用 \cmd{captionsetup} 有两方面的优势。
@@ -1047,7 +1047,7 @@ text text text text text text...
 
 \begin{table}
 \centering
-\caption{\pkg{caption} 宏包中的标题设置命令}
+\caption{\pkg{caption} 宏包中的标题设置命令}\label{tab:caption-setupcmd}
 \begin{tabular}{p{.2\linewidth}p{0.5\linewidth} p{0.5\linewidth}}
 \toprule
 \multicolumn{2}{l}{命令} & 描述 \\
@@ -1226,9 +1226,9 @@ text text text text text text...
 \end{table}
 
 \FloatBarrier
-\subsection{Caption宏包示例}
+\subsection{Caption宏包示例}\label{ssec:caption-ex}
 
-\subsubsection{Caption宏包字体选项}
+\subsubsection{Caption宏包字体选项}\label{sssec:caption-fontopt}
 
 表~\ref{tab:caption-fontopt} 列出了\pkg{caption} 宏包提供的三个定制标题字体的选项。
 其中“标签”、“分隔符”和“标题内容”的定义如图~\ref{fig:captiondef} 所示。
@@ -1238,7 +1238,7 @@ text text text text text text...
 	\centering
 	\includegraphics{captiondef}
 	\captionof{figure}{标题标签、分隔符和标题内容的定义}
-	\label{fig:captiondef}
+	\label{fig:def-capcontent}
 \end{minipage}
 
 \vskip2em\hrule
@@ -1314,7 +1314,7 @@ text text text text text text...
 
 \vskip2em\hrule
 
-\subsubsection{Caption垂直间距选项}
+\subsubsection{Caption垂直间距选项}\label{sssec:caption-spaceopt}
 
 顾名思义，标题上方的间距由 \opt{aboveskip} 选项控制，
 标题下方的间距由 \opt{belowskip} 选项控制。
@@ -1367,7 +1367,7 @@ text text text text text text...
 \begin{minipage}{\linewidth}
 	\centering
 	\captionsetup{aboveskip=1cm,position=top}
-	\captionof{table}{Vertical Spacing Example \#2}
+	\captionof{table}{Vertical Spacing Example \#2}\label{tab:caption-skip-ex2}
 	\begin{tabular}{|c|c|}
 		\hline
 		a & b \\ \hline
@@ -1419,7 +1419,7 @@ text text text text text text...
 
 \vskip2em\hrule
 
-\subsubsection{Caption 宏包标签选项}
+\subsubsection{Caption 宏包标签选项}\label{sssec:caption-labelopt}
 
 \paragraph{标签选项示例\#1}
 
@@ -1516,7 +1516,7 @@ text text text text text text...
 
 \vskip2em\hrule
 
-\subsubsection{Caption 宏包格式选项}
+\subsubsection{Caption 宏包格式选项}\label{sssec:caption-formatopt}
 
 \paragraph{格式选项示例\#1：标题宽度}
 
@@ -1746,12 +1746,12 @@ Caption with hang format and raggedleft justification.}
 \end{figure}
 
 
-\subsection{进一步定制}
+\subsection{进一步定制}\label{ssec:furthercustom}
 
 \pkg{caption} 宏包还有一些额外的特性，可以允许用户进行进一步的定制。
 本节对此进行了简要介绍，详细的指南请参考 \cite{caption-doc}。
 
-\subsubsection{标题样式}
+\subsubsection{标题样式}\label{sssec:caption-style}
 
 用户可以定义一组标题选项，称之为\emph{标题样式}。
 这样通过一个样式选项就可以指定一组选项值。
@@ -1796,7 +1796,7 @@ singlelinecheck=false}
 
 \vskip2em\hrule
 
-\subsubsection{其它选项值}
+\subsubsection{其它选项值}\label{sssec:caption-addoptval}
 
 \pkg{caption} 宏包提供了一组命令用于其它的选项值，这些命令只能用于导言区中。
 \begin{lstlisting}
@@ -1882,7 +1882,7 @@ singlelinecheck=false}
 \captionsetup{labelsep=arrow}
 \caption{This Caption has a Custom Label Separator}
 \end{lstlisting}
-的效果见图~\ref{fig:caption-labelsep-arrow}。
+的效果见图~\ref{fig:caption-labelformat-arrow}。
 
 \begin{minipage}{\linewidth}
 	\centering

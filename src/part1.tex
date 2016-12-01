@@ -64,7 +64,7 @@
 尽管这种图像格式的预处理通常是最佳办法，
 不过，\LaTeX\ 图形宏集还提供了另一种选择：\file{dvi} 转 \file{ps} 时自动地实时转换图像格式。
 第 \ref{ssec:convertor} 节（\pageref{ssec:convertor} 页）介绍了一下图像转换程序，
-第 \ref{sec:noneps} 节（\pageref{sec:noneps} 页） 讲述了如何在 \file{dvi} 转 \file{ps} 时使用非 \file{eps} 格式的图像。
+第 \ref{sec:dvips-noneps} 节（\pageref{sec:dvips-noneps} 页） 讲述了如何在 \file{dvi} 转 \file{ps} 时使用非 \file{eps} 格式的图像。
 
 过去，\file{PostScript} 通常是 \LaTeX{} 文档的最终格式，
 \marginpar{\pdfTeX}
@@ -73,7 +73,7 @@
 (2) 使用一个 \file{dvi} 到 \file{ps} 的转换程序（例如\prgname{dvips}） 来生成 \file{PostScript} 文件。
 之后，随着 Adobe 的 \file{pdf} 格式开始流行，编译过程又加了第三步：
 (3) 使用 \prgname{Ghostscript}
-\footnote{自由软件，见第 \ref{ssec:ghostscript} 节（\pageref{ssec:ghostscript} 页）。}、
+\footnote{自由软件，见第 \ref{ssec:gs} 节（\pageref{ssec:gs} 页）。}、
 \prgname{Adobe Acrobat}
 \footnote{商业软件，见 \url{www.adobe.com}}
 或者 \prgname{PStill}
@@ -102,11 +102,11 @@
 \footnote{\pdfTeX{} 可以导入由 \prgname{PurifyEPS} 处理的 \file{eps} 文件，
 	见第 \ref{ssec:purifyeps} 节（\pageref{ssec:purifyeps} 页）。}，
 用户需要用 \prgname{epstopdf} 等程序将 \file{eps} 文件转成 \file{pdf} 格式，
-不过这样就不能直接使用 PSfrag 宏包（见第 \ref{sec:psfrag} 节，\pageref{sec:psfrag} 页）。
+不过这样就不能直接使用 PSfrag 宏包（见第 \ref{ssec:psfrag} 节，\pageref{ssec:psfrag} 页）。
 
 \section{\LaTeX{} 术语}\label{sec:terminology}
 
-任何 \LaTeX{} 对象（字符，图形等）都把\emphi{盒子}作为单位（\cite[page 103]{Leslie}）。
+任何 \LaTeX{} 对象（字符，图形等）都把\emphi{盒子}作为单位（\cite[103页]{Lamport1994}）。
 每个盒子在它的左侧均有一个\emphi{参考点}（\emphi{Reference point}）。
 盒子的\emphi{基线}（\emphi{baseline}，见图~\ref{fig:samplebox}）是一条通过参考点的
 一条水平线。
@@ -294,7 +294,7 @@ PostScript 语言能够用来描述图形和文本。
 	\item 由于 \TeX{} 不能读取非 \ascii 文件，也不能生成其它的程序，
 	所以 \LaTeX{} 不能从压缩的 \file{eps} 文件或其它非 \file{eps} 图像文件中得到BoundingBox的信息。
 	在这种情况下，BoundingBox参数值必须由插图命令给定（例如 \cmd{includegraphics} 命令的 \opt{bb} 选项）
-	或者存放在一个未压缩的文本文件中（见第~\ref{sec:noneps} 节，\pageref{sec:noneps}~页）。
+	或者存放在一个未压缩的文本文件中（见第~\ref{sec:dvips-noneps} 节，\pageref{sec:dvips-noneps}~页）。
 	\item \file{eps} 图像并没有包含在\file{dvi}文件中。
 	当 \file{dvi} 转换为 \file{ps} 时，\file{eps} 文件必须存在。
 	因此，所有用到的\file{eps}文件必须和 \file{dvi} 文件放在一起。
@@ -302,7 +302,7 @@ PostScript 语言能够用来描述图形和文本。
 	这时，为了方便使用者对图像进行定位，一般会将图形的BoundingBoX用一个方框显示出来。
 \end{itemize}
 
-\subsection[行缓冲区溢出]{行缓冲区溢出}\label{ssec:linebuffer}
+\subsection{行缓冲区溢出}\label{ssec:linebuffer}
 
 \TeX{} 在读取 \ascii 文件时是每次从中读取一行，然后把它放到自己的行缓冲区里。
 \TeX{} 的行缓冲区大约有3000个字符长度。
@@ -358,7 +358,7 @@ PostScript 语言能够用来描述图形和文本。
 \section{PDF 图像}\label{sec:pdfgraphics}
 正如之前提到的，\pdfTeX{} 可以直接导入 \file{pdf}、\file{png}、\file{jpeg} 和 \file{MetaPost} 图像格式。
 这一节将简要介绍这些格式。
-相关的\pdfTeX{} 插图命令将在第~\ref{sec:graphicsinlusion} 节（\pageref{sec:graphicsinclusion} 页）中介绍。
+相关的\pdfTeX{} 插图命令将在第~\ref{sec:graphicsinclusion} 节（\pageref{sec:graphicsinclusion} 页）中介绍。
 
 \subsection{JPEG}\label{ssec:jpeg}
 \file{jpeg} 是由联合图像专家组（Joint Photographic Experts Group , JPEG）委员会
@@ -491,7 +491,7 @@ Ghostscript中还带有一些有用的工具，如 \prgname{ps2pdf} 等，可利
 在 \prgname{dvips} 模式文件中，这些程序可以将非\file{eps} 图像转成 \file{eps}。
 在 \pdfLaTeX{} 文档中，这些程序可以将图像转成可以支持的格式（ \file{pdf}、\file{png}、\file{jpeg} ）。
 其中一些程序还提供命令行方式，这样就可以实时转换图像，
-具体见第~\pageref{ssec:nonepsfile} 页的~\ref{ssec:nonepsfiles} 节
+具体见第~\pageref{ssec:noneps} 页的~\ref{ssec:noneps} 节
 
 \begin{description}
 	\item[ImageMagick] 
@@ -575,11 +575,11 @@ Ghostscript中还带有一些有用的工具，如 \prgname{ps2pdf} 等，可利
 		\url{http://www.irfanview.com/}
 	\end{center}
 	\prgname{Irfanview} 对于个人、学术和非盈利用户是免费的，
-	商业用户则要求捐赠12美元的注册费。
+	商业用户则要求注册费。
 	
 	\item[Graphic Converter]
 	
-	Graphic Converter 是一个Macintosh上的\$30 共享软件，
+	Graphic Converter 是一个Macintosh上的共享软件，
 	可以读取约190种图片格式，并输出约75种格式。
 	更多信息可见
 	\begin{center}
@@ -604,7 +604,7 @@ Ghostscript中还带有一些有用的工具，如 \prgname{ps2pdf} 等，可利
 	
 	\item[KVEC]
 	
-	\prgname{KVEC} 是一个共享软件，非商业使用为 \$25，商业用户为 \$50，
+	\prgname{KVEC} 是一款自由软件，
 	能将 \file{bmp}、\file{gif}、\file{tiff} 等位图格式转化为 PostScript和其它的矢量图格式。
 	\prgname{KVEC} 可以运行在 Windows、OS/2、Linux、Unix、Macintosh和BeOS等系统上。
 	更多信息可见
@@ -619,8 +619,7 @@ Ghostscript中还带有一些有用的工具，如 \prgname{ps2pdf} 等，可利
 	因此不适用于图像转换。
 	例如，它没有提供命令行功能，所以图像转换必须一个一个做。
 	
-	\prgname{xv} 对于非商业使用是 \$25 的共享软件，
-	对于商业使用要求 \$25 的强制注册。
+	\prgname{xv} 对于非商业使用是共享软件，对于商业使用要求的强制注册。
 	更多信息可见
 	\begin{center}
 		\url{http://www.trilon.com/xv/xv.html}

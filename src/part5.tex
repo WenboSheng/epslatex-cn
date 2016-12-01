@@ -183,7 +183,7 @@
 \end{figure}
 \end{lstlisting}
 生成图~\ref{fig:subfig}。
-表~\ref{tab:subfigref} 展示了用于如何引用图~\ref{fig:subfig} 中子图的命令。
+表~\ref{tab:ref-subfig} 展示了用于如何引用图~\ref{fig:subfig} 中子图的命令。
 其中带 \texttt{*} 的命令 \cmd{ref*} 和 \cmd{subref*} 需要导入 \pkg{hyperref} 宏包，
 效果是生成没有超链接的引用。
 
@@ -430,7 +430,7 @@
 			Friday & 14.9 \\ \hline
 		\end{tabular}
 		\captionof{table}{This is a Table by a Figure}
-		\label{table:by:fig}
+		\label{tab:by:fig}
 	\end{minipage}
 \end{figure}
 
@@ -450,14 +450,14 @@
 （参见第~\ref{ssec:unprocessfig} 节）。
 
 
-\section{堆叠的图形和子图}\label{sec:stackedfigs}
+\section{堆叠的图形和子图}\label{sec:stackfigs}
 
 第~\ref{sec:sidebyside}~节介绍了一系列方法创建并列图形。
 这些方法的原理都是将对象（图形、小页、子浮动体等）依次排列在一条直线上。
 当使用 \cmd{\cmd{}} 显式断行时，相同的方法也可以生成堆叠的图形。
 此外还可以通过 \cmd{\cmd{}} 命令的可选参数（例如 \cmd{\cmd{}}\opt{[20pt]}）指定竖直间距。
 
-\subsection{堆叠的图形}\label{ssec:stackedfigs}
+\subsection{堆叠的图形}\label{ssec:stackfigs}
 
 第~\ref{sec:sidebyside}~节介绍了如何创建并列图形。
 本节的内容表明，添加断行可以生成多行图形。
@@ -551,7 +551,7 @@
 
 \subsection{堆叠的子图}\label{ssec:stackedsubfigs}
 
-第~\ref{sec:sidesubfigure}~节介绍了如何创建并列的子图。
+第~\ref{ssec:sidesubfigure}~节介绍了如何创建并列的子图。
 本节的内容表明，添加断行可以生成多行子图。
 例如下列代码
 
@@ -729,7 +729,7 @@ skip=6pt,list=false,hypcap=false
 \end{lstlisting}
 不过，这样做会使得两幅图形无法被正确区分，导致 \LaTeX{} 的引用的混乱。
 
-\subsection{连续图形}
+\subsection{连续图形}\label{ssec:continuedfloat}
 
 连续图形既需要具有相同的编号，又应该有各自不同的引用，例如“Figure 12, Figure 12b”。
 构造连续图形的最佳办法是使用 \pkg{caption} 宏包。
