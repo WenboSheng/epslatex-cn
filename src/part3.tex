@@ -1221,8 +1221,9 @@ GraphicFrag01.pdf
 \end{minipage}%
 \begin{minipage}[b]{.6\textwidth}
 \begin{lstlisting}
-\begin{overpic}[width=\linewidth,grid,tics=10]%
-               {golfer}
+\begin{overpic}%
+	[width=\linewidth,grid,tics=10]%
+	{golfer}
 \end{overpic}
 \end{lstlisting}
 \par\vspace{0pt}
@@ -1232,7 +1233,7 @@ GraphicFrag01.pdf
 \begin{overpic}[width=\linewidth]{golfer}
   \put(5,50){\LaTeX}
   \put(5,40){\color{red}外部图形}
-  \put(55,10){%
+  \put(50,10){%
     \includegraphics[scale=.06]%
                     {golfer}}
 \end{overpic}
@@ -1241,11 +1242,12 @@ GraphicFrag01.pdf
 \begin{minipage}[b]{.6\textwidth}
 \begin{lstlisting}
 \begin{overpic}[width=\linewidth]{golfer}
-  \put(5,50){\LaTeX}
-  \put(5,40){\color{red}外部图形}
-  \put(55,10){%
-    \includegraphics[scale=.07]%
-                    {golfer}}
+	\put(5,50){\LaTeX}
+	\put(5,40){\color{red}外部图形}
+	\put(50,10){%
+		\includegraphics[scale=.07]%
+			{golfer}}
+\end{overpic}
 \end{lstlisting}
 \par\vspace{0pt}
 \end{minipage}
@@ -1274,7 +1276,7 @@ GraphicFrag01.pdf
   \put(65,65){\colorbox{white}{\shortstack{水力 \\ 驱动器}}}
 \end{overpic}
 \end{lstlisting}
-结果如图~\ref{fig:overpic:psfrag}所示。
+结果如图~\ref{fig:overpic:psfrag} 所示。
 
 \begin{center}
 	\CJKfamily{zhkai}

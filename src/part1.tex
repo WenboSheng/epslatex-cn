@@ -2,10 +2,10 @@
 \part{背景知识}
 
 \section{简介}\label{sec:introduction}
-当 Knuth 编写 \TeX\ 的时候，还没有 \prgname{PostScript}/\prgname{eps}、\prgname{jpeg}、\prgname{gif} 以及其它图像格式。
+当 Knuth 编写 \TeX{} 的时候，还没有 \prgname{PostScript}/\prgname{eps}、\prgname{jpeg}、\prgname{gif} 以及其它图像格式。
 \marginpar{历史渊源}
 因此 \prgname{dvi} 文件对于图像导入并没有直接的支持。
-不过，\TeX{} 允许\file{dvi} 文件中包含 \cmd{spectial} 命令，
+不过，\TeX{} 允许\file{dvi} 文件中包含 \cmd{special} 命令，
 通过它可以向调用 \file{dvi} 文件的程序传递命令。
 因此，凡是调用 \file{dvi} 的程序支持的图像格式，
 \TeX\ 和 \LaTeX\ 都能够导入。
@@ -13,10 +13,10 @@
 过去的许多年来，\file{dvi} 通常都被转为 \file{PostScript}格式，
 进而标准的插图格式是 Encapsulated PostScript（\file{eps}）图像，
 因为它是PostScript语言的一个子集。
-在 \LaTeX{} 中插入\file{eps}图像最初通过低层命令 \cmd{spectial} 来完成。
+在 \LaTeX{} 中插入\file{eps}图像最初通过低层命令 \cmd{special} 来完成。
 为了使插图更加方便并且更具有可移植性，
 专门为 \LaTeX 2.09 设计了两个高层的宏包 \pkg{epsf} 和 \pkg{psfig}。
-\textsf{epsf}~提供了 \cmd{epsfbox} 命令来插入图片，
+\textsf{epsf} 提供了 \cmd{epsfbox} 命令来插入图片，
 此外另有三个命令来控制图片的缩放。
 在 \pkg{psfig} 中，\cmd{psfig} 命令除了用来插入图片，还有缩放和旋转功能。
 不过，尽管 \pkg{psfig} 的句法更受欢迎，它的代码却没有 \pkg{epsf} 健壮。
@@ -24,8 +24,9 @@
 \pkg{epsfig} 宏包使用 \pkg{psfig} 的句法和大部分 \pkg{epsf} 的健壮代码。
 不过，\pkg{epsfig} 仍然使用了一些不健壮的 \pkg{psfig} 代码。
 
-随着 1994 年 \LaTeXe{} 的发布，\LaTeX 3 小组认识到在 \LaTeX{} 中插图的一些普遍问题。
-\marginpar{\LaTeX{} 图形宏集}
+随着 1994 年 \LaTeXe{} 的发布，
+\marginpar{\LaTeX{}\\图形宏集}
+\LaTeX 3 小组认识到在 \LaTeX{} 中插图的一些普遍问题。
 通过努力，他们开发出了“\LaTeX\ 图形宏集”，
 \footnote{已经有 \LaTeX{} 图形宏集的 plain \TeX{} 版本，
 	相关文件请见 \href{ftp://ctan.tug.org/tex-archive/macros/plain/graphics/}{CTAN/macros/generic/graphics/}}
@@ -56,9 +57,10 @@
 因此，该 \pkg{epsfig} 宏包应当只用于旧文档。
 在编写新文档时要用 \cmd{includegraphics}。
 
-除了改进 \file{eps} 图片的部分，\LaTeX{}~图形宏集还处理非 \file{eps} 图像格式的插图问题，
+除了改进 \file{eps} 图片的部分，
+\marginpar{非 \file{eps}\\图形}
+\LaTeX{}~图形宏集还处理非 \file{eps} 图像格式的插图问题，
 例如\file{jpeg} 和 \file{gif}等。
-\marginpar{非 \file{eps} 图形}
 由于 \file{dvi} 到 \file{ps} 的转换程序一般不直接支持大部分的非\file{eps} 格式，
 向 \file{PostScript} 文档中插入这些图像之前相关图像必须首先转成 \file{eps} 格式。
 尽管这种图像格式的预处理通常是最佳办法，
@@ -90,7 +92,7 @@
 \pdfTeX 从名称上看来输出的是 \file{pdf}，
 不过它也能输出 \file{dvi} 格式，并且与原先 \TeX{} 引擎的输出结果相同。
 
-如同 \prgname{latex}　命令使用　\TeX{} 处理 \LaTeX{} 文档来生成 \file{dvi} 文件，
+如同 \prgname{latex}　命令使用　\TeX{} 处理 \LaTeX{} 文档来生成 \file{dvi} 文件一样，
 \prgname{pdflatex} 命令使用 \pdfTeX{} 处理 \LaTeX{} 文档，并直接生成 \file{pdf} 文件。
  
 \pdfTeX{} 的一个重要特性就是原生支持许多图像格式：
@@ -102,7 +104,7 @@
 \footnote{\pdfTeX{} 可以导入由 \prgname{PurifyEPS} 处理的 \file{eps} 文件，
 	见第 \ref{ssec:purifyeps} 节（\pageref{ssec:purifyeps} 页）。}，
 用户需要用 \prgname{epstopdf} 等程序将 \file{eps} 文件转成 \file{pdf} 格式，
-不过这样就不能直接使用 PSfrag 宏包（见第 \ref{ssec:psfrag} 节，\pageref{ssec:psfrag} 页）。
+不过这样就不能直接使用 \pkg{PSfrag} 宏包（见第 \ref{ssec:psfrag} 节，\pageref{ssec:psfrag} 页）。
 
 \section{\LaTeX{} 术语}\label{sec:terminology}
 
@@ -126,7 +128,7 @@
 \emphi{高度}（\emphi{height}）、\emphi{深度}（\emphi{depth}）和\emphi{宽度}（\emphi{width}）。
 高度是参考点到盒子顶部的距离，深度是参考点到盒子底部的距离，宽度则是盒子的宽度。
 而\emphi{整体高度}（\emphi{totalheight}）定义为盒子底部到顶部的距离，即
-$\text{整体高度} = \text{高度} + \text{深度}$。
+$\text{\emph{整体高度}} = \text{\emph{高度}} + \text{\emph{深度}}$。
 
 未旋转的 \file{eps} 图形的参考点是它的左下角（见图~\ref{fig:rotate-box}~的
 左边的盒子），它的深度为零，高度就等于全部高度。
@@ -185,7 +187,7 @@ PostScript 语言能够用来描述图形和文本。
 所以在大多数情况下，简单地将这些招致问题的操作符删除就可解决问题。
 其它的情形则需要更为复杂的PostScipt编程知识。
 
-\subsection{The EPS BoundingBox}\label{ssec:bbox}
+\subsection{EPS BoundingBox}\label{ssec:bbox}
 \index{EPS BoundingBox}
 
 习惯上，PostScript 文件的第一行标明了该文件的PostScript类型，
@@ -299,7 +301,7 @@ PostScript 语言能够用来描述图形和文本。
 	当 \file{dvi} 转换为 \file{ps} 时，\file{eps} 文件必须存在。
 	因此，所有用到的\file{eps}文件必须和 \file{dvi} 文件放在一起。
 	\item 一些 \file{dvi} 浏览器可能不支持显示 \file{eps} 图像。
-	这时，为了方便使用者对图像进行定位，一般会将图形的BoundingBoX用一个方框显示出来。
+	这时，为了方便使用者对图像进行定位，一般会将图形的BoundingBox用一个方框显示出来。
 \end{itemize}
 
 \subsection{行缓冲区溢出}\label{ssec:linebuffer}
@@ -391,7 +393,7 @@ PostScript 语言能够用来描述图形和文本。
 \subsection{PDF}\label{ssec:pdf}
 \href{http://www.adobe.com}{Adobe} 的便携式文档格式（ Portable Document Format, pdf ）与它的Adobe成员 PostScript 有很多相似之处。
 与PostScript一样，\file{pdf} 可以包含文本、矢量图和位图。
-一个 \file{pdf} 文件可以包含整个文档，也可以仅仅包含一个图形（类似于 \file{pdf} ）。
+一个 \file{pdf} 文件可以包含整个文档，也可以仅仅包含一个图形（类似于 \file{eps} ）。
 
 \file{pdf} 不仅仅是 \pdfTeX{} 的主要输出格式，也是\pdfTeX{} 插图的最普遍方法。
 许多图像程序允许它们的图像直接保存为 \file{pdf} 格式。
@@ -408,10 +410,9 @@ MetaPost 是由John Hobby编写的绘图语言。
 它基于高德纳的 \prgname{metafont}，但增加了PostScript输出的功能。
 关于MetaPost的信息可以从以下网址获得：
 \begin{center}
-\url{http://www.tug.org/metapost.html}\\
-\url{http://cm.bell-labs.com/who/hobby/MetaPost.html}
+\url{http://www.tug.org/metapost.html}
 \end{center}
-相关文档可参考~\cite{MetaPost}。
+相关文档可参考~\cite{metaPost-doc}。
 
 MetaPost 可以用于 \prgname{dvips} 类型的 \LaTeX{} 文档，
 也可以直接用于 \pdfLaTeX{} 文档\footnote{
@@ -432,7 +433,7 @@ Scott Pakin 的 \prgname{purifyeps} 工具能够将很多（但不是全部） \
 为了运行 \prgname{purifyeps} 你需要下列工具：
 \begin{description}
 	\item[PurifyEPS] 可以从\href{ftp://ctan.tug.org/tex-archive/support/purifyeps/}{CTAN/support/purifyeps/} 获得，
-	其中 \texttt{CTAN/} 使用第~\pageref{ctan-cite} 页中列出的任何\textsc{ctan} 站点替代。
+	其中 \texttt{CTAN/} 使用第~\pageref{ctan-sites} 页中列出的任何\textsc{ctan} 站点替代。
 	\item[Perl] 可以从 \url{http://www.cpan.org} 获得。
 	\item[pstoedit] 可以从 \url{http://www.pstoedit.net/pstoedit} 获得。
 	\item[mpost] 来自于任何包含MetaPost的\LaTeX{} 发行版本。
@@ -454,32 +455,12 @@ Ghostscript 是一个 PostScript/\file{pdf} 解释器，
 也可以用 Postscript 和 非 PostScript 打印机来打印。
 AFPL Ghostscript 可以从 Ghostscript 官网获得：
 \begin{center}
-	\url{http://www.cs.wisc.edu/~ghost/}
+	\url{http://ghostscript.com/}
 \end{center}
 其中包含了预编译的Windows、DOS、OS/2 和 Macintosh 可执行文件，
 以及在 Unix/VMS 下可用的源代码。
 此外还有一些Ghostscript的图形界面软件，例如GSview、Ghostview、GV等，
 可以更方便地浏览 PostScript。
-
-%Aladdin \GS~目前的正式版本为~6.01，~GNU \GS~的正式版本为~5.50。
-%对于~Window/DOS/OS{\small /}2~和~Macintosh~的用户来说，直接下载
-%它的已编译好的压缩包，安装使用就行了。而对于~Unix/VMS~的用户，通常
-%需要自己编译。编译时，首先将~\texttt{ghostscrip-x.xx.tar.gz}~和
-%其它所需的软件包解压缩：
-%\begin{Verbatim}[xleftmargin=1cm]
-%gzip -dc ghostscrip-x.xx.tar.gz | tar -vxf -
-%cd gsx.xx
-%gzip -dc ghostscrip-x.xxjpeg.tar.gz | tar -vxf -
-%gzip -dc ghostscrip-x.xxlibpng.tar.gz |tar -vxf -
-%gzip -dc ghostscrip-x.xxzlib.tar.gz | tar -vxf -
-%\end{Verbatim}
-%解压后可参考~GS~所带的帮助文件~make.txt~来按照你的要求编辑适当的~.mak~
-%文件，然后进行编译（假设使用~\texttt{gcc}~编译）和安装：
-%\begin{Verbatim}[xleftmargin=1cm]
-%ln -s src/gcc.mak ./Makefile
-%make
-%make install
-%\end{Verbatim}
 
 Ghostscript中还带有一些有用的工具，如 \prgname{ps2pdf} 等，可利用Ghostscript来
 转换图形，打印、预览 PostScript文件。
@@ -503,13 +484,12 @@ Ghostscript中还带有一些有用的工具，如 \prgname{ps2pdf} 等，可利
 	添加、拉伸和旋转文字、线条、多边形、椭圆和贝塞尔曲线。
 	
 	例如，当 \prgname{ImageMagick} 的 \prgname{convert} 命令添加到系统的环境变量后，
-	如下命令
+	如下命令会将 \file{file.jpg} 存为 \file{eps} 版本。
 \begin{verbatim}
 		convert file.jpg file.eps
 \end{verbatim}
-	会将 \file{file.jpg} 存为 \file{eps} 版本。
 	
-	使用通配符可以批量转换文件
+	使用通配符可以批量转换文件，例如
 \begin{verbatim}
 		convert *.gif image.png
 \end{verbatim}
@@ -519,8 +499,8 @@ Ghostscript中还带有一些有用的工具，如 \prgname{ps2pdf} 等，可利
 		images-1.png
 		...
 \end{verbatim}
-	将\file{png} 文件的文件名与原始的　\file{gif} 相同则比较复杂，
-	涉及到写一个 shell 脚本或者 Windows 批处理文件。
+	想要将 \file{png} 文件名保存成原始的　\file{gif} 文件名则比较复杂，
+	需要写一个 shell 脚本或者 Windows 批处理文件。
 	
 	\prgname{ImageMagick} 可以运行在所有主流的操作系统上。
 	可执行程序和相关信息可以从下面的网址下载
@@ -588,19 +568,13 @@ Ghostscript中还带有一些有用的工具，如 \prgname{ps2pdf} 等，可利
 	
 	\item[WMF2EPS]
 	
-	\prgname{WMF2EPS} 是运行在Windows上的\$20 共享软件，
+	\prgname{WMF2EPS} 是运行在Windows上的共享软件，
 	实现可以 \file{wmf} 到 \file{eps} 的转换。
 	获取网址为
 	\begin{center}
-		\href{ftp://ctan.tug.org/tex-archive/nonfree/support/wmf2eps/}{CTAN/nonfree/support/wmf2eps/}
+		\href{http://www.ctan.org/tex-archive/support/wmf2eps}{CTAN/support/wmf2eps/}
 	\end{center}
 	其中 \texttt{CTAN/} 可以代替为任意列出在第~\pageref{ctan-sites} 页的\textsc{ctan} 站点。
-	
-	该软件也可以从\texttt{WMF2EPS} 官网下载
-	\begin{center}
-		\url{http://www.wmf2eps.de.vu/}
-	\end{center}
-	官网还提供了一些其它信息，包括Adobe兼容打印机驱动的链接（使用\prgname{WMF2EPS}需要安装）。
 	
 	\item[KVEC]
 	
@@ -665,8 +639,7 @@ Level 2 PostScript 支持若干种压缩格式，
 	\prgname{jpeg2ps} 可在 Unix、DOS 和其它操作系统下使用。
 	\prgname{jpeg2ps} 可以从如下网址获得
 	\begin{center}
-		\href{ftp://ctan.tug.org/tex-archive/nonfree/support/jpeg2ps/}{CTAN/nonfree/support/jpeg2ps/}\\
-		\url{http://www.pdflib.com/products/more/jpeg2ps.html}\\
+		\href{http://www.ctan.org/tex-archive/support/jpeg2ps}{CTAN/support/jpeg2ps/}\\
 		\url{http://gnuwin32.sourceforge.net/packages/jpeg2ps.htm}
 	\end{center}
 	其中 \texttt{CTAN/} 可以代替为任意列出在第~\pageref{ctan-sites} 页的\textsc{ctan} 站点。
@@ -718,12 +691,11 @@ Level 2 PostScript 支持若干种压缩格式，
 	\item[Mayura Draw]
 	
 	\prgname{Mayura Draw} 以前称为\prgname{PageDraw}，
-	是 Windows3.1/95/NT 下的 \$39 共享软件。
+	是 Windows3.1/95/NT 下的共享软件。
 	当与ghostscript一起使用时，它可以编辑PostScript文件。见：
 	\begin{center}
 		\url{http://www.mayura.com/}
 	\end{center}
-	\href{http://www.wix.com/PageDraw}{\texttt{http://www.wix.com/PageDraw}}
 	
 	\item[xfig]
 	

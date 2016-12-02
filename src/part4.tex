@@ -175,7 +175,7 @@ text text text text text text...
 	\footnote{当一幅图形被放置在页面的底部时，
 		如果此页有脚注的话，它将位于所有脚注的下方。
 		现在还没有办法来避免这种情况。}。
-	\item [p] \emph{\CJKfamily{hei} 浮动页。} 将图形放置在允许有浮动体的页面上。
+	\item [p] \emph{浮动页。} 将图形放置在允许有浮动体的页面上。
 \end{description}
 
 几个注记：
@@ -996,7 +996,7 @@ text text text text text text...
 \end{sidewaystable}
 
 
-\subsection{使用 Caption 宏包命令定制标题} \label{ssec:captioncmd}
+\subsection{使用 Caption 宏包命令定制标题} \label{ssec:caption-custom}
 
 正如第~\ref{ssec:caption-overview} 提到的，
 利用 \pkg{caption} 宏包可以定制标题的字体、间距、标签和格式。
@@ -1231,7 +1231,7 @@ text text text text text text...
 \subsubsection{Caption宏包字体选项}\label{sssec:caption-fontopt}
 
 表~\ref{tab:caption-fontopt} 列出了\pkg{caption} 宏包提供的三个定制标题字体的选项。
-其中“标签”、“分隔符”和“标题内容”的定义如图~\ref{fig:captiondef} 所示。
+其中“标签”、“分隔符”和“标题内容”的定义如图~\ref{fig:def-capcontent} 所示。
 这三个选项可以修改字族、字形、字系和字号的任意组合，见表~\ref{tab:caption-fontval}。
 
 \begin{minipage}{\linewidth}
@@ -1403,7 +1403,6 @@ text text text text text text...
 \begin{minipage}{\linewidth}
 	\centering
 	\captionsetup{skip=1cm,belowskip=0pt}
-	\captionsetup[figure]{position=bottom}
 	\captionsetup[table]{position=top}
 	\captionof{table}{Table for Vertical Spacing Example \#3}
 	\label{tab:caption-skip-ex3}
@@ -1413,6 +1412,7 @@ text text text text text text...
 		c & d \\ \hline
 	\end{tabular}\\
 	\usebox{\boxgraphictwo}
+	\captionsetup[figure]{position=bottom}
 	\captionof{figure}{Figure for Vertical Spacing Example \#3}
 	\label{fig:caption-skip-ex3}
 \end{minipage}
@@ -1899,7 +1899,7 @@ singlelinecheck=false}
 表~\ref{tab:caption-formatopt} 介绍了 \opt{format=} 选项值。
 \cmdi{DeclareCaptionFormat} 命令允许用户为 \opt{format=} 选项自定义额外的选项值。
 在自定义中，使用符号 \opt{\#1}、\opt{\#2} 和 \opt{\#3} 指代标题的各部分。
-其中 \opt{\#1} 代表标题标签，\opt{\#2} 代表标题分隔符，\opt{\#3} 代表标题文本（其定义可参见图~\ref{fig:captiondef}）。
+其中 \opt{\#1} 代表标题标签，\opt{\#2} 代表标题分隔符，\opt{\#3} 代表标题文本（其定义可参见图~\ref{fig:def-capcontent}）。
 例如，在导言区使用如下命令定义了 \opt{reverse} 格式，
 使得先出现标题内容，然后是标题分隔符，最后是放在双尖括号 \cmd{ll} 和 \cmd{gg} 内的标题标签。
 \begin{lstlisting}

@@ -6,6 +6,10 @@
 \usepackage{lmodern}
 \usepackage{textcomp}
 \usepackage[style=numeric,sorting=nty]{biblatex}
+\usepackage{geometry}
+%\usepackage{marginnote}
+\usepackage{etoolbox}
+\usepackage{cprotect}
 
 \usepackage{placeins}
 \usepackage{fancybox}
@@ -20,7 +24,6 @@
 \usepackage{psfrag}
 \usepackage{overpic}
 
-\usepackage{cprotect}
 \usepackage{fancyvrb}
 \usepackage{verbatim}
 \usepackage{listings}
@@ -28,7 +31,18 @@
 \usepackage{hologo}
 \usepackage{array,booktabs}
 \usepackage{hyperref}
+\usepackage{layout}
 
+% settings
+\geometry{a4paper,includemp,reversemp,left=0.9in,right=0.85in,top=1in,bottom=1in,%
+	marginparwidth=50pt}
+
+\let\marginpartemp=\marginpar
+\renewcommand{\marginpar}[1]{\reversemarginpar\marginpartemp{\CJKfamily{zhkai} #1}}
+%\patchcmd{\@ympar}{\@savemarbox\@marbox{#1}}{\@savemarbox\@marbox{{\itshape\small#1}}}{}{}
+%\pretocmd{\marginpar}{\reversemarginpar}{}{}
+
+%\renewcommand{\marinpar}[1]{\reversemarginpar\marginpartemp{\CJKfamily{zhkai}#1}}
 \graphicspath{{images/}}
 \def\pdfTeX{\hologo{pdfTeX}}
 \def\pdfLaTeX{\hologo{pdfLaTeX}}
@@ -121,6 +135,7 @@
 \makeindex
 %\includeonly{part1}
 \begin{document}
+\layout
 
 \include{preface}
 
