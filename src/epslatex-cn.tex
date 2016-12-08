@@ -10,6 +10,8 @@
 %\usepackage{marginnote}
 \usepackage{etoolbox}
 \usepackage{cprotect}
+\usepackage{environ}
+\usepackage[nottoc,section]{tocbibind}
 
 \usepackage{placeins}
 \usepackage{fancybox}
@@ -42,16 +44,38 @@
 %\patchcmd{\@ympar}{\@savemarbox\@marbox{#1}}{\@savemarbox\@marbox{{\itshape\small#1}}}{}{}
 %\pretocmd{\marginpar}{\reversemarginpar}{}{}
 
+\defbibheading{mybibintoc}[\refname]{%
+ 	\section*{#1}%
+ 	\phantomsection%
+ 	\addcontentsline{toc}{section}{#1}%
+ 	\label{references}
+ 	\markboth{\MakeUppercase{#1}}{\MakeUppercase{#1}}
+ 	\thispagestyle{plain}}
 %\renewcommand{\marinpar}[1]{\reversemarginpar\marginpartemp{\CJKfamily{zhkai}#1}}
 \graphicspath{{images/}}
 \def\pdfTeX{\hologo{pdfTeX}}
 \def\pdfLaTeX{\hologo{pdfLaTeX}}
+\def\XeTeX{\hologo{XeTeX}}
+\def\LuaTeX{\hologo{LuaTeX}}
 \def\HanTheThanh{\hologo{HanTheThanh}}
 \lstset{
 	basicstyle=\ttfamily\small,
 	commentstyle=\ttfamily\slshape,
 	language=[LaTeX]{TeX},
+	tabsize=4,
 	xleftmargin=1em}
+\NewEnviron{fixedfigure}[1]{%
+	\begin{minipage}{#1}%
+		\vspace{\intextsep}
+		\captionsetup{type=figure}%
+		\BODY%
+	\end{minipage}}
+\NewEnviron{fixedtable}[1]{%
+	\begin{minipage}{#1}%
+		\vspace{\intextsep}
+		\captionsetup{type=table}%
+		\BODY%
+	\end{minipage}}
 % new column type in tabular with fixed width
 \newcolumntype{P}[1]{>{\setlength{\parindent}{2em}}p{#1}}
 \newcommand{\file}[1]{\texttt{#1}}
@@ -128,8 +152,6 @@
 \definecolor{VerbatimColor}{cmyk}{0.45,0.86,0,0}
 \definecolor{PageColor}{rgb}{0.21,0.42,0.73}
 
-
-
 \addbibresource{ref.bib}
 
 \makeindex
@@ -137,9 +159,11 @@
 \begin{document}
 \layout
 
+\include{title}
+
 \include{preface}
 
-\tableofcontents
+\tableofcontents\label{toc}
 
 \include{part1}
 
@@ -151,7 +175,14 @@
 
 \include{part5}
 
-\printbibliography[title={参考文献}, heading=bibnumbered]
-%\makeindex
+\clearpage
+
+%\addcontentsline{toc}{section}{参考文献}
+\printbibliography[title={参考文献},heading=mybibintoc]
+
+\clearpage
+%\addcontentsline{toc}{section}{索引}
+\phantomsection\label{sec:index}
 \printindex
+
 \end{document}

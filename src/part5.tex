@@ -690,7 +690,7 @@
 margin=0pt,font+=small,labelformat=parens,labelsep=space,
 skip=6pt,list=false,hypcap=false
 \end{lstlisting}
-	其中各个选项的含义参见第~\ref{ssec:captioncmd} 节以及 \pkg{caption} 宏包文档\cite{caption-doc}。
+	其中各个选项的含义参见第~\ref{ssec:caption-cmd} 节以及 \pkg{caption} 宏包文档\cite{caption-doc}。
 	
 	\item \opt{sub} 类型的全局设置
 	\begin{center}
@@ -890,13 +890,14 @@ skip=6pt,list=false,hypcap=false
 
 \subsection{Wrapfig 宏包}\label{ssec:wrapfig}
 
-\begin{wrapfigure}{l}{25pt}
-	\textcolor{blue}{\resizebox{2em}{!}{\bfseries\texttt{W}}}
+\begin{wrapfigure}{l}{2em}
+	\textcolor{blue}{\resizebox{2em}{!}{\bfseries\texttt{\fbox{W}}}}
 \end{wrapfigure}
 \noindent \texttt{rapfig} 宏包提供了一个 \envi{wrapfigure} 环境\footnote{
 	\pkg{wrapfig} 也同时提供了一个 \envi{wraptable} 环境。}来排版窄小的图形，
 使得该图形位于文本的一边，并使文本在其边上折行。
 
+\FloatBarrier
 \env{wrapfigure}的用法为：
 \begin{flushleft}
 	\cmdMOMOM{begin}{wrapfigure}{\metacmd{行数}}{\metacmd{位置}}{\metacmd{外延长度}}{\metacmd{宽度}}\\
@@ -909,8 +910,8 @@ skip=6pt,list=false,hypcap=false
 \metacmd{位置}是指图形相对于文本的位置，须给定下面四项的一个。
 其中大写字母选项允许图形浮动，而小写字母选项则严格地将图形放在代码所在位置。
 \begin{description}
-	\item [\opt{r,R}] 表示图形位于文本的左边。
-	\item [\opt{l,L}] 表示图形位于文本的右边。
+	\item [\opt{r,R}] 表示图形位于文本的右边。
+	\item [\opt{l,L}] 表示图形位于文本的左边。
 	\item [\opt{i,I}] 表示图形位于页面靠里的一边（用在\opt{twoside}双面格式里）。
 	\item [\opt{o,O}] 表示图形位于页面靠外的一边。
 \end{description}
@@ -969,7 +970,7 @@ skip=6pt,list=false,hypcap=false
 
 \pkgi{picinpar} 宏包定义了一个基本的环境 \envi{window}，
 还有两个变体 \envi{figwindow} 和 \envi{tabwindow}。
-允许在文本段落中打开一个“窗口”，在其中放入图形、文字和表格等。
+效果是在文本段落中打开一个“窗口”，在其中放入图形、文字和表格等。
 这里我们主要讨论将图形放入文本段落的用法，其它的用法可参考 \pkg{picinpar} 的说明。
 
 \begin{flushleft}
@@ -996,7 +997,7 @@ skip=6pt,list=false,hypcap=false
 \CJKfamily{zhkai}
 \begin{Verbatim}
 \begin{window}[2,c,{\fcolorbox{morelight}{yellow}{%
-		\shortstack{你在他乡 \\还 好 \\ 吗？}}},{}]
+	\shortstack{你在他乡 \\还 好 \\ 吗？}}},{}]
 	可是哈卜拉姆再聪明...可是我偏不喜欢。」
 \end{window}
 \end{Verbatim}
@@ -1013,13 +1014,13 @@ skip=6pt,list=false,hypcap=false
 
 \begin{Verbatim}
 \begin{figwindow}[1,r,{\mbox{%
-		\includegraphics[width=4cm]{tiger}}},{Tiger}]
+	\includegraphics[width=3cm]{tiger}}},{Tiger}]
 	可是哈卜拉姆再聪明...可是我偏不喜欢。」
 \end{figwindow}
 \end{Verbatim}
 
 \begin{figwindow}[1,r,{\mbox{%
-		\includegraphics[width=4cm,clip]{tiger}}},{Tiger}]
+		\includegraphics[width=3cm,clip]{tiger}}},{Tiger}]
 	可是哈卜拉姆再聪明、再有学问，有一件事却是他不能解答的，因为包
 	罗万有的「可兰经」上也没有答案；如果你深深爱著的人，却深深的爱上了
 	别人，有甚麽法子？白马带著她一步步的回到中原。白马已经老了，只能慢
@@ -1030,7 +1031,7 @@ skip=6pt,list=false,hypcap=false
 
 \begin{Verbatim}
 \begin{figwindow}[1,c,{\mbox{%
-		\includegraphics[width=3cm]{tiger}}},{Tiger}]
+	\includegraphics[width=3cm]{tiger}}},{Tiger}]
 	可是哈卜拉姆再聪明...可是我偏不喜欢。」
 \end{figwindow}
 \end{Verbatim}

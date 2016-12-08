@@ -149,7 +149,7 @@ text text text text text text...
 
 由于 \pkg{hyperref} 重定义了很多 \LaTeX{} 命令，
 通常用户需要注意 \cmd{usepackage} 的顺序以使得最后导入 \pkg{hyperref} 宏包。
-更多信息请参考 \cite{hyperref-manual}。
+更多信息请参考 \cite{hyperref-doc}。
 
 \paragraph{超文本引用}
 当使用 \pkg{hyperref} 宏包时，\cmd{ref} 命令会打印出的图形编号会带有指向该图形的超链接。
@@ -207,7 +207,7 @@ text text text text text text...
 \end{itemize}
 
 当 \LaTeX{}“\emph{试图}”放置一浮动图形时，
-\marginpar{参见文献 \cite[第~198~页]{Leslie1994}}
+\marginpar{见 \cite[第~198~页]{Lamport1994}}
 它将遵循以下规则：
 \begin{enumerate}
 	\item 图形只能置于由位置参数所确定的地点。
@@ -1234,12 +1234,12 @@ text text text text text text...
 其中“标签”、“分隔符”和“标题内容”的定义如图~\ref{fig:def-capcontent} 所示。
 这三个选项可以修改字族、字形、字系和字号的任意组合，见表~\ref{tab:caption-fontval}。
 
-\begin{minipage}{\linewidth}
+\begin{fixedfigure}{\linewidth}
 	\centering
 	\includegraphics{captiondef}
-	\captionof{figure}{标题标签、分隔符和标题内容的定义}
+	\caption{标题标签、分隔符和标题内容的定义}
 	\label{fig:def-capcontent}
-\end{minipage}
+\end{fixedfigure}
 
 \vskip2em\hrule
 
@@ -1253,13 +1253,13 @@ text text text text text text...
 会将所有的标题字体重置为默认值，然后将整个标题（标签、分隔符和标题内容）设置为 \opt{Large} 字号并加粗，
 而字族和字形仍然保持默认值，如图~\ref{fig:caption-font-ex1} 所示。
 
-\begin{minipage}{\linewidth}
+\begin{fixedfigure}{\linewidth}
 	\centering
 	\usebox{\boxgraphictwo}
 	\captionsetup{font={default,Large,bf}}
-	\captionof{figure}{This is Caption Font Example \#1}
+	\caption{This is Caption Font Example \#1}
 	\label{fig:caption-font-ex1}
-\end{minipage}
+\end{fixedfigure}
 
 注意以上的例子会同时影响图形和表格的标题。
 如果 \cmd{captionsetup} 添加了 \opt{[figure]} 选项
@@ -1282,13 +1282,13 @@ text text text text text text...
 然后将标题内容设置为 \opt{scriptsize} 字号和无衬线字族，
 如图~\ref{fig:caption-font-ex2} 所示。
 
-\begin{minipage}{\linewidth}
+\begin{fixedfigure}{\linewidth}
 	\centering
 	\usebox{\boxgraphictwo}
 	\captionsetup{font=default, textfont={scriptsize,sf}}
-	\captionof{figure}{This is Caption Font Example \#2}
+	\caption{This is Caption Font Example \#2}
 	\label{fig:caption-font-ex2}
-\end{minipage}
+\end{fixedfigure}
 
 \vskip2em\hrule
 
@@ -1304,13 +1304,13 @@ text text text text text text...
 然后将标题标签和分隔符加粗、将标题内容设置为斜体，
 如图~\ref{fig:caption-font-ex3} 所示。
 
-\begin{minipage}{\linewidth}
+\begin{fixedfigure}{\linewidth}
 	\centering
 	\usebox{\boxgraphictwo}
 	\captionsetup{font={default,Large}, labelfont=bf, textfont=sl}
-	\captionof{figure}{This is Caption Font Example \#3}
+	\caption{This is Caption Font Example \#3}
 	\label{fig:caption-font-ex3}
-\end{minipage}
+\end{fixedfigure}
 
 \vskip2em\hrule
 
@@ -1342,13 +1342,13 @@ text text text text text text...
 \end{lstlisting}
 在标题和浮动体内容之间留出1厘米间距，如图~\ref{fig:caption-skip-ex1}
 
-\begin{minipage}{\linewidth}
+\begin{fixedfigure}{\linewidth}
 	\centering
 	\usebox{\boxgraphictwo}
 	\captionsetup{skip=1cm}
-	\captionof{figure}{Vertical Spacing Example \#1}
+	\caption{Vertical Spacing Example \#1}
 	\label{fig:caption-skip-ex1}
-\end{minipage}
+\end{fixedfigure}
 
 \vskip2em\hrule
 
@@ -1364,16 +1364,16 @@ text text text text text text...
 	这是因为当在 \env{tabular} 表格环境或者 \cmd{includegraphics} 插入命令之前使用 \cmd{caption} 时，
 	默认选项 \opt{position=auto} 会自动判断为 \opt{top}。}。
 
-\begin{minipage}{\linewidth}
+\begin{fixedtable}{\linewidth}
 	\centering
 	\captionsetup{aboveskip=1cm,position=top}
-	\captionof{table}{Vertical Spacing Example \#2}\label{tab:caption-skip-ex2}
+	\caption{Vertical Spacing Example \#2}\label{tab:caption-skip-ex2}
 	\begin{tabular}{|c|c|}
 		\hline
 		a & b \\ \hline
 		c & d \\ \hline
 	\end{tabular}
-\end{minipage}
+\end{fixedtable}
 
 \vskip2em\hrule
 
@@ -1400,11 +1400,12 @@ text text text text text text...
 这样表格的标题下方有1厘米间距（表~\ref{tab:caption-skip-ex3}），
 而图形的标题上方有1厘米间距（图~\ref{fig:caption-skip-ex3}）。
 
-\begin{minipage}{\linewidth}
+\begin{fixedfigure}{\linewidth}
 	\centering
+	\captionsetup{type=table}
 	\captionsetup{skip=1cm,belowskip=0pt}
-	\captionsetup[table]{position=top}
-	\captionof{table}{Table for Vertical Spacing Example \#3}
+%	\captionsetup[table]{position=top}
+	\caption{Table for Vertical Spacing Example \#3}
 	\label{tab:caption-skip-ex3}
 	\begin{tabular}{|c|c|}
 		\hline
@@ -1412,10 +1413,11 @@ text text text text text text...
 		c & d \\ \hline
 	\end{tabular}\\
 	\usebox{\boxgraphictwo}
-	\captionsetup[figure]{position=bottom}
-	\captionof{figure}{Figure for Vertical Spacing Example \#3}
+	\captionsetup{type=figure}
+%	\captionsetup[figure]{position=bottom}
+	\caption{Figure for Vertical Spacing Example \#3}
 	\label{fig:caption-skip-ex3}
-\end{minipage}
+\end{fixedfigure}
 
 \vskip2em\hrule
 
@@ -1431,13 +1433,13 @@ text text text text text text...
 一般情况下 \opt{simple} 格式等同于 \opt{default} 格式，
 除非文档类重新定义了 \opt{default} 为不同样式。
 
-\begin{minipage}{\linewidth}
+\begin{fixedfigure}{\linewidth}
 	\centering
 	\usebox{\boxgraphictwo}
 	\captionsetup{labelformat=simple}
-	\captionof{figure}{This is Caption Label Example \#1}
+	\caption{This is Caption Label Example \#1}
 	\label{fig:caption-label-ex1}
-\end{minipage}
+\end{fixedfigure}
 
 \vskip2em\hrule
 
@@ -1450,13 +1452,13 @@ text text text text text text...
 如图~\ref{fig:caption-label-ex2} 所示，标签格式为 \opt{parens}。
 数字编号位于一对圆括号内。
 
-\begin{minipage}{\linewidth}
+\begin{fixedfigure}{\linewidth}
 	\centering
 	\usebox{\boxgraphictwo}
 	\captionsetup{labelformat=parens}
-	\captionof{figure}{This is Caption Label Example \#2}
+	\caption{This is Caption Label Example \#2}
 	\label{fig:caption-label-ex2}
-\end{minipage}
+\end{fixedfigure}
 
 \vskip2em\hrule
 
@@ -1469,13 +1471,13 @@ text text text text text text...
 如图~\ref{fig:caption-label-ex3} 所示，标签格式为 \opt{empty}。
 不过由于没有编号，很难说这是图~\ref{fig:caption-label-ex3}。
 
-\begin{minipage}{\linewidth}
+\begin{fixedfigure}{\linewidth}
 	\centering
 	\usebox{\boxgraphictwo}
 	\captionsetup{labelformat=empty, labelsep=none}
-	\captionof{figure}{This is Caption Label Example \#3}
+	\caption{This is Caption Label Example \#3}
 	\label{fig:caption-label-ex3}
-\end{minipage}
+\end{fixedfigure}
 
 \vskip2em\hrule
 
@@ -1487,13 +1489,13 @@ text text text text text text...
 \end{lstlisting}
 如图~\ref{fig:caption-label-ex4} 所示，标题分隔符由默认的冒号改为句点。
 
-\begin{minipage}{\linewidth}
+\begin{fixedfigure}{\linewidth}
 	\centering
 	\usebox{\boxgraphictwo}
 	\captionsetup{labelformat=default, labelsep=period}
-	\captionof{figure}{This is Caption Label Example \#4}
+	\caption{This is Caption Label Example \#4}
 	\label{fig:caption-label-ex4}
-\end{minipage}
+\end{fixedfigure}
 
 \vskip2em\hrule
 
@@ -1505,14 +1507,13 @@ text text text text text text...
 \end{lstlisting}
 如图~\ref{fig:caption-label-ex5} 所示，标题分隔符改成另起一行。
 
-
-\begin{minipage}{\linewidth}
+\begin{fixedfigure}{\linewidth}
 	\centering
 	\usebox{\boxgraphictwo}
 	\captionsetup{labelformat=default, labelsep=newline}
-	\captionof{figure}{This is Caption Label Example \#5}
+	\caption{This is Caption Label Example \#5}
 	\label{fig:caption-label-ex5}
-\end{minipage}
+\end{fixedfigure}
 
 \vskip2em\hrule
 
@@ -1526,13 +1527,13 @@ text text text text text text...
 \end{lstlisting}
 如图~\ref{fig:caption-format-ex1} 所示，标题宽度设置为 3英寸。
 
-\begin{minipage}{\linewidth}
+\begin{fixedfigure}{\linewidth}
 	\centering
 	\usebox{\boxgraphictwo}
 	\captionsetup{width=3in}
-	\captionof{figure}{This is an example of customizing the caption width}
+	\caption{This is an example of customizing the caption width}
 	\label{fig:caption-format-ex1}
-\end{minipage}
+\end{fixedfigure}
 
 \vskip2em\hrule
 
@@ -1786,13 +1787,13 @@ singlelinecheck=false}
 \end{lstlisting}
 效果如图~\ref{fig:caption-style-BigLeft}
 
-\begin{minipage}{\linewidth}
+\begin{fixedfigure}{\linewidth}
 	\centering
 	\usebox{\boxgraphictwo}
 	\captionsetup{style=BigLeft}
-	\captionof{figure}{This Caption uses BigLeft Style}
+	\caption{This Caption uses BigLeft Style}
 	\label{fig:caption-style-BigLeft}
-\end{minipage}
+\end{fixedfigure}
 
 \vskip2em\hrule
 
@@ -1823,13 +1824,13 @@ singlelinecheck=false}
 \end{lstlisting}
 效果如图~\ref{fig:caption-font-BigAndBold} 所示。
 
-\begin{minipage}{\linewidth}
+\begin{fixedfigure}{\linewidth}
 	\centering
 	\usebox{\boxgraphictwo}
 	\captionsetup{font=BigAndBold}
-	\captionof{figure}{This Caption uses a Custom Font}
+	\caption{This Caption uses a Custom Font}
 	\label{fig:caption-font-BigAndBold}
-\end{minipage}
+\end{fixedfigure}
 
 \vskip2em\hrule
 
@@ -1859,13 +1860,13 @@ singlelinecheck=false}
 \end{lstlisting}
 效果如图~\ref{fig:caption-labelformat-hash}。
 
-\begin{minipage}{\linewidth}
+\begin{fixedfigure}{\linewidth}
 	\centering
 	\usebox{\boxgraphictwo}
 	\captionsetup{labelformat=hash}
-	\captionof{figure}{This Caption has a Custom Label Format}
+	\caption{This Caption has a Custom Label Format}
 	\label{fig:caption-labelformat-hash}
-\end{minipage}
+\end{fixedfigure}
 
 \vskip2em\hrule
 
@@ -1884,13 +1885,13 @@ singlelinecheck=false}
 \end{lstlisting}
 的效果见图~\ref{fig:caption-labelformat-arrow}。
 
-\begin{minipage}{\linewidth}
+\begin{fixedfigure}{\linewidth}
 	\centering
 	\usebox{\boxgraphictwo}
 	\captionsetup{labelsep=arrow}
-	\captionof{figure}{This Caption has a Custom Label Separator}
+	\caption{This Caption has a Custom Label Separator}
 	\label{fig:caption-labelformat-arrow}
-\end{minipage}
+\end{fixedfigure}
 
 \vskip2em\hrule
 
@@ -1912,13 +1913,13 @@ singlelinecheck=false}
 \end{lstlisting}
 的效果见图~\ref{fig:caption-format-reverse}。
 
-\begin{minipage}{\linewidth}
+\begin{fixedfigure}{\linewidth}
 	\centering
 	\usebox{\boxgraphictwo}
 	\captionsetup{format=reverse,labelsep=none}
-	\captionof{figure}{This Caption has a Custom Format}
+	\caption{This Caption has a Custom Format}
 	\label{fig:caption-format-reverse}
-\end{minipage}
+\end{fixedfigure}
 
 
 \section{不浮动的图形}\label{sec:nonfloat}
@@ -2050,14 +2051,16 @@ This is the text after the figure.
 这时，可以用第~\ref{sec:nonfloat}~节定义的 \cmd{captionof} 命令来构造非浮动的边注图形。
 \marginpar{\centering
 	\resizebox{\marginparwidth}{!}{\usebox{\boxgraphic}}%
-	\captionof{figure}{这是边注图形}
+	\captionsetup{type=figure}
+	\caption{这是边注图形}
 	\label{fig:marginal:fig} }
 例如，图~\ref{fig:marginal:fig} 就由下面的命令来得到：
 \begin{lstlisting}
 ... 构造非浮动的边注图形。
 \marginpar{\centering 
 	\includegraphics[width=\marginparwidth]{graphic.eps}% 
-	\figcaption{This is a Marginal Figure} 
+	\captionsetup{type=figure}
+	\caption{This is a Marginal Figure} 
 	\label{fig:marginal:fig} }
 例如，图~\ref{fig:marginal:fig} 就由下面的命令来得到：
 \end{lstlisting}
@@ -2605,7 +2608,7 @@ This is the text after the figure.
 然而，这样做是无效的，因为 \cmd{caption} 命令只能在段落模式中使用，
 而 \cmd{fbox} 命令中的内容是在左右模式中被处理\footnote{
 	\LaTeX{} 使用三种模式，左右模式，段落模式和数学模式。
-	参考 \cite[第36页]{lamport1994}}。
+	参考 \cite[第36页]{Lamport1994}}。
 
 因为小页环境和 \cmd{parbox} 命令的内容都在段落模式中处理，
 所以将 \cmd{fbox} 命令的内容放到小页环境或 \cmd{parbox} 命令中，

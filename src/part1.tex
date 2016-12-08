@@ -2,9 +2,9 @@
 \part{背景知识}
 
 \section{简介}\label{sec:introduction}
-当 Knuth 编写 \TeX{} 的时候，还没有 \prgname{PostScript}/\prgname{eps}、\prgname{jpeg}、\prgname{gif} 以及其它图像格式。
+当 Knuth 编写 \TeX{} 的时候，还没有 PostScript/\file{eps}、\file{jpeg}、\file{gif} 以及其它图像格式。
 \marginpar{历史渊源}
-因此 \prgname{dvi} 文件对于图像导入并没有直接的支持。
+因此 \file{dvi} 文件对于图像导入并没有直接的支持。
 不过，\TeX{} 允许\file{dvi} 文件中包含 \cmd{special} 命令，
 通过它可以向调用 \file{dvi} 文件的程序传递命令。
 因此，凡是调用 \file{dvi} 的程序支持的图像格式，
@@ -412,7 +412,7 @@ MetaPost 是由John Hobby编写的绘图语言。
 \begin{center}
 \url{http://www.tug.org/metapost.html}
 \end{center}
-相关文档可参考~\cite{metaPost-doc}。
+相关文档可参考~\cite{metapost-doc}。
 
 MetaPost 可以用于 \prgname{dvips} 类型的 \LaTeX{} 文档，
 也可以直接用于 \pdfLaTeX{} 文档\footnote{
