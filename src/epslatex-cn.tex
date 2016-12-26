@@ -40,7 +40,7 @@
 	marginparwidth=50pt}
 
 \let\marginpartemp=\marginpar
-\renewcommand{\marginpar}[1]{\reversemarginpar\marginpartemp{\CJKfamily{zhkai} #1}}
+\renewcommand{\marginpar}[1]{\reversemarginpar\marginpartemp{\raggedright\CJKfamily{zhkai} #1}}
 %\patchcmd{\@ympar}{\@savemarbox\@marbox{#1}}{\@savemarbox\@marbox{{\itshape\small#1}}}{}{}
 %\pretocmd{\marginpar}{\reversemarginpar}{}{}
 

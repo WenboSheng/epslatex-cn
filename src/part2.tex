@@ -20,16 +20,18 @@
 \footnote{
 	到目前（2016年）为止，支持的驱动数已经超过了20种。——译注
 	}，
-不过，本文档只涉及两种最常用的驱动：
-\prgname{dvips} 类型文档所用的 \prgname{dvips} 驱动
-\footnote{使用 \prgname{latex} 命令将 \LaTeX{} 文件处理成 \file{dvi} 文件后，
-	\prgname{dvips} 随后就将其转成 PostScript 格式。}，
-以及 \pdfLaTeX{} 文档所用的 \prgname{pdftex} 驱动。
-如果用户使用的是这两种驱动之一，一般不用显示地指明，
-因为绝大部分 \LaTeX{} 发行版中的 \file{graphics.cfg} 可以自动识别正确的驱动
-\footnote{\file{graphics.cfg} 文件会检测文件是由 \prgname{latex} 还是 \prgname{pdflatex} 编译，
+不过，本文档只涉及几种最常用的驱动：
+\prgname{dvips}、\prgname{dvipdfmx}、\prgname{pdftex}、\prgname{xetex}、\prgname{luatex}。
+除了 \prgname{dvipdfmx} 之外，余下几种驱动一般不用显式指明，
+因为绝大部分 \LaTeX{} 发行版中的 \file{graphics.cfg} 可以自动识别
+\footnote{\file{graphics.cfg} 文件会检测文件的编译方式。
 	对于 \prgname{latex} 会指定 \opt{dvips} 选项，
-	对于 \prgname{pdflatex} 会指定 \opt{pdftex} 选项。}。
+	对于 \prgname{pdflatex} 会指定 \opt{pdftex} 选项，
+	对于 \prgname{xelatex} 会指定 \opt{xetex} 选项，
+	对于 \prgname{lualatex} 会指定 \opt{luatex} 选项。
+	而对于 \prgname{latex}+\prgname{dvipdfmx} 编译方式，则需要手动声明 \opt{dvipdfmx} 选项，
+	因为经由 \prgname{latex} 生成 \file{dvi} 文件后，
+	\file{graphics.cfg} 会假定接下来使用 \prgname{dvips}。}。
 
 如果用户想要指定一个驱动，可以用以下三种方式
 \marginpar{指定驱动}
@@ -78,6 +80,9 @@
 要求 PostScript 输出时使用 \LaTeX{} 编译和 \prgname{dvips} 驱动，
 要求 \file{pdf} 输出时则使用 \pdfLaTeX{} 编译。
 在这两种方式之间切换会改变两件事情。
+\footnote{使用 \prgname{xelatex} 或者 \prgname{lualatex} 编译时无需考虑此问题。
+	这是因为这两种编译方式能同时支持 \file{eps} 和 \file{pdf}、\file{jpg}、\file{png} 等图片格式，
+	同时编译时也能够自动调用相应的 \pkg{graphicx} 驱动选项。——译注}
 \begin{itemize}
 	\item 合适的 \pkg{graphicx} 驱动会改变。
 	\item 可以直接导入的图像类型会改变。
@@ -89,7 +94,9 @@
 	\begin{enumerate}
 		\item 一份 \file{eps} 版本，当使用 \prgname{latex} 编译时会导入。
 		\item 一份 \file{png}、\file{pdf}、\file{jpeg} 或者 MetaPost 版本，
-		当使用 \prgname{pdflatex} 编译时会导入。
+		当使用 \prgname{pdflatex} 编译时会导入\footnote{
+			也可以使用 \prgname{epstopdf} 进行实时转换，
+			见下面的第~\ref{sssec:epstopdf} 节。——译注}。
 	\end{enumerate}
 	
 	\item 不要在 \cmd{documentclass} 或者 \cmdM{usepackage}{graphicx} 命令中指定 \opt{dvips} 或者 \opt{pdftex} 选项。
@@ -145,6 +152,37 @@
 不过，正如~\pageref{ssec:driver} 页的第~\ref{ssec:driver} 节所述，
 这段代码实际上没有必要，因为绝大部分的发行版本会根据 \file{graphics.cfg} 文件自动处理驱动选项。
 
+\subsubsection{使用 epstopdf 宏包}\label{sssec:epstopdf}
+如果已经准备了 \file{eps} 图像而想使用 \prgname{pdflatex} 编译方式，
+可以考虑使用宏包 \pkgi{epstopdf}。
+该宏包可以在编译时实时地将 \file{eps} 转成 \file{pdf} 格式图像，
+从而可以在 \prgname{pdflatex} 编译方式下使用。
+
+使用该宏包要注意两点：
+\begin{itemize}
+	\item 需要开启 \cmd{write18} 特性，从而使得可以在编译时调用外部程序。
+	具体来说，编译方式为
+\begin{lstlisting}[language=bash,escapechar=\%]
+pdflatex -shell-escape test.tex %(\TeX Live 中)%
+pdflatex –enable-write18 test.tex %(MiK\TeX{} 中)%
+\end{lstlisting}
+	\item 在图形宏包 \pkg{graphics}/\pkg{graphicx} 之后载入 \pkg{epstopdf}，即
+\begin{lstlisting}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\end{lstlisting}
+\end{itemize}
+
+结合之前介绍的 \pkg{ifpdf}，可以使用如下代码
+\begin{lstlisting}
+\usepackage{graphicx}
+\usepackage{ifpdf}
+\ifpdf
+\usepackage{epstopdf}
+\fi
+\end{lstlisting}
+这样，在只准备 \file{eps} 格式图像的情况下，
+\prgname{dvips} 和 \prgname{pdflatex} 都可以处理文档。
 
 \subsection{指定宽度、高度和角度}\label{ssec:spec-width-height-angle}
 如下命令
@@ -185,7 +223,7 @@
 \begin{lstlisting}
 \includegraphics[height=2cm]{file}
 \end{lstlisting}
-导入指定的图片文件，且高度为2厘米。
+导入指定的图片文件，且使得高度为2厘米。
 此外，\cmd{includegraphics} 命令还有一个 \opt{totalheight} 选项来指定整体高度
 （关于高度和整体高度的定义可参见第~\pageref{sec:terminology} 页的第~\ref{sec:terminology} 节）。
 
@@ -218,7 +256,7 @@
 \begin{table}
 \centering
 \caption{\cmd{includegraphics} 选项}\label{tab:opt}
-\begin{tabular}{>{\ttfamily}l P{0.7\textwidth}}
+\begin{tabular}{>{\ttfamily}l p{0.7\textwidth}}
 	\toprule
 	height & 图形的高度（可为任何~\TeX{}~度量单位）。 \\ \hline
 	totalheight & 图形的整体高度，可为任何~\TeX{}~度量单位。 \\ \hline
@@ -240,7 +278,7 @@
 \begin{table}
 \centering
 \caption{\cmd{includegraphics} 裁剪选项}\label{tab:cropopt}
-\begin{tabular}{>{\ttfamily}l P{0.7\textwidth}}
+\begin{tabular}{>{\ttfamily}l p{0.7\textwidth}}
 	\toprule
 	viewpoint & 指定图像可以被看到的部分。
 	如同 BoundingBox 一样，这个区域由四个数字决定，分别是左下角和右上角的坐标。
@@ -265,7 +303,7 @@
 \begin{table}
 \centering
 \caption{\cmd{includegraphics} 布尔型选项}\label{tab:boolopt}
-\begin{tabular}{>{\ttfamily}l P{0.7\textwidth} }
+\begin{tabular}{>{\ttfamily}l p{0.7\textwidth} }
 	\toprule
 	clip & 指定 \opt{clip=false} 会显示整个的图形，即使有些部分在视图之外。（默认值）
 	
@@ -355,7 +393,7 @@
 \end{minipage}
 \fi\fi
 
-在下面的几个例子中，可以比较以下使用 \opt{scale,width,height,angle} 以及 \opt{keepaspectratio} 选项及其不同的顺序所得到的不同效果。
+以下几个例子中使用了 \opt{scale}、\opt{width}、\opt{height}、\opt{angle} 以及 \opt{keepaspectratio} 等选项及其不同的顺序，从而得到的不同效果。
 
 \begin{minipage}[t]{.45\textwidth}
 	\vspace{0pt}
@@ -499,12 +537,12 @@ width=30mm]{w.eps}}%
 \hspace{-.5cm}
 \begin{minipage}[c]{.5\textwidth}
 \begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例十},labelposition=topline]
-	左\HR\fbox{%
-	\includegraphics
-	[angle=-60,totalheight=20mm,%
-	width=30mm,keepaspectratio]%
-	{w.eps}}%
-	\HR 右
+左\HR\fbox{%
+\includegraphics
+[angle=-60,totalheight=20mm,%
+width=30mm,keepaspectratio]%
+{w.eps}}%
+\HR 右
 \end{Verbatim}
 \end{minipage}
 
@@ -532,8 +570,8 @@ width=30mm]{w.eps}}%
 \rotatebox{45}{\includegraphics{file.eps}}
 \end{lstlisting}
 
-尽管结果相同，但在最好还是用前一种方法，
-因为它的速度更快，而且生成的 PostScript 和 \file{pdf} 效率更高。
+尽管结果相同，但最好还是用前一种方法，
+因为它的速度更快，而且生成 PostScript 和 \file{pdf} 的效率更高。
 
 \subsection{scalebox 命令}\label{ssec:scalebox}
 语法：
@@ -547,7 +585,8 @@ width=30mm]{w.eps}}%
 以保持原始的宽高比进行缩放。
 如果缩放因子为负值，则对对象进行翻转。下面是几个例子
 
-\hspace{-1.5cm}
+%\hspace{-1.5cm}
+\begin{center}
 \begin{minipage}[b]{.5\textwidth}
 	\begin{center}
 		\color{blue}{\CJKfamily{zhkai}
@@ -565,8 +604,10 @@ width=30mm]{w.eps}}%
 \end{lstlisting}
 \par\vspace{0pt}
 \end{minipage}
+\end{center}
 
-\hspace{-1.5cm}
+\begin{center}
+%\hspace{-1.5cm}
 \begin{minipage}[b]{.5\textwidth}
 	\color{blue}{\CJKfamily{zhkai}
 		\framebox{\scalebox{2}{%
@@ -583,9 +624,11 @@ width=30mm]{w.eps}}%
 \parbox{.5in}{放大 \\ 和 \\ 缩小}}}
 \end{lstlisting}
 \par\vspace{0pt}
-\end{minipage}
+\end{minipage}	
+\end{center}
 
-\hspace{-1.5cm}
+\begin{center}
+%\hspace{-1.5cm}
 \begin{minipage}[b]{.5\textwidth}
 	\begin{center}
 		\color{blue}{\texttt{%
@@ -605,6 +648,8 @@ China? \scalebox{-1}{China?}}
 \end{lstlisting}
 \par\vspace{0pt}
 \end{minipage}
+\end{center}
+
 
 \subsection{resizebox 命令}\label{ssec:resizebox}
 语法：
@@ -637,7 +682,9 @@ China? \scalebox{-1}{China?}}
 
 下面是几个例子：
 
-\hspace{-1.5cm}\begin{minipage}[b]{.5\textwidth}
+\begin{center}
+%\hspace{-1.5cm}
+\begin{minipage}[b]{.4\textwidth}
 	\begin{center}
 		\color{blue}{\CJKfamily{zhkai}
 			\framebox{\resizebox{5mm}{!}{%
@@ -647,7 +694,8 @@ China? \scalebox{-1}{China?}}
 		\par\vspace{0pt}
 	\end{center}
 \end{minipage}%
-\hspace{-1cm}\begin{minipage}[b]{.5\textwidth}
+\hspace{-1cm}
+\begin{minipage}[b]{.6\textwidth}
 \begin{lstlisting}
 \framebox{\resizebox{5mm}{!}{%
 \parbox{14mm}{选项 \\ 角度 \\ 对象}}}
@@ -656,9 +704,11 @@ China? \scalebox{-1}{China?}}
 \end{lstlisting}
 \par\vspace{0pt}
 \end{minipage}
+\end{center}
 
-\hspace{-2cm}
-\begin{minipage}[b]{.5\textwidth}
+\begin{center}
+%\hspace{-2cm}
+\begin{minipage}[b]{.4\textwidth}
 	\begin{center}
 		\color{blue}{\CJKfamily{zhkai}
 			\resizebox*{2cm}{3cm}{\LaTeX{}~图形} \\
@@ -666,13 +716,15 @@ China? \scalebox{-1}{China?}}
 		\par\vspace{0pt}
 	\end{center}
 \end{minipage}%
-\begin{minipage}[b]{.5\textwidth}
+\begin{minipage}[b]{.6\textwidth}
 \begin{lstlisting}
 \resizebox*{2cm}{3cm}{\LaTeX{}~图形} \\
 \resizebox*{2cm}{1cm}{\LaTeX{}~图形}
 \end{lstlisting}
 \par\vspace{0pt}
 \end{minipage}
+\end{center}
+
 
 \subsection{rotatebox 命令}\label{ssec:rotatebox}
 语法：
@@ -713,8 +765,9 @@ China? \scalebox{-1}{China?}}
 
 下面是一个例子：
 
-\hspace{-1.5cm}
-\begin{minipage}[b]{.5\textwidth}
+\begin{center}
+%\hspace{-1.5cm}
+\begin{minipage}[b]{.4\textwidth}
 	\begin{center}
 		\setlength{\fboxsep}{0mm}
 		\newcommand{\MyRot}[1]{%
@@ -725,7 +778,7 @@ China? \scalebox{-1}{China?}}
 	\end{center}
 	\par\vspace{0pt}
 \end{minipage}%
-\begin{minipage}[b]{.5\textwidth}
+\begin{minipage}[b]{.6\textwidth}
 \begin{lstlisting}
 \setlength{\fboxsep}{0mm}
 \newcommand{\MyRot}[1]{%
@@ -735,6 +788,7 @@ China? \scalebox{-1}{China?}}
 \end{lstlisting}
 \par\vspace{0pt}
 \end{minipage}
+\end{center}
 
 
 \section{高级插图命令}\label{sec:adgraphcmd}
@@ -749,7 +803,7 @@ China? \scalebox{-1}{China?}}
 	\item 当使用压缩的\file{eps} 图形文件时。见第~\ref{ssec:compresseps}~节。
 	\item 当使用非\file{eps} 格式的图形文件时。见第~\ref{ssec:noneps}~节。
 \end{enumerate}
-在这些情况下，\LaTeX{} 为了处理由 \cmd{includegraphics} 所引入的文件，
+在这些情况下，\LaTeX{} 为了处理由命令 \cmd{includegraphics} 所导入的图像文件，
 就需要用 \cmdi{DeclareGraphicsRule} 和 \cmdi{DeclareGraphicsExtensions} 命令来控制。
 \begin{itemize}
 	\item \cmd{DeclareGraphicsExtensions} 命令指定了在没有提供图形文件扩展名的情况下，
@@ -778,15 +832,15 @@ China? \scalebox{-1}{China?}}
 
 如果 \pkg{graphicx} 宏包使用 \prgname{pdftex} 驱动，
 那么默认会使用下列图形文件扩展名（在 \file{pdftex.def} 中定义）
-\cprotect\footnote{
-	实际上在最新版本（2016年）中，\file{dvips.def} 中定义扩展名的方式为
-\begin{lstlisting}
-%\def\Gin@extensions{.eps,.ps,.eps.gz,.ps.gz,.eps.Z,.mps}
-\end{lstlisting}
+\footnote{实际上在最新版本（2016年）中，
+	\file{dvips.def} 中定义扩展名的方式为
+	\begin{flushleft}
+		\cmd{def}\cmdM{Gin@extions}{.eps,.ps,.eps.gz,.ps.gz,.eps.Z,.mps}
+	\end{flushleft}
 	\file{pdftex.def} 中定义扩展名的方式为
-\begin{lstlisting}
-\def\Gin@extensions{.png,.pdf,.jpg,.mps,.jpeg,.PNG,.PDF,.JPG,.JPEG}
-\end{lstlisting}
+	\begin{flushleft}
+		\cmd{def}\cmdM{Gin@extions}{.png,.pdf,.jpg,.mps,.jpeg,.PNG,.PDF,.JPG,.JPEG}
+	\end{flushleft}
 	——译注}：
 \begin{lstlisting}
 \DeclareGraphicsExtensions{.png,.pdf,.jpg,.mps}
@@ -865,7 +919,7 @@ China? \scalebox{-1}{China?}}
 	\centering
 	\caption{\cmd{DeclareGraphicsRule} 的选项}\label{tab:DeclaregruleArgs}
 	\kaishu 
-	\begin{tabular}{>{\ttfamily}l  P{0.7\textwidth}}
+	\begin{tabular}{>{\ttfamily}l  p{0.7\textwidth}}
 		\toprule
 		ext & 文件的扩展名。 \\ \hline
 		type & 扩展名所对应的图像类型。 \\ \hline

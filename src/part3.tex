@@ -401,6 +401,7 @@ World
 \begin{figure}
 	\centering
 	\includegraphics{left.eps}
+	\includegraphics{right.eps}
 	\caption{两幅图像的内容}\label{fig:leftright}
 \end{figure}
 \begin{figure}
@@ -551,7 +552,7 @@ latex_paper file.tex
 \subsection{节约池空间}\label{ssec:poolspace}
 
 \TeX{} 为其内部的字符串传递保留了一部分内存空间，称为\emph{池空间}（\emphi{pool space}）。
-每当 \TeX{} （试图）打开打开一文件，就会有一部分池空间按被永久性分配。
+每当 \TeX{} （试图）打开一文件，就会有一部分池空间按被永久性分配。
 当打开很多文件时，这种内存的占用会导致 \TeX{} 耗光它的池空间，产生如下的错误讯息：
 \begin{Verbatim}[xleftmargin=1cm]
 ! TeX capacity exceeded, sorry [poolsize=72288]
@@ -693,8 +694,8 @@ file.eps.Z
 \end{figure}
 \end{document}
 \end{lstlisting}
-	在这个特殊的例子里，\cmd{DeclareGraphicsRule} 实际上是可以省略的，
-	因为在 \file{dvips.def} 已经预定义过了。
+	在这个特殊的例子里，命令 \cmd{DeclareGraphicsRule} 实际上是可以省略的，
+	因为它在文件 \file{dvips.def} 中已经预定义过了。
 	如果使用另外一个解压缩程序或文件名后缀，那么 \cmd{DeclareGraphicsRule} 是不能少的。
 	例如 BoundingBox~存放到文件 \texttt{file.bb} 中，
 	则相应的 \cmd{DeclareGraphicsRule} 应为：
@@ -1065,8 +1066,8 @@ convert file2.gif 'eps:-'
 \includegraphics[width=.45\textwidth]{psfrag-ex3}
 \else
 \psfrag{q1}[][]{\colorbox{white}{$q_1$}}
-\psfrag{base}{\fcolorbox{black}{white}{\CJKfamily{kai} 基础部分}}
-\psfrag{Actuator}[l][l]{\shortstack{\CJKfamily{kai} 水力\\ \CJKfamily{kai} 驱动器}}
+\psfrag{base}{\fcolorbox{black}{white}{\CJKfamily{zhkai} 基础部分}}
+\psfrag{Actuator}[l][l]{\shortstack{\CJKfamily{zhkai} 水力\\ \CJKfamily{zhkai} 驱动器}}
 \includegraphics[width=.45\textwidth]{mass.eps}
 \fi
 \fi
@@ -1115,7 +1116,6 @@ convert file2.gif 'eps:-'
 参见~\cite{psfrag-doc}~以获取关于 \pkg{PSfrag} 文本缩放的详细说明。
 
 \subsubsection{PSfrag和 \pdfTeX{}}\label{sssec:psfrag-pdftex}
-
 \pkg{psfrag} 不能在 \pdfTeX{} 模式下使用。
 如果需要进行 \pkg{psfrag} 替换，
 一种解决办法是使用 \LaTeX{}-\file{dvi}-PostScript-\file{pdf} 编译途径。
@@ -1123,6 +1123,14 @@ convert file2.gif 'eps:-'
 另外一种方法是在 \pdfTeX{} 中间接地使用 \pkg{psfrag}，
 这样既可以进行 \pkg{psfrag} 替换，又可以利用 \pdfTeX{} 的优势，
 不过，这种方法比较费时费力。
+
+\pkgi{pstool} 宏包提供了实时
+
+
+\subsubsection{PSfrag 和 其它编译方式}\label{sssec:psfrag-otherdriver}
+\prgname{dvipdfmx}、\XeTeX{}、\LuaTeX{} 等其它编译引擎不支持 \pkg{psfrag} 和 \pkg{pstool}，
+因此此时只能手动转换每一要使用 \pkg{psfrag} 的图像。
+具体步骤为
 \begin{enumerate}
 	\item 对于每一个要使用 \pkg{psfrag} 的图像，分别创建包含 \pkg{psfrag} 命令和 \cmd{includegraphics} 命令的 \LaTeX{} 文件。
 	其中注意使用 \cmdM{pagestyle}{empty} 以禁止页码的出现。
@@ -1152,7 +1160,7 @@ GraphicFrag00.pdf
 GraphicFrag01.pdf
 ...
 \end{verbatim}
-	\item 使用 \prgname{pdflatex} 处理 \LaTeX{} 文件。
+	\item 使用 \prgname{latex}+\prgname{dvipdfmx}、\prgname{xelatex}、\prgname{lualatex} 等编译程序处理 \LaTeX{} 文件。
 \end{enumerate}
 
 

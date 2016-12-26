@@ -30,8 +30,8 @@
 通过努力，他们开发出了“\LaTeX\ 图形宏集”，
 \footnote{已经有 \LaTeX{} 图形宏集的 plain \TeX{} 版本，
 	相关文件请见 \href{ftp://ctan.tug.org/tex-archive/macros/plain/graphics/}{CTAN/macros/generic/graphics/}}
-其中的命令全部重写。
-比起其它的插入命令，他们的命令更高效、更健壮、更具有可移植性。
+并全部重写了其中的命令。
+比起其它的插图命令，他们的命令更高效、更健壮、更具有可移植性。
 
 \LaTeX{} 图形宏集包括“标准”的 \pkg{graphics} 宏包和“扩展”的 \pkg{graphicx} 宏包。
 这两个宏包都有一个 \cmd{includegraphis} 命令，不过版本不同。
@@ -105,6 +105,26 @@
 	见第 \ref{ssec:purifyeps} 节（\pageref{ssec:purifyeps} 页）。}，
 用户需要用 \prgname{epstopdf} 等程序将 \file{eps} 文件转成 \file{pdf} 格式，
 不过这样就不能直接使用 \pkg{PSfrag} 宏包（见第 \ref{ssec:psfrag} 节，\pageref{ssec:psfrag} 页）。
+
+目前\footnote{此段由译者添加}，
+\marginpar{其它编译引擎}
+除了 \prgname{latex}+\prgname{dvips} 和 \prgname{pdflatex} 之外，
+还有几种常见的编译方式。
+\begin{description}
+	\item \prgname{dvipdfmx} 可以从 \file{dvi} 文件生成 \file{pdf} 文件。
+	\item \prgname{xelatex} 可以直接生成 \file{pdf} 文件。支持UTF-8编码和使用各种字体。
+	\item \prgname{lualatex} 作为 \prgname{pdflatex} 的后继引擎，引入了Lua动态编程语言。
+	可以直接生成 \file{pdf} 文件。支持UTF-8编码和使用各种字体。
+\end{description}
+出于技术上的先进性、稳定性以及效率和兼容性考虑，
+一般而言推荐使用 \prgname{xelatex} 编译方式。
+特别是对于中文文档，可以直接
+而对于英文文档，也可以考虑使用 \prgname{pdflatex}。
+
+以上几种编译方式都原生支持 \file{eps}、\file{pdf}、\file{jpg}、\file{png} 等各种图片格式。
+不过这样就不能直接使用 \pkg{PSfrag} 宏包（见第 \ref{ssec:psfrag} 节，\pageref{ssec:psfrag} 页），
+因为该宏包要求输出格式是 PostScript。
+
 
 \section{\LaTeX{} 术语}\label{sec:terminology}
 
@@ -201,6 +221,7 @@ PostScript 语言能够用来描述图形和文本。
 \end{enumerate}
 
 例如，一个由 \prgname{gnuplot} 程序生成的 \file{eps} 文件的前五行为
+
 \begin{Verbatim}[frame=single,rulecolor=\color{mygreen},label={\bfseries \file{eps} 文件头示例}]
 %!PS-Adobe-2.0 EPSF-2.0
 %%Creator: gnuplot
