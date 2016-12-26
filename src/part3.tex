@@ -280,8 +280,8 @@ World
 \end{figure}
 
 \subsubsection{小页的底部对齐}
-让小页的底部对齐的一种方法是强制使小页的底部为其基线。
-再次要注意的是，\env{minipage} 的 \opt{[b]} 选项效果是让小页最底行的基线作为小页的基线。
+让小页的底部对齐的方法之一是强制使小页的底部为其基线。
+再次要注意的是，小页环境 \env{minipage} 的 \opt{[b]} 选项效果是让小页最底行的基线作为小页的基线。
 
 如果小页最底行正好是一条高和深都为零的线，
 那么最后一行的参考点就是该行的底部，
@@ -458,7 +458,7 @@ World
 尽管稍有不同，但其它的 \TeX{} 发行版也大致采用相似的策略。
 
 对 Unix 下的 web2c/te\TeX{} 而言，
-改变 \TeX{} 的搜索路径可通过设置环境变量 \file{TEXINPUTS} 来实现。
+可通过设置环境变量 \file{TEXINPUTS} 来修改 \TeX{} 的搜索路径。
 如使用 \prgname{csh}，命令
 \begin{lstlisting}[language=csh]
 setenv TEXINPUTS /dir1:/dir2:
@@ -522,8 +522,8 @@ chmod u+x latex_paper
 \begin{lstlisting}[language=sh]
 latex_paper file.tex
 \end{lstlisting}
-就会在 \file{TEXINPUTS} 的开头添加 \file{~/PAPER/SUB1/:~/PAPER/SUB2/}，
-之后用 \prgname{latex} 运行 \file{file.tex}，
+就会在 \file{TEXINPUTS} 的开头添加路径 \file{~/PAPER/SUB1/:~/PAPER/SUB2/}，
+之后，用 \prgname{latex} 运行文件 \file{file.tex}，
 就可以搜索 \file{~/PAPER/SUB1/} 和 \file{~/PAPER/SUB2/} 子目录下的任何图像文件。
 
 类似地，还需要写一个 \verb|dvips_paper| 脚本，
@@ -589,8 +589,8 @@ dir2/file.eps
 	每一次打开文件的尝试都会消耗池空间。
 	应该用更改 \TeX{} 搜索路径的办法来替代使用命令 \cmd{graphicspath}。
 	
-\item 给出全部的文件名，不要省略文件的扩展名（例如 \file{.eps}）。
-	在缺省的 \cmd{DeclareGraphicsExtensions} （第~\ref{ssec:deextension} 节）定义下，命令
+\item 给出文件全名，不要省略扩展名（例如 \file{.eps} 等）。
+	\cmd{DeclareGraphicsExtensions} （第~\ref{ssec:deextension} 节）缺省定义时，命令
 	\begin{lstlisting}
 	\includegraphics{file}
 	\end{lstlisting}
@@ -766,7 +766,7 @@ convert file2.gif 'eps:-'
 另一方法是使用 \prgname{ppm} 组件的 \prgname{giftoppm}、\prgname{ppmtopgm} 和 \prgname{pgmtops} 程序
 将 \file{gif} 通过 \file{ppm} 和灰度 \file{pgm} 格式最终转为\file{eps}。
 在Unix中，使用如下 \cmd{DeclareGraphicsRule} 命令可以将这些程序用管道连接起来：
-\begin{lstlisting}
+\begin{lstlisting}[xleftmargin=0em]
 \DeclareGraphicsRule{.gif}{eps}{.gif.bb}{`giftoppm #1 | ppmtopgm | pgmtops}
 \end{lstlisting}
 
@@ -775,8 +775,8 @@ convert file2.gif 'eps:-'
 
 当 \LaTeX{} 遇到\cmd{includegraphics} 命令时，
 会首先在当前目录下搜寻图形文件。
-如果找不到所需的文件，\LaTeX{} 将按照 \TeX{} 搜索路径来寻找。
-当 \file{dvi} 文件转为PostScript文件时，\prgname{dvips} 也是同样地顺序来搜寻图形文件。
+如果找不到所需文件，则会在 \TeX{} 搜索路径中寻找。
+当 \file{dvi} 文件转为PostScript文件时，\prgname{dvips} 也以相同顺序搜索图形文件。
 这不会有什么问题。
 然而，如果用 \cmd{DeclareGraphicsRule} 定义了一个实时转换的命令，
 那么此命令将会阻止 \prgname{dvips} 在 \TeX{} 搜索路径中寻找图形文件。
@@ -1177,8 +1177,7 @@ GraphicFrag01.pdf
 这样，虽然在定位时要麻烦一些，
 却可以在一些不能使用 \pkg{PSfrag} 的情况下得到同样的效果。
 
-\pkg{overpic} 宏包中定义了一个 \envi{overpic} 环境，
-能够有效地将 \env{picture} 环境和 \cmd{includegraphics} 命令结合起来。
+\pkg{overpic} 宏包定义的 \envi{overpic} 环境能有效地将 \env{picture} 环境和 \cmd{includegraphics} 命令结合起来。
 这样使得 \env{picture} 环境和插入图像的大小相同，
 进而可以很容易地把 \LaTeX{} 的命令放到图形上的任何指定位置。
 同时，还可以在图形上加上标尺以方便定位。
@@ -1222,44 +1221,48 @@ GraphicFrag01.pdf
 \opt{unit} 为图像较长一边长度的 $1/1000$。
 下面是几个例子（使用默认的 \opt{percent} 相对位置）：
 
-
+\begin{center}
 \begin{minipage}[b]{.4\textwidth}
-\begin{overpic}[width=\linewidth,grid,tics=10]{golfer}
-  \end{overpic}
-\par\vspace{0pt}
+	\begin{overpic}[width=\linewidth,grid,tics=10]{golfer}
+	\end{overpic}
+	\par\vspace{0pt}
 \end{minipage}%
 \begin{minipage}[b]{.6\textwidth}
 \begin{lstlisting}
 \begin{overpic}%
-	[width=\linewidth,grid,tics=10]%
-	{golfer}
+[width=\linewidth,grid,tics=10]%
+{golfer}
 \end{overpic}
 \end{lstlisting}
 \par\vspace{0pt}
 \end{minipage}
+\end{center}
 
+\begin{center}
 \begin{minipage}[b]{.4\textwidth}
-\begin{overpic}[width=\linewidth]{golfer}
-  \put(5,50){\LaTeX}
-  \put(5,40){\color{red}外部图形}
-  \put(50,10){%
-    \includegraphics[scale=.06]%
-                    {golfer}}
-\end{overpic}
-\par\vspace{0pt}
+	\begin{overpic}[width=\linewidth]{golfer}
+		\put(5,50){\LaTeX}
+		\put(5,40){\color{red}外部图形}
+		\put(50,10){%
+			\includegraphics[scale=.06]%
+			{golfer}}
+	\end{overpic}
+	\par\vspace{0pt}
 \end{minipage}%
 \begin{minipage}[b]{.6\textwidth}
 \begin{lstlisting}
 \begin{overpic}[width=\linewidth]{golfer}
-	\put(5,50){\LaTeX}
-	\put(5,40){\color{red}外部图形}
-	\put(50,10){%
-		\includegraphics[scale=.07]%
-			{golfer}}
+\put(5,50){\LaTeX}
+\put(5,40){\color{red}外部图形}
+\put(50,10){%
+\includegraphics[scale=.07]%
+{golfer}}
 \end{overpic}
 \end{lstlisting}
 \par\vspace{0pt}
 \end{minipage}
+\end{center}
+
 
 
 对于第~\ref{sssec:psfragex2}~节中的例子，
@@ -1468,8 +1471,8 @@ $
 
 \subsection{在页眉和页脚使用图形}\label{ssec:headgraph}
 
-在页眉和页脚使用图形的一个最容易的方法是使用 \pkgi{fancyhdr}（
-它是旧的 \pkg{fancyheadings} 宏包的增强版本）。
+在页眉和页脚使用图形的一个最容易的方法是使用 \pkgi{fancyhdr} 宏包
+（它是过时宏包 \pkg{fancyheadings} 的增强版本）。
 \pkg{fancyhdr} 的用法和宏包说明详见说明文档~\cite{fancyhdr-doc}。
 
 在 \LaTeX{} 文档中，页眉由左、中、右三部分组成。
@@ -1548,7 +1551,7 @@ $
 
 \cmd{fancyhead}~命令只对那些页面样式为 \opt{fancy} 的页面起作用。
 \marginpar{ 改变 \opt{plain} \\ 页面样式}
-即使用 \cmdM{pagestyle}{fancy} 将文档的页面样式设置为 \opt{fancy}，
+即使使用命令 \cmdM{pagestyle}{fancy} 将文档的页面样式设置为 \opt{fancy}，
 但封面、目录和每章的第一页等页面仍为缺省的 \opt{plain} 样式。
 
 改变 \opt{plain} 样式的缺省设置可用 \cmdi{fancypagestyle} 命令来实现。
@@ -1616,7 +1619,7 @@ $
 
 \subsubsection{使用 eso-pic 宏包}\label{sssec:esopic}
 
-另一种得到图形水印效果的方法是使用 \pkgi{eso-pic} 宏包。
+另一种得到图形水印效果的方法是 \pkgi{eso-pic} 宏包。
 它定义一个长度为零的 \env{picture} 环境，基点位于页面的左下角。
 
 它提供命令 \cmdi{AddToShipoutPicture} 把任何 \LaTeX{} 图形环境先于正文文本排出，从而得到水印的效果。
