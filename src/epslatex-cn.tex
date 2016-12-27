@@ -65,13 +65,13 @@
 	tabsize=4,
 	xleftmargin=1em}
 \NewEnviron{fixedfigure}[1]{%
-	\begin{minipage}{#1}%
+	\noindent\begin{minipage}{#1}%
 		\vspace{\intextsep}
 		\captionsetup{type=figure}%
 		\BODY%
 	\end{minipage}}
 \NewEnviron{fixedtable}[1]{%
-	\begin{minipage}{#1}%
+	\noindent\begin{minipage}{#1}%
 		\vspace{\intextsep}
 		\captionsetup{type=table}%
 		\BODY%

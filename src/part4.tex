@@ -51,8 +51,8 @@
 	不喜欢这样做的用户可以使用~\pkgi{flafter} 宏包。
 	无需使用特殊的命令，只要简单地调入该宏包 \cmdM{usepackage}{flafter} 即可。
 	
-	\item 要确保图形的浮动不超过某一特定点，可调入 \pkgi{placeins} 宏包，
-	并且使用 \cmdi{FloatBarrier} 命令。见第~\ref{ssec:unprocessfig}~节。
+	\item 要确保图形的浮动不超过某一特定点，
+	可调入 \pkgi{placeins} 宏包并使用 \cmdi{FloatBarrier} 命令。见第~\ref{ssec:unprocessfig}~节。
 	
 	\textbf{警告}：过多使用 \cmd{FloatBarrier}	命令会导致浮动位置难以控制或浮动参数不正确。
 	这两种情况都是应当尽量避免的。
@@ -307,10 +307,10 @@ text text text text text text...
 	而到页面结束时可能又会累积新的未处理的浮动体，
 	进而可能已超过了 \LaTeX{} 的限制。
 	
-	\cmdM{afterpage}{\cmd{clearpage}} 命令在排版较小的浮动页图形时特别有用。
+	\cmdM{afterpage}{\cmd{clearpage}} 命令在排版尺寸较小的浮动页图形时特别有用。
 	而命令 \cmd{floatpagefraction} （见第~\ref{ssec:figpara} 节）
 	会阻止“太小”的图形在浮动页上出现。
-	进一步地，由于浮动位置标识符 \texttt{!} 	不会应用于浮动页，
+	此外，由于浮动位置标识符 \texttt{!} 不会应用于浮动页，
 	因此 \opt{[!p]} 不会破除 \cmd{floatpagefraction} 的限制，
 	使用 \cmdM{afterpage}{\cmd{clearpage}} 既可以克服 \cmd{floatpagefraction} 的限制，
 	又不会导致正文页有较多空白。
@@ -412,7 +412,7 @@ text text text text text text...
 \begin{table}[hbp]
 	\centering\kaishu
 	\caption{图形位置的比例参数}\label{tab:floatfraction}
-	\begin{tabular}{ l P{0.7\textwidth}}
+	\begin{tabular}{ l p{0.65\textwidth}}
 		\toprule
 		\cmd{textfraction} & 页面中必须用于文本的最小比例。缺省值为 0.2，
 		即一页中浮动体所占的比例不得超过 $80\percent$。 \\
@@ -512,7 +512,7 @@ text text text text text text...
 	\centering
 	\caption{Suppressfloats 的选项}\label{tab:suppressfloat}
 	
-	\begin{tabular}{>{\ttfamily}l p{0.7\textwidth}}
+	\begin{tabular}{>{\ttfamily}l p{0.65\textwidth}}
 		\toprule
 		\cmd{suppressfloats}\opt{[t]} & 阻止当前页的顶部出现其它的浮动体。 \\
 		\hline
@@ -528,7 +528,7 @@ text text text text text text...
 
 \subsection{图形的间距}\label{ssec:vspace}
 
-表~\ref{tab:figlength-textpage}~中给出的长度控制着两幅图形之间或图形与正文的间距。
+表~\ref{tab:figlength-textpage}~中给出的长度控制两幅图形之间或图形与正文的间距。
 与其它大部分的~\LaTeX{}~长度不同的是，这三个都是橡皮长度，
 这就使得可以通过缩短或拉伸获得更好的排版页面。
 这些长度可用 \cmd{setlength} 命令来设定。例如：
@@ -899,7 +899,7 @@ text text text text text text...
 		这些选项在表~\ref{tab:caption-fontopt} 和表~\ref{tab:caption-fontval} 列出。
 		相关例子在第~\ref{sssec:caption-fontopt} 节。
 		
-		\item[标题间距选项] 控制了标题的垂直间距。
+		\item[标题间距选项] 控制标题的垂直间距。
 		相关选项在表~\ref{tab:caption-spaceopt} 中列出。
 		相关例子在第~\ref{sssec:caption-spaceopt} 节。
 		
@@ -963,7 +963,7 @@ text text text text text text...
 \begin{sidewaystable}
 \centering
 \caption{\pkg{caption} 宏包命令}\label{tab:caption-cmd}
-\begin{tabular}{l P{0.5\linewidth}}
+\begin{tabular}{l p{0.45\linewidth}}
 	\toprule
 	命令 & 描述 \\
 	\midrule
@@ -1006,7 +1006,7 @@ text text text text text text...
 \begin{description}
 	\item[usepackage 选项] 
 	
-	\cmdOM{usepackage}{options}{caption} 命令。
+	\cmdOM{usepackage}{options}{caption}。
 	其中 \opt{[options]} 可以是表~\ref{tab:caption-fontopt}--\ref{tab:caption-formatopt} 中任意选项的组合。例如
 \begin{lstlisting}
 \usepackage[margin=10pt,font=small,labelfont=bf]{caption}
@@ -1022,7 +1022,7 @@ text text text text text text...
 \begin{lstlisting}
 \captionsetup{margin=10pt,font=small,labelfont=bf}
 \end{lstlisting}
-	会使得当前环境中接下来的左右标题左右缩进 $10\pt$，标题的全部（标签和文本）使用 \texttt{small} 字号，
+	会使得当前环境中接下来的标题左右缩进 $10\pt$，整个标题（标签和文本）使用 \texttt{small} 字号，
 	并且标签字体加粗。
 	表~\ref{tab:caption-setupcmd} 介绍了 \cmdi{captionsetup} 和 \cmdi{clercaptionsetup} 命令。
 \end{description}
@@ -1048,7 +1048,7 @@ text text text text text text...
 \begin{table}
 \centering
 \caption{\pkg{caption} 宏包中的标题设置命令}\label{tab:caption-setupcmd}
-\begin{tabular}{p{.2\linewidth}p{0.5\linewidth} p{0.5\linewidth}}
+\begin{tabular}{p{.05\linewidth} p{0.45\linewidth} p{0.4\linewidth}}
 \toprule
 \multicolumn{2}{l}{命令} & 描述 \\
 \midrule
@@ -1118,15 +1118,15 @@ text text text text text text...
 \toprule
 关键字 & 值 & 描述 \\
 \midrule
-\opt{skip=} & \opt{<amount>} & 标题和图标内容的垂直间距，默认是 $10\pt$。 \\
+\opt{skip=} & \opt{<amount>} & 设置标题和图表之间的垂直间距，默认是 $10\pt$。 \\
 \midrule
 \opt{aboveskip=} & \opt{<amount>} & 
-设置标题和图表内容的垂直间距，默认是 $10\pt$。
+设置标题和图表之间的垂直间距，默认是 $10\pt$。
 正常情况下间距是在标题上方，
 但是当 \opt{position=top} 时，\opt{aboveskip=} 间距则位于与标题下方。\\
 \midrule
 \opt{belowskip=} & \opt{<amount>} &
-设置标题朝图表内容外侧方向的垂直间距，默认是 $0\pt$。
+设置标题朝图表外侧方向的垂直间距，默认是 $0\pt$。
 正常情况下该间距在标题下方，
 但是当 \opt{position=top} 时，\opt{belowskip=} 间距则位于标题上方。\\
 \midrule
@@ -1140,7 +1140,7 @@ text text text text text text...
 在绝大部分情况下没有问题，不过极少数场合可能判断错误。\\
 \midrule
 \opt{parskip} & \opt{<amount>} & 
-标题内部的段间距，默认为 $0\pt$。
+标题内部的段间距，默认是 $0\pt$。
 如果标题只有一个段落，该选项不起作用。\\
 \bottomrule
 \end{tabular}
@@ -1180,7 +1180,7 @@ text text text text text text...
 \begin{table}
 \centering
 \caption{\cmd{captionsetup} 格式选项}\label{tab:caption-formatopt}
-\begin{tabular}{llp{0.6\linewidth}}
+\begin{tabular}{llp{0.5\linewidth}}
 \toprule
 关键字 & 值 & 描述 \\
 \midrule
@@ -1234,7 +1234,7 @@ text text text text text text...
 其中“标签”、“分隔符”和“标题内容”的定义如图~\ref{fig:def-capcontent} 所示。
 这三个选项可以修改字族、字形、字系和字号的任意组合，见表~\ref{tab:caption-fontval}。
 
-\begin{fixedfigure}{\linewidth}
+\begin{fixedfigure}{\textwidth}
 	\centering
 	\includegraphics{captiondef}
 	\caption{标题标签、分隔符和标题内容的定义}
@@ -1261,7 +1261,7 @@ text text text text text text...
 	\label{fig:caption-font-ex1}
 \end{fixedfigure}
 
-注意以上的例子会同时影响图形和表格的标题。
+注意，以上的例子中的代码会同时影响图形和表格的标题。
 如果 \cmd{captionsetup} 添加了 \opt{[figure]} 选项
 \begin{lstlisting}
 \captionsetup[figure]{font={default,Large,bf}}
@@ -1872,8 +1872,8 @@ singlelinecheck=false}
 
 \paragraph{选项定义示例\#3}
 
-表~\ref{tab:caption-labelopt} 定义了 \opt{labelsep=} 选项值。
-用户可以用 \cmdi{DeclareCaptionLabelSeparator} 命令为 \opt{labelsep=} 选项自定义额外的选项值。
+表~\ref{tab:caption-labelopt} 定义了 \opt{labelsep=} 接受的选项值。
+此外，用户还可以使用 \cmdi{DeclareCaptionLabelSeparator} 命令为 \opt{labelsep=} 选项自定义额外的选项值。
 例如，在导言区使用如下命令会将标签分隔符定义为箭头
 \begin{lstlisting}
 \DeclareCaptionLabelSeparator{arrow}{\quad\ensuremath{\Rightarrow}\quad}
@@ -1961,8 +1961,8 @@ This is the text after the figure.
 可得到一幅不浮动的图形。对于不浮动的图形，需要注意下面几点：
 \begin{itemize}
 	\item 需要使用 \env{minipage} 小页环境来防止在图形中出现分页的情况。
-	\item 命令 \cmdO{\cmd{}}{\cmd{intextsep}} 开始新的一行并在图形的前后加上垂直的空白。
-	\cmd{intextsep}~（见第~\ref{ssec:vspace}~节）可以使用任意大小的空白，
+	\item 图形前后的命令 \cmdO{\cmd{}}{\cmd{intextsep}} 作用是进行换行并加上垂直的间距。
+	\cmd{intextsep} 命令~（见第~\ref{ssec:vspace}~节）可以使用任意大小的空白，
 	目的是使不浮动的图形具有与浮动图形相同的上下间距。
 	\item 正常情况下，浮动图形是按照它们在 \LaTeX{} 源文件中的顺序一一被放置的。
 	而不浮动的图形是被立即放置到页面上，
@@ -2140,8 +2140,8 @@ This is the text after the figure.
 	\end{narrow}
 \end{figure}
 
-当使用边注时，可能希望宽图形精确延伸到边注的边界
-（使得图形的宽度为 $\text{\cmd{linewidth}}+\text{\cmd{marginparwidth}}+\text{\cmd{marginparsep}}$）。这时，可以定义一新长度 \cmd{marginwidth} 并将它设为 $\text{\cmd{marginparwidth}}+\text{\cmd{marginparsep}}$。
+当使用边注时，可能希望宽图形能够精确地延伸到边注的边界
+（使得图形的宽度为 $\text{\cmd{linewidth}}+\text{\cmd{marginparwidth}}+\text{\cmd{marginparsep}}$）。这时可以定义新长度 \cmd{marginwidth} 并将它设为 $\text{\cmd{marginparwidth}}+\text{\cmd{marginparsep}}$。
 例如：
 \begin{lstlisting}
 \newlength{\marginwidth} 
@@ -2279,7 +2279,7 @@ This is the text after the figure.
 \begin{lstlisting}
 \usepackage[figuresleft]{rotating}
 \end{lstlisting}
-使得用 \env{sidewaysfigure} 图像的底部面向竖排页的左边界
+使得用 \env{sidewaysfigure} 图像的底部位于竖排页的左边
 （无论是 \opt{oneside} 还是 \opt{twoside}）。同样地，
 \begin{lstlisting}
 \usepackage[figuresright]{rotating}
@@ -2378,7 +2378,7 @@ This is the text after the figure.
 \subsection{不使用 Sidecap 宏包时的一侧标题}
 
 如果 \pkg{sidecap} 没有提供足够的灵活性，
-用户可以使用本节的方法生成一侧标题。
+用户还可以使用本节的方法生成位于一侧的标题。
 第~\ref{sssec:leftcaption} 节展示了如何将标题放在图像的左侧。
 放在图像右侧的方法也是类似的。
 第~\ref{sssec:bindcaption} 节展示了对于双面版式的文档，
@@ -2501,7 +2501,7 @@ This is the text after the figure.
 	{\leftfig}}%
 {\afterpage{\leftfig}}
 \end{lstlisting}
-	\item 由于这些图形是非浮动的，可以用 \cmdM{value}{page} 命令确定当前页码。
+	\item 由于这些图形是非浮动的，因此可以用 \cmdM{value}{page} 命令确定当前页码。
 	注意，\cmdM{value}{page} 对于浮动图形用处不大，
 	因为它指的是图形处理时的页码，不是图形放置的页码。
 	因此，使用 \cmdM{value}{page} 比 \cmd{pageref} 更好，
@@ -2520,7 +2520,7 @@ This is the text after the figure.
 	\vspace*{\fill}\newpage}
 \end{lstlisting}
 
-	\item \cmd{afterpage} 命令在极少数情况下会造成一个~``lost float'' 的错误。
+	\item \cmd{afterpage} 命令在极少数情况下会造成~``lost float'' 的错误。
 	这时将 \cmd{clearpage} 从 \cmd{ifthenelse} 前去掉可能会有所帮助。
 \begin{lstlisting}
 \afterpage{\ifthenelse{\isodd{\value{page}}}%
@@ -2667,9 +2667,9 @@ This is the text after the figure.
 
 	\item 为保证标题只有一行，
 	可以使用 \cmdi{settowidth} 命令来估计标题的宽度并将其作为小页的宽度。
-\begin{lstlisting}
+\begin{lstlisting}[xleftmargin=0pt]
 \newlength{\mylength} 
-\settowidth{\mylength}{Figure XX: Box Around Figure Graphic and Caption} 
+\settowidth{\mylength}{Figure X: Box Around Figure Graphic and Caption} 
 \fbox{ \begin{minipage}{\mylength} 
 ...
 \end{lstlisting}
@@ -2714,8 +2714,7 @@ This is the text after the figure.
 \begin{table}
 	\centering
 	\caption{\pkg{fancybox} 命令}\label{tab:fancyboxcmd}
-	\ttfamily
-	\begin{tabular}{ p{4cm} p{10cm} }
+	\begin{tabular}{ p{0.3\textwidth} p{0.6\textwidth} }
 		\toprule
 		命令 & 参数  \\
 		\midrule
@@ -2725,7 +2724,7 @@ This is the text after the figure.
 		\end{center}  &
 		\begin{itemize}
 			\item 盒子边框线厚度为 \cmd{fboxrule}
-			\item 盒子阴影厚度为 \cmd{shadowsize} （缺省为 4\pt ）。
+			\item 盒子阴影厚度为 \cmd{shadowsize} （缺省为 $4\pt$ ）。
 		\end{itemize} \\
 		\midrule
 		\begin{center}
@@ -2733,9 +2732,9 @@ This is the text after the figure.
 			\doublebox{Example}
 		\end{center} &
 		\begin{itemize}
-			\item 内框线厚为 $.75$\cmd{fboxrule}。 
-			\item 外框线厚为 $1.5$\cmd{fboxrule}。
-			\item 内外框之间的距离为 $1.5\text{\cmd{fboxrule}} + 0.5\pt$。
+			\item 内框线厚为 $.75 \text{\cmd{fboxrule}}$。 
+			\item 外框线厚为 $1.5 \text{\cmd{fboxrule}}$。
+			\item 内外框之间的距离为 $1.5 \text{\cmd{fboxrule}} + 0.5\pt$。
 		\end{itemize} \\
 		\midrule
 		\begin{center}

@@ -17,8 +17,8 @@
 	\item 连续使用 \cmd{includgraphics} 命令。
 	\item 并列的小页环境，其中每个都包含一个 \cmd{includegraphics} 命令。
 \end{enumerate}
-在构造多个并列图形时，理解第~\ref{sec:terminology}~节的内容是非常重要的。
-并列图形是通过将盒子（\cmd{incudegraphics}~或小页）平行放置在一条线上来得到的。
+在构造多个并列图形时，很重要的一点是要理解第~\ref{sec:terminology}~节的内容。
+并列图形是通过将若干盒子（\cmd{incudegraphics} 或小页）平行放置在一条线上来得到的。
 
 \subsection{单个图形环境中的并列图像}\label{ssec:sidegraphics-singlefig}
 
@@ -153,7 +153,7 @@
 	此外，标题的宽度也可以用 \pkg{caption} 宏包的 \opt{margin} 或 \opt{width} 关键字进行控制
 	（参见表~\ref{tab:caption-formatopt}）。
 	
-	\item 紧接着 \cmdM{begin}{figure} 的 \cmd{centering} 命令使得两个小页以及之间的空白在 \env{figure} 环境中居中放置。
+	\item 紧接着 \cmdM{begin}{figure} 的 \cmd{centering} 命令使得两个小页环境以及之间的空白在 \env{figure} 环境中居中放置。
 		
 	\item 小页内部的 \cmd{centering} 命令使得图像在小页环境内部居中放置。
 \end{itemize}
@@ -228,7 +228,7 @@
 
 使用 \cmd{subcaptionbox} 创建的子图宽度默认为插入内容的自然宽度。
 由于子图~\ref{fig:subfig:a} 只包含 \cmd{includegraphics} 插图命令，
-因此其标题宽度取决于插入图片的宽度。
+因此其标题宽度取决于图片的宽度。
 \cmd{subcaptionbox} 命令还提供了一个可选项用于控制子图的宽度，
 这样标题就可以和子图宽度一样了。
 例如，
@@ -564,22 +564,27 @@
 \begin{figure}
 	\centering
 	%%----start of first subfigure----
-	\subcaptionbox{First Subfigure\label{fig:stacksub:a}}%% label for first subfigure
+	% label for first subfigure
+	\subcaptionbox{First Subfigure\label{fig:stacksub:a}}%
 		{\includegraphics[width=0.25\linewidth]{graphic}}
 	\hspace{0.1\linewidth}
 	%%----start of second subfigure----
-	\subcaptionbox{Second Subfigure\label{fig:stacksub:b}}%% label for second subfigure
+	% label for second subfigure
+	\subcaptionbox{Second Subfigure\label{fig:stacksub:b}}%
 		{\includegraphics[width=0.25\linewidth]{graphic}}\\[20pt]
 	%%----start of third subfigure----
-	\subcaptionbox{Third Subfigure\label{fig:stacksub:c}}%% label for third subfigure
+	% label for third subfigure
+	\subcaptionbox{Third Subfigure\label{fig:stacksub:c}}%
 		{\includegraphics[width=0.25\linewidth]{graphic}}
 	\hspace{0.1\linewidth}
 	%%----start of fourth subfigure----
-	\subcaptionbox{Fourth Subfigure\label{fig:stacksub:d}}%% label for fourth subfigure
+	% label for fourth subfigure
+	\subcaptionbox{Fourth Subfigure\label{fig:stacksub:d}}%
 		{\includegraphics[width=0.25\linewidth]{graphic}}
 	\hspace{0.1\linewidth}
 	%%----start of fifth subfigure----
-	\subcaptionbox{Fifth Subfigure\label{fig:stacksub:e}}%% label for fifth subfigure
+	% label for fifth subfigure
+	\subcaptionbox{Fifth Subfigure\label{fig:stacksub:e}}%
 		{\includegraphics[width=0.25\linewidth]{graphic}}
 	\caption{Five Subfigures}
 	\label{fig:stacksub} %% label for entire figure
@@ -642,7 +647,7 @@
 \end{figure}
 \end{lstlisting}
 	\item[\env{subfigure} 和 \env{subtable} 环境] 
-	为方便起见，\pkg{subcaption} 宏包提供了 \envi{subfigure} 和 \envi{subtable} 两个环境用于创建子图和子表格，用法与 \env{minipage} 环境完全相同。
+	\pkg{subcaption} 宏包提供了 \envi{subfigure} 和 \envi{subtable} 两个环境用于快速创建子图和子表格，用法与 \env{minipage} 环境完全相同。
 	在其中使用 \cmd{caption} 命令可以直接创建子标题。例如
 \begin{lstlisting}[escapechar=\%]
 \begin{figure}
@@ -710,7 +715,10 @@ skip=6pt,list=false,hypcap=false
 	这两个类型的设置适用于 \env{subfigure} 和 \env{subtable} 环境中的标题。
 	
 	\item 局部的 \opt{sub} 类型设置，
-	例如在 \env{subfigure} 和 \env{subtable} 环境内的 \cmdOM{captionsetup}{sub}{\metacmd{options}}。
+	例如在 \env{subfigure} 和 \env{subtable} 环境内的设置。
+	\begin{center}
+		\cmdOM{captionsetup}{sub}{\metacmd{options}}
+	\end{center}
 \end{itemize}
 
 \section{连续图形和连续子图}\label{sec:contfig}
@@ -733,7 +741,7 @@ skip=6pt,list=false,hypcap=false
 
 连续图形既需要具有相同的编号，又应该有各自不同的引用，例如“Figure 12, Figure 12b”。
 构造连续图形的最佳办法是使用 \pkg{caption} 宏包。
-\pkg{caption} 宏包提供了 \cmdi{ContinuedFloat} 命令以及相应的标题类型 \opt{ContinuedFloat} 以及同名的计数器 \opt{ContinuedFloat}。
+该宏包提供了 \cmdi{ContinuedFloat} 命令以及相应的标题类型 \opt{ContinuedFloat} 以及同名的计数器 \opt{ContinuedFloat}。
 \begin{lstlisting}
 \renewcommand\theContinuedFloat{\alph{ContinuedFloat}}
 \DeclareCaptionLabelFormat{continued}{Continued #1˜#2}
@@ -969,7 +977,7 @@ skip=6pt,list=false,hypcap=false
 \subsection{Picinpar 宏包}\label{ssec:picinpar}
 
 \pkgi{picinpar} 宏包定义了一个基本的环境 \envi{window}，
-还有两个变体 \envi{figwindow} 和 \envi{tabwindow}。
+以及两个变体环境 \envi{figwindow} 和 \envi{tabwindow}。
 效果是在文本段落中打开一个“窗口”，在其中放入图形、文字和表格等。
 这里我们主要讨论将图形放入文本段落的用法，其它的用法可参考 \pkg{picinpar} 的说明。
 
