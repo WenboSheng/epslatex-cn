@@ -950,15 +950,7 @@ convert file2.gif 'eps:-'
 \begin{minipage}[t]{.5\textwidth}
 \vspace{0pt}
 \centering
-\ifxetex
-\includegraphics[width=.9\textwidth]{psfrag-ex1}
-\else
-\ifpdf
-\includegraphics[width=.9\textwidth]{psfrag-ex1}
-\else
-\ifdvipdfm
-\includegraphics[width=.9\textwidth]{psfrag-ex1}
-\else
+\ifdvips
 \psfrag{q1}{$\theta_1$}
 \psfrag{q2}{$\theta_2$}
 \psfrag{L1}{$L_1$}
@@ -966,8 +958,8 @@ convert file2.gif 'eps:-'
 \psfrag{P1}[][]{$P_1$}
 \psfrag{P2}[][]{\large $P_2$}
 \includegraphics[width=.6\textwidth]{pend.eps}
-\fi
-\fi
+\else
+\includegraphics[width=.9\textwidth]{psfrag-ex1}
 \fi
 \caption{With PSfrag Replacement}\label{fig:psfragex1}
 \end{minipage}
@@ -1011,21 +1003,13 @@ convert file2.gif 'eps:-'
 \end{minipage}%
 \begin{minipage}[b]{.5\textwidth}
 \centering
-\ifxetex
-\includegraphics[width=.9\textwidth]{psfrag-ex2}
-\else
-\ifpdf
-\includegraphics[width=.9\textwidth]{psfrag-ex2}
-\else
-\ifdvipdfm
-\includegraphics[width=.9\textwidth]{psfrag-ex2}
-\else
+\ifdvips
 \psfrag{q1}[][]{\colorbox{white}{$q_1$}}
 \psfrag{base}{\fcolorbox{black}{white}{Base}}
 \psfrag{Actuator}[l][l]{\shortstack{Hydraulic\\ Actuator}}
 \includegraphics[width=.9\textwidth]{mass.eps}
-\fi
-\fi
+\else
+\includegraphics[width=.9\textwidth]{psfrag-ex2}
 \fi
 \caption{With PSfrag Replacement}\label{fig:psfragex2}
 \par\vspace{0pt}
@@ -1056,21 +1040,13 @@ convert file2.gif 'eps:-'
 
 \begin{figure}
 \centering
-\ifxetex
-\includegraphics[width=.45\textwidth]{psfrag-ex3}
-\else
-\ifpdf
-\includegraphics[width=.45\textwidth]{psfrag-ex3}
-\else
-\ifdvipdfm
-\includegraphics[width=.45\textwidth]{psfrag-ex3}
-\else
+\ifdvips
 \psfrag{q1}[][]{\colorbox{white}{$q_1$}}
 \psfrag{base}{\fcolorbox{black}{white}{\CJKfamily{zhkai} 基础部分}}
 \psfrag{Actuator}[l][l]{\shortstack{\CJKfamily{zhkai} 水力\\ \CJKfamily{zhkai} 驱动器}}
 \includegraphics[width=.45\textwidth]{mass.eps}
-\fi
-\fi
+\else
+\includegraphics[width=.45\textwidth]{psfrag-ex3}
 \fi
 \caption{PSfrag~{\CJKfamily{zhhei}中使用中文的例子}}\label{fig:psfragex3}
 \end{figure}

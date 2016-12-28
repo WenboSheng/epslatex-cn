@@ -12,6 +12,7 @@
 \usepackage{cprotect}
 \usepackage{environ}
 \usepackage[nottoc,section]{tocbibind}
+\usepackage{etoolbox}
 
 \usepackage{placeins}
 \usepackage{fancybox}
@@ -106,6 +107,12 @@
 \newcommand{\percent}{\char37}
 \newcommand{\pt}{\ensuremath{\,\mathtt{pt}}}
 \newcommand{\metacmd}[1]{{\rm\textlangle\it#1\rm\textrangle}}
+
+%test dvips mode
+\newif\ifdvips
+\makeatletter
+\ifdefstring{\Gin@driver}{dvips.def}{\dvipstrue}{\dvipsfalse}
+\makeatother
 
 % store some graphics for accelerating compiling
 \newsavebox{\boxgraphic}
