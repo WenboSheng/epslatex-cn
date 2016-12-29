@@ -1094,18 +1094,25 @@ convert file2.gif 'eps:-'
 \subsubsection{PSfrag和 \pdfTeX{}}\label{sssec:psfrag-pdftex}
 \pkg{psfrag} 不能在 \pdfTeX{} 模式下使用。
 如果需要进行 \pkg{psfrag} 替换，
-一种解决办法是使用 \LaTeX{}-\file{dvi}-PostScript-\file{pdf} 编译途径。
-这样虽然可以使用 \pkg{psfrag} 替换，然而同时也失去了 \pdfTeX{} 提供的优势。
-另外一种方法是在 \pdfTeX{} 中间接地使用 \pkg{psfrag}，
-这样既可以进行 \pkg{psfrag} 替换，又可以利用 \pdfTeX{} 的优势，
-不过，这种方法比较费时费力。
+必须间接地使用 \pkg{psfrag} 进行图像，可以使用 \pkgi{pstool} 宏包。
 
-\pkgi{pstool} 宏包提供了实时
-
+\pkg{pstool} 宏包会自动导入 \pkg{psfrag} 宏包。
+它提供的 \cmdi{psfragfig} 命令可以对 \file{eps} 图像进行实时 \pkg{psfrag} 替换，
+并使用 \prgname{latex}-\prgname{dvips} 生成相应的 \file{pdf} 格式文件，
+然后插入到文档中。
+使用方法为
+\begin{center}
+\cmdOMM{psfragfig}{\metacmd{option}}{\metacmd{filename}}{\metacmd{input definitions}}
+\end{center}
+其中，\metacmd{option} 可以是 \cmd{includegraphics} 命令的可选项，
+例如 \opt{angle}、\opt{width} 等。
+\metacmd{filename} 是图片的文件名，注意不要包含 \file{.eps} 后缀。
+\metacmd{input definitions} 则包含 \cmd{psfrag} 定义。
+更详细的说明请参考宏包文档\cite{pstool-doc}。
 
 \subsubsection{PSfrag 和 其它编译方式}\label{sssec:psfrag-otherdriver}
 \prgname{dvipdfmx}、\XeTeX{}、\LuaTeX{} 等其它编译引擎不支持 \pkg{psfrag} 和 \pkg{pstool}，
-因此此时只能手动转换每一要使用 \pkg{psfrag} 的图像。
+因此此时只能手动转换每一幅要使用 \pkg{psfrag} 的图像。
 具体步骤为
 \begin{enumerate}
 	\item 对于每一个要使用 \pkg{psfrag} 的图像，分别创建包含 \pkg{psfrag} 命令和 \cmd{includegraphics} 命令的 \LaTeX{} 文件。
