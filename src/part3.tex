@@ -807,7 +807,7 @@ convert file2.gif 'eps:-'
 \DeclareGraphicsRule{.eps.gz}{eps}{.eps.bb}%
 {`gunzip -c `kpsewhich -n latex tex #1`}
 \end{lstlisting}
-这里使用 \prgname{kpsewhich}\index{kpsewhich@\textsf} 为 \prgname{gunzip} 寻找文件。
+这里使用 \prgname{kpsewhich}\index{kpsewhich@{\textsf{kpsewhich}}} 为 \prgname{gunzip} 寻找文件。
 \begin{lstlisting}[language=bash]
 `kpsewhich -n latex tex #1
 \end{lstlisting}
@@ -1094,11 +1094,12 @@ convert file2.gif 'eps:-'
 \subsubsection{PSfrag和 \pdfTeX{}}\label{sssec:psfrag-pdftex}
 \pkg{psfrag} 不能在 \pdfTeX{} 模式下使用。
 如果需要进行 \pkg{psfrag} 替换，
-必须间接地使用 \pkg{psfrag} 进行图像，可以使用 \pkgi{pstool} 宏包。
+必须间接地使用 \pkg{psfrag} 进行图像，可以使用 \pkgi{pstool} 宏包\footnote{
+	本节由译者添加。}。
 
 \pkg{pstool} 宏包会自动导入 \pkg{psfrag} 宏包。
 它提供的 \cmdi{psfragfig} 命令可以对 \file{eps} 图像进行实时 \pkg{psfrag} 替换，
-并使用 \prgname{latex}-\prgname{dvips} 生成相应的 \file{pdf} 格式文件，
+并使用 \prgname{latex}-\prgname{dvips} 生成相应的 \file{pdf} 格式图片，
 然后插入到文档中。
 使用方法为
 \begin{center}

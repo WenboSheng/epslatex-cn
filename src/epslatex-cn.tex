@@ -34,7 +34,6 @@
 \usepackage{hologo}
 \usepackage{array,booktabs}
 \usepackage{hyperref}
-\usepackage{layout}
 
 % settings
 \geometry{a4paper,includemp,reversemp,left=0.9in,right=0.85in,top=1in,bottom=1in,%
@@ -97,8 +96,15 @@
 \newcommand{\opt}[1]{\texttt{#1}}
 \newcommand{\pkgi}[1]{\pkg{#1}%
 	\index{#1@{\textsf{#1} 宏包}}}
-\newcommand{\cmdi}[1]{\cmd{#1}%
-	\index{#1@{\texttt{\textbackslash#1} 命令}}}
+%\newcommand{\cmdi}[1]{\cmd{#1}%
+%	\index{#1@{\texttt{\textbackslash#1} 命令}}}
+%\newcommand{\cmdi}[2][#2]{\cmd{#2}%
+%	\index{#1@{\texttt{\textbackslash#2} 命令}}
+\makeatletter
+\def\cmdi{\@ifnextchar[{\@@cmdi}{\@cmdi}}
+\def\@cmdi#1{\@@cmdi[#1]{#1}}
+\def\@@cmdi[#1]#2{\cmd{#2}\index{#1@{\texttt{\textbackslash#2} 命令}}}
+\makeatother
 \newcommand{\envi}[1]{\env{#1}%
 	\index{#1@{\texttt{#1} 环境}}}
 %\renewcommand{\bs}{\symbol{'134}}%Print backslash
@@ -165,7 +171,6 @@
 \makeindex
 %\includeonly{part1}
 \begin{document}
-\layout
 
 \include{title}
 

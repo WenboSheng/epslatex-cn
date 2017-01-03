@@ -229,7 +229,7 @@ text text text text text text...
 	不过，表格在排版时是跳过图形而单独处理的。
 	反之，图形的处理也是与表格的处理无关的。
 	\item 必须符合在第~\ref{sec:typerule}~节中给出的审美条件。
-	例如，一页上的浮动体的数目不能超过 \opt{totalnumber}\index{totalnumber@\texttt}。
+	例如，一页上的浮动体的数目不能超过 \opt{totalnumber}\index{totalnumber}。
 	在浮动位置选项前加上一个惊叹号（如 \cmdM{begin}{figure}\opt{[!ht]}）
 	会使 \LaTeX{} 忽略应用于文本页的审美条件，试图强制放置浮动图形。
 	不过，\texttt{!} 不会影响应用于浮动页的审美条件。
@@ -575,15 +575,15 @@ text text text text text text...
 	\centering
 	\caption{浮动页面中的浮动体间距}\label{tab:figlength-floatpage}
 	\kaishu
-	\begin{tabular}{>{\ttfamily}l P{0.7\textwidth}}
+	\begin{tabular}{>{\ttfamily}l p{0.7\textwidth}}
 		\toprule
-		\cmdi{@fptop} & 浮动页中顶部的浮动体上方的空白。
+		\cmdi["@fptop]{@fptop} & 浮动页中顶部的浮动体上方的空白。
 		缺省为~\texttt{0pt plus 1.0fil}。 \\
 		\hline
-		\cmdi{@fpsep} & 浮动页中的浮动体之间的距离。
+		\cmdi["@fpsep]{@fpsep} & 浮动页中的浮动体之间的距离。
 		缺省为~\texttt{8pt plus 2.0fil}。 \\
 		\hline
-		\cmdi{@fpbot} & 浮动页中底部的浮动体下方的空白。
+		\cmdi["@fpbot]{@fpbot} & 浮动页中底部的浮动体下方的空白。
 		缺省为~\texttt{0pt plus 1.0fil}。 \\
 		\bottomrule
 	\end{tabular}
@@ -1982,7 +1982,7 @@ This is the text after the figure.
 本节介绍如何不使用 \pkg{caption} 宏包做到这一点。
 
 \cmd{caption} 命令之所以可以在 \env{figure} 和 \env{table} 环境中使用，
-是因为这两个环境分别为图形和表格定义了内部命令 \cmdi{@captype}。
+是因为这两个环境分别为图形和表格定义了内部命令 \cmdi["@captype]{@captype}。
 这样，通过定义 \cmd{@captype} 就可以在 \env{figure} 和 \env{table} 环境外使用 \cmd{caption} 命令。
 当然这时 \cmd{@captype} 必须用 \cmd{makeatletter}-\cmd{makeatother} 命令对包围起来，
 使得可以在命令名中使用 \texttt{@}。

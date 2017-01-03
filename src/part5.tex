@@ -898,14 +898,10 @@ skip=6pt,list=false,hypcap=false
 
 \subsection{Wrapfig 宏包}\label{ssec:wrapfig}
 
-\begin{wrapfigure}{l}{2em}
-	\textcolor{blue}{\resizebox{2em}{!}{\bfseries\texttt{\fbox{W}}}}
-\end{wrapfigure}
-\noindent \texttt{rapfig} 宏包提供了一个 \envi{wrapfigure} 环境\footnote{
+\pkg{Wrapfig} 宏包提供了一个 \envi{wrapfigure} 环境\footnote{
 	\pkg{wrapfig} 也同时提供了一个 \envi{wraptable} 环境。}来排版窄小的图形，
 使得该图形位于文本的一边，并使文本在其边上折行。
 
-\FloatBarrier
 \env{wrapfigure}的用法为：
 \begin{flushleft}
 	\cmdMOMOM{begin}{wrapfigure}{\metacmd{行数}}{\metacmd{位置}}{\metacmd{外延长度}}{\metacmd{宽度}}\\
@@ -935,7 +931,6 @@ skip=6pt,list=false,hypcap=false
 	\item 图文绕排通常需要多次手动定位。
 	由于会受到修改其它排版格式的影响，因此应当在最后定稿前进行调整。
 	\item \env{wrapfigure} 环境不能放置在跨页的地方。
-	\item 不能在任何列表环境中使用 \env{wrapfigure}。
 	\item 从美学角度讲，图文混排只应当用于普通文本。
 	章节标题、大块的公式与图形混排会很难看。
 	图形放在列表的左边也很糟糕。（排版仍会允许，只是结果很差）
@@ -956,16 +951,7 @@ skip=6pt,list=false,hypcap=false
 	\item 正文中的文本，而不是小页环境。
 \end{itemize}
 
-\pkg{wrapfig} 还可用来放大段落的第一个字。
-本节的第一个字母 \texttt{W} 就是使用如下命令来得到的：
-\begin{lstlisting}
-\begin{wrapfigure}{l}{25pt}
-\textcolor{blue}{\resizebox{2em}{!}{\bfseries\texttt{W}}}
-\end{wrapfigure}
-\noindent\texttt{rapfig} 宏包提供了一个...
-\end{lstlisting}
-
-本节中的另一例子使用了如下命令：
+本节中的例子使用了如下命令：
 \begin{lstlisting}
 \begin{wrapfigure}{r}{4.5cm}
 \includegraphics[width=4cm,clip]{tiger}
@@ -1022,13 +1008,13 @@ skip=6pt,list=false,hypcap=false
 
 \begin{Verbatim}
 \begin{figwindow}[1,r,{\mbox{%
-	\includegraphics[width=3cm]{tiger}}},{Tiger}]
+	\includegraphics[width=2cm]{tiger}}},{Tiger}]
 	可是哈卜拉姆再聪明...可是我偏不喜欢。」
 \end{figwindow}
 \end{Verbatim}
 
 \begin{figwindow}[1,r,{\mbox{%
-		\includegraphics[width=3cm,clip]{tiger}}},{Tiger}]
+		\includegraphics[width=2cm,clip]{tiger}}},{Tiger}]
 	可是哈卜拉姆再聪明、再有学问，有一件事却是他不能解答的，因为包
 	罗万有的「可兰经」上也没有答案；如果你深深爱著的人，却深深的爱上了
 	别人，有甚麽法子？白马带著她一步步的回到中原。白马已经老了，只能慢
@@ -1039,13 +1025,13 @@ skip=6pt,list=false,hypcap=false
 
 \begin{Verbatim}
 \begin{figwindow}[1,c,{\mbox{%
-	\includegraphics[width=3cm]{tiger}}},{Tiger}]
+	\includegraphics[width=2cm]{tiger}}},{Tiger}]
 	可是哈卜拉姆再聪明...可是我偏不喜欢。」
 \end{figwindow}
 \end{Verbatim}
 
 \begin{figwindow}[1,c,{\mbox{%
-		\includegraphics[width=3cm,clip]{tiger}}},{Tiger}]
+		\includegraphics[width=2cm,clip]{tiger}}},{Tiger}]
 	可是哈卜拉姆再聪明、再有学问，有一件事却是他不能解答的，因为包
 	罗万有的「可兰经」上也没有答案；如果你深深爱著的人，却深深的爱上了
 	别人，有甚麽法子？白马带著她一步步的回到中原。白马已经老了，只能慢
