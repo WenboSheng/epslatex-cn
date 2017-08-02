@@ -182,3 +182,6 @@ TSWLatexianTemp*
 
 # KBibTeX
 *~[0-9]*
+
+# system
+.DS_Store
