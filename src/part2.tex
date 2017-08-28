@@ -18,13 +18,12 @@
 用户必须指定一个图形驱动以告诉图形宏包如何处理导入的图像。
 目前\LaTeX{} 图形宏集支持18种不同的驱动
 \footnote{
-	到目前（2016年）为止，支持的驱动数已经超过了20种。——译注
-	}，
+	到目前（2016年）为止，支持的驱动数已经超过了20种。——译注}，
 不过，本文档只涉及几种最常用的驱动：
 \prgname{dvips}、\prgname{dvipdfmx}、\prgname{pdftex}、\prgname{xetex}、\prgname{luatex}。
 除了 \prgname{dvipdfmx} 之外，余下几种驱动一般不用显式指明，
-因为绝大部分 \LaTeX{} 发行版中的 \file{graphics.cfg} 可以自动识别
-\footnote{\file{graphics.cfg} 文件会检测文件的编译方式。
+因为绝大部分 \LaTeX{} 发行版中的 \file{graphics.cfg} 可以自动识别\footnote{
+    \file{graphics.cfg} 文件会检测文件的编译方式。
 	对于 \prgname{latex} 会指定 \opt{dvips} 选项，
 	对于 \prgname{pdflatex} 会指定 \opt{pdftex} 选项，
 	对于 \prgname{xelatex} 会指定 \opt{xetex} 选项，
@@ -56,7 +55,7 @@
 （见~\pageref{ssec:deextension} 的第~\ref{ssec:deextension} 节）。
 
 \subsection[pdfLaTeX 模式下的图像加载]{\pdfLaTeX{} 模式下的图像加载}
-\pdfTeX{} 支持直接导入 \file{pdf}、\file{png}、\file{jpeg} 和 MetaPost 图像。
+\pdfTeX{} 支持直接导入 \file{pdf}、\file{png}、\file{jpeg} 和 \MetaPost{} 图像。
 当使用 \prgname{pdflatex} 编译时，下面的命令
 \begin{lstlisting}
 \includegraphics{file.pdf}
@@ -67,7 +66,7 @@
 会按照自然尺寸大小导入 \file{pdf} 文件 \file{file.pdf}、
 \file{png} 文件 \file{file.png}、
 \file{jpeg} 文件 \file{file.jpg}
-以及 MetaPost 文件 \file{file.mps}。
+以及 \MetaPost{} 文件 \file{file.mps}。
 如果文件名没有扩展名
 \begin{lstlisting}
 \includegraphics{file.eps}
@@ -79,8 +78,8 @@
 很多情况下要求文档同时可以由 \LaTeX{} 或 \pdfLaTeX{} 编译。
 要求 PostScript 输出时使用 \LaTeX{} 编译和 \prgname{dvips} 驱动，
 要求 \file{pdf} 输出时则使用 \pdfLaTeX{} 编译。
-在这两种方式之间切换会改变两件事情。
-\footnote{使用 \prgname{xelatex} 或者 \prgname{lualatex} 编译时无需考虑此问题。
+在这两种方式之间切换会改变两件事情。\footnote{
+    使用 \prgname{xelatex} 或者 \prgname{lualatex} 编译时无需考虑此问题。
 	这是因为这两种编译方式能同时支持 \file{eps} 和 \file{pdf}、\file{jpg}、\file{png} 等图片格式，
 	同时编译时也能够自动调用相应的 \pkg{graphicx} 驱动选项。——译注}
 \begin{itemize}
@@ -93,7 +92,7 @@
 		有时使用 \prgname{PurifyEPS} （见 \pageref{ssec:purifyeps} 页的第~\ref{ssec:purifyeps} 节） 可以创建一个文件并可以同时供 \LaTeX{} 和 \pdfLaTeX{} 使用。}：
 	\begin{enumerate}
 		\item 一份 \file{eps} 版本，当使用 \prgname{latex} 编译时会导入。
-		\item 一份 \file{png}、\file{pdf}、\file{jpeg} 或者 MetaPost 版本，
+		\item 一份 \file{png}、\file{pdf}、\file{jpeg} 或者 \MetaPost{} 版本，
 		当使用 \prgname{pdflatex} 编译时会导入\footnote{
 			也可以使用 \prgname{epstopdf} 进行实时转换，
 			见下面的第~\ref{sssec:epstopdf} 节。——译注}。
@@ -108,7 +107,7 @@
 \includegraphics{graphic}
 \end{lstlisting}
 	定义在 \file{dvips.def} 中的默认扩展名列表会使得 \LaTeX{} 导入图像 \file{eps} 版本，
-	而定义在 \file{pdftex.def} 中的默认扩展名列表会使得 \pdfLaTeX{} 导入图像的 \file{png}、\file{pdf}、\file{jpeg} 或者 MetaPost 版本
+	而定义在 \file{pdftex.def} 中的默认扩展名列表会使得 \pdfLaTeX{} 导入图像的 \file{png}、\file{pdf}、\file{jpeg} 或者 \MetaPost{} 版本
 	（见~\pageref{ssec:deextension} 的第~\ref{ssec:deextension} 节）。
 	
 	\item 不要直接使用 \pkg{psfrag}。如果需要进行 \pkg{psfrag} 替换，
@@ -116,8 +115,7 @@
 \end{enumerate}
 
 \subsubsection{使用 \pkg{ifpdf} 宏包的条件代码}
-\pkgi{ifpdf} 宏包的 \cmdi{ifpdf} 命令会检测文档是否由 \prgname{pdflatex} 编译
-\footnote{
+\pkgi{ifpdf} 宏包的 \cmdi{ifpdf} 命令会检测文档是否由 \prgname{pdflatex} 编译\footnote{
 	历史上，有一种检测方法是基于 \cmd{pdfoutput} 仅在使用 \pdfLaTeX{} 时才有定义这一事实。
 	然而，现在绝大部分 \TeX{} 发行版中的 \prgname{latex} 命令实际上是在 \file{dvi} 模式下执行 \pdfLaTeX{}。
 	此时无论用\prgname{latex} 和 \prgname{pdflatex} 中的哪种来编译，\cmd{pdfoutput} 都有定义。
@@ -156,7 +154,8 @@
 如果已经准备了 \file{eps} 图像而想使用 \prgname{pdflatex} 编译方式，
 可以考虑使用宏包 \pkgi{epstopdf}。
 该宏包可以在编译时实时地将 \file{eps} 转成 \file{pdf} 格式图像，
-从而可以在 \prgname{pdflatex} 编译方式下使用。
+从而可以在 \prgname{pdflatex} 编译方式下使用。\footnote{
+    在 \TeX Live （2010之后的较新版本）中会自动调用该宏包，也就是说，此时可以直接用 \prgname{pdflatex} 编译 \file{eps} 插图的情况——译注}
 
 使用该宏包要注意两点：
 \begin{itemize}
@@ -164,7 +163,7 @@
 	具体来说，编译方式为
 \begin{lstlisting}[language=bash,escapechar=\%]
 pdflatex -shell-escape test.tex %(\TeX Live 中)%
-pdflatex –enable-write18 test.tex %(MiK\TeX{} 中)%
+pdflatex -enable-write18 test.tex %(MiK\TeX{} 中)%
 \end{lstlisting}
 	\item 在图形宏包 \pkg{graphics}/\pkg{graphicx} 之后载入 \pkg{epstopdf}，即
 \begin{lstlisting}
@@ -190,11 +189,10 @@ pdflatex –enable-write18 test.tex %(MiK\TeX{} 中)%
 \begin{lstlisting}
 \includegraphics[width=3in]{file}
 \end{lstlisting}
-导入指定的图片文件，且宽度为 3英寸
-\footnote{同时高度也会按相应的比例缩放——译注}。
+导入指定的图片文件，且宽度为 3英寸\footnote{
+    同时高度也会按相应的比例缩放——译注}。
 不过，为了使图像的页面布局更具通用性，
-图片宽度最好指定为可伸缩的相对长度而不是用像3英寸这样的固定尺寸
-\footnote{
+图片宽度最好指定为可伸缩的相对长度而不是用像3英寸这样的固定尺寸\footnote{
 	预先定义的相对长度包括：\\
 	\cmd{textwidth} 是文档中正文的宽度；\\
 	\cmd{linewidth} 是当前环境中一行的宽度；\\
@@ -267,7 +265,7 @@ pdflatex –enable-write18 test.tex %(MiK\TeX{} 中)%
 		\opt{origin} 点可以与第~\ref{ssec:rotatebox}节的 \cmd{rotatebox} 命令中的一样。
 	比如 \opt{origin=c} 将使图形绕它的中心旋转。  \\ \hline
 	bb & 设定 BoundingBox 的值。
-	例如，\opt{bb=10 20 100 200} 设定BoundingBox 的左下角在 $(10,20)$，右上角在 $(100,200)$。\par
+	例如，\opt{bb=10 20 100 200} 会设定BoundingBox 的左下角在 $(10,20)$，右上角在 $(100,200)$。\par
 	因为 \cmd{includegraphics} 会自动从 \file{eps} 文件中读入BoundingBox值，
 	所以一般不用\opt{bb} 这个选项。
 	但它在 \file{eps} 文件中的 BoundingBox 丢失或不准确时还是很有用的。 \\ 
@@ -285,10 +283,10 @@ pdflatex –enable-write18 test.tex %(MiK\TeX{} 中)%
 	这里的坐标是以 BoundingBox 左下角为起点的相对坐标。
 	
 	例如，如果图像的 BoundingBox 的值是 \texttt{50	50 410 302}，
-	那么 \texttt{viewpoint=50 50 122 122} 将显示以图像左下角为左下角的一英寸大小的正方形区域。
-	而 \texttt{viewpoint=338 230 410 302} 则会显示以图形的右上角为右上角的一英寸大小的正方形区域。
+	那么 \texttt{viewpoint=50 50 122 122} 显示的图像是一平方英寸大小的正方形区域，且以图像左下角为左下角。
+	而 \texttt{viewpoint=338 230 410 302} 显示的图像也是一平方英寸大小的正方形区域，但以图形的右上角为右上角。
 	
-	必须使用\opt{clip} 选项（见表~\ref{tab:boolopt}）来阻止显示视图以外的图形部分。 \\ \hline
+	必须使用\opt{clip} 选项（见表~\ref{tab:boolopt}）来阻止显示视图以外的部分。 \\ \hline
 	trim & 显示部分图像的另一种方法。
 	所给出的四个数字分别代表了从左、下、右、上被截去的值。
 	正数代表从此方向截去的大小，而负数则代表从此方向加上的大小。
@@ -308,7 +306,7 @@ pdflatex –enable-write18 test.tex %(MiK\TeX{} 中)%
 	clip & 指定 \opt{clip=false} 会显示整个的图形，即使有些部分在视图之外。（默认值）
 	
 	指定 \opt{clip=true} 时将不显示图形在视图之外的部分。 \\ \hline
-	draft & 当使用\opt{draft} 或 \opt{draft=true} 选项将阻止图像的导入。
+	draft & 使用\opt{draft} 或 \opt{draft=true} 选项将阻止图像的导入。
 	此时在插图的位置只显示图像的BoundingBox和文件名，
 	这会加快文档的显示和打印速度。
 	使用 \opt{draft=false} 则会显示图像。
@@ -328,8 +326,7 @@ pdflatex –enable-write18 test.tex %(MiK\TeX{} 中)%
 
 \subsection{一些例子}
 
-下面是一些使用 \cmd{includegraphics} 命令来插入图形的例子。
-\footnote{
+下面是一些使用 \cmd{includegraphics} 命令来插入图形的例子。\footnote{
 	本小节来自于王磊在旧版本的中译本《\LaTeXe{} 插图指南》中额外补充的内容。——译注}
 这里为方便起见，定义水平线 \cmd{HR} 为
 \begin{lstlisting}
@@ -403,7 +400,7 @@ pdflatex –enable-write18 test.tex %(MiK\TeX{} 中)%
 \hspace{-.5cm}
 \begin{minipage}[t]{.5\textwidth}
 	\vspace{0pt}
-\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例一},labelposition=topline]
+\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例一},labelposition=topline,formatcom=\color{VerbatimColor}]
 左\HR\fbox{%
 \includegraphics
 [scale=.5]{w.eps}%
@@ -417,7 +414,7 @@ pdflatex –enable-write18 test.tex %(MiK\TeX{} 中)%
 \end{minipage}%
 \hspace{-.5cm}
 \begin{minipage}[c]{.5\textwidth}
-\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例二},labelposition=topline]
+\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例二},labelposition=topline,formatcom=\color{VerbatimColor}]
 左\HR\fbox{%
 \includegraphics%
 [width=10mm]{w.eps}%
@@ -431,7 +428,7 @@ pdflatex –enable-write18 test.tex %(MiK\TeX{} 中)%
 \end{minipage}%
 \hspace{-.5cm}
 \begin{minipage}[c]{.5\textwidth}
-\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例三},labelposition=topline]
+\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例三},labelposition=topline,formatcom=\color{VerbatimColor}]
 左\HR\fbox{%
 \includegraphics
 [height=20mm,width=30mm]%
@@ -446,7 +443,7 @@ pdflatex –enable-write18 test.tex %(MiK\TeX{} 中)%
 \end{minipage}%
 \hspace{-.5cm}
 \begin{minipage}[c]{.5\textwidth}
-\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例四},labelposition=topline]
+\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例四},labelposition=topline,formatcom=\color{VerbatimColor}]
 左\HR\fbox{%
 \includegraphics
 [height=20mm,width=30mm,%
@@ -461,7 +458,7 @@ keepaspectratio]{w.eps}}%
 \end{minipage}%
 \hspace{-.5cm}
 \begin{minipage}[c]{.5\textwidth}
-\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例五},labelposition=topline]
+\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例五},labelposition=topline,formatcom=\color{VerbatimColor}]
 左\HR\fbox{%
 \includegraphics
 [angle=-45]{w.eps}}%
@@ -475,7 +472,7 @@ keepaspectratio]{w.eps}}%
 \end{minipage}%
 \hspace{-.5cm}
 \begin{minipage}[c]{.5\textwidth}
-\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例六},labelposition=topline]
+\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例六},labelposition=topline,formatcom=\color{VerbatimColor}]
 左\HR\fbox{%
 \includegraphics
 [angle=-45,width=30mm]%
@@ -489,7 +486,7 @@ keepaspectratio]{w.eps}}%
 		\rotatebox{-45}{\resizebox{30mm}{!}{\usebox{\boxw}}}}\HR 右
 \end{minipage}%
 \begin{minipage}[c]{.5\textwidth}
-\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例七},labelposition=topline]
+\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例七},labelposition=topline,formatcom=\color{VerbatimColor}]
 左\HR\fbox{%
 \includegraphics
 [width=30mm,angle=-45]%
@@ -504,7 +501,7 @@ keepaspectratio]{w.eps}}%
 \end{minipage}%
 \hspace{-.5cm}
 \begin{minipage}[c]{.5\textwidth}
-\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例八},labelposition=topline]
+\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例八},labelposition=topline,formatcom=\color{VerbatimColor}]
 左\HR\fbox{%
 \includegraphics
 [angle=-60,totalheight=15mm]%
@@ -520,7 +517,7 @@ keepaspectratio]{w.eps}}%
 \end{minipage}%
 \hspace{-.5cm}
 \begin{minipage}[c]{.5\textwidth}
-\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例九},labelposition=topline]
+\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例九},labelposition=topline,formatcom=\color{VerbatimColor}]
 左\HR\fbox{%
 \includegraphics
 [angle=-60,totalheight=20mm,%
@@ -536,7 +533,7 @@ width=30mm]{w.eps}}%
 \end{minipage}%
 \hspace{-.5cm}
 \begin{minipage}[c]{.5\textwidth}
-\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例十},labelposition=topline]
+\begin{Verbatim}[frame=lines,label=\colorbox{green}{\small 例十},labelposition=topline,formatcom=\color{VerbatimColor}]
 左\HR\fbox{%
 \includegraphics
 [angle=-60,totalheight=20mm,%
@@ -820,8 +817,7 @@ China? \scalebox{-1}{China?}}
 若~\cmd{includegraphics}~命令所引入的文件没有提供扩展名，
 将试图为其自动加上什么样的扩展名。
 
-为方便起见，在选择图形驱动
-\footnote{
+为方便起见，在选择图形驱动\footnote{
 	指定一个图形驱动选项如 \cmdOM{usepackage}{dvips}{graphics} 将会覆盖掉在~\texttt{graphics.cfg} 中设定的缺省驱动选项——旧译本注。}
 时，就已经有一个相应的预设扩展名集。
 举例来说，如果选择 \prgname{dvips} 作为图形驱动，
@@ -831,9 +827,8 @@ China? \scalebox{-1}{China?}}
 \end{lstlisting}
 
 如果 \pkg{graphicx} 宏包使用 \prgname{pdftex} 驱动，
-那么默认会使用下列图形文件扩展名（在 \file{pdftex.def} 中定义）
-\footnote{实际上在最新版本（2016年）中，
-	\file{dvips.def} 中定义扩展名的方式为
+那么默认会使用下列图形文件扩展名（在 \file{pdftex.def} 中定义）\footnote{
+    实际上在较新版本（2016年）中，\file{dvips.def} 中定义扩展名的方式为
 	\begin{flushleft}
 		\cmd{def}\cmdM{Gin@extions}{.eps,.ps,.eps.gz,.ps.gz,.eps.Z,.mps}
 	\end{flushleft}
@@ -918,7 +913,6 @@ China? \scalebox{-1}{China?}}
 \begin{table}
 	\centering
 	\caption{\cmd{DeclareGraphicsRule} 的选项}\label{tab:DeclaregruleArgs}
-	\kaishu 
 	\begin{tabular}{>{\ttfamily}l  p{0.7\textwidth}}
 		\toprule
 		ext & 文件的扩展名。 \\ \hline
@@ -927,7 +921,7 @@ China? \scalebox{-1}{China?}}
 		如果这一选项为空，
 		那么必须要在 \cmd{includegraphics} 命令中给定 \opt{bb} 选项的值。 \\ \hline
 		command & 作用于图像文件的命令，此项常为空。
-		命令前必须有一个前单引号（键盘上数字键 \texttt{1} 的左侧键——译注），
+		命令前必须有一个前单引号（键盘上数字键 \texttt{1} 左侧的键——译注），
 		注意不是常用的后单引号。
 		目前为止，只有 \prgname{dvips} 能够执行这样的命令。
 		参见第~\ref{ssec:noneps}~节关于如何用这样的命令来处理非 \file{eps} 格式图像和压缩的 \file{eps} 图像的例子。\\
@@ -948,10 +942,9 @@ China? \scalebox{-1}{China?}}
 为方便起见，根据不同的图形驱动选项，
 \marginpar{预定义命令}
 已经预定义了不同的缺省图像规则。
-例如使用 \opt{dvips} 图形驱动选项时，文件 \file{dvips.def} 定义了如下缺省图形规则
-\footnote{
+例如使用 \opt{dvips} 图形驱动选项时，文件 \file{dvips.def} 定义了如下缺省图形规则\footnote{
 	实际上 \file{dvips.def} 的代码并没有使用 \cmd{DeclareGraphicsRule}，
-	不过效果是一样。}：
+	不过效果是一样的。}：
 \begin{lstlisting}
 \DeclareGraphicsRule{.eps}{eps}{.eps}{}
 \DeclareGraphicsRule{.ps}{eps}{.ps}{}
@@ -970,8 +963,7 @@ China? \scalebox{-1}{China?}}
 接下来的三个命令定义了位图文件 \file{pcx}、\file{bmp}、\file{msp} 的扩展名，
 最后一个命令设定未知扩展名的文件按照 \file{eps} 文件处理。
 
-如果使用 \pdfTeX 引擎，那么 \file{pdftex.def} 缺省定义了以下的图形规则
-\footnote{
+如果使用 \pdfTeX 引擎，那么 \file{pdftex.def} 缺省定义了以下的图形规则\footnote{
 	\file{pdftex.def} 实际上先检查 \pdfTeX{} 的版本，
 	然后根据不同版本的处理方式定义相应的图形规则。}：
 \begin{lstlisting}

@@ -10,7 +10,7 @@
 因此，凡是调用 \file{dvi} 的程序支持的图像格式，
 \TeX\ 和 \LaTeX\ 都能够导入。
 
-过去的许多年来，\file{dvi} 通常都被转为 \file{PostScript}格式，
+过去的许多年来，\file{dvi} 通常都被转为 PostScript 格式，
 进而标准的插图格式是 Encapsulated PostScript（\file{eps}）图像，
 因为它是PostScript语言的一个子集。
 在 \LaTeX{} 中插入\file{eps}图像最初通过低层命令 \cmd{special} 来完成。
@@ -26,9 +26,9 @@
 
 随着 1994 年 \LaTeXe{} 的发布，
 \marginpar{\LaTeX{}\\图形宏集}
-\LaTeX 3 小组认识到在 \LaTeX{} 中插图的一些普遍问题。
-通过努力，他们开发出了“\LaTeX\ 图形宏集”，
-\footnote{已经有 \LaTeX{} 图形宏集的 plain \TeX{} 版本，
+\LaTeX 3 小组认识到在 \LaTeX{} 插图中存在的一些普遍问题。
+通过努力，他们开发出了“\LaTeX\ 图形宏集”，\footnote{
+    已经有 \LaTeX{} 图形宏集的 plain \TeX{} 版本，
 	相关文件请见 \href{ftp://ctan.tug.org/tex-archive/macros/plain/graphics/}{CTAN/macros/generic/graphics/}}
 并全部重写了其中的命令。
 比起其它的插图命令，他们的命令更高效、更健壮、更具有可移植性。
@@ -62,25 +62,25 @@
 \LaTeX{}~图形宏集还处理非 \file{eps} 图像格式的插图问题，
 例如\file{jpeg} 和 \file{gif}等。
 由于 \file{dvi} 到 \file{ps} 的转换程序一般不直接支持大部分的非\file{eps} 格式，
-向 \file{PostScript} 文档中插入这些图像之前相关图像必须首先转成 \file{eps} 格式。
+向 PostScript 文档中插入这些图像之前相关图像必须首先转成 \file{eps} 格式。
 尽管这种图像格式的预处理通常是最佳办法，
 不过，\LaTeX\ 图形宏集还提供了另一种选择：\file{dvi} 转 \file{ps} 时自动地实时转换图像格式。
 第 \ref{ssec:convertor} 节（\pageref{ssec:convertor} 页）介绍了一下图像转换程序，
 第 \ref{sec:dvips-noneps} 节（\pageref{sec:dvips-noneps} 页） 讲述了如何在 \file{dvi} 转 \file{ps} 时使用非 \file{eps} 格式的图像。
 
-过去，\file{PostScript} 通常是 \LaTeX{} 文档的最终格式，
+过去，PostScript 通常是 \LaTeX{} 文档的最终格式，
 \marginpar{\pdfTeX}
 整个编译过程有两个步骤：
 (1) 使用 \LaTeX{} 生成 \file{dvi} 文件，
-(2) 使用一个 \file{dvi} 到 \file{ps} 的转换程序（例如\prgname{dvips}） 来生成 \file{PostScript} 文件。
-之后，随着 Adobe 的 \file{pdf} 格式开始流行，编译过程又加了第三步：
-(3) 使用 \prgname{Ghostscript}
-\footnote{自由软件，见第 \ref{ssec:gs} 节（\pageref{ssec:gs} 页）。}、
-\prgname{Adobe Acrobat}
-\footnote{商业软件，见 \url{www.adobe.com}}
-或者 \prgname{PStill}
-\footnote{共享软件，见 \url{www.pstill.com}}
-等工具将 \file{PostScript} 文件转成 \file{pdf} 文件。
+(2) 使用一个 \file{dvi} 到 \file{ps} 的转换程序（例如\prgname{dvips}） 来生成 PostScript 文件。
+之后，随着 Adobe 公司的 \file{pdf} 格式开始流行，编译过程又加了第三步：
+(3) 使用 \prgname{Ghostscript}\footnote{
+    自由软件，见第 \ref{ssec:gs} 节（\pageref{ssec:gs} 页）。}、
+\prgname{Adobe Acrobat}\footnote{
+    商业软件，见 \url{www.adobe.com}}
+或者 \prgname{PStill}\footnote{
+    共享软件，见 \url{www.pstill.com}}
+等工具将 PostScript 文件转成 \file{pdf} 文件。
 
 然而，这种三步骤过程 \LaTeX-\prgname{dvips}-\prgname{ghostscript} 不仅很繁琐，
 而且很难实现一些 \file{pdf} 特性，比如超链接。
@@ -92,24 +92,26 @@
 \pdfTeX 从名称上看来输出的是 \file{pdf}，
 不过它也能输出 \file{dvi} 格式，并且与原先 \TeX{} 引擎的输出结果相同。
 
-如同 \prgname{latex}　命令使用　\TeX{} 处理 \LaTeX{} 文档来生成 \file{dvi} 文件一样，
-\prgname{pdflatex} 命令使用 \pdfTeX{} 处理 \LaTeX{} 文档，并直接生成 \file{pdf} 文件。
+如同 \prgname{latex}　命令使用　\TeX{} 引擎处理 \LaTeX{} 文档并生成 \file{dvi} 文件，\footnote{
+现代的 \TeX 发行版本中，\prgname{latex} 命令使用的也是 \pdfTeX{} 引擎。——译注}
+\prgname{pdflatex} 命令使用 \pdfTeX{} 引擎处理 \LaTeX{} 文档，并直接生成 \file{pdf} 文件。
  
 \pdfTeX{} 的一个重要特性就是原生支持许多图像格式：
 \marginpar{\pdfTeX{} 和图像}
-\file{jpeg}、\file{png}、\file{pdf}、\file{MetaPost}。
+\file{jpeg}、\file{png}、\file{pdf}、\MetaPost。
 尽管老版本的 \pdfTeX{} 还支持 \file{tiff} 文件，目前的 \pdfTeX{} 版本不支持 \file{tiff}。
 
-另外要注意的是，\pdfTeX{} 不能直接导入 \file{eps} 文件
-\footnote{\pdfTeX{} 可以导入由 \prgname{PurifyEPS} 处理的 \file{eps} 文件，
+另外要注意的是，\pdfTeX{} 不能直接导入 \file{eps} 文件\footnote{
+    \pdfTeX{} 可以导入由 \prgname{PurifyEPS} 处理的 \file{eps} 文件，
 	见第 \ref{ssec:purifyeps} 节（\pageref{ssec:purifyeps} 页）。}，
 用户需要用 \prgname{epstopdf} 等程序将 \file{eps} 文件转成 \file{pdf} 格式，
 不过这样就不能直接使用 \pkg{PSfrag} 宏包（见第 \ref{ssec:psfrag} 节，\pageref{ssec:psfrag} 页）。
 
-目前\footnote{此段由译者添加}，
+目前\footnote{
+    此段由译者添加}，
 \marginpar{其它编译引擎}
 除了 \prgname{latex}+\prgname{dvips} 和 \prgname{pdflatex} 之外，
-还有几种常见的编译方式。
+还有几种常见的编译方式：
 \begin{description}
 	\item \prgname{dvipdfmx} 可以从 \file{dvi} 文件生成 \file{pdf} 文件。
 	\item \prgname{xelatex} 可以直接生成 \file{pdf} 文件。支持UTF-8编码和使用各种字体。
@@ -118,7 +120,7 @@
 \end{description}
 出于技术上的先进性、稳定性以及效率和兼容性考虑，
 一般而言推荐使用 \prgname{xelatex} 编译方式。
-特别是对于中文文档，可以直接
+特别是对于中文文档，这样可以直接使用系统字体，避免了繁琐的中文配置过程。
 而对于英文文档，也可以考虑使用 \prgname{pdflatex}。
 
 以上几种编译方式都原生支持 \file{eps}、\file{pdf}、\file{jpg}、\file{png} 等各种图片格式。
@@ -130,8 +132,7 @@
 
 任何 \LaTeX{} 对象（字符，图形等）都把\emphi{盒子}作为单位（\cite[103页]{Lamport1994}）。
 每个盒子在它的左侧均有一个\emphi{参考点}（\emphi{Reference point}）。
-盒子的\emphi{基线}（\emphi{baseline}，见图~\ref{fig:samplebox}）是一条通过参考点的
-一条水平线。
+盒子的\emphi{基线}（\emphi{baseline}，见图~\ref{fig:samplebox}）是一条通过参考点的水平线。
 当 \LaTeX{} 从左到右排列文本时，
 每一字符的参考点排成一条水平直线，称为\emphi{当前基线}（\emphi{current baseline}），
 并使它与字符的基线对齐。
@@ -147,10 +148,10 @@
 每一个盒子的大小由三个长度决定：
 \emphi{高度}（\emphi{height}）、\emphi{深度}（\emphi{depth}）和\emphi{宽度}（\emphi{width}）。
 高度是参考点到盒子顶部的距离，深度是参考点到盒子底部的距离，宽度则是盒子的宽度。
-而\emphi{整体高度}（\emphi{totalheight}）定义为盒子底部到顶部的距离，即
-$\text{\emph{整体高度}} = \text{\emph{高度}} + \text{\emph{深度}}$。
+而\emphi{整体高度}（\emphi{totalheight}）定义为盒子底部到顶部的距离，
+即：$\text{\emph{整体高度}} = \text{\emph{高度}} + \text{\emph{深度}}$。
 
-未旋转的 \file{eps} 图形的参考点是它的左下角（见图~\ref{fig:rotate-box}~的
+未旋转图形的参考点是它的左下角（见图~\ref{fig:rotate-box}~的
 左边的盒子），它的深度为零，高度就等于全部高度。
 图~\ref{fig:rotate-box}~中间的盒子则是将图形旋转后，它的高度就不等于全部高度了。
 右边的盒子则展示可将图形旋转使其高度为零。
@@ -211,7 +212,7 @@ PostScript 语言能够用来描述图形和文本。
 \index{EPS BoundingBox}
 
 习惯上，PostScript 文件的第一行标明了该文件的PostScript类型，
-接下来的几行是被称为 \emph{header} 或\emph{preamble} 的注释行（~PostScript 的注释符也是 \texttt{\%}）。
+接下来的几行是被称为 \emph{header} 或\emph{preamble} 的注释行（PostScript 的注释符也是 \texttt{\%}）。
 其中一行定义了 BoundingBox，包括四个整数值，分别代表:
 \begin{enumerate}
 	\item BoundingBox 的左下角的 $x$ 坐标。
@@ -346,8 +347,8 @@ PostScript 语言能够用来描述图形和文本。
 	这样就可使得像\file{dvi} 浏览器等一些不能解释PostScript的软件也可来显示 \file{eps} 图形。
 	目前有少数与\TeX{} 有关的软件使用这种方法。
 	
-	如果这个二进制预览图比行缓冲区小，\cmd{includegraphics} 将会略过它
-	\footnote{注意，\cmd{psfig} 和其它一些过时的图像命令则不会忽略二进制预览。}。
+	如果这个二进制预览图比行缓冲区小，\cmd{includegraphics} 将会略过它\footnote{
+        注意，\cmd{psfig} 和其它一些过时的图像命令则不会忽略二进制预览。}。
 	但是，如果这个二进制的预览图比行缓冲区大的话，就会发生行缓冲区溢出的错误。
 	对于该问题有两种解决办法：
 	
@@ -375,11 +376,11 @@ PostScript 语言能够用来描述图形和文本。
 	然而，带有二进制部分的 \file{eps} 文件必须用二进制方式传输，
 	否则文本方式传输会损坏二进制部分。
 	由于二进制传输方式不会翻译分行符，这时就需要在插图命令中给出BoundingBox的值来解决
-	（例如\cmd{includegraphics} 命令的 \opt{bb} 选项）。
+	（例如 \cmd{includegraphics} 命令的 \opt{bb} 选项）。
 \end{enumerate}
 
 \section{PDF 图像}\label{sec:pdfgraphics}
-正如之前提到的，\pdfTeX{} 可以直接导入 \file{pdf}、\file{png}、\file{jpeg} 和 \file{MetaPost} 图像格式。
+正如之前提到的，\pdfTeX{} 可以直接导入 \file{pdf}、\file{png}、\file{jpeg} 和 \MetaPost{} 图像格式。
 这一节将简要介绍这些格式。
 相关的\pdfTeX{} 插图命令将在第~\ref{sec:graphicsinclusion} 节（\pageref{sec:graphicsinclusion} 页）中介绍。
 
@@ -389,8 +390,8 @@ PostScript 语言能够用来描述图形和文本。
 	\url{http://www.jpeg.org/}
 \end{center}
 授权的压缩标准。
-\file{jpeg} 格式是一种位图的压缩标准，它采用了有损压缩格式
-\footnote{有损压缩意味着压缩过程中损失了数据。
+\file{jpeg} 格式是一种位图的压缩标准，它采用了有损压缩格式\footnote{
+    有损压缩意味着压缩过程中损失了数据。
 	也就是说，解压缩一个有损压缩过的位图不会得到原始图片。
 	反之，无损压缩过程中不会有数据损失，
 	所以解压一个无损压缩过的位图会生成原始图片。}。
@@ -412,11 +413,11 @@ PostScript 语言能够用来描述图形和文本。
 \file{jpeg} 有损压缩通常效果更好（ “更好”指的是生成更小的文件体积，同时对于人眼观察没有失真）。
 
 \subsection{PDF}\label{ssec:pdf}
-\href{http://www.adobe.com}{Adobe} 的便携式文档格式（ Portable Document Format, pdf ）与它的Adobe成员 PostScript 有很多相似之处。
+\href{http://www.adobe.com}{Adobe} 的便携式文档格式（ Portable Document Format, \file{pdf} ）与它的Adobe成员 PostScript 有很多相似之处。
 与PostScript一样，\file{pdf} 可以包含文本、矢量图和位图。
 一个 \file{pdf} 文件可以包含整个文档，也可以仅仅包含一个图形（类似于 \file{eps} ）。
 
-\file{pdf} 不仅仅是 \pdfTeX{} 的主要输出格式，也是\pdfTeX{} 插图的最普遍方法。
+\file{pdf} 不仅仅是 \pdfTeX{} 的主要输出格式，也是 \pdfTeX{} 插图的最普遍方法。
 许多图像程序允许它们的图像直接保存为 \file{pdf} 格式。
 没有直接 \file{pdf} 输出的程序可以转而输出 \file{eps} 矢量图，
 后者通过 \prgname{epstopdf} 转换程序可以很容易地转成 \file{pdf} 矢量图。
@@ -426,21 +427,21 @@ PostScript 语言能够用来描述图形和文本。
 \href{ftp://ctan.tug.org/tex-archive/support/epstopdf/}{CTAN/support/epstopdf/}
 \end{center}
 
-\subsection{MetaPost}\label{ssec:metapost}
-MetaPost 是由John Hobby编写的绘图语言。
-它基于高德纳的 \prgname{metafont}，但增加了PostScript输出的功能。
-关于MetaPost的信息可以从以下网址获得：
+\subsection{\MetaPost}\label{ssec:metapost}
+\MetaPost{} 是由John Hobby编写的绘图语言。
+它基于高德纳的 \MetaFont ，但增加了PostScript输出的功能。
+关于 \MetaPost{} 的信息可以从以下网址获得：
 \begin{center}
 \url{http://www.tug.org/metapost.html}
 \end{center}
 相关文档可参考~\cite{metapost-doc}。
 
-MetaPost 可以用于 \prgname{dvips} 类型的 \LaTeX{} 文档，
+\MetaPost 可以用于 \prgname{dvips} 类型的 \LaTeX{} 文档，
 也可以直接用于 \pdfLaTeX{} 文档\footnote{
-	\pdfLaTeX{} 实际上使用Hans Hagen开发的 {Con\TeX t}代码将MetaPost图像实时转成 \file{pdf},
+	\pdfLaTeX{} 实际上使用Hans Hagen开发的 {Con\TeX t} 代码将 \MetaPost{} 图像实时转成 \file{pdf},
 	不过在用户层面上是很简明的。}。
 
-下面的步骤使用MetaPost（ \prgname{mpost} ）所带的 \prgname{pstoedit} 工具将名为 \file{graphic.eps} 的 \file{eps} 文件转为名为 \file{graphic.mps} 的 MetaPost 文件：
+下面的步骤使用 \MetaPost（ \prgname{mpost} ）所带的 \prgname{pstoedit} 工具将名为 \file{graphic.eps} 的 \file{eps} 文件转为名为 \file{graphic.mps} 的 \MetaPost{} 文件：
 
 \begin{verbatim}
 	pstoedit -f mpost graphic.eps graphic.mp
@@ -457,16 +458,15 @@ Scott Pakin 的 \prgname{purifyeps} 工具能够将很多（但不是全部） \
 	其中 \texttt{CTAN/} 使用第~\pageref{ctan-sites} 页中列出的任何\textsc{ctan} 站点替代。
 	\item[Perl] 可以从 \url{http://www.cpan.org} 获得。
 	\item[pstoedit] 可以从 \url{http://www.pstoedit.net/pstoedit} 获得。
-	\item[mpost] 来自于任何包含MetaPost的\LaTeX{} 发行版本。
+	\item[mpost] 来自于任何包含 \MetaPost{} 的\LaTeX{} 发行版本。
 \end{description}
 
 
 \section{图像软件}\label{sec:graphicsoftware}
-
+[{\bfseries 本节介绍的部分软件可能已经过时，仅供参考。——译注}]
 \subsection{Ghostscript}\label{ssec:gs}
 Ghostscript 是一个 PostScript/\file{pdf} 解释器，
-它可以运行在大多数操作系统平台上，并且是自由发布的
-\footnote{
+它可以运行在大多数操作系统平台上，并且是自由发布的\footnote{
 	尽管 AFPL Ghostscript （之前叫做 Aladdin Ghostscript ）是免费发布的，
 	但却不是公有领域。
 	它受版权保护，有一些限制，例如不允许商业发布等。
@@ -624,7 +624,7 @@ Ghostscript中还带有一些有用的工具，如 \prgname{ps2pdf} 等，可利
 	
 	\prgname{GIMP}，即 GNU Image Manipulation Program，是一个图片操作的自由软件。
 	它基本上提供了 \prgname{PhotoShop}  的功能。
-	\prgname{GIMP} 可以运行在 Unix/Linux、Windows和MacOSX上。
+	\prgname{GIMP} 可以运行在 Unix/Linux、Windows和MacOS上。
 	更多信息可见
 	\begin{center}
 		\url{http://www.gimp.org/}

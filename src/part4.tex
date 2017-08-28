@@ -31,7 +31,7 @@
 \begin{enumerate}
 	\item 不要束缚 \LaTeX{} 的手脚。
 	给出的浮动选项越多，\LaTeX{} 做的就越好。
-	特别地，使用选项 \opt{[htbp]} 和 \opt{[tbp]}	就很好。
+	具体来说，使用选项 \opt{[htbp]} 和 \opt{[tbp]}	就很好。
 	见第~\ref{ssec:figplacement}~节。
 	
 	\item 很多人发现缺省的浮动参数过于严格了。下面的命令
@@ -59,7 +59,7 @@
 \end{enumerate}
 
 \subsection{创建浮动图形}\label{ssec:createfloatfig}
-可以通过把命令置于一个 \envi{figure} 环境中来生成浮动图形。
+可以通过把命令置于 \envi{figure} 环境中来生成浮动图形。
 在图形环境中的所有内容都会被保持在一起，
 浮动到合适的位置以保证得到最好的分页结果。
 另外，可以通过使用 \cmdi{caption} 命令来为浮动图形自动编号并加上标题。
@@ -171,8 +171,8 @@ text text text text text text...
 	将图形放置在正文文本中给出该图形环境的地方。
 	如果本页所剩的页面不够，这一参数将不起作用。
 	\item [t] \emph{顶部。} 将图形放置在页面的顶部。
-	\item [b] \emph{底部。} 将图形放置在页面的底部
-	\footnote{当一幅图形被放置在页面的底部时，
+	\item [b] \emph{底部。} 将图形放置在页面的底部\footnote{
+        当一幅图形被放置在页面的底部时，
 		如果此页有脚注的话，它将位于所有脚注的下方。
 		现在还没有办法来避免这种情况。}。
 	\item [p] \emph{浮动页。} 将图形放置在允许有浮动体的页面上。
@@ -197,8 +197,8 @@ text text text text text text...
 	\item 给出的参数越多，\LaTeX{} 的排版结果就会越好。
 	一般来说，\opt{[htbp]}、\opt{[tbp]}、\opt{[htp]}、\opt{[tp]} 这些组合得到的效果就很不错。
 	
-	\item 只给出单个的参数项 \opt{[t]}、\opt{[b]}、\opt{[p]}、\opt{[h]} 极易引发问题
-	\footnote{实际上，永远不要单独使用 \opt{[h]} 选项。
+	\item 只给出单个的参数项 \opt{[t]}、\opt{[b]}、\opt{[p]}、\opt{[h]} 极易引发问题\footnote{
+        实际上，永远不要单独使用 \opt{[h]} 选项。
 		由于使用单个的 \opt{[h]} 选项效果过于糟糕，
 		较新版本的 \LaTeX{} 自动将其改为 \opt{[ht]}。}。
 	如果该图形不适合所指定的位置，它就会被搁置并阻碍对接下来图形的处理。
@@ -206,26 +206,26 @@ text text text text text text...
 	就会产生 ``Too Many Unprocessed Floats'' 的错误（见第~\ref{ssec:toomanyfig}~节）。
 \end{itemize}
 
-当 \LaTeX{}“\emph{试图}”放置一浮动图形时，
+当 \LaTeX{} “\emph{试图}”放置一浮动图形时，
 \marginpar{见 \cite[第~198~页]{Lamport1994}}
 它将遵循以下规则：
 \begin{enumerate}
 	\item 图形只能置于由位置参数所确定的地点。
 	\item 图形的放置不能造成页面溢出（\texttt{overfull page}）。
-	\item 图形只能置于当前页或后面的页中
-		\footnote{因为图形可浮动到当前页的顶部，所以它可能会出现在它所在文本的前面。
-			如果要防止出现这种情况，可使用 \pkg{flafter}宏包。
-			只要使用 \cmd{usepackage} 导入宏包即可，
-			不需要使用什么命令。}。
+	\item 图形只能置于当前页或后面的页中\footnote{
+        因为图形可浮动到当前页的顶部，所以它可能会出现在它所在文本的前面。
+		如果要防止出现这种情况，可使用 \pkg{flafter}宏包。
+		只要使用 \cmd{usepackage} 导入宏包即可，
+		不需要使用什么命令。}。
 	所以图形只能“向后浮动”而不能“向前浮动”。
 	\item 图形必须按顺序出现。当前图形只有当之前的图形都被放置好之后才能被放置。
 	进一步又有两个衍生规则：
 	\begin{itemize}
-		\item 只要前面有未被处理的图形，一幅图形就不会被放在当前位置。
-		\item 一幅“不可能放置”的图形将阻碍它后面的图形的放置。
+		\item 只要前面有未被处理的图形，当前位置就不会放置图形。
+		\item 一幅“不可能放置”的图形将阻碍之后的图形放置。
 		直到文件结束或达到~\LaTeX{}~的浮动限制。参见第~\ref{ssec:toomanyfig}~节。
 	\end{itemize}
-	同样地，一表格也只能在其前面的表格都被处理完后才能被放置。
+	同样地，表格也只能在其前面的表格都被处理完后才能被放置。
 	不过，表格在排版时是跳过图形而单独处理的。
 	反之，图形的处理也是与表格的处理无关的。
 	\item 必须符合在第~\ref{sec:typerule}~节中给出的审美条件。
@@ -382,7 +382,7 @@ text text text text text text...
 \end{lstlisting}
 
 \begin{table}[htp]
-	\centering\kaishu
+	\centering
 	\caption{浮动位置计数器}\label{tab:floatcounter}
 	\begin{tabular}{>{\ttfamily}l p{0.7\textwidth} }
 		\toprule
@@ -410,7 +410,7 @@ text text text text text text...
 限定浮动体不得超过文本页的 $70\percent$。
 
 \begin{table}[hbp]
-	\centering\kaishu
+	\centering
 	\caption{图形位置的比例参数}\label{tab:floatfraction}
 	\begin{tabular}{ l p{0.65\textwidth}}
 		\toprule
@@ -486,8 +486,8 @@ text text text text text text...
 	\[
 	\text{\cmd{floatpagefraction}} \leq \text{\cmd{topfraction}} - 0.05.
 	\]
-	后面的 0.05 这一项是由于文本页和浮动页有不同的竖直间距
-	\footnote{特别地，当比较图形的高度比例和 \cmd{topfraction} 时，
+	后面的 0.05 这一项是由于文本页和浮动页有不同的竖直间距\footnote{
+        特别地，当比较图形的高度比例和 \cmd{topfraction} 时，
 		\cmd{textfloatsep} 和其它文本页浮动间距都被计算在内。
 		而对浮动页来说，在考察图形的高度比例是否超过了 \cmd{floatpagefraction} 时，
 		浮动间距是不被计算在内的。
@@ -546,8 +546,7 @@ text text text text text text...
 \begin{table}
 	\centering
 	\caption{文本页面中的浮动图形间距}\label{tab:figlength-textpage}
-	\kaishu
-	\begin{tabular}{>{\ttfamily}l P{0.7\textwidth}}
+	\begin{tabular}{>{\ttfamily}l p{0.7\textwidth}}
 		\toprule
 		\cmdi{floatsep} & 出现在页面的顶部或底部的浮动体之间的垂直距离。
 		缺省为 \texttt{12pt plus 2pt minus 2pt}。 \\
@@ -574,7 +573,6 @@ text text text text text text...
 \begin{table}
 	\centering
 	\caption{浮动页面中的浮动体间距}\label{tab:figlength-floatpage}
-	\kaishu
 	\begin{tabular}{>{\ttfamily}l p{0.7\textwidth}}
 		\toprule
 		\cmdi["@fptop]{@fptop} & 浮动页中顶部的浮动体上方的空白。
@@ -633,14 +631,13 @@ text text text text text text...
 \begin{table}
 	\centering
 	\caption{图形标尺命令}\label{tab:figrulecmd}
-	\kaishu
-	\begin{tabular}{>{\ttfamily}l P{0.7\textwidth}}
+	\begin{tabular}{>{\ttfamily}l p{0.7\textwidth}}
 		\toprule
 		\cmdi{topfigrule} & 该命令在一页顶部的最后一个浮动体后，
-		\cmd{textfloatsep} 前被执行的命令（见第~\ref{ssec:vspace}~节）。 \\
+		\cmd{textfloatsep} 前执行（见第~\ref{ssec:vspace}~节）。 \\
 		\hline
 		\cmdi{bottomfigrule} & 该命令在一页底部第一个浮动体前，
-		\cmd{textfloatsep} 后被执行。\\
+		\cmd{textfloatsep} 后执行。\\
 		\bottomrule
 	\end{tabular}
 \end{table}
@@ -648,7 +645,7 @@ text text text text text text...
 在这里 \cmd{topfigrule} 的定义中，
 首先向下移动 $5\pt$ （进入到~\cmd{textfloatsep} 的区域）
 以提供图形与水平线之间的距离，然后画上一高为 $0.4\pt$ 的水平线，
-最后再向上移动 $5.4pt$ 以补偿前面向下的位移。
+最后再向上移动 $5.4\pt$ 以补偿前面向下的位移。
 同样地，\cmd{botfigrule} 在图形与水平线之间留出了 $5\pt$ 的空间。
 
 由于上面的命令使得图形与水平线之间的距离为 $5\pt$，
@@ -667,9 +664,9 @@ text text text text text text...
 \begin{itemize}
 	\item \cmd{topfigrule} 和 \cmd{botfigrule} 命令对浮动页上的图形
 	和放置在当前位置的图形（如使用了\opt{h} 选项）不起作用。
-	如果一放置在当前位置的图形正好位于页面的顶部或底部，也不会画上水平线。
+	如果放置在当前位置的图形正好位于页面的顶部或底部，也不会画上水平线。
 	\item 即便图形很宽，水平线的长度也只与文本的宽度相等（参见第~\ref{sec:widefig} 节）。
-	\item 因为 \LaTeX{} 的\cmd{rule} 命令在 \cmd{parskip} 不为零时会产生额外的空白，
+	\item 因为 \LaTeX{} 的 \cmd{rule} 命令在 \cmd{parskip} 不为零时会产生额外的空白，
 	所以代之以 \TeX{} 命令 \cmd{hrule}。
 \end{itemize}
 
@@ -677,7 +674,10 @@ text text text text text text...
 \subsection{图形与标题的间距}\label{ssec:capspace}
 
 \LaTeX{} 假定图形的标题位于图形的下方，
-故而在标题上方保留了更多的空白。因此
+故而在标题上方保留了更多的空白。\footnote{
+    当使用 \pkg{caption} 宏包时，默认选项 \opt{position=auto} 会自动判断标题的位置并设置合适的间距，
+    因此无需手动调整间距，见第~\ref{sec:caption-pkg} 节。 ——译注}
+因此
 \begin{lstlisting}
 \begin{figure} 
 	\centering 
@@ -687,7 +687,8 @@ text text text text text text...
 \end{lstlisting}
 生成的图~\ref{fig:verynearcap}~中标题和图形非常接近。
 
-\begin{figure} 
+\begin{figure}[ht]
+    \captionsetup{position=below}
 	\centering 
 	\caption{图像上方的标题} \label{fig:verynearcap}
 	\includegraphics[width=2in]{graphic.eps} 
@@ -708,7 +709,8 @@ text text text text text text...
 \end{lstlisting}
 得到图~\ref{fig:normalabovefig}。其中标题的上方没有额外的空白，与图形之间则有 10\pt 的距离。
 
-\begin{figure} 
+\begin{figure}[hb]
+    \captionsetup{position=below}
 	\setlength{\abovecaptionskip}{0pt} 
 	\setlength{\belowcaptionskip}{10pt} 
 	\centering 
@@ -776,7 +778,7 @@ text text text text text text...
 \begin{lstlisting}
 \renewcommand{\thefigure}{\Roman{figure}}
 \end{lstlisting}
-图片编号的效果是大写罗马数字（I,II,III,IV,\dots）
+图片编号的效果是大写罗马数字（I, II, III, IV, \dots）
 
 关于图片编号的注记：
 \begin{itemize}
@@ -840,10 +842,8 @@ text text text text text text...
 不过这也会使浮动体标题和脚注也变成双倍行距。
 为了使双倍行距只应用于正文，而标题和脚注仍是单倍行距，
 需要使用 \pkgi{setspace} 宏包\footnote{
-	尽管 \pkg{doublespace} 宏包也可以设置行距，
-	但是没有很好地更新到 \LaTeXe{} 下，
-	所以会与许多宏包相互影响。
-	取而代之应使用 \pkg{setspace} 宏包。}：
+	尽管 \pkg{doublespace} 宏包也可以设置行距，但是没有很好地更新到 \LaTeXe{} 下，
+	所以会与许多宏包相互影响。取而代之应使用 \pkg{setspace} 宏包。}：
 \begin{lstlisting}
 \usepackage{setspace}
 \linestretch{1.5}
@@ -855,8 +855,9 @@ text text text text text text...
 \section{使用caption宏包来定制标题}\label{sec:caption-pkg}
 
 第~\ref{ssec:captionlabel}~节和第~\ref{ssec:capspace}~节分别介绍了如何定制浮动图形的标题的标签和标题上下方的垂直间距。
-对于标题其它属性的控制，则可以用 \pkgi{caption} 宏包\footnote{%
-	版本$3.0+$的 \pkg{caption} 宏包取代了之前版本的 \pkg{caption} 以及过时的 \pkg{caption2} 宏包。}来完成。
+对于标题其它属性的控制，则可以用 \pkgi{caption} 宏包\footnote{
+	版本$3.0+$的 \pkg{caption} 宏包取代了之前版本的 \pkg{caption} 以及过时的 \pkg{caption2} 宏包。}
+来完成。
 本节简要介绍了 \pkg{caption} 宏包，更多细节请参考宏包文档 \cite{caption-doc}。
 
 \pkg{caption} 宏包可以用于多种类型的浮动体。
@@ -890,7 +891,7 @@ text text text text text text...
 	\item 第~\ref{ssec:caption-custom} 节介绍了两种如何定制标题选项的方法。
 	其中选项主要有四种类型：
 	\begin{description}
-		\item[字体选项] 用于定制标题中的字体\footnote{%
+		\item[字体选项] 用于定制标题中的字体\footnote{
 			尽管 \pkg{caption} 宏包提供了定制标题字体的命令，
 			不过使用的字体不一定包含了所有的字体因子组合。
 			例如，假如用户指定罗马字族、小型大写字样和粗体系列。
@@ -1095,8 +1096,8 @@ text text text text text text...
 \midrule
 设置字形 & up & \textup{直立字形，upright} （默认值） \\
 & it & \textit{意大利字形，italic} \\
-& sl & \textsl{倾斜字形，slanted} \\
-& sc & \textsc{小型大写字形，small caps} \\
+& sl & 倾斜字形，\textsl{slanted} \\
+& sc & 小型大写字形，\textsc{small caps} \\
 \midrule
 设置字系 & md & \textmd{中等字系，medium} （默认值） \\
 & bf & \textbf{粗体字系，bold} \\
@@ -1319,8 +1320,7 @@ text text text text text text...
 顾名思义，标题上方的间距由 \opt{aboveskip} 选项控制，
 标题下方的间距由 \opt{belowskip} 选项控制。
 不过，仅当使用 \opt{position=bottom} 选项时才成立。
-当使用 \opt{position=top} 选项时，\opt{aboveskip} 和 \opt{belowskip} 选项的意义是相反的。
-\footnote{
+当使用 \opt{position=top} 选项时，\opt{aboveskip} 和 \opt{belowskip} 选项的意义是相反的。\footnote{
 	注意，\opt{position=top} 只说明标题的上下间距按浮动体顶部的标题来处理，
 	并不意味着标题真的位于图形或表格的上方。
 	标题的实际位置取决于声明 \cmd{caption} 的位置。——译注}
@@ -1964,7 +1964,7 @@ This is the text after the figure.
 	\item 图形前后的命令 \cmdO{\cmd{}}{\cmd{intextsep}} 作用是进行换行并加上垂直的间距。
 	\cmd{intextsep} 命令~（见第~\ref{ssec:vspace}~节）可以使用任意大小的空白，
 	目的是使不浮动的图形具有与浮动图形相同的上下间距。
-	\item 正常情况下，浮动图形是按照它们在 \LaTeX{} 源文件中的顺序一一被放置的。
+	\item 正常情况下，浮动图形是按照它们在 \LaTeX{} 源文件中的顺序一一放置的。
 	而不浮动的图形是被立即放置到页面上，
 	所以可以跳过浮动图形队列中的未处理图形。
 	如果出现这样情况，那么图形不会按照数字顺序编号\footnote{
@@ -2180,7 +2180,7 @@ This is the text after the figure.
 \end{figure}
 \end{lstlisting}
 由于 \cmd{ifthenelse} 使用命令 \cmd{pageref} 作为输入，
-所以需要 \LaTeX{} 运行足够的次数后才能正确地排出交叉引用。
+所以需要 \LaTeX{} 运行足够的次数后才能正确地排版交叉引用。
 
 
 \section{横排的图形}\label{sec:lscapefig}
@@ -2307,7 +2307,7 @@ This is the text after the figure.
 \end{lstlisting}
 会生成图~\ref{fig:rotcaption}。
 \cmd{rotcaption} 命令生成标题的底部总是面向页面的右边界。
-与第~\ref{ssec:landscape}~节和第~\ref{ssec:sidewaysfigure}~节的方法不同的是，
+与第~\ref{ssec:landscape}~节和第~\ref{ssec:sidewaysfigure}~节不同的是，
 \cmd{rotcaption} 并不旋转图形。
 因此上例中的 \cmd{includegraphics} 命令需要使用 \opt{angle=90} 这一选项。
 
@@ -2326,7 +2326,7 @@ This is the text after the figure.
 \end{figure}
 
 
-\section{标题在一边的图形}\label{sec:sidecaption}
+\section{标题在一侧的图形}\label{sec:sidecaption}
 
 一般来说，图形的标题放置在其上方或下方。
 本节将介绍怎样将标题放置在图形的一侧\footnote{
@@ -2338,7 +2338,7 @@ This is the text after the figure.
 
 \subsection{Sidecap 宏包}\label{ssec:sidecap}
 
-创建一侧标题最简单的途径就是使用 \pkgi{sidecap} 宏包。
+创建侧边标题最简单的途径就是使用 \pkgi{sidecap} 宏包。
 该宏包定义了 \envi{SCfigure} 和 \envi{SCtable} 环境。
 在其中使用 \cmd{caption} 命令时，标题就会自动放在环境内容的一侧。
 例如：
@@ -2420,7 +2420,7 @@ This is the text after the figure.
 \end{figure}
 
 图~\ref{fig:side:caption} 中标题和图形垂直居中。
-如果想让图形和标题顶部对齐或底部对齐，可参见第~\ref{ssec:minivalign}节。
+如果想让图形和标题顶部对齐或底部对齐，可参见第~\ref{ssec:minivalign} 节。
 
 \subsubsection{图形内侧标题}\label{sssec:bindcaption}
 
@@ -2592,7 +2592,7 @@ This is the text after the figure.
 	\label{fig:boxed_graphic}
 \end{figure}
 \end{lstlisting}
-如图~\ref{fig:boxed_graphic}所示，图形被置于一带框盒子中。
+如图~\ref{fig:boxed_graphic} 所示，图形被置于一带框盒子中。
 
 \begin{figure}
 	\centering

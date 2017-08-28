@@ -26,6 +26,7 @@
 \usepackage{picinpar}
 \usepackage{psfrag}
 \usepackage{overpic}
+\usepackage{eso-pic}
 
 \usepackage{fancyvrb}
 \usepackage{verbatim}
@@ -33,6 +34,8 @@
 \usepackage{makeidx}
 \usepackage{hologo}
 \usepackage{array,booktabs}
+\usepackage[nopagecolor=white]{pagecolor}
+\usepackage{afterpage}
 \usepackage{hyperref}
 
 % settings
@@ -58,8 +61,11 @@
 \def\XeTeX{\hologo{XeTeX}}
 \def\LuaTeX{\hologo{LuaTeX}}
 \def\HanTheThanh{\hologo{HanTheThanh}}
+\def\MetaFont{\hologo{METAFONT}}
+\def\MetaPost{\hologo{METAPOST}}
+
 \lstset{
-	basicstyle=\ttfamily\small,
+	basicstyle=\ttfamily\small\color{VerbatimColor},
 	commentstyle=\ttfamily\slshape,
 	language=[LaTeX]{TeX},
 	tabsize=4,
@@ -77,7 +83,7 @@
 		\BODY%
 	\end{minipage}}
 % new column type in tabular with fixed width
-\newcolumntype{P}[1]{>{\setlength{\parindent}{2em}}p{#1}}
+%\newcolumntype{P}[1]{>{\setlength{\parindent}{2em}}p{#1}}
 \newcommand{\file}[1]{\texttt{#1}}
 \newcommand{\prgname}[1]{\textsf{#1}}
 \newcommand{\pkg}[1]{\texttt{#1}}

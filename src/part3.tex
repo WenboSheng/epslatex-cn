@@ -37,16 +37,14 @@
 （ \env{figure} 带有的垂直间距加上 \env{center} 环境带有的垂直间距）。
 若希望有额外的垂直间距，可使用第~\ref{ssec:vspace}~节介绍的命令。
 
-\cmd{psfig} 和 \cmd{epsfbox} 命令
-\marginpar{过时的用法}
-的缺陷让它们很难使图形居中排列。
+\cmd{psfig} 和 \cmd{epsfbox} 命令\marginpar{过时的用法}的缺陷让它们很难使图形居中排列。
 过去，作为一种解决办法，使用了 \TeX{} 命令 \cmdi{centerline} 和 \cmdi{leavevmode}。
 而 \cmd{includegraphics} 命令已克服了这些缺陷，
 允许直接与 \cmd{centering} 命令一起使用或用在 \env{center} 环境中，
 因此也就不需再使 \cmd{centerline} 和 \cmd{leavevmode}了。
 
 \subsection{水平间距}\label{ssec:hspace}
-\LaTeX{} 在排列图形的时候实际上与排列其它的像文字这样的对象是一样的，
+\LaTeX{} 排列图形的方式实际上与排列其它对象（比如文字）是一样的，
 了解到这一点很重要。
 举例来说，如果行尾不是以 \texttt{\%} 结束的话，
 \LaTeX{} 会自动在两行之间加进一个字符的水平间距。
@@ -70,10 +68,10 @@ World
 就会取消图形之间的水平间距。
 
 如果需要水平间距，可用 \cmdi{hspace} 命令在图形之间
-加入指定长度
-\footnote{
-	用 \cmd{textwidth} 或 \texttt{em} （原文误作 \cmd{em}——译注）等作为 \cmd{hspace} 的参数，
-	而不是采用固定长度，可提高文档的通用性。}
+加入指定长度\footnote{
+    为提高文档的通用性，
+	可以使用 \cmd{textwidth} 或 \texttt{em} （原文误作 \cmd{em}——译注）等作为 \cmd{hspace} 的参数，
+	而不是采用固定长度。}
 或用 \cmdi{hfill} 加入一个可填充可能的间距的弹性长度。
 例如：
 \begin{lstlisting}
@@ -285,7 +283,7 @@ World
 
 如果小页最底行正好是一条高和深都为零的线，
 那么最后一行的参考点就是该行的底部，
-这样 \opt{[b]} 选项就可使作为其基线。
+这样 \opt{[b]} 选项就可使其作为基线。
 类似地，如果在 \verb|\end{minipage}| 之前添加一条高度和深度为零的线，
 那么 \opt{[b]} 选项就会使小页的底部作为小页的基线。
 命令 \cmd{par}\cmdM{vspace}{0pt} 就可以产生这样高和深都为零的线段。
@@ -363,8 +361,7 @@ World
 
 这里小页的顶部是和当前基线对齐。
 如果要求小页的顶部是和当前文本行的顶部对齐，
-可用 \cmdM{vspace}{-\cmd{baselineskip}}。
-  ~\verb+\vspace{-\baselineskip}+~来
+可用 \cmdM{vspace}{-\cmd{baselineskip}} 代替 \cmdM{vspace}{0pt}。
 相关专题参考~\cite[第~863--865~页]{Mittelbach2004}。
 
 
@@ -419,11 +416,14 @@ World
 \includegraphics{sub/file.eps}
 \end{lstlisting}
 
-尽管这种用法在大多数 Unix 和 DOS 下的 \TeX{} 发行版里工作正常，它却有以下的问题：
+尽管这种用法在大多数 Unix 和 DOS 下的 \TeX{} 发行版里工作正常，它却有以下的问题：\footnote{
+在现代的计算机和 \TeX{} 环境中一般不会出现性能和效率问题，
+因此，插图时直接使用文件路径或者使用  \cmd{graphicspath} 指明图片路径都不会有问题，
+同时在各主流操作系统（Windows、MacOS、Linux）上的操作也是相同的。本节的翻译仅供参考。——译注}
 \begin{description}
 	\item [效率不高]
 	
-	每当 \TeX{} 打开一个文件，该文件名就被存入 TeX{} 的内存中。
+	每当 \TeX{} 打开一个文件，该文件名就被存入 \TeX{} 的内存中。
 	当打开大量的文件时，内存空间减少会导致内存池大小的错误（见第~\ref{ssec:poolspace}~节）。
 	显式地给出子目录名增加了文件名的长度，进而加重这种池空间问题。
 	
@@ -616,6 +616,8 @@ file.eps.Z
 
 \section{在 DVIPS 中使用压缩EPS文件和非 EPS 文件}\label{sec:dvips-noneps}
 
+（{\bfseries 正如译序所述，推荐使用 \XeTeX 或者 \pdfTeX 编译方式，因此本节一般可以略过。——译注}）
+
 正如第~\ref{sec:introduction} 节所述，在 \prgname{dvips} 模式下，
 \LaTeX{} 图像插入的任务是由 \file{dvi} 程序负责。
 这就意味着，\LaTeX{} 文档可以使用任何 \file{dvi} 程序支持的图像格式。
@@ -639,8 +641,7 @@ file.eps.Z
 所以这里需要在速度和存储之间进行权衡。
 不过大部分用户偏向“提前转换”带来的速度优势。
 
-与直接整合图像转换指令不同，\prgname{dvips} 提供了一种调用外部转换程序的机制
-\footnote{
+与直接整合图像转换指令不同，\prgname{dvips} 提供了一种调用外部转换程序的机制\footnote{
 	这种机制需要操作系统支持管道功能。}。
 这可以通过在 \LaTeX{} 中使用 \cmd{DeclareGraphicsRule} 的命令选项来完成。
 这种方法比直接的图像转换支持更方便灵活，因为图像转换和 \file{dvi}-\file{ps} 过程是分开的，
@@ -798,7 +799,7 @@ convert file2.gif 'eps:-'
 但是，如果 \file{file.eps.gz} 和 \file{file.eps.bb} 不在当前目录就会有问题。
 假设在目录 \file{/a/b/c/} 下（并且该目录已加到 \TeX{} 搜索路径中）。
 \LaTeX{} 通过搜索路径仍然能够找到 \file{/a/b/c/file.eps.bb}，
-但 \prgname{dvips} 在执行\verb|gunzip -c file.eps.gz| 就会出问题。
+但 \prgname{dvips} 在执行 \verb|gunzip -c file.eps.gz| 就会出问题。
 因为 \prgname{gunzip} 找不到文件 \file{file.eps.gz}。
 
 如果 \TeX{} 发行版使用了 \prgname{kpathsea} 库（比如 te\TeX{} 发行版），
@@ -911,7 +912,7 @@ convert file2.gif 'eps:-'
 由于 \pkg{PSfrag} 将其视为是两个不相干的字符串“Hello W”和“orld”，
 所以任何对“Hello World”的替换都不起作用。
 如果不能在应用软件中手动取消这种对字符间距的处理，
-一般可以使用 Courier 或其它等宽字体来阻止这种情况\footnote{%
+一般可以使用 Courier 或其它等宽字体来阻止这种情况\footnote{
 	为了避免字符间距，可能需要在创建文本之前设置Courier字体。
 	先穿件文本在将其转成Courier字体可能仍然会有字符间距。}。
 如果确实无法避免这种情况，那么只能对单个字符进行替换。
@@ -945,7 +946,7 @@ convert file2.gif 'eps:-'
 \vspace{0pt}
 \centering
 \includegraphics[width=.9\textwidth]{pend}
-\caption{Without PSfrag Replacement}\label{fig:nopsfrag}
+\caption{PSfrag 替换前}\label{fig:nopsfrag}
 \end{minipage}%
 \begin{minipage}[t]{.5\textwidth}
 \vspace{0pt}
@@ -961,7 +962,7 @@ convert file2.gif 'eps:-'
 \else
 \includegraphics[width=.9\textwidth]{psfrag-ex1}
 \fi
-\caption{With PSfrag Replacement}\label{fig:psfragex1}
+\caption{PSfrag 替换后}\label{fig:psfragex1}
 \end{minipage}
 \end{figure}
 
@@ -970,7 +971,7 @@ convert file2.gif 'eps:-'
 这个例子演示了 \cmdi{shortstack}, \cmdi{colorbox} 和 \cmdi{fcolorbox} 等命令如何与 \cmd{psfrag} 一起使用。
 
 \begin{description}
-\item[\cmd{shortstack}] 这一命令允许将文本竖直放置，每行用 \cmd{\cmd{}}分开。
+\item[\cmd{shortstack}] 这一命令允许将文本竖直放置，每行用 \cmd{\cmd{}} 分开。
 	可用来使用多行文本替换图中的单行文本。
 \item[\cmd{colorbox}] \pkgi{color} 宏包所提供的一个命令，
 	它在所作用的对象背后放置长方形的彩色区域作为背景。
@@ -979,7 +980,7 @@ convert file2.gif 'eps:-'
 \colorbox{yellow}{文本}
 \end{lstlisting}
 	在{\colorbox{yellow}{文本}}后放置了一长方形的黄色背景。
-	有关\cmd{colorbox} 的详细说明可参考文献~\cite{grfguide}。
+	有关 \cmd{colorbox} 的详细说明可参考文献~\cite{grfguide}。
 
 	在使用 \pkg{PSfrag}~时，\cmd{colorbox} 常常用来放置那些由于线条或阴影而被遮挡的文本。
 	通过将这些文本的背景色设为白色，防止它们被图形所遮挡。
@@ -998,7 +999,7 @@ convert file2.gif 'eps:-'
 \begin{minipage}[b]{.5\textwidth}
 \centering
 \includegraphics[width=.9\textwidth]{mass}
-\caption{Without PSfrag Replacement}\label{fig:nopsfragex2}
+\caption{PSfrag 替换前}\label{fig:nopsfragex2}
 \par\vspace{0pt}
 \end{minipage}%
 \begin{minipage}[b]{.5\textwidth}
@@ -1011,7 +1012,7 @@ convert file2.gif 'eps:-'
 \else
 \includegraphics[width=.9\textwidth]{psfrag-ex2}
 \fi
-\caption{With PSfrag Replacement}\label{fig:psfragex2}
+\caption{PSfrag 替换后}\label{fig:psfragex2}
 \par\vspace{0pt}
 \end{minipage}
 \end{figure}
@@ -1026,8 +1027,8 @@ convert file2.gif 'eps:-'
 \end{lstlisting}
 
 下面的例子使用了中文，结果如图~\ref{fig:psfragex3}。
-注意，由于最新的\pkg{ctex}宏集不支持 \prgname{dvips}，
-需要手动使用\pkg{CJK}。
+注意，由于最新的\pkg{ctex}宏集不支持自动配置 \prgname{dvips}，
+需要手动使用\pkg{CJK} 或配置字体文件。
 \begin{lstlisting}
 %\usepackage{CJKutf8}
 \begin{CJK}{UTF8}{gkai}
@@ -1055,7 +1056,7 @@ convert file2.gif 'eps:-'
 
 在使用 \pkg{PSfrag} 宏包时，\cmd{psfrag} 命令是最常使用也是推荐使用的。
 它的具体用法已在前面几小节中介绍过了。
-此外，\pkg{PSfrag} 宏包还提供 \cmd{tex} 直接将 \LaTeX{} 文本嵌入到 \file{eps} 中。
+此外，\pkg{PSfrag} 宏包还提供 \cmd{tex} 命令直接将 \LaTeX{} 文本嵌入到 \file{eps} 中。
 不过，它的效率要比 \cmd{psfrag} 低。
 有关 \cmd{tex} 的详细信息可参见 \cite{psfrag-doc}。
 
@@ -1124,9 +1125,8 @@ convert file2.gif 'eps:-'
 		GraphicFrag01.tex
 		...
 \end{verbatim}
-	\item 在操作系统的命令行中执行以下步骤\footnote{%
-		这里使用 \TeX Live 自带的 \prgname{ps2eps} 程序代替原文中的第三方程序 \prgname{epstool}。
-		——译注}：
+	\item 在操作系统的命令行中执行以下步骤\footnote{
+		这里使用 \TeX Live 自带的 \prgname{ps2eps} 程序代替原文中的第三方程序 \prgname{epstool}。——译注}：
 \begin{lstlisting}[language=bash]
 latex GraphicFrag00.tex
 dvips -E GraphicFrag00
@@ -1154,7 +1154,7 @@ GraphicFrag01.pdf
 但只适用于 \file{eps} 图像并使用 \prgname{dvips} 引擎。
 但对于非 \file{eps} 图形或标记并非标准字符串的 \file{eps} 图来说，
 它就不能被使用。
-此外，一些 \TeX{} 程序如 \prgname{dvipdfm(x)} \pdfLaTeX{} 等不能直接使用PostScript 替换，
+此外，一些 \TeX{} 程序如 \prgname{dvipdfm(x)}、\pdfLaTeX{} 等不能直接使用PostScript 替换，
 也限制了 \pkg{PSfrag} 的使用。
 本节所介绍的 \pkgi{overpic} 宏包允许直接将 \LaTeX{} 对象放置到一幅图形上，
 而不是通过对图形上已有的标记进行替换来实现。
@@ -1185,8 +1185,8 @@ GraphicFrag01.pdf
 \end{lstlisting}
 则在 \env{overpic} 环境中使用绝对位置，
 即放置 \LaTeX{} 对象的位置以实际度量来定位。
-此时 \env{overpic} 选项的默认值为 \opt{tics=10}，\opt{unit=\cmd{unitlength}}\footnote{%
-	\cmdi{unitlength} 为 \env{picture} 环境的长度单位，在 \LaTeX{} 中默认设置为 $1\pt$。}
+此时 \env{overpic} 选项的默认值为 \opt{tics=10}，\opt{unit=\cmd{unitlength}}\footnote{
+	\cmdi{unitlength} 为 \env{picture} 环境的长度单位，在 \LaTeX{} 中默认设置为 1\pt。}
 
 
 若使用
@@ -1205,6 +1205,7 @@ GraphicFrag01.pdf
 \opt{unit} 为图像较长一边长度的 $1/1000$。
 下面是几个例子（使用默认的 \opt{percent} 相对位置）：
 
+\vspace{1em}
 \begin{center}
 \begin{minipage}[b]{.4\textwidth}
 	\begin{overpic}[width=\linewidth,grid,tics=10]{golfer}
@@ -1221,6 +1222,8 @@ GraphicFrag01.pdf
 \par\vspace{0pt}
 \end{minipage}
 \end{center}
+\vspace{1em}
+
 
 \begin{center}
 \begin{minipage}[b]{.4\textwidth}
@@ -1264,7 +1267,7 @@ GraphicFrag01.pdf
   \end{overpic}
 \end{center}
 
-根据上图来将所需的 \LaTeX{} 对象放到图形上的合适位置。
+根据上图，将所需的 \LaTeX{} 对象放到图形上的合适位置：
 \begin{lstlisting}
 \begin{overpic}[scale=1.2]{mass}
   \put(25,8){\fcolorbox{black}{white}{基础部分}}
@@ -1281,7 +1284,7 @@ GraphicFrag01.pdf
 	  \put(31,64){\colorbox{white}{$q_1$}}
 	  \put(65,65){\colorbox{white}{\shortstack{水力 \\ 驱动器}}}
 	\end{overpic}
-	\captionof{figure}{Overpic example}\label{fig:overpic:psfrag}
+	\captionof{figure}{Overpic 例子}\label{fig:overpic:psfrag}
 \end{center}
 
 
@@ -1291,7 +1294,8 @@ GraphicFrag01.pdf
 特别地，当使用 \prgname{dvips} 处理文档时，
 如果多次使用同一 \file{eps} 图像，
 那么它的 \file{eps} 代码就会多次出现在得到的 \file{ps} 文件中。
-本节将介绍一些相关的技巧。
+本节将介绍一些相关的技巧。\footnote{
+本节结构编排与原文略有出入。——译注}
 
 一般来说多次使用同一图形有以下一些方法：
 \begin{enumerate}
@@ -1307,7 +1311,6 @@ GraphicFrag01.pdf
 \end{lstlisting}
 	每次使用图形时，用命令 \cmdM{usebox}{\cmd{mygraphic}} 即可。
 	另外，将 \cmd{usebox} 命令放在 \cmd{scalebox} 或者 \cmd{resizebox} 中即可实现图形的缩放和旋转。
-	不过，
 \end{enumerate}
 
 \subsection{在 DVIPS 模式下使用 Postscript 命令插入 EPS 文件}\label{ssec:defps}
@@ -1337,9 +1340,9 @@ GraphicFrag01.pdf
 	不过需要注意的是，在打印时由于绘图命令一直存放在打印机的内存中，
 	很容易导致打印机的内存耗尽而无法打印。
 	另外，使用这种方法时，\LaTeX{} 仍然得每次对图形文件进行搜索和打开操作。
-	\item 像前面一种方法一样定义PostScript绘图命令，
+	\item 像之前方法一样定义PostScript绘图命令，
 	但把它存放到一个 \LaTeX{} 盒子中。
-	这样不仅最后生成的~PS~文件很小，
+	这样不仅最后生成的PostScript文件很小，
 	而且 \LaTeX{} 也只需搜索和打开一次图形文件即可。
 \end{enumerate}
 
@@ -1430,7 +1433,7 @@ $
 \end{document}
 \end{lstlisting}
 
-注意这里并没有使用原始图形文件 \file{file.eps} 并没有被使用。
+注意这里并没有使用原始图形文件 \file{file.eps}。
 因为 \file{file.h} 中的 PostScript 命令只导入一次，
 所以最后得到的PostScript文件很小。
 然而，每次插入图形的时候，\LaTeX{} 都要搜索和读取一次 \file{file.ps}。
@@ -1478,7 +1481,7 @@ $
 
 
 可以利用 \pkg{fancyhdr} 宏包中的命令
-\marginpar{页眉和页脚 \\ 的图形}
+\marginpar{页眉和页脚的图形}
 在页眉和页脚中插入图形。
 例如，在用第~\ref{ssec:defps}~节的方法将 \file{eps} 文件 \file{file.eps} 分为两个文件 \file{file.h} 和 \file{file.ps} 后，
 下面的命令
@@ -1604,7 +1607,8 @@ $
 \subsubsection{使用 eso-pic 宏包}\label{sssec:esopic}
 
 另一种得到图形水印效果的方法是 \pkgi{eso-pic} 宏包。
-它定义一个长度为零的 \env{picture} 环境，基点位于页面的左下角。
+它定义一个长度为零的 \env{picture} 环境，基点位于页面的左下角。\footnote{
+原文只提及该宏包，以下部分由译者扩充。——译注}
 
 它提供命令 \cmdi{AddToShipoutPicture} 把任何 \LaTeX{} 图形环境先于正文文本排出，从而得到水印的效果。
 以下是一个使用 \pkg{eso-pic} 的例子：
@@ -1630,6 +1634,6 @@ $
 然后存放到一个 \LaTeX{} 盒子中。
 在每一页中将此盒子放置在正文的底层。
 更多命令和选项请参考宏包说明文档 \cite{eso-pic-doc}。
-此外，实现水印效果的宏包还有 \pkg{background} \cite{background-doc}、\pkg{xwatermark} \cite{xwatermark-doc} 等，详细说明请参考相关文档。
+此外，实现水印效果的宏包还有 \pkg{background} \cite{background-doc}、\pkg{xwatermark} \cite{xwatermark-doc} 等，详细说明请参考各自宏包文档。
 
 \endinput

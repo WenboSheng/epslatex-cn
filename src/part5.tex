@@ -3,8 +3,8 @@
 
 \section{并列的图形}\label{sec:sidebyside}
 
-并列图形所需的命令依赖于用户到底想怎样来组织图形。
-本节主要讨论三种常见的并列图形。
+并列图形所需的命令取决于用户到底想怎样来组织图形。
+本节主要讨论三种常见的并列图形方式。
 \begin{enumerate}
 	\item 多个图像并列于一个图形环境中。
 	\item 多个并列的浮动图形，如图~\ref{fig:side:a}~和~\ref{fig:side:b}。
@@ -18,13 +18,13 @@
 	\item 并列的小页环境，其中每个都包含一个 \cmd{includegraphics} 命令。
 \end{enumerate}
 在构造多个并列图形时，很重要的一点是要理解第~\ref{sec:terminology}~节的内容。
-并列图形是通过将若干盒子（\cmd{incudegraphics} 或小页）平行放置在一条线上来得到的。
+并列图形是通过将若干盒子（\cmd{incudegraphics} 或小页）平行放置在一条水平基线上来得到的。
 
 \subsection{单个图形环境中的并列图像}\label{ssec:sidegraphics-singlefig}
 
 对于在单个 \env{figure} 环境中创建并列图像，
 尽管使用并列的小页环境能更容易地对齐图像，
-不过最简单的办法还是直接连续使用多个 \cmd{includgraphics}命令。
+不过最简单的办法还是直接连续使用多个 \cmd{includgraphics} 命令。
 
 \subsubsection{使用并列的 includegraphics 命令}
 
@@ -39,7 +39,7 @@
 \end{figure}
 \end{lstlisting}
 会得到如图~\ref{fig:sidegraphics}~的并列图形。
-该图形宽度为4英寸（第一幅图1英寸，\cmd{hspace}1英寸，第二幅图2英寸），居中放置。
+该图形宽度为4英寸（第一幅图1英寸，\cmd{hspace} 间距1英寸，第二幅图2英寸），居中放置。
 其中的 \cmd{hspace} 命令可用 \cmd{hfill} 来代替，
 这会将图形推向页面的两端边界（见第~\ref{ssec:hspace}~节）。
 
@@ -91,15 +91,15 @@
 	\item 在第一个 \cmdM{end}{minipage} 后面的 \texttt{\%} 防止在两个小页之间多一个空格
 	（参见第~\ref{ssec:hspace} 节）。
 	
-	\item 当几个并列小页的宽度之和没有达到 $1.0\text{\cmd{textwidth}}$ 时，
+	\item 当几个并列小页的宽度之和没有达到 $1.0\,\text{\cmd{textwidth}}$ 时，
 	可用 \cmd{hspace} 或 \cmd{hfill} 来确定水平间距，详见第~\ref{ssec:hspace}~节。
 \end{itemize}
 
 
 \subsection{并列的浮动图形}\label{ssec:sidefigure}
 
-在上一节中，通过在一个图形环境中使用多个小页环境得到一个由多幅图像组成的浮动图形。
-若将  \cmd{caption} 命令放到每个小页环境中，则每个小页环境自己就变成浮动图形。例如：
+在上一节中，在一个图形环境中使用多个小页环境可以得到一个由多幅图像组成的浮动图形。
+若将  \cmd{caption} 命令放到每个小页环境中，则每个小页环境本身就变成浮动图形。例如：
 \begin{lstlisting}
 \begin{figure}
 	\centering
@@ -139,17 +139,15 @@
 
 关于该例子有几个注记：
 \begin{itemize}
-	\item 尽管上面的命令只使用了一个 \env{figure} 环境，
-	但由于每个小页中都包含 \cmd{caption} 命令，所以仍然得到两个浮动图形。
+	\item 尽管上面的命令只使用了\emph{一}个 \env{figure} 环境，
+	但由于每个小页中都包含 \cmd{caption} 命令，所以仍然得到\emph{两}个浮动图形。
 	
-	\item 两个放置图像的小页环境宽度为 \env{figure} 环境宽度的 $40\percent$，
+	\item 两个放置图像的小页环境宽度为 \env{figure} 环境宽度的 $40\,\percent$，
 	之间有1厘米的水平间距。
 	（注意，在 \cmdM{end}{minipage} 和 \cmdM{hspace}{1cm} 之后的注释会阻止额外的空格，
 	从而确保了间距正好是1厘米。）
-	
 	默认情况下，图形标题的宽度就是小页环境的宽度。
 	使用1厘米的水平间距是为了确保标题之间有空白（无论对长标题还是很宽的图像）。
-	
 	此外，标题的宽度也可以用 \pkg{caption} 宏包的 \opt{margin} 或 \opt{width} 关键字进行控制
 	（参见表~\ref{tab:caption-formatopt}）。
 	
@@ -371,7 +369,7 @@
 在这个例子中，需要注意以下几点：
 \begin{itemize}
 	\item 在最后一幅图后面用 \cmd{\cmd{}} 来断行，
-	\cmd{\cmd{}}的参数项 \opt{[-10pt]} 使得图形与标题之间的距离比当前行距减少10\pt 。
+	\cmd{\cmd{}} 的参数项 \opt{[-10pt]} 使得图形与标题之间的距离比当前行距减少10\pt 。
 	这样做是让图形和标题更接近些，用户也可自己选用合适的值。
 	\item 包含图形的小页使用 \opt{[b]} 选项，使得它们的参考点为其最后一行的基线。
 	\item 包含标题小页使用 \opt{[t]} 选项，使得它们的参考点为其第一行的基线，这样使得标题的顶行对齐。
@@ -382,7 +380,7 @@
 \section{图形与表格的平行排列}\label{sec:figuretable}
 
 在第~\ref{sec:sidebyside} 节中，
-通过在一个 \env{figure} 环境中使用多个 \cmd{caption} 命令来得到并列的多个图形。
+在一个 \env{figure} 环境中使用多个 \cmd{caption} 命令可以得到并列的多个图形。
 同样地，在一个 \env{table} 环境中使用多个 \cmd{caption} 命令可以得到并列的表格。
 
 第~\ref{sec:nonfloat} 节介绍的 \cmd{captionof} 命令可以将表格放在图形旁边。
@@ -620,12 +618,11 @@
 
 第~\ref{ssec:sidesubfigure} 节介绍了一个例子，
 其中使用 \pkgi{subcaption} 宏包的 \cmd{subcaptionbox} 命令创建子图，
-并且使用 \cmd{ref}、\cmd{ref*} 以及 \pkg{subcaption} 的 \cmd{subref}、\cmd{subref*} 对整个图形和每一子图进行标签引用
-\footnote{
+并且使用 \cmd{ref}、\cmd{ref*} 以及 \pkg{subcaption} 的 \cmd{subref}、\cmd{subref*} 对整个图形和每一子图进行标签引用\footnote{
 	\cmd{ref*} 由 \pkg{hyperref} 宏包提供，\cmd{subref*} 同样需要 \pkg{hyperref} 宏包的支持。}，
 相应的效果见表~\ref{tab:ref-subfig}。
 
-本节简要介绍 \pkgi{subcaption} 宏包，
+本节介绍 \pkgi{subcaption} 宏包的更多知识，
 包括如何创建子浮动体以及如何进行标题定制。
 更多用法请参考宏包文档\cite{subcaption-doc}。
 
@@ -672,7 +669,7 @@
 	\metacmd{盒子内位置}表示\metacmd{内容} 在子浮动体内的对齐方式，
 	默认为 \opt{c} （居中 \cmd{centering}），
 	此外还可以是 \opt{r} （居左 \cmd{raggedright}）、
-	\opt{l} （居右\cmd{raggedleft}）和 \opt{s} （无对齐格式）。
+	\opt{l} （居右 \cmd{raggedleft}）和 \opt{s} （无对齐格式）。
 	
 	该命令创建的子浮动体按照首行的基线对齐，
 	相当于 \cmd{parbox} 盒子或者 \env{minipage} 环境的 \opt{[t]} 选项。
@@ -889,7 +886,10 @@ skip=6pt,list=false,hypcap=false
 甚至放在文字的下方作为背景，或重叠放置。
 这时，前面所介绍的只使用 \LaTeX{} 图形宏包套件就很难得到所希望的结果。
 本节将介绍两个有用的图形宏包 \pkgi{wrapfig} 和 \pkgi{picinpar}，
-可以让你很容易地得到上述特殊效果。
+可以让你很容易地得到上述特殊效果。\footnote{
+    图文混排这一部分来自于旧译本，并经过一些修改调整。
+    旧译本还介绍了 \pkg{picins} 宏包，但该宏包用于 \LaTeX2.09，较新的发行版已无此宏包，故略去。——译注}
+
 
 除了本节所介绍的宏包外，还有一些宏包也可完成同样的工作。
 如 \pkgi{floatflt}\cite{floatflt-doc} 以及较新的\pkgi{cutwin}\cite{cutwin-doc} 也可用来将图形置于文本段落的一边。
@@ -898,8 +898,8 @@ skip=6pt,list=false,hypcap=false
 
 \subsection{Wrapfig 宏包}\label{ssec:wrapfig}
 
-\pkg{Wrapfig} 宏包提供了一个 \envi{wrapfigure} 环境\footnote{
-	\pkg{wrapfig} 也同时提供了一个 \envi{wraptable} 环境。}来排版窄小的图形，
+\pkg{Wrapfig} 宏包提供了 \envi{wrapfigure} 环境\footnote{
+	\pkg{wrapfig} 也同时提供了 \envi{wraptable} 环境。}来排版窄小的图形，
 使得该图形位于文本的一边，并使文本在其边上折行。
 
 \env{wrapfigure}的用法为：
@@ -989,51 +989,51 @@ skip=6pt,list=false,hypcap=false
 下面是几个例子：
 
 \CJKfamily{zhkai}
-\begin{Verbatim}
+\begin{lstlisting}
 \begin{window}[2,c,{\fcolorbox{morelight}{yellow}{%
 	\shortstack{你在他乡 \\还 好 \\ 吗？}}},{}]
 	可是哈卜拉姆再聪明...可是我偏不喜欢。」
 \end{window}
-\end{Verbatim}
+\end{lstlisting}
 
 \begin{window}[2,c,{\fcolorbox{morelight}{yellow}{%
 		\shortstack{你在他乡 \\还好 \\ 吗？}}},{}]
 	可是哈卜拉姆再聪明、再有学问，有一件事却是他不能解答的，因为包
-	罗万有的「可兰经」上也没有答案；如果你深深爱著的人，却深深的爱上了
+    罗万象 的「可兰经」上也没有答案；如果你深深爱著的人，却深深的爱上了
 	别人，有甚麽法子？白马带著她一步步的回到中原。白马已经老了，只能慢
 	慢的走，但终是能回到中原的。江南有杨柳、桃花，有燕子、金鱼……汉人中
 	有的是英俊勇武的少年，倜傥潇洒的少年……但这个美丽的姑娘就像古高昌国
 	人那样固执：「那都是很好很好的，可是我偏不喜欢。」
 \end{window}
 
-\begin{Verbatim}
+\begin{lstlisting}
 \begin{figwindow}[1,r,{\mbox{%
 	\includegraphics[width=2cm]{tiger}}},{Tiger}]
 	可是哈卜拉姆再聪明...可是我偏不喜欢。」
 \end{figwindow}
-\end{Verbatim}
+\end{lstlisting}
 
 \begin{figwindow}[1,r,{\mbox{%
 		\includegraphics[width=2cm,clip]{tiger}}},{Tiger}]
 	可是哈卜拉姆再聪明、再有学问，有一件事却是他不能解答的，因为包
-	罗万有的「可兰经」上也没有答案；如果你深深爱著的人，却深深的爱上了
+	罗万象的「可兰经」上也没有答案；如果你深深爱著的人，却深深的爱上了
 	别人，有甚麽法子？白马带著她一步步的回到中原。白马已经老了，只能慢
 	慢的走，但终是能回到中原的。江南有杨柳、桃花，有燕子、金鱼……汉人中
 	有的是英俊勇武的少年，倜傥潇洒的少年……但这个美丽的姑娘就像古高昌国
 	人那样固执：「那都是很好很好的，可是我偏不喜欢。」
 \end{figwindow}
 
-\begin{Verbatim}
+\begin{lstlisting}
 \begin{figwindow}[1,c,{\mbox{%
 	\includegraphics[width=2cm]{tiger}}},{Tiger}]
 	可是哈卜拉姆再聪明...可是我偏不喜欢。」
 \end{figwindow}
-\end{Verbatim}
+\end{lstlisting}
 
 \begin{figwindow}[1,c,{\mbox{%
 		\includegraphics[width=2cm,clip]{tiger}}},{Tiger}]
 	可是哈卜拉姆再聪明、再有学问，有一件事却是他不能解答的，因为包
-	罗万有的「可兰经」上也没有答案；如果你深深爱著的人，却深深的爱上了
+	罗万象的「可兰经」上也没有答案；如果你深深爱著的人，却深深的爱上了
 	别人，有甚麽法子？白马带著她一步步的回到中原。白马已经老了，只能慢
 	慢的走，但终是能回到中原的。江南有杨柳、桃花，有燕子、金鱼……汉人中
 	有的是英俊勇武的少年，倜傥潇洒的少年……但这个美丽的姑娘就像古高昌国

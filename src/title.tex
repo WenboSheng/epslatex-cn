@@ -1,5 +1,55 @@
+
+\def\HugeRoman{\bfseries\fontsize{2cm}{2cm}\selectfont\color{white}}
+\def\HugeChinese{\bfseries\fontsize{1.5cm}{1.5cm}\selectfont\color{light}}
+
 \thispagestyle{empty}
-%\vspace*{0.4\textheight}
+\newpagecolor{PageColor}\afterpage{\restorepagecolor}
+
+\AddToShipoutPicture*{%
+    \setlength{\unitlength}{1cm}%
+    \color{white}%
+    \linethickness{5pt}%
+    \put(3,0){\line(0,1){30}}
+    \put(0,5){\line(1,0){3}}
+    \put(0,10){\line(1,0){3}}
+    \put(0,15){\line(1,0){3}}
+    \put(0,20){\line(1,0){3}}
+    \put(0,25){\line(1,0){3}}
+}
+
+%\vspace{10pt}
+{\hspace{-15pt}\hypertarget{title}{\HugeRoman \LaTeXe{}}}%
+\hfill{%
+    \raisebox{-40pt}{%
+        \fcolorbox{white}{white}{%
+            \parbox{2.5cm}{%
+                \vbox to 12cm{%
+                    \vfill\hbox to 2.5cm{\hfill\CJKfamily{hei}\HugeChinese 插\hfill}%
+                    \vfill\vfill
+                    \hbox to 2.5cm{\hfill\CJKfamily{hei}\HugeChinese 图\hfill}%
+                    \vfill\vfill
+                    \hbox to 2.5cm{\hfill\CJKfamily{hei}\HugeChinese 指\hfill}%
+                    \vfill\vfill
+                    \hbox to 2.5cm{\hfill\CJKfamily{hei}\HugeChinese 南\hfill}%
+                    \vfill}
+            }
+        }
+    }
+}
+
+\vskip -7.5cm
+
+\hskip -15pt
+\begin{overpic}[scale=0.5]{golfer}
+    \put(4,48){\huge \color{red}{\bf \LaTeX}}
+    \put(4,38){\huge \color{red}{\bf Graphics}}
+    \put(31,7){\includegraphics[scale=.25]{golfer}}
+    \put(49,11){\includegraphics[scale=.10]{golfer}}
+\end{overpic}
+
+\clearpage
+
+\thispagestyle{empty}
 
 \begin{center}
 
@@ -12,3 +62,7 @@ January 12, 2006
 \vfill}
 \end{center}
 
+
+\clearpage
+
+\setcounter{page}{1}

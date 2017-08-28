@@ -2,7 +2,7 @@
 
 \section*{译序}
 
-本文档是Keith Reckdahl所著的``Using Imported Graphics in \LaTeX\ and \pdfLaTeX'' 的中文译本。
+本文档是Keith Reckdahl所著``Using Imported Graphics in \LaTeX\ and \pdfLaTeX'' 的中文译本。
 
 Keith Reckdahl于1997年原著有文档``Using Imported Graphics in \LaTeXe{}''
 （版本2.0，以下简称为 epslatex2），
@@ -14,7 +14,7 @@ Keith Reckdahl于1997年原著有文档``Using Imported Graphics in \LaTeXe{}''
 例如只讨论 \prgname{latex}+\prgname{dvips} 模式下 \file{eps} 图像格式的插入，
 以及使用 \pkg{caption2} 等过时宏包进行插图标题的处理等等。
 为此，原作者在2006年将epslatex2更新为版本3.0.1（以下简称为 epslatex3）。
-虽然说关于 \LaTeX{} 插图这一话题有不少书籍和电子文档都有相关介绍，
+虽然关于 \LaTeX{} 插图这一话题有不少书籍和电子文档都有相关介绍，
 不过即便距今已十年有余，但英文版epslatex3仍可以说是最详尽的参考文档。
 而国内除了一些出版的书籍外，尚没有一份全面的专题文档介绍关于插图的各方面知识。
 这也正是翻译epslatex3的动机。
@@ -27,29 +27,44 @@ Keith Reckdahl于1997年原著有文档``Using Imported Graphics in \LaTeXe{}''
 	\item 原文档第7节只讨论了 \prgname{dvips} 和 \prgname{pdftex} 两种引擎程序。
 	这里加入了 \prgname{dvipdfmx}、\prgname{xetex}和 \prgname{luatex}等更多编译方式。
 	\item 原文档12.1节提到了 \pkg{overpic} 宏包，
-	本文档在第~\ref{ssec:overpic} 加以详细介绍。
+	本文档基于旧译本，在第~\ref{ssec:overpic} 节加以详细介绍。
+    \item 在第~\ref{sssec:esopic} 节简要介绍了 \pkg{eso-pic} 宏包用法。
 	\item 原文档的第32节使用 \pkg{subfig} 宏包处理子图标题，
 	这里代之以介绍 \pkg{subcaption} 宏包。
 	\item 第~\ref{sec:figintext} 节关于图文混排的内容来自于旧译本。
 \end{itemize}
+对于明显过时的章节将在行文处加以说明，但出于完整性考虑仍然翻译出来供参考。
 此外，行文各处的细节修改则通过脚注的方式给出。
 
 本文档主要是在王磊前辈的译文基础上，
 结合英文版epslatex3对epslatex2的变动翻译而来。
 考虑到目前的 \LaTeX{} 编译程序并非只有 \pdfTeX{}，
 因此参照旧译本仍命名为《\LaTeXe{} 插图指南》。
-在翻译过程中还参考了刘海洋的著作《\LaTeX{} 入门》以及其它相关宏包的文档。
+继续使用或修改了旧译本中添加的内容已征得原译者许可。
+在翻译过程中还参考了刘海洋的著作《\LaTeX{} 入门》以及其它相关宏包的文档，
 在此一并表示感谢。
+
+本文档可在 \LaTeX\ 项目公共协议（LPPL, \LaTeX\ Project Public License）下复制和分发。
+LPPL 协议的内容见 \url{http://www.latex-project.org/lppl/}。
+
+\begin{flushright}
+盛文博\\
+\href{mailto:wbsheng88@foxmail.com}{<wbsheng88@foxmail.com>}\\
+二零一七年八月
+\end{flushright}
 
 \newpage
 \section*{前言}
 \label{sect:preface}
 
 在用 \LaTeX\ 编写论文、书稿时，经常要遇到使用图形的情况。
-本书将讲述如何在 \LaTeX\ 文件中插入图片以及与此有关的一些其它问题。
+本书将讲述如何在 \LaTeX\ 文件中插入图像以及其它一些相关问题。\footnote{
+    原文档涉及到图片的单词包括“figure”和“graphic”，
+    前者指的是 \LaTeX{} 文档中作为独立单元的图元素，而后者更偏向于来自于外部的图片文件及图片内容。
+    本译文中将 figure 和 graphic 分别翻译为“图形”和“图像”。——译注}
 由于完全阅读本书需要较多的时间，
-如果您想查找某一特定的信息，
-那么可以查阅\hyperref[toc]{目录}和\hyperref[sec:index]{索引}直接阅读所需的相关内容。
+如果想要查询某一特定的信息，
+那么可以通过\hyperref[toc]{目录}和\hyperref[sec:index]{索引}直接阅读相关内容。
 
 插图的基本步骤是，首先确认宏包的导入
 \begin{lstlisting}
@@ -64,41 +79,41 @@ Keith Reckdahl于1997年原著有文档``Using Imported Graphics in \LaTeXe{}''
 本文档分为如下的五个部分。
 
 \paragraph{第一部分：背景介绍}
-在这一部分中，介绍了一些有关的历史资料和基本的 \LaTeX{} 术语。
-此外也包括
+这一部分介绍了一些有关的历史资料和基本的 \LaTeX{} 术语。
+此外还包括
 \begin{itemize}
 	\item Encapsulated PostScript (\file{eps}) 图形格式，\file{eps} 与 \file{ps} 文件的区别，
 	以及将其它图形格式转为 \file{eps} 格式的方法。
-	\item 通过 \pdfTeX 引擎可以直接导入的图片格式（\file{jpeg}, \file{png}, \file{pdf}, MetaPost）。
+	\item 通过 \pdfTeX 引擎可以直接导入的图片格式（\file{jpeg}, \file{png}, \file{pdf}, \MetaPost）。
 	\item 一些与图形有关的自由软件和共享软件。
 \end{itemize}
 
 \paragraph{第二部分：\LaTeX{} 图形宏集}
-在这一部分中，详细介绍了 \LaTeXe{} 图形宏包套件中用于引入、缩放和旋转图形的命令。
+这一部分详细介绍了 \LaTeXe{} 图形宏集中用于导入、缩放和旋转图形的命令。
 这部分涵盖了~\LaTeXe{}~图形宏集文档的大部分内容\cite{grfguide}。
 
 \paragraph{第三部分：\LaTeXe{}~图形命令的使用}
-这一部分介绍了如何使用~\LaTeXe{}~图形宏包套件中的命令来引入、缩放和旋转图形。
+这一部分介绍了如何使用 \LaTeXe{} 图形宏包套件中的命令来引入、缩放和旋转图形。
 此外还讨论了以下三种情况：
 \begin{itemize}
-	\item 在支持管道（例如 UNIX ）的系统中，使用 \texttt{dvips} 还可以实时地插入压缩的 EPS 图形或其它格式的图形（\prgname{tiff}, \prgname{gif}, \prgname{jpeg}, \prgname{pict} 等）。
-	在其它的系统中，非 \prgname{eps} 格式图形必须先转换为 \prgname{eps} 才行。
-	因为 \LaTeX\ 还是 \texttt{dvips} 都没有内置解压缩和转换图像格式转换的功能，
+	\item 在支持管道（例如 UNIX ）的系统中，使用 \prgname{dvips} 还可以实时地插入压缩的 EPS 图形或其它格式的图形（\file{tiff}, \file{gif}, \file{jpeg}, \file{pict} 等）。
+	在其它的系统中，非 \file{eps} 格式图形必须先转换为 \file{eps} 才行。
+	因为无论 \LaTeX\ 还是 \prgname{dvips} 都没有内置解压缩和转换图像格式转换的功能，
 	所以相应软件需要使用者提供。
 	\item 由于许多图形应用程序只支持 \ascii 文本格式，
-	\pkg{psfrag} 宏包可以将 \prgname{eps} 图形中的文字替换为 \LaTeX{} 符号或数学表达式。
-	\item 当一个\prgname{eps}图形被多次使用时（比如文字后面或页眉上的徽标），最后生成的 \prgname{ps} 文件会包含此\prgname{eps}图形的很多个副本。
-	当所使用的图形不是位图格式时，可以通过定义 \prgname{PostScript} 命令来避免此图形被重复插入，
-	从而减小得到的\prgname{eps}文件体积。
+	\pkg{psfrag} 宏包可以将 \file{eps} 图形中的文字替换为 \LaTeX{} 符号或数学表达式。
+	\item 当一个\file{eps}图形被多次使用时（比如文字后面或页眉上的徽标），最后生成的 \file{ps} 文件会包含此\file{eps}图形的很多个副本。
+	当所使用的图形不是位图格式时，可以通过定义 PostScript 命令来避免此图形被重复插入，
+	从而减小得到的\file{eps}文件体积。
 \end{itemize}
 
 \paragraph{第四部分：\env{figure} 环境}
-将插入的图形放置于\env{figure} 环境中有几个优点。
-在\env{figure}环境中的图形会被自动编号，从而可被引用或加到目录中。
-因为置于该环境中的图形可以通过浮动来很好分页，所以可以很容易的制作出具有专业水准的文稿。
+将插入的图形放置于\env{figure} 环境中有几个优点：
+在\env{figure}环境中的图形会被自动编号，从而可以引用或添加到目录中；
+置于该环境中的图形可以通过浮动实现较好的分页，所以可以很容易制作出具有专业水准的文稿。
 除了介绍\env{figure}环境的一般信息外，这一部分还讲述了如下一些和图形有关的话题：
 \begin{itemize}
-	\item 怎样自定义\env{figure}环境，例如怎样调整图形的放置位置、图形周围的距离、
+	\item 怎样自定义\env{figure}环境，例如怎样调整图形的位置、图形周围的距离、
 	标题的距离，以及在图形与文本之间加入分隔线等。
 	还可以自定义标题的格式，改变标题的样式、宽度和字体等。
 	\item 怎样创建边注图形和伸入边注位置的宽图形。
@@ -163,16 +178,7 @@ Keith Reckdahl于1997年原著有文档``Using Imported Graphics in \LaTeXe{}''
 
 LPPL 协议的内容可参见 \url{http://www.latex-project.org/lppl/}。
 
-%中文版的~PDF~
-%格式文件和源文件可从~\href{ftp://ftp.ctex.org/pub/tex/documents/latex/graphics/}%
-%{ftp.ctex.org}~下载。
-%
-%\vspace{1cm}
-%\hbox to \textwidth{\hfill
-%	\href{mailto:lwang2002@gmail.com}{%
-%		\Large {\CJKfamily{kai}王~~磊}}}
-%
-%\hbox to \textwidth{\hfill{\CJKfamily{kai}二○○○年四月十三日}}
+
 
 \clearpage
 \endinput
