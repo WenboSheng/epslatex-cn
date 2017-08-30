@@ -15,10 +15,10 @@
 - 运行 `src/makefiles.bat` 进行编译（在 Windows 系统中双击运行，在 \*nix 系统中在终端运行），即，依次执行以下命令：
 
 ```
-xelatex -synctex=1 -interaction=nonstopmode --shell-escape epslatex-cn
-biber epslatex-cn
-zhmakeindex epslatex-cn
-xelatex -synctex=1 -interaction=nonstopmode --shell-escape epslatex-cn
+xelatex -synctex=1 -interaction=nonstopmode --shell-escape -output-directory .. epslatex-cn
+biber ../epslatex-cn
+zhmakeindex ../epslatex-cn
+xelatex -synctex=1 -interaction=nonstopmode --shell-escape -output-directory .. epslatex-cn
 ```
 
 ## 许可协议
