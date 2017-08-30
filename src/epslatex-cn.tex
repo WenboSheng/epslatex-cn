@@ -7,7 +7,6 @@
 \usepackage{textcomp}
 \usepackage[style=numeric,sorting=nty]{biblatex}
 \usepackage{geometry}
-%\usepackage{marginnote}
 \usepackage{etoolbox}
 \usepackage{cprotect}
 \usepackage{environ}
@@ -44,8 +43,6 @@
 
 \let\marginpartemp=\marginpar
 \renewcommand{\marginpar}[1]{\reversemarginpar\marginpartemp{\raggedright\CJKfamily{zhkai} #1}}
-%\patchcmd{\@ympar}{\@savemarbox\@marbox{#1}}{\@savemarbox\@marbox{{\itshape\small#1}}}{}{}
-%\pretocmd{\marginpar}{\reversemarginpar}{}{}
 
 \defbibheading{mybibintoc}[\refname]{%
  	\section*{#1}%
@@ -82,8 +79,7 @@
 		\captionsetup{type=table}%
 		\BODY%
 	\end{minipage}}
-% new column type in tabular with fixed width
-%\newcolumntype{P}[1]{>{\setlength{\parindent}{2em}}p{#1}}
+
 \newcommand{\file}[1]{\texttt{#1}}
 \newcommand{\prgname}[1]{\textsf{#1}}
 \newcommand{\pkg}[1]{\texttt{#1}}
@@ -102,10 +98,6 @@
 \newcommand{\opt}[1]{\texttt{#1}}
 \newcommand{\pkgi}[1]{\pkg{#1}%
 	\index{#1@{\textsf{#1} 宏包}}}
-%\newcommand{\cmdi}[1]{\cmd{#1}%
-%	\index{#1@{\texttt{\textbackslash#1} 命令}}}
-%\newcommand{\cmdi}[2][#2]{\cmd{#2}%
-%	\index{#1@{\texttt{\textbackslash#2} 命令}}
 \makeatletter
 \def\cmdi{\@ifnextchar[{\@@cmdi}{\@cmdi}}
 \def\@cmdi#1{\@@cmdi[#1]{#1}}
@@ -113,7 +105,6 @@
 \makeatother
 \newcommand{\envi}[1]{\env{#1}%
 	\index{#1@{\texttt{#1} 环境}}}
-%\renewcommand{\bs}{\symbol{'134}}%Print backslash
 \newcommand{\emphi}[1]{\emph{#1}\index{#1}}
 \newcommand{\ascii}{\textsc{ascii}}
 \newcommand{\HR}{\rule{1em}{0.4pt}}
@@ -139,7 +130,6 @@
 \sbox{\boxrosette}{\includegraphics{rosette.eps}}
 \sbox{\boxrosettebox}{\includegraphics{rosettebox.eps}}
 
-%% cmd and env defined in epslatex
 \newenvironment{narrow}[2]{%
 	\begin{list}{}{%
 			\setlength{\topsep}{0pt}%
@@ -159,7 +149,7 @@
 \DeclareCaptionFormat{reverse}{#3#2\ensuremath{\ll}#1\ensuremath{\gg}}
 \renewcommand\theContinuedFloat{\alph{ContinuedFloat}}
 
-%% Highlight color definition, from Wanglei's epslatex-cn, ver 2000
+%% Highlight color definition, from WangLei's epslatex-cn, ver 2000
 \definecolor{highlightcolor}{rgb}{1,1,0.8}
 \definecolor{mygreen}{rgb}{0,0.5,0}
 \definecolor{RoyalBlue}{cmyk}{1,0.50,0,0}
@@ -175,7 +165,7 @@
 \addbibresource{ref.bib}
 
 \makeindex
-%\includeonly{part1}
+
 \begin{document}
 
 \include{title}
@@ -196,11 +186,9 @@
 
 \clearpage
 
-%\addcontentsline{toc}{section}{参考文献}
 \printbibliography[title={参考文献},heading=mybibintoc]
 
 \clearpage
-%\addcontentsline{toc}{section}{索引}
 \phantomsection\label{sec:index}
 \printindex
 

@@ -454,8 +454,7 @@ Scott Pakin 的 \prgname{purifyeps} 工具能够将很多（但不是全部） \
 从而可以直接被 \LaTeX{} 和 \pdfLaTeX{} 读取。
 为了运行 \prgname{purifyeps} 你需要下列工具：
 \begin{description}
-	\item[PurifyEPS] 可以从\href{ftp://ctan.tug.org/tex-archive/support/purifyeps/}{CTAN/support/purifyeps/} 获得，
-	其中 \texttt{CTAN/} 使用第~\pageref{ctan-sites} 页中列出的任何\textsc{ctan} 站点替代。
+	\item[PurifyEPS] 可以从\href{ftp://ctan.tug.org/tex-archive/support/purifyeps/}{CTAN/support/purifyeps/} 获得。
 	\item[Perl] 可以从 \url{http://www.cpan.org} 获得。
 	\item[pstoedit] 可以从 \url{http://www.pstoedit.net/pstoedit} 获得。
 	\item[mpost] 来自于任何包含 \MetaPost{} 的\LaTeX{} 发行版本。
@@ -595,7 +594,6 @@ Ghostscript中还带有一些有用的工具，如 \prgname{ps2pdf} 等，可利
 	\begin{center}
 		\href{http://www.ctan.org/tex-archive/support/wmf2eps}{CTAN/support/wmf2eps/}
 	\end{center}
-	其中 \texttt{CTAN/} 可以代替为任意列出在第~\pageref{ctan-sites} 页的\textsc{ctan} 站点。
 	
 	\item[KVEC]
 	
@@ -614,7 +612,7 @@ Ghostscript中还带有一些有用的工具，如 \prgname{ps2pdf} 等，可利
 	因此不适用于图像转换。
 	例如，它没有提供命令行功能，所以图像转换必须一个一个做。
 	
-	\prgname{xv} 对于非商业使用是共享软件，对于商业使用要求的强制注册。
+	\prgname{xv} 对于非商业使用是共享软件，对于商业使用则要求注册。
 	更多信息可见
 	\begin{center}
 		\url{http://www.trilon.com/xv/xv.html}
@@ -636,7 +634,7 @@ Ghostscript中还带有一些有用的工具，如 \prgname{ps2pdf} 等，可利
 \subsection{Level 2 EPS 封装}\label{ssec:epswrapper}
 Level 2 PostScript 支持若干种压缩格式，
 包括用于 \file{jpeg} 文件的 DCT 和用于许多 \file{tiff} 文件的 LZW。
-此外，这一二进制数据可以是 \ascii 编码的，
+此外，二进制数据可以是 \ascii 编码的，
 比如 \ascii85 或者 \ascii Hex，这样生成的\ascii 文件大小分别是原来二进制文件的$125\percent$ 和 $200\percent$。
 由于Level-2 \file{eps}支持这些压缩格式，
 因此可以创建为 \file{jpeg} 或是 \file{tiff} 文件的封装。
@@ -663,7 +661,6 @@ Level 2 PostScript 支持若干种压缩格式，
 		\href{http://www.ctan.org/tex-archive/support/jpeg2ps}{CTAN/support/jpeg2ps/}\\
 		\url{http://gnuwin32.sourceforge.net/packages/jpeg2ps.htm}
 	\end{center}
-	其中 \texttt{CTAN/} 可以代替为任意列出在第~\pageref{ctan-sites} 页的\textsc{ctan} 站点。
 	
 	\prgname{jpeg2ps} 支持三种 level-2 编码：
 	\ascii85 （默认值）、8-bit binary （使用 \verb|jpeg2ps -b| 选项）、7-bit \ascii Hex （使用 \verb|jpeg2ps -h| 选项）。
@@ -696,7 +693,7 @@ Level 2 PostScript 支持若干种压缩格式，
 
 虽然可直接编辑 \file{eps} 文件中的PostScript命令来改变图像，
 但这对大多数人来说还是很困难的。
-所幸的是，借助于下面的一些工具软件，可以很容易的编辑 \file{eps} 图像。
+所幸的是，借助于下面的一些工具软件，可以很容易地编辑 \file{eps} 图像。
 
 \begin{description}
 	\item[pstoedit]
