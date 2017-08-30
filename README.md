@@ -6,8 +6,8 @@
 ## 编译方式
 ### 编译依赖
 
-- 较新版本的 TeX 发行版本
-- `zhmakeindex`, 见 https://github.com/leo-liu/zhmakeindex
+- 较新版本的 TeX 发行版本，例如 TeXLive 2016+
+- `zhmakeindex`, 见 https://github.com/leo-liu/zhmakeindex 以及 http://mirror.ctan.org/tex-archive/indexing/zhmakeindex/
 
 ### 编译过程
 
