@@ -1,6 +1,6 @@
 ## Repository Related Files:
 ref/*
-src/*.pdf
+#src/*.pdf
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
