@@ -69,7 +69,7 @@
 以及 \MetaPost{} 文件 \file{file.mps}。
 如果文件名没有扩展名
 \begin{lstlisting}
-\includegraphics{file.eps}
+\includegraphics{file}
 \end{lstlisting}
 那么 \cmd{includegraphics} 会按照 \cmd{DeclareGraphicsExtensions} 扩展名列表中自动加上扩展名
 （见~\pageref{ssec:deextension} 的第~\ref{ssec:deextension} 节）。
@@ -256,9 +256,9 @@ pdflatex -enable-write18 test.tex %(MiK\TeX{} 中)%
 \caption{\cmd{includegraphics} 选项}\label{tab:opt}
 \begin{tabular}{>{\ttfamily}l p{0.7\textwidth}}
 	\toprule
-	height & 图形的高度（可为任何~\TeX{}~度量单位）。 \\ \hline
-	totalheight & 图形的整体高度，可为任何~\TeX{}~度量单位。 \\ \hline
-	width & 图形的宽度（可为任何~\TeX{}~度量单位）。 \\ \hline
+	height & 图形的高度，可用任何 \TeX{} 度量单位。 \\ \hline
+	totalheight & 图形的整体高度，可用任何 \TeX{} 度量单位。 \\ \hline
+	width & 图形的宽度，可为任何 \TeX{} 度量单位。 \\ \hline
 	scale & 图形的缩放因子，设定 \opt{scale=2} 会使插入图形的大小为其自然大小的两倍。 \\ \hline
 	angle & 设定旋转的角度，以度为单位，逆时针方向为正。 \\ \hline
 	origin & \opt{origin} 指定图形绕那一点旋转，默认是围绕参考点旋转。
@@ -577,10 +577,10 @@ width=30mm,keepaspectratio]%
 \end{lstlisting}
 
 \cmdi{scalebox} 命令对其作用的对象进行缩放，
-使得缩放后对象的宽度为原始宽度与\texttt{水平缩放因子}之积，高度为原始高度与\texttt{垂直缩放因子}之积。
-如果\texttt{垂直缩放因子}没有给出，那么默认取为\texttt{水平缩放因子}，
+使得缩放后对象的宽度为原始宽度与“\texttt{水平缩放因子}”之积，高度为原始高度与“\texttt{垂直缩放因子}”之积。
+如果“\texttt{垂直缩放因子}”没有给出，那么默认取为“\texttt{水平缩放因子}”，
 以保持原始的宽高比进行缩放。
-如果缩放因子为负值，则对对象进行翻转。下面是几个例子
+如果缩放因子为负值，则翻转该对象。下面是几个例子
 
 %\hspace{-1.5cm}
 \begin{center}
@@ -656,7 +656,7 @@ China? \scalebox{-1}{China?}}
 \end{lstlisting}
 
 \cmdi{resizebox} 命令将对象的大小改变为给定值。
-如果\texttt{宽度}或\texttt{高度}中的任一项用 \texttt{!} 给出，
+如果“\texttt{宽度}”或“\texttt{高度}”中的任一项用 \texttt{!} 给出，
 那么缩放时会保持原有的宽高比。
 例如：
 \begin{lstlisting}
@@ -671,9 +671,8 @@ China? \scalebox{-1}{China?}}
 \end{lstlisting}
 使得对象的宽度改变为 2 英寸但保持原有高度不变。 
 
-除了以外，
-命令 \cmdi{reseizebox*} 与 \cmd{resizebox} 几乎是相同的
-不同之处仅在于第二个参数表示对象的全部高度
+此外，命令 \cmdi{reseizebox*} 与 \cmd{resizebox} 几乎是相同的，
+不同之处仅在于第二个参数表示对象的整体高度。
 （关于高度和整体高度的定义见第~\ref{sec:terminology} 节，
 关于 \opt{height} 和 \opt{totalheight} 选项的比较见第~\ref{ssec:diffheight} 节。）
 
@@ -729,16 +728,16 @@ China? \scalebox{-1}{China?}}
 \rotatebox[选项]{角度}{对象}
 \end{lstlisting}
 \cmdi{rotatebox} 将对象旋转一给定度数的角度，逆时针方向为正。
-默认\texttt{选项}下对象绕它的参考点旋转。
-\cmd{rotatebox} 命令中\texttt{选项} 允许对象绕给定的点来旋转。
+默认选项下对象绕它的参考点旋转。
+\cmd{rotatebox} 命令中“\texttt{选项}”允许对象绕给定的点来旋转。
 \begin{enumerate}
 	\item 给定\opt{[x=xdim,y=ydim]}，则对象旋转所绕的点相对于参考点的
 	坐标为 $(\mathtt{xdim}, \mathtt{ydim})$。
 	\item \opt{origin} 选项可以指定12个特殊点其中之一（见图~\ref{fig:rotatepoint}）。
 \end{enumerate}
 
-\opt{origin} 点的水平位置由\opt{lcr} （分别代表左、中、右）三个字母其中之一确定，
-垂直位置则由\opt{t,c,B,b}~（分别代表顶部、中部、基线、底部）四个字母中的一个来确定。
+\opt{origin} 点的水平位置由 \opt{lcr}（分别代表左、中、右）三个字母其中之一确定，
+垂直位置则由 \opt{t,c,B,b}（分别代表顶部、中部、基线、底部）四个字母中的一个来确定。
 例如：
 \begin{description}
 	\item [\opt{[rb]}] 右下角。
@@ -749,7 +748,7 @@ China? \scalebox{-1}{China?}}
 \paragraph{几点说明：}
 \begin{itemize}
 	\item 标记字母的顺序并不重要，\opt{[br]} 等同于 \opt{[rb]}。
-	\item \opt{c}~代表水平位置的中点还是垂直位置的中点由和它一起的标记字母来决定。
+	\item \opt{c} 代表水平位置的中点还是垂直位置的中点由和它一起的标记字母来决定。
 	\item 如果只给出一个标记字母，那么另一个将被假设为 \opt{c}。
 	即，\opt{[c]} 等于\opt{[cc]}，\opt{[l]}等于\opt{[lc]}，\opt{[t]}等于\opt{[ct]}，等等。
 \end{itemize}
@@ -797,14 +796,14 @@ China? \scalebox{-1}{China?}}
 \includegraphics{file}
 \end{lstlisting}
 
-	\item 当使用压缩的\file{eps} 图形文件时。见第~\ref{ssec:compresseps}~节。
-	\item 当使用非\file{eps} 格式的图形文件时。见第~\ref{ssec:noneps}~节。
+	\item 当使用压缩的\file{eps} 图形文件时。见第~\ref{ssec:compresseps} 节。
+	\item 当使用非\file{eps} 格式的图形文件时。见第~\ref{ssec:noneps} 节。
 \end{enumerate}
 在这些情况下，\LaTeX{} 为了处理由命令 \cmd{includegraphics} 所导入的图像文件，
 就需要用 \cmdi{DeclareGraphicsRule} 和 \cmdi{DeclareGraphicsExtensions} 命令来控制。
 \begin{itemize}
 	\item \cmd{DeclareGraphicsExtensions} 命令指定了在没有提供图形文件扩展名的情况下，
-	\LaTeX{} 将自动为其加上的扩展名列表（如~\file{.eps}、\file{.ps}、\file{.eps.gz} 等）。
+	\LaTeX{} 将自动为其加上的扩展名列表（如 \file{.eps}、\file{.ps}、\file{.eps.gz} 等）。
 	\item \cmd{DeclareGraphicsRule} 命令指定了对图形文件执行的命令。
 	执行这一命令要求操作系统支持管道功能，比如 Unix 等操作系统，而DOS则不行。
 	
@@ -814,14 +813,14 @@ China? \scalebox{-1}{China?}}
 
 \subsection{DeclareGraphicsExtensions 命令}\label{ssec:deextension}
 \cmd{DeclareGraphicsExtensions} 命令告诉 \LaTeX{}，
-若~\cmd{includegraphics}~命令所引入的文件没有提供扩展名，
+若 \cmd{includegraphics} 命令所引入的文件没有提供扩展名，
 将试图为其自动加上什么样的扩展名。
 
 为方便起见，在选择图形驱动\footnote{
-	指定一个图形驱动选项如 \cmdOM{usepackage}{dvips}{graphics} 将会覆盖掉在~\texttt{graphics.cfg} 中设定的缺省驱动选项——旧译本注。}
+	指定一个图形驱动选项如 \cmdOM{usepackage}{dvips}{graphics} 将会覆盖掉在 \texttt{graphics.cfg} 中设定的缺省驱动选项——旧译本注。}
 时，就已经有一个相应的预设扩展名集。
 举例来说，如果选择 \prgname{dvips} 作为图形驱动，
-那么默认会使用下列图形文件扩展名（在~\file{dvips.def}~中定义）：
+那么默认会使用下列图形文件扩展名（在 \file{dvips.def} 中定义）：
 \begin{lstlisting}
 \DeclareGraphicsExtensions{.eps,.ps,.eps.gz,.ps.gz,.eps.Z}
 \end{lstlisting}
@@ -854,7 +853,7 @@ China? \scalebox{-1}{China?}}
 \end{lstlisting}
 这样做的好处是如果以后决定压缩 \file{file.eps}，也无须更改 \LaTeX{} 文件。
 无后缀名的方式使得可以同时使用 \LaTeX{} 和 \pdfLaTeX{} 编译文档，
-见第~\pageref{ssec:latexandpdflatex} 页的~\ref{ssec:latexandpdflatex} 节。
+见第~\pageref{ssec:latexandpdflatex} 页的 \ref{ssec:latexandpdflatex} 节。
 然而，这种无后缀名的方式可能会加剧内存池空间问题，详见下面的~\ref{sssec:poolspaceproblem} 小节。
 
 \subsubsection{无扩展名的文件}
@@ -862,7 +861,7 @@ China? \scalebox{-1}{China?}}
 \begin{lstlisting}
 \includegrapincs{file}
 \end{lstlisting}
-不会试图寻找~\file{file}，
+不会试图寻找 \file{file}，
 除非空扩展名列表中包含空的扩展名 \verb+{}+。
 例如：
 \begin{lstlisting}
@@ -877,7 +876,7 @@ China? \scalebox{-1}{China?}}
 \subsubsection{池空间问题}\label{sssec:poolspaceproblem}
 
 不给出扩展名而靠 \LaTeX{} 从 \cmd{DeclareGraphicsExtensions} 的扩展名列表中选择正确的扩展名可能
-加剧池空间问题（见第~\ref{ssec:poolspace}~节）。
+加剧池空间问题（见第~\ref{ssec:poolspace} 节）。
 如果有池空间问题的话，应当使用 \cmd{DeclareGraphicsExtensions} 指定的扩展名数目尽可能小。如：
 \begin{lstlisting}
 \DeclareGraphicsExtensions{.eps,.eps.gz}
@@ -897,7 +896,7 @@ China? \scalebox{-1}{China?}}
 指定任何以 \file{.eps.gz} 为扩展名的文件为压缩的\file{eps} 文件，
 该文件的 BoundingBox 信息存放在扩展名为 \file{.eps.bb} 的文件中，
 并用命令 \texttt{gunzip -c} 来解压缩
-（因为 \LaTeX{} 不能从压缩文件中读取 BoundingBox~信息，
+（因为 \LaTeX{} 不能从压缩文件中读取 BoundingBox 信息，
 所以 BoundingBox 行必须存放到非压缩文件中）。
 
 可以允许有多个 \cmd{DeclareGraphicsRule} 命令。
@@ -924,7 +923,7 @@ China? \scalebox{-1}{China?}}
 		命令前必须有一个前单引号（键盘上数字键 \texttt{1} 左侧的键——译注），
 		注意不是常用的后单引号。
 		目前为止，只有 \prgname{dvips} 能够执行这样的命令。
-		参见第~\ref{ssec:noneps}~节关于如何用这样的命令来处理非 \file{eps} 格式图像和压缩的 \file{eps} 图像的例子。\\
+		参见第~\ref{ssec:noneps} 节关于如何用这样的命令来处理非 \file{eps} 格式图像和压缩的 \file{eps} 图像的例子。\\
 		\bottomrule
 	\end{tabular}
 \end{table}

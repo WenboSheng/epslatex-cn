@@ -7,9 +7,9 @@
 本节主要讨论三种常见的并列图形方式。
 \begin{enumerate}
 	\item 多个图像并列于一个图形环境中。
-	\item 多个并列的浮动图形，如图~\ref{fig:side:a}~和~\ref{fig:side:b}。
+	\item 多个并列的浮动图形，如图~\ref{fig:side:a} 和~\ref{fig:side:b}。
 	\item 一图形环境中各个子图的平行排列。
-	如子图~\ref{fig:subfig:a}~和~\ref{fig:subfig:b}~并列于图~\ref{fig:subfig}~中。
+	如子图~\ref{fig:subfig:a} 和~\ref{fig:subfig:b} 并列于图~\ref{fig:subfig} 中。
 \end{enumerate}
 
 本节将用下列两种方法构建上述三种并列图形。
@@ -17,7 +17,7 @@
 	\item 连续使用 \cmd{includgraphics} 命令。
 	\item 并列的小页环境，其中每个都包含一个 \cmd{includegraphics} 命令。
 \end{enumerate}
-在构造多个并列图形时，很重要的一点是要理解第~\ref{sec:terminology}~节的内容。
+在构造多个并列图形时，很重要的一点是要理解第~\ref{sec:terminology} 节的内容。
 并列图形是通过将若干盒子（\cmd{incudegraphics} 或小页）平行放置在一条水平基线上来得到的。
 
 \subsection{单个图形环境中的并列图像}\label{ssec:sidegraphics-singlefig}
@@ -38,10 +38,10 @@
 	\caption{一个 figure 环境中的两幅图像} 
 \end{figure}
 \end{lstlisting}
-会得到如图~\ref{fig:sidegraphics}~的并列图形。
+会得到如图~\ref{fig:sidegraphics} 的并列图形。
 该图形宽度为4英寸（第一幅图1英寸，\cmd{hspace} 间距1英寸，第二幅图2英寸），居中放置。
 其中的 \cmd{hspace} 命令可用 \cmd{hfill} 来代替，
-这会将图形推向页面的两端边界（见第~\ref{ssec:hspace}~节）。
+这会将图形推向页面的两端边界（见第~\ref{ssec:hspace} 节）。
 
 \begin{figure} 
 	\centering 
@@ -66,7 +66,7 @@
 	\caption{中间对齐的图像} 
 \end{figure}
 \end{lstlisting}
-生成图~\ref{fig:minipagegraphics}~，其中的图形是中间对齐的。
+生成图~\ref{fig:minipagegraphics}，其中的图形是中间对齐的。
 
 \begin{figure} 
 	\centering 
@@ -86,13 +86,13 @@
 	\item 如同其它的 \LaTeX{} 对象一样，小页在放置时，它的参考点和当前基线对齐。
 	缺省情况下小页使用 \opt{[c]} 选项，将参考点置于其竖直方向的中点。
 	选项 \opt{[t]} 将参考点置于小页顶行的基线上，
-	而选项 \opt{[b]} 将参考点置于小页底行的基线上（参见第~\ref{ssec:minivalign}~节）。
+	而选项 \opt{[b]} 将参考点置于小页底行的基线上（参见第~\ref{ssec:minivalign} 节）。
 	
 	\item 在第一个 \cmdM{end}{minipage} 后面的 \texttt{\%} 防止在两个小页之间多一个空格
 	（参见第~\ref{ssec:hspace} 节）。
 	
 	\item 当几个并列小页的宽度之和没有达到 $1.0\,\text{\cmd{textwidth}}$ 时，
-	可用 \cmd{hspace} 或 \cmd{hfill} 来确定水平间距，详见第~\ref{ssec:hspace}~节。
+	可用 \cmd{hspace} 或 \cmd{hfill} 来确定水平间距，详见第~\ref{ssec:hspace} 节。
 \end{itemize}
 
 
@@ -118,7 +118,7 @@
 	\end{minipage}
 \end{figure}
 \end{lstlisting}
-生成图~\ref{fig:side:a}~和~\ref{fig:side:b}。
+生成图~\ref{fig:side:a} 和~\ref{fig:side:b}。
 
 \begin{figure}
 	\centering
@@ -269,8 +269,8 @@
 第~\ref{ssec:sidefigure} 节描述了如何通过在小页环境中同时使用插图命令和 \cmd{caption} 命令来构建并列图形。
 本节将介绍如何通过在不同的小页环境中使用插图命令和 \cmd{caption} 命令来获得更好的对齐效果。
 
-在图~\ref{fig:side:a}~和~\ref{fig:side:b}中，
-并列的小页环境使用了 \opt{[t]}~选项，进而使得两幅图形的基线对齐。
+在图~\ref{fig:side:a} 和~\ref{fig:side:b}中，
+并列的小页环境使用了 \opt{[t]} 选项，进而使得两幅图形的基线对齐。
 这对于非旋转的图形没有任何问题，而且使得两标题的顶部对齐。
 不过，如果图形的底部不对齐的话（如其中一图形被旋转），就会发生问题。例如：
 \begin{lstlisting}
@@ -291,7 +291,7 @@
 	\end{minipage}%
 \end{figure}
 \end{lstlisting}
-生成图~\ref{fig:mininonrot}~和~\ref{fig:minirot}，
+生成图~\ref{fig:mininonrot} 和~\ref{fig:minirot}，
 我们可以看到这里两幅图形的标题并不对齐。
 而若只使用小页的 \opt{[b]} 选项，会使得标题的最后一行对齐，并不能解决问题。
 
@@ -339,7 +339,7 @@
 	\end{minipage}%
 \end{figure}
 \end{lstlisting}
-生成的图~\ref{fig:mininonrot:a}~和~\ref{fig:minirot:a}~中，
+生成的图~\ref{fig:mininonrot:a} 和~\ref{fig:minirot:a} 中，
 图形的基线和标题的第一行分别对齐。
 
 \begin{figure}
@@ -408,7 +408,7 @@
 	\end{minipage}
 \end{figure}
 \end{lstlisting}
-使用一个 \env{figure} 环境创建图~\ref{fig:by:table} 和 表~\ref{tab:by:fig}。
+使用一个 \env{figure} 环境创建图~\ref{fig:by:table} 和表~\ref{tab:by:fig}。
 
 \begin{figure}[htb]
 	\begin{minipage}[b]{0.5\linewidth}
@@ -450,14 +450,14 @@
 
 \section{堆叠的图形和子图}\label{sec:stackfigs}
 
-第~\ref{sec:sidebyside}~节介绍了一系列方法创建并列图形。
+第~\ref{sec:sidebyside} 节介绍了一系列方法创建并列图形。
 这些方法的原理都是将对象（图形、小页、子浮动体等）依次排列在一条直线上。
 当使用 \cmd{\cmd{}} 显式断行时，相同的方法也可以生成堆叠的图形。
 此外还可以通过 \cmd{\cmd{}} 命令的可选参数（例如 \cmd{\cmd{}}\opt{[20pt]}）指定竖直间距。
 
 \subsection{堆叠的图形}\label{ssec:stackfigs}
 
-第~\ref{sec:sidebyside}~节介绍了如何创建并列图形。
+第~\ref{sec:sidebyside} 节介绍了如何创建并列图形。
 本节的内容表明，添加断行可以生成多行图形。
 例如下列代码
 \begin{lstlisting}
@@ -549,7 +549,7 @@
 
 \subsection{堆叠的子图}\label{ssec:stackedsubfigs}
 
-第~\ref{ssec:sidesubfigure}~节介绍了如何创建并列的子图。
+第~\ref{ssec:sidesubfigure} 节介绍了如何创建并列的子图。
 本节的内容表明，添加断行可以生成多行子图。
 例如下列代码
 

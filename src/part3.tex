@@ -32,10 +32,10 @@
 \end{center}
 \end{figure}
 \end{lstlisting}
-这里推荐使用~\cmd{centering}，因为~\verb+\begin{center}+~会使图形上下
+这里推荐使用 \cmd{centering}，因为 \verb+\begin{center}+ 会使图形上下
 方的垂直间距增加一倍
 （ \env{figure} 带有的垂直间距加上 \env{center} 环境带有的垂直间距）。
-若希望有额外的垂直间距，可使用第~\ref{ssec:vspace}~节介绍的命令。
+若希望有额外的垂直间距，可使用第~\ref{ssec:vspace} 节介绍的命令。
 
 \cmd{psfig} 和 \cmd{epsfbox} 命令\marginpar{过时的用法}的缺陷让它们很难使图形居中排列。
 过去，作为一种解决办法，使用了 \TeX{} 命令 \cmdi{centerline} 和 \cmdi{leavevmode}。
@@ -60,7 +60,7 @@ World
 \includegraphics{file}
 \end{lstlisting}
 则在图形之间有一个字符的水平间距。
-在第一行的行尾加上注释符\texttt{\%}
+在第一行的行尾加上注释符 \texttt{\%}
 \begin{lstlisting}
 \includegraphics{file}%
 \includegraphics{file}
@@ -84,7 +84,7 @@ World
 \end{lstlisting}
 使得图形的两边和中间的间距都相等。
 由于断行前的 \cmd{hfill} 命令会被忽略，
-所以需要用\cmdM{hspace*}{\cmd{fill}} 来替代它。
+所以需要用 \cmdM{hspace*}{\cmd{fill}} 来替代它。
 
 除了 \cmd{hspace} 和 \cmd{hfill} 之外，
 \marginpar{其它间距命令}
@@ -109,8 +109,8 @@ World
 \includegraphics[angle=-45,totalheight=1in]{file}
 \includegraphics[angle=-45,height=1in]{file}
 \end{lstlisting}
-第一个命令缩放一个旋转了的图形，使其全部高度为~1~英寸。
-而第二个命令缩放一个旋转了的图形，使其在参考点以上的部分为~1~英寸高。
+第一个命令缩放一个旋转了的图形，使其全部高度为 1 英寸。
+而第二个命令缩放一个旋转了的图形，使其在参考点以上的部分为 1 英寸高。
 
 \subsection{旋转图形的缩放}\label{ssec:enlarge}
 当在插图命令中指定高度或宽度时，这里给出的大小并不是图形的大小，
@@ -131,7 +131,7 @@ World
 	\resizebox*{!}{1in}{\rotatebox{90}{\usebox{\boxrosette}}}
 \end{center}
 尽管看上去图形的大小不一有点奇怪，
-但在看过它们的~BoundingBox~后就会明白了。
+但在看过它们的 BoundingBox 后就会明白了。
 
 \begin{center}
 	\resizebox*{!}{1in}{\usebox{\boxrosettebox}}
@@ -162,7 +162,7 @@ World
 	\rotatebox{-45}{\resizebox*{!}{1in}{\usebox{\boxrosette}}}
 	\rotatebox{-90}{\resizebox*{!}{1in}{\usebox{\boxrosette}}}
 \end{center}
-当然，这种现象仍可用图形的~BoundingBox~来解释。
+当然，这种现象仍可用图形的 BoundingBox 来解释。
 
 \begin{center}
 	\resizebox*{!}{1in}{\usebox{\boxrosettebox}}
@@ -220,7 +220,7 @@ World
 \subsection{小页环境的垂直对齐}\label{ssec:minivalign}
 
 将图形放置于 \envi{minipage} 小页环境中是经常遇到的情况下，
-而且也十分实用（见第~\ref{sec:sidebyside}~节）。
+而且也十分实用（见第~\ref{sec:sidebyside} 节）。
 当小页并列时， \LaTeX{} 会将它们的参考点垂直对齐地排列。
 缺省地，小页的参考点是它的左边界的中点。
 可用一个可选参数项来改变小页的参考点的位置。
@@ -231,7 +231,7 @@ World
 
 注意选项 \opt{[b]} 不会将参考点置于小页的底部
 （除非其底行的参考点在它的底部），
-同样地，选项 \opt{[t]}~不会将参考点置于小页的顶部
+同样地，选项 \opt{[t]} 不会将参考点置于小页的顶部
 （除非其顶行的参考点在它的顶部）。
 
 当小页中只有一行时， \opt{[b]} 和 \opt{[t]} 选项得到的结果是一样的。例如：
@@ -260,7 +260,7 @@ World
 \end{minipage}
 \end{center}
 \end{lstlisting}
-都得到图~\ref{fig:minipagesamp-1}~的结果。
+都得到图~\ref{fig:minipagesamp-1} 的结果。
 在这两种情况下，小页的参考点都是图形的参考点（左下角）。
 \begin{figure}
 \begin{center}
@@ -342,7 +342,7 @@ World
 \end{minipage}
 \end{center}
 \end{lstlisting}
-结果如图~\ref{fig:minipagesamp-3}~所示。
+结果如图~\ref{fig:minipagesamp-3} 所示。
 \begin{figure}
 \begin{center}
 	\begin{minipage}[t]{.25\linewidth}
@@ -362,7 +362,7 @@ World
 这里小页的顶部是和当前基线对齐。
 如果要求小页的顶部是和当前文本行的顶部对齐，
 可用 \cmdM{vspace}{-\cmd{baselineskip}} 代替 \cmdM{vspace}{0pt}。
-相关专题参考~\cite[第~863--865~页]{Mittelbach2004}。
+相关专题参考~\cite[第 863--865 页]{Mittelbach2004}。
 
 
 \section{两幅图像的堆叠}
@@ -424,7 +424,7 @@ World
 	\item [效率不高]
 	
 	每当 \TeX{} 打开一个文件，该文件名就被存入 \TeX{} 的内存中。
-	当打开大量的文件时，内存空间减少会导致内存池大小的错误（见第~\ref{ssec:poolspace}~节）。
+	当打开大量的文件时，内存空间减少会导致内存池大小的错误（见第~\ref{ssec:poolspace} 节）。
 	显式地给出子目录名增加了文件名的长度，进而加重这种池空间问题。
 	
 	\item [通用性差]
@@ -437,7 +437,7 @@ World
 \begin{enumerate}
 	\item 最好的方法是将子目录加到 \TeX{} 搜索路径中（见第 \ref{ssec:texpath} 节）。
 	\item 另外一种办法是用 \cmdi{graphicspath} 命令来指明所用的子目录
-	（见第~\ref{ssec:graphpath}~节）。不过，这比前一种方法的效率要低不少。
+	（见第~\ref{ssec:graphpath} 节）。不过，这比前一种方法的效率要低不少。
 \end{enumerate}
 
 上述两种方法都将使 \cmd{includegraphics} 自动搜索图形子目录，
@@ -495,8 +495,8 @@ TEXINPUTS="/dir1:/dir2:"; export TEXINPUTS
 
 当 \LaTeX{} 在 \TeX{} 搜索路径中寻找文件时，不会将目录名也写到 \file{dvi} 文件中。
 对于旧版本的 \prgname{dvips} 和 \prgname{xdvi} 而言，
-由于没有搜索\TeX{}~的搜索路径的功能，
-因此，可能会找不到该文件（见第~\ref{ssec:path-dvips}~节）。
+由于没有搜索 \TeX{} 的搜索路径的功能，
+因此，可能会找不到该文件（见第~\ref{ssec:path-dvips} 节）。
 
 
 \subsection{临时改变 \TeX{} 的搜索路径}\label{ssec:temptexpath}
@@ -522,9 +522,9 @@ chmod u+x latex_paper
 \begin{lstlisting}[language=sh]
 latex_paper file.tex
 \end{lstlisting}
-就会在 \file{TEXINPUTS} 的开头添加路径 \file{~/PAPER/SUB1/:~/PAPER/SUB2/}，
+就会在 \file{TEXINPUTS} 的开头添加路径 \verb|~/PAPER/SUB1/:~/PAPER/SUB2/|，
 之后，用 \prgname{latex} 运行文件 \file{file.tex}，
-就可以搜索 \file{~/PAPER/SUB1/} 和 \file{~/PAPER/SUB2/} 子目录下的任何图像文件。
+就可以搜索 \verb|~/PAPER/SUB1/| 和 \verb|~/PAPER/SUB2/| 子目录下的任何图像文件。
 
 类似地，还需要写一个 \verb|dvips_paper| 脚本，
 以便让 \prgname{dvips} 在 \file{dvi} 转 \file{ps} 过程中可以搜索到图像文件。
@@ -544,9 +544,9 @@ latex_paper file.tex
 
 很重要的一点是，搜索由 \cmd{graphicspath} 给出的目录要比由 \file{TEXINPUTS} 给出的目录慢的多。
 更进一步说，搜索由 \cmd{graphicspath} 给出的目录要占用一定的池空间
-（见第~\ref{ssec:poolspace}节）。
+（见第~\ref{ssec:poolspace} 节）。
 鉴于 \cmd{graphicspath} 效率不高，所以一般不推荐使用这一命令，
-最好的办法就是将要使用的目录加到 \TeX{} 搜索路径中去（见第~\ref{ssec:texpath}~节）。
+最好的办法就是将要使用的目录加到 \TeX{} 搜索路径中去（见第~\ref{ssec:texpath} 节）。
 
 
 \subsection{节约池空间}\label{ssec:poolspace}
@@ -602,7 +602,7 @@ file.eps.gz
 file.ps.gz
 file.eps.Z
 \end{Verbatim}
-	若是再加上使用~\cmd{graphicspath}，会导致效率特别低。
+	若是再加上使用 \cmd{graphicspath}，会导致效率特别低。
 	
 	最好将 \cmd{DeclareGraphicsExtensions} 中定义的扩展名列表减到最小，
 	这样在使用省略扩展名的文件时会好些。
@@ -674,14 +674,14 @@ file.eps.Z
 使用压缩 \file{eps} 文件的步骤是：
 \begin{enumerate}
 	\item 创建一个 \file{eps} 文件（比如说 \file{file1.eps}）。
-	\item 将它的 BoundingBox 存放到另外一文件中（~\file{file1.eps.bb}）。
+	\item 将它的 BoundingBox 存放到另外一文件中（\file{file1.eps.bb}）。
 	\item 压缩  \file{eps}  文件，比如在很多平台上用命令：
 	\begin{lstlisting}[language=bash]
 	gzip -9 file1.eps
 	\end{lstlisting}
 	得到压缩文件 \file{file1.eps.gz}。这里 \opt{-9}（或者 \opt{-best}） 选项表示最佳压缩。
 	\item 在 \cmd{includegraphics}前声明适当的 \cmd{DeclareGraphicsRule} 命令。
-	使得 \LaTeX{} 知道如何处理特殊后缀的文件（见第~\ref{ssec:derule}~节）。例如：
+	使得 \LaTeX{} 知道如何处理特殊后缀的文件（见第~\ref{ssec:derule} 节）。例如：
 \begin{lstlisting}
 \documentclass[dvips]{article}
 \usepackage{graphicx}
@@ -698,7 +698,7 @@ file.eps.Z
 	在这个特殊的例子里，命令 \cmd{DeclareGraphicsRule} 实际上是可以省略的，
 	因为它在文件 \file{dvips.def} 中已经预定义过了。
 	如果使用另外一个解压缩程序或文件名后缀，那么 \cmd{DeclareGraphicsRule} 是不能少的。
-	例如 BoundingBox~存放到文件 \texttt{file.bb} 中，
+	例如 BoundingBox 存放到文件 \texttt{file.bb} 中，
 	则相应的 \cmd{DeclareGraphicsRule} 应为：
 \begin{lstlisting}
 \DeclareGraphicsRule{.eps.gz}{eps}{.bb}{`gunzip -c #1}
@@ -708,12 +708,12 @@ file.eps.Z
 
 \subsection{非 EPS 图形文件}\label{ssec:noneps}
 
-\file{eps} 格式的图形文件可以很容易的插入到~\LaTeX{}~文件中，
+\file{eps} 格式的图形文件可以很容易的插入到 \LaTeX{} 文件中，
 而非 \file{eps} 格式的图形文件（\file{gif}、\file{tiff}、\file{jpeg}、\file{pict} 等）则不是将插图命令中的文件名替换一下就可以的。
 一个简单的解决方法是检查一下生成该图像的应用程序是否也可以输出 \file{eps}。
 如果不是的话，就必须用图像转换程序（见第~\ref{ssec:convertor} 节）将其转成 PostScript。
 尽管使用非 \file{eps} 格式的图形文件不如 \file{eps} 图形文件简单方便，
-但由于它们可能比 \file{eps} 文件要小，而一些绘图软件也不能生成~EPS~文件，
+但由于它们可能比 \file{eps} 文件要小，而一些绘图软件也不能生成 \file{eps} 文件，
 所以有时还是希望在 \file{dvi} 文件转换为 \file{ps} 文件时再对其进行图像格式转换。
 如果使用 \prgname{dvips}，这种即时转换的命令可用 \cmd{DeclareGraphicsRule}来给出。
 例如用这种方法将 \file{file2.gif} 插入到 \LaTeX{} 文档中需要以下几步：
@@ -731,7 +731,7 @@ file.eps.Z
 			用来计算非\file{eps} 图形文件的 BoundingBox。——旧译本}。
 		\item 将 \file{file2.gif} 转成PostScript。
 		如果 PostScript 文件包含 BoundingBox 行，则将此行保存到文件 \file{file2.gif.bb}；
-		否则，可按照第~\ref{ssec:pstoeps}~节的方法来计算 BoundingBox，
+		否则，可按照第~\ref{ssec:pstoeps} 节的方法来计算 BoundingBox，
 		并将所得到的结果放在 \file{file2.gif.bb} 中的 \verb|%%BoundingBox|后。
 		然后将 PostScript 文件删除。
 	\end{enumerate}
@@ -843,7 +843,7 @@ convert file2.gif 'eps:-'
 参考文献 \cite{psfrag-doc} 给出了\pkg{PSfrag} 3.0 的详细说明。
 
 \pkg{PSfrag} 的另一优势是支持压缩的 \file{eps} 图形。
-不过，\cmd{tex} 命令（见第~\ref{sssec:latextext}~节）
+不过，\cmd{tex} 命令（见第~\ref{sssec:latextext} 节）
 不能用于在压缩的 \file{eps} 图形中嵌入 \LaTeX{} 文本。
 
 使用\pkg{PSfrag} 的步骤是：
@@ -860,7 +860,7 @@ convert file2.gif 'eps:-'
 \end{lstlisting}
 其中选项说明见表~\ref{tab:psfrag}。
 
-选项 \opt{posn} 和 \opt{PSposn} 可以是第~\pageref{fig:rotatepoint}~页图~\ref{fig:rotatepoint}~所示的~12~个点中的一个（例如 \opt{[tl]}、\opt{[br]}、\opt{[cc]}）。
+选项 \opt{posn} 和 \opt{PSposn} 可以是第~\pageref{fig:rotatepoint} 页图~\ref{fig:rotatepoint} 所示的 12 个点中的一个（例如 \opt{[tl]}、\opt{[br]}、\opt{[cc]}）。
 如果没有给出，默认点是 \opt{[Bl]}。
 缺失字母默认为 \opt{c}，例如 \opt{[]} 和 \opt{[c]} 都等价于 \opt{[cc]}，
 \opt{[l]} 等价于 \opt{[lc]}。
@@ -873,9 +873,9 @@ convert file2.gif 'eps:-'
 \toprule
 {PStext} & \file{eps} 图形中被替换的文本。\\
 \midrule
-{posn}  & （可选项，缺省为~\opt{[Bl]}）放置点相对于 \LaTeX{} 文本的参考位置。 \\
+{posn}  & （可选项，缺省为 \opt{[Bl]}）放置点相对于 \LaTeX{} 文本的参考位置。 \\
 \midrule
-{PSposn} & （可选项，缺省为~\opt{[Bl]}）放置点相对于现有 \file{eps} 文本的参考位置。 \\
+{PSposn} & （可选项，缺省为 \opt{[Bl]}）放置点相对于现有 \file{eps} 文本的参考位置。 \\
 \midrule
 {scale} & （可选项，缺省为1） \LaTeX{} 文本的缩放因子。
 	为得到最好的效果，建议不使用这一选项，
@@ -887,7 +887,7 @@ convert file2.gif 'eps:-'
 	此选项特别适用于应用软件只能生成包含水平方向文本的 \file{eps} 图像的情形。\\
 \midrule
 {text} &  用来插入 \file{eps} 图像的 \LaTeX{} 文本。
-	如同通常的~\LaTeX{}~文本，数学公式必须放在美元符号对
+	如同通常的 \LaTeX{} 文本，数学公式必须放在美元符号对
 	中。如 \verb+$\frac{1}{2}$+ 或 \verb+$x^2$+。\\
 \bottomrule
 \end{tabular}
@@ -939,7 +939,7 @@ convert file2.gif 'eps:-'
 前四个 \cmd{psfrag} 命令中，新的 \LaTeX{} 字符串的左基线点对应于旧的 \file{eps} 字符串的左基线点，
 后面两个 \cmd{psfrag} 命令中使用 \opt{[][]} 选项使得新的 \LaTeX{} 字符串的中心对应于旧的 \file{eps} 字符串的中心。
 注意并不是所有的 \file{eps} 字符串都被替换，
-如在图~\ref{fig:psfragex1}~中 \texttt{N} 就没有被替换。
+如在图~\ref{fig:psfragex1} 中 \texttt{N} 就没有被替换。
 
 \begin{figure}
 \begin{minipage}[t]{.5\textwidth}
@@ -980,9 +980,9 @@ convert file2.gif 'eps:-'
 \colorbox{yellow}{文本}
 \end{lstlisting}
 	在{\colorbox{yellow}{文本}}后放置了一长方形的黄色背景。
-	有关 \cmd{colorbox} 的详细说明可参考文献~\cite{grfguide}。
+	有关 \cmd{colorbox} 的详细说明可参考文献 \cite{grfguide}。
 
-	在使用 \pkg{PSfrag}~时，\cmd{colorbox} 常常用来放置那些由于线条或阴影而被遮挡的文本。
+	在使用 \pkg{PSfrag} 时，\cmd{colorbox} 常常用来放置那些由于线条或阴影而被遮挡的文本。
 	通过将这些文本的背景色设为白色，防止它们被图形所遮挡。
 \item[\cmd{fcolorbox}] 命令（也由 \pkg{color} 宏包所提供）与 \cmd{colorbox} 类似，
 	只是为背景加上了一个边框。例如命令
@@ -1017,8 +1017,8 @@ convert file2.gif 'eps:-'
 \end{minipage}
 \end{figure}
 
-图~\ref{fig:nopsfragex2}~是没有使用 \pkg{PSfrag} 的原始图形，
-而图~\ref{fig:psfragex2}~则是使用如下命令的结果。
+图~\ref{fig:nopsfragex2} 是没有使用 \pkg{PSfrag} 的原始图形，
+而图~\ref{fig:psfragex2} 则是使用如下命令的结果。
 \begin{lstlisting}
 \psfrag{q1}[][]{\colorbox{white}{$q_1$}}
 \psfrag{base}{\fcolorbox{black}{white}{Base}}
@@ -1049,7 +1049,7 @@ convert file2.gif 'eps:-'
 \else
 \includegraphics[width=.45\textwidth]{psfrag-ex3}
 \fi
-\caption{PSfrag~{\CJKfamily{zhhei}中使用中文的例子}}\label{fig:psfragex3}
+\caption{PSfrag {\CJKfamily{zhhei}中使用中文的例子}}\label{fig:psfragex3}
 \end{figure}
 
 \subsubsection{EPS 图形中的 \LaTeX{} 文本}\label{sssec:latextext}
@@ -1066,7 +1066,7 @@ convert file2.gif 'eps:-'
 因此，使用 \pkg{graphicx} 包时的一些细节有可能影响到这些文本的大小。
 
 \begin{itemize}
-\item 当使用~\opt{width}、\opt{height} 或 \opt{totalheight} 指定图形的大小时，如
+\item 当使用 \opt{width}、\opt{height} 或 \opt{totalheight} 指定图形的大小时，如
 \begin{lstlisting}
 \includegraphics[width=3in]{file.eps}
 \end{lstlisting}
@@ -1090,7 +1090,7 @@ convert file2.gif 'eps:-'
       所以第二个命令中的替换文本会被缩放，而第一个命令中的替换文本不会被缩放。
       如果图形的自然大小和被缩放后的大小差别很大的话，这两个命令得到的结果会大不相同。
 \end{itemize}
-参见~\cite{psfrag-doc}~以获取关于 \pkg{PSfrag} 文本缩放的详细说明。
+参见 \cite{psfrag-doc} 以获取关于 \pkg{PSfrag} 文本缩放的详细说明。
 
 \subsubsection{PSfrag和 \pdfTeX{}}\label{sssec:psfrag-pdftex}
 \pkg{psfrag} 不能在 \pdfTeX{} 模式下使用。
@@ -1252,7 +1252,7 @@ GraphicFrag01.pdf
 
 
 
-对于第~\ref{sssec:psfragex2}~节中的例子，
+对于第~\ref{sssec:psfragex2} 节中的例子，
 现在使用 \pkg{overpic} 宏包来得到同样的结果。
 首先可使用 \opt{grid} 和 \opt{tics} 选项来确定放置 \LaTeX{} 对象的位置
 （这样做只是为了能够得到更精确的放置位置，
@@ -1483,7 +1483,7 @@ $
 可以利用 \pkg{fancyhdr} 宏包中的命令
 \marginpar{页眉和页脚的图形}
 在页眉和页脚中插入图形。
-例如，在用第~\ref{ssec:defps}~节的方法将 \file{eps} 文件 \file{file.eps} 分为两个文件 \file{file.h} 和 \file{file.ps} 后，
+例如，在用第~\ref{ssec:defps} 节的方法将 \file{eps} 文件 \file{file.eps} 分为两个文件 \file{file.h} 和 \file{file.ps} 后，
 下面的命令
 \begin{lstlisting}
 \documentclass{article}
@@ -1536,8 +1536,8 @@ $
 \end{lstlisting}
 那么图像将出现在所有\opt{fancy} 风格页面的页眉外侧，即奇数页的右侧和偶数页的左侧。
 
-\cmd{fancyhead}~命令只对 \opt{fancy} 样式的页面起作用。
-\marginpar{ 改变 \opt{plain} \\ 页面样式}
+\cmd{fancyhead} 命令只对 \opt{fancy} 样式的页面起作用。
+\marginpar{改变 \opt{plain} \\ 页面样式}
 即使使用命令 \cmdM{pagestyle}{fancy} 将文档的页面样式设置为 \opt{fancy}，
 但封面、目录和每章的第一页等页面仍为缺省的 \opt{plain} 样式。
 
@@ -1595,14 +1595,14 @@ $
 	...
 \end{document}
 \end{lstlisting}
-在这个例子中，图像的左下角位于页眉中心下方~6~英寸，偏左 $2.2$ 英寸的地方。
+在这个例子中，图像的左下角位于页眉中心下方 6 英寸，偏左 $2.2$ 英寸的地方。
 可以通过改变这两个数字调整图像的位置。
 
 因为页眉在正文文本之前排出，所以正文文本会覆盖图形，从而得到水印的效果。
 反之，因为页脚在正文文本之后排出，
 所以若在页脚中使用图形会覆盖正文文本。
 如果 \file{file.eps} 是矢量图而不是位图，
-可用第~\ref{ssec:defps}~节的方法来使得最后生成的 PostScript 文件较为小些。
+可用第~\ref{ssec:defps} 节的方法来使得最后生成的 PostScript 文件较为小些。
 
 \subsubsection{使用 eso-pic 宏包}\label{sssec:esopic}
 

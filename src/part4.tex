@@ -10,7 +10,7 @@
 为得到专家级的排版效果，作者不得不手工调整图形的位置。
 这种工作是非常乏味的，尤其是几乎每次修改文档都得这样做一次。
 
-为此，\LaTeX{}~提供了一个浮动图形机制来自动将图形放置到看起来合适的位置，
+为此，\LaTeX{} 提供了一个浮动图形机制来自动将图形放置到看起来合适的位置，
 既能得到专家级的排版效果，又不必手工做调整图形位置的乏味的工作。
 不过，它也会给那些习惯于手工调整图形的新手带来不适。
 想要有效的利用浮动图形机制需要注意以下几点：
@@ -18,10 +18,10 @@
 	\item[不要使用依赖于图形放置位置的文本]
 	
 	使用如“\emph{这幅图...}”或“\emph{下面的图形...}”等短语要求所指的图形需在固定位置。
-	而像~``\emph{图~5...}''~这样的短语则允许图形出现在任意位置。
+	而像“\emph{图~5...}”这样的短语则允许图形出现在任意位置。
 	\item [放松]
 	
-	一些用户在发现图形没有十分准确的出现在他们所想要的位置时，往往非常着急。
+	一些用户在发现图形没有十分准确地出现在他们所想要的位置时，往往非常着急。
 	这没有必要，图形的放置是 \LaTeX{} 的工作，最好放松一些。
 \end{description}
 
@@ -32,7 +32,7 @@
 	\item 不要束缚 \LaTeX{} 的手脚。
 	给出的浮动选项越多，\LaTeX{} 做的就越好。
 	具体来说，使用选项 \opt{[htbp]} 和 \opt{[tbp]}	就很好。
-	见第~\ref{ssec:figplacement}~节。
+	见第~\ref{ssec:figplacement} 节。
 	
 	\item 很多人发现缺省的浮动参数过于严格了。下面的命令
 \begin{lstlisting}
@@ -44,15 +44,15 @@
 \renewcommand{\bottomfraction}{0.70}
 \renewcommand{\floatpagefraction}{0.66}
 \end{lstlisting}
-	将浮动参数重新设置为更宽松的值。详见第~\ref{sec:typerule}~节。
+	将浮动参数重新设置为更宽松的值。详见第~\ref{sec:typerule} 节。
 	
 	\item \LaTeX{} 允许图形浮动到当前页的顶部，
 	这样会使图形在引述它的文本前出现。
-	不喜欢这样做的用户可以使用~\pkgi{flafter} 宏包。
+	不喜欢这样做的用户可以使用 \pkgi{flafter} 宏包。
 	无需使用特殊的命令，只要简单地调入该宏包 \cmdM{usepackage}{flafter} 即可。
 	
 	\item 要确保图形的浮动不超过某一特定点，
-	可调入 \pkgi{placeins} 宏包并使用 \cmdi{FloatBarrier} 命令。见第~\ref{ssec:unprocessfig}~节。
+	可调入 \pkgi{placeins} 宏包并使用 \cmdi{FloatBarrier} 命令。见第~\ref{ssec:unprocessfig} 节。
 	
 	\textbf{警告}：过多使用 \cmd{FloatBarrier}	命令会导致浮动位置难以控制或浮动参数不正确。
 	这两种情况都是应当尽量避免的。
@@ -89,7 +89,7 @@
 	这在排版并列放置的图形（见第~\ref{sec:sidebyside} 节）
 	或者复杂排列的图形（见第~\ref{sec:stackfigs} 节）时是非常有用的。
 	
-	\item 可用命令~\cmdi{listoffigures}~来得到一个图形目录。
+	\item 可用命令 \cmdi{listoffigures} 来得到一个图形目录。
 	\item 缺省地，\cmd{caption} 的文本就是标题内容，也会在图形目录中列出。
 	\cmd{caption} 命令的可选项可用来将与标题文本不同的内容加到图形目录中。如：
 \begin{lstlisting}
@@ -203,11 +203,11 @@ text text text text text text...
 		较新版本的 \LaTeX{} 自动将其改为 \opt{[ht]}。}。
 	如果该图形不适合所指定的位置，它就会被搁置并阻碍对接下来图形的处理。
 	一旦这些阻塞的图形数目超过了18幅这一 \LaTeX{} 所能容许的最大值，
-	就会产生 ``Too Many Unprocessed Floats'' 的错误（见第~\ref{ssec:toomanyfig}~节）。
+	就会产生 ``Too Many Unprocessed Floats'' 的错误（见第~\ref{ssec:toomanyfig} 节）。
 \end{itemize}
 
 当 \LaTeX{} “\emph{试图}”放置一浮动图形时，
-\marginpar{见 \cite[第~198~页]{Lamport1994}}
+\marginpar{见 \cite[第 198 页]{Lamport1994}}
 它将遵循以下规则：
 \begin{enumerate}
 	\item 图形只能置于由位置参数所确定的地点。
@@ -223,12 +223,12 @@ text text text text text text...
 	\begin{itemize}
 		\item 只要前面有未被处理的图形，当前位置就不会放置图形。
 		\item 一幅“不可能放置”的图形将阻碍之后的图形放置。
-		直到文件结束或达到~\LaTeX{}~的浮动限制。参见第~\ref{ssec:toomanyfig}~节。
+		直到文件结束或达到 \LaTeX{} 的浮动限制。参见第~\ref{ssec:toomanyfig} 节。
 	\end{itemize}
 	同样地，表格也只能在其前面的表格都被处理完后才能被放置。
 	不过，表格在排版时是跳过图形而单独处理的。
 	反之，图形的处理也是与表格的处理无关的。
-	\item 必须符合在第~\ref{sec:typerule}~节中给出的审美条件。
+	\item 必须符合在第~\ref{sec:typerule} 节中给出的审美条件。
 	例如，一页上的浮动体的数目不能超过 \opt{totalnumber}\index{totalnumber}。
 	在浮动位置选项前加上一个惊叹号（如 \cmdM{begin}{figure}\opt{[!ht]}）
 	会使 \LaTeX{} 忽略应用于文本页的审美条件，试图强制放置浮动图形。
@@ -240,7 +240,7 @@ text text text text text text...
 
 使用浮动体的一大优势就是不需要将它们立即放置在输入它们的地方。
 \LaTeX{} 会将它们暂时保存，直到在更合适的地点加以放置。
-当一浮动图形已被~\LaTeX{}~读入，但还没有将它放到页面上时，
+当一浮动图形已被 \LaTeX{} 读入，但还没有将它放到页面上时，
 这一图形被称为“未处理浮动图形”。
 虽然 \LaTeX{} 处理浮动体的算法通常很好，
 但有时还是需要手动强制处理那些未处理的浮动图形。
@@ -248,7 +248,7 @@ text text text text text text...
 下面的三个方法都可以用来清除未处理的浮动图形。
 这些命令必须分开使用。
 然而，过度使用这些方法要么说明手动管理浮动体位置过去细致，
-要么说明位置参数有问题（见第~\ref{sec:typerule}~节）。
+要么说明位置参数有问题（见第~\ref{sec:typerule} 节）。
 
 \begin{description}
 	\item [clearpage] \mbox{} \\
@@ -302,7 +302,7 @@ text text text text text text...
 	会使所有未处理的浮动体在下一分页前被清除完。
 	
 	使用 \cmdM{afterpage}{\cmd{clearpage}} 并不总可以解决浮动限制问题
-	（见第~\ref{ssec:toomanyfig}~节）。
+	（见第~\ref{ssec:toomanyfig} 节）。
 	因为它只是在页面结束前才会执行 \cmd{clearpage} 命令，
 	而到页面结束时可能又会累积新的未处理的浮动体，
 	进而可能已超过了 \LaTeX{} 的限制。
@@ -351,7 +351,7 @@ text text text text text text...
 		但在此情况下并不起作用，
 		因为引发自然分页需要足够的文本，在这之前就会超过浮动体队列限制了。
 		\item 因为这里没有文本，所以图形并不需要浮动。
-		因此，最好的解决办法也许是采用第~\ref{sec:nonfloat}~节中的方法来构建非浮动的图形，
+		因此，最好的解决办法也许是采用第~\ref{sec:nonfloat} 节中的方法来构建非浮动的图形，
 		同时用 \cmd{vspace} 和 \cmd{vfill} 来提供竖直间距。
 	\end{enumerate}
 \end{enumerate}
@@ -418,18 +418,18 @@ text text text text text text...
 		即一页中浮动体所占的比例不得超过 $80\percent$。 \\
 		\hline
 		\cmd{topfraction} &  文本页中页面顶部可以用来放置浮动体的最大空间比例。
-		缺省值为~0.7，即放置在顶部的浮动体所占的高度不得超过整个页面高度 $70\percent$。
+		缺省值为 $0.7$，即放置在顶部的浮动体所占的高度不得超过整个页面高度 $70\percent$。
 		同样地，如果多个使用了选项 \opt{t} 的浮动体的高度和超过了整个页面高度的 $70\percent$，
 		即使它们的数目没有超过 \texttt{topnumber} 的值，
-		仍将一个也不会被放置在页面顶部。 \\
+		也不会被放置在页面顶部。 \\
 		\hline
 		\cmd{bottomfraction} & 文本页中页面底部可以用来放置浮动体的最大空间比例。
-		缺省值为~0.3，即，
+		缺省值为 $0.3$，即，
 		只有当浮动体的高度不超过整个页面高度的 $30\percent$ 时才可以放置在页面底部。\\
-		\cline{2-2}
+		\hline
 		\cmd{floatpagefraction} & 浮动页中必须由浮动体占用高度的最小比例。
-		因此在浮动页中空白所占的比例不会超过~$1-\text{\cmd{floatpagefraction}}$。
-		缺省值为~0.5。\\
+		因此在浮动页中空白所占的比例不会超过 $1-\text{\cmd{floatpagefraction}}$。
+		缺省值为 $0.5$。\\
 		\bottomrule
 	\end{tabular}
 \end{table}
@@ -462,7 +462,7 @@ text text text text text text...
 	这样作会让 \LaTeX{} 感到迷惑并导致低劣的排版结果。
 	
 	\item [\cmd{topfraction}] \mbox{} \\
-	不要使~\cmd{topfraction}~的值大于 $1-\text{\cmd{textfraction}}$，
+	不要使 \cmd{topfraction} 的值大于 $1-\text{\cmd{textfraction}}$，
 	否则会使 \LaTeX{} 的浮动定位算法发生矛盾\footnote{
 		旧译本误作“小于 $1-\text{\cmd{textfraction}}$”。——译注}。
 	
@@ -491,7 +491,8 @@ text text text text text text...
 		\cmd{textfloatsep} 和其它文本页浮动间距都被计算在内。
 		而对浮动页来说，在考察图形的高度比例是否超过了 \cmd{floatpagefraction} 时，
 		浮动间距是不被计算在内的。
-		因此，必须从 \cmd{topfraction} 中减去 \cmd{textfloatsep} 除以 \cmd{textheight} 的值（约为0.05）。关于图形间距详见第~\ref{ssec:vspace}~节。}。
+		因此，必须从 \cmd{topfraction} 中减去 \cmd{textfloatsep} 除以 \cmd{textheight} 的值（约为0.05）。
+        关于图形间距详见第~\ref{ssec:vspace} 节。}。
 	同样地，如果使用了 \opt{[bp]} 或 \opt{[hbp]}，
 	那么 \cmd{floatpagefraction} 和 \cmd{bottomfraction} 要满足：
 	\[
@@ -528,14 +529,14 @@ text text text text text text...
 
 \subsection{图形的间距}\label{ssec:vspace}
 
-表~\ref{tab:figlength-textpage}~中给出的长度控制两幅图形之间或图形与正文的间距。
-与其它大部分的~\LaTeX{}~长度不同的是，这三个都是橡皮长度，
+表~\ref{tab:figlength-textpage} 中给出的长度控制两幅图形之间或图形与正文的间距。
+与其它大部分的 \LaTeX{} 长度不同的是，这三个都是橡皮长度，
 这就使得可以通过缩短或拉伸获得更好的排版页面。
 这些长度可用 \cmd{setlength} 命令来设定。例如：
 \begin{lstlisting}
 \setlength{\floatsep}{10pt plus 3pt minus 2pt}
 \end{lstlisting}
-将 \cmdi{floatsep} 的正常值设定为~10\pt。
+将 \cmdi{floatsep} 的正常值设定为 10\pt。
 此外，为了改善页面排版，浮动体的间距可以从 8\pt 到 13\pt 之间调节。
 
 由于 \LaTeX{} 在每一个按照选项 \opt{h} 排在当前位置的浮动体前后都放置一个 \cmdi{intextsep} 间距，
@@ -552,17 +553,17 @@ text text text text text text...
 		缺省为 \texttt{12pt plus 2pt minus 2pt}。 \\
 		\hline
 		\cmdi{textfloatsep} & 出现在页面的顶部或底部的浮动体与文本之间的垂直距离。
-		缺省为~\texttt{20pt plus 2pt minus 4pt}。 \\
+		缺省为 \texttt{20pt plus 2pt minus 4pt}。 \\
 		\hline
 		\cmdi{intextsep} & 出现在页面中间的浮动体
 		（如使用了 \opt{h} 选项的浮动体）与上下方文本之间的垂直距离。
-		缺省为~\texttt{12pt plus 2pt minus 2pt}。 \\
+		缺省为 \texttt{12pt plus 2pt minus 2pt}。 \\
 		\bottomrule
 	\end{tabular}
 \end{table}
 
-表~\ref{tab:figlength-textpage}~中给出的长度不会影响浮动页上各浮动体之间的距离。
-它们由表~\ref{tab:figlength-floatpage}~中给出的长度控制。
+表~\ref{tab:figlength-textpage} 中给出的长度不会影响浮动页上各浮动体之间的距离。
+它们由表~\ref{tab:figlength-floatpage} 中给出的长度控制。
 浮动页面中的空白经常使用单位 \texttt{fil}，
 类似于 \cmdi{vfill} 生成的垂直间距，具有无限伸展的能力。
 当在一段距离中出现多个 \texttt{fil} 时，它们将按比例填充这段距离。
@@ -576,18 +577,18 @@ text text text text text text...
 	\begin{tabular}{>{\ttfamily}l p{0.7\textwidth}}
 		\toprule
 		\cmdi["@fptop]{@fptop} & 浮动页中顶部的浮动体上方的空白。
-		缺省为~\texttt{0pt plus 1.0fil}。 \\
+		缺省为 \texttt{0pt plus 1.0fil}。 \\
 		\hline
 		\cmdi["@fpsep]{@fpsep} & 浮动页中的浮动体之间的距离。
-		缺省为~\texttt{8pt plus 2.0fil}。 \\
+		缺省为 \texttt{8pt plus 2.0fil}。 \\
 		\hline
 		\cmdi["@fpbot]{@fpbot} & 浮动页中底部的浮动体下方的空白。
-		缺省为~\texttt{0pt plus 1.0fil}。 \\
+		缺省为 \texttt{0pt plus 1.0fil}。 \\
 		\bottomrule
 	\end{tabular}
 \end{table}
 
-在表~\ref{tab:figlength-floatpage}~中的长度名字中的 \texttt{@} 表示
+在表~\ref{tab:figlength-floatpage} 中的长度名字中的 \texttt{@} 表示
 这是一个 \LaTeX{} 内部命令\footnote{
 	用户所有涉及到 \LaTeX{} 内部命令的代码都必须包含在 \cmd{makeatletter} 和 \cmd{makeatother} 之间。
 	为实现它的功能， \LaTeX{} 使用了很多普通用户无需涉及的内部命令。
@@ -595,9 +596,9 @@ text text text text text text...
 	\LaTeX{} 在它的内部命令名字前加上了一个\texttt{@}。
 	由于 \LaTeX{} 命令的名字只能包含字母，
 	所以通常不可能定义一个含有 \texttt{@} 的命令。
-	不过，命令~\cmdi{makeatletter} 让 \LaTeX{} 把 \texttt{@} 当作字母，
-	从而可以定义带有~\texttt{@} 的命令。
-	命令~\cmdi{makeatother} 则重新令 \LaTeX{} 不把 \texttt{@} 当作字母。
+	不过，命令 \cmdi{makeatletter} 让 \LaTeX{} 把 \texttt{@} 当作字母，
+	从而可以定义带有 \texttt{@} 的命令。
+	命令 \cmdi{makeatother} 则重新令 \LaTeX{} 不把 \texttt{@} 当作字母。
 	}。
 所以，所有改变这些长度的 \cmd{setlength} 命令都必须放到 \cmd{makeatletter}  和 \cmd{makeatother} 之间。例如：
 \begin{lstlisting}
@@ -634,7 +635,7 @@ text text text text text text...
 	\begin{tabular}{>{\ttfamily}l p{0.7\textwidth}}
 		\toprule
 		\cmdi{topfigrule} & 该命令在一页顶部的最后一个浮动体后，
-		\cmd{textfloatsep} 前执行（见第~\ref{ssec:vspace}~节）。 \\
+		\cmd{textfloatsep} 前执行（见第~\ref{ssec:vspace} 节）。 \\
 		\hline
 		\cmdi{bottomfigrule} & 该命令在一页底部第一个浮动体前，
 		\cmd{textfloatsep} 后执行。\\
@@ -643,13 +644,13 @@ text text text text text text...
 \end{table}
 
 在这里 \cmd{topfigrule} 的定义中，
-首先向下移动 $5\pt$ （进入到~\cmd{textfloatsep} 的区域）
-以提供图形与水平线之间的距离，然后画上一高为 $0.4\pt$ 的水平线，
+首先向下移动 $5\pt$ （进入到 \cmd{textfloatsep} 的区域）
+以提供图形与水平线之间的距离，然后画上一条高为 $0.4\pt$ 的水平线，
 最后再向上移动 $5.4\pt$ 以补偿前面向下的位移。
 同样地，\cmd{botfigrule} 在图形与水平线之间留出了 $5\pt$ 的空间。
 
 由于上面的命令使得图形与水平线之间的距离为 $5\pt$，
-所以水平线与文本之间的距离为~$\text{\cmd{textfloatsep}}-5\pt$（见第~\ref{ssec:vspace}~节）。
+所以水平线与文本之间的距离为 $\text{\cmd{textfloatsep}}-5\pt$（见第~\ref{ssec:vspace} 节）。
 
 水平线的厚度缺省为 $0.4\pt$，
 并可用 \cmd{hrule} 命令的 \opt{height} 选项来改变。
@@ -685,7 +686,7 @@ text text text text text text...
 	\includegraphics[width=2in]{graphic.eps} 
 \end{figure}
 \end{lstlisting}
-生成的图~\ref{fig:verynearcap}~中标题和图形非常接近。
+生成的图~\ref{fig:verynearcap} 中标题和图形非常接近。
 
 \begin{figure}[ht]
     \captionsetup{position=below}
@@ -745,7 +746,7 @@ text text text text text text...
 
 \subsection{标题的标记}\label{ssec:captionlabel}
 
-缺省情况下，\LaTeX{} 会在图形的标题开头加上像~``Figure 13: ''~这样的标记。
+缺省情况下，\LaTeX{} 会在图形的标题开头加上像 ``Figure 13: '' 这样的标记。
 其中的 ``Figure'' 可以通过重定义 \cmdi{figurename} 来更改。例如，下面的命令
 \begin{lstlisting}
 \begin{figure} 
@@ -755,9 +756,9 @@ text text text text text text...
 	\caption{This is the Caption} 
 \end{figure}
 \end{lstlisting}
-得到如图~\ref{fig:figname}~的结果。
-至于标题文本的字体，分隔符~``:''~以及其它标题属性的修改可用~\pkg{caption}~宏包
-（见第~\ref{sec:caption-pkg}~节）来完成。
+得到如图~\ref{fig:figname} 的结果。
+至于标题文本的字体，分隔符 ``:'' 以及其它标题属性的修改可用 \pkg{caption} 宏包
+（见第~\ref{sec:caption-pkg} 节）来完成。
 
 \begin{figure} 
 	\centering 
@@ -797,7 +798,7 @@ text text text text text text...
 \end{lstlisting}
 另外，这个宏包在导入时还有一系列选项，包括：
 \begin{itemize}
-	\item 在邻近浮动体的文本中会放置像~``[Figure 4 about here.]''~之类的说明。
+	\item 在邻近浮动体的文本中会放置像 ``[Figure 4 about here.]'' 之类的说明。
 	要取消这一功能可在调入宏包时使用 \opt{nomarkers} 选项。
 \begin{lstlisting}
 \usepackage[nomarkers]{endfloat}
@@ -854,7 +855,7 @@ text text text text text text...
 
 \section{使用caption宏包来定制标题}\label{sec:caption-pkg}
 
-第~\ref{ssec:captionlabel}~节和第~\ref{ssec:capspace}~节分别介绍了如何定制浮动图形的标题的标签和标题上下方的垂直间距。
+第~\ref{ssec:captionlabel} 节和第~\ref{ssec:capspace} 节分别介绍了如何定制浮动图形的标题的标签和标题上下方的垂直间距。
 对于标题其它属性的控制，则可以用 \pkgi{caption} 宏包\footnote{
 	版本$3.0+$的 \pkg{caption} 宏包取代了之前版本的 \pkg{caption} 以及过时的 \pkg{caption2} 宏包。}
 来完成。
@@ -1928,7 +1929,7 @@ singlelinecheck=false}
 	此时强烈建议用户使用 \env{figure} 环境的 \opt{[!ht]} 选项，
 	这样只有当当前页面排不下时才会移动图形。}
 
-如同第~\ref{sec:floatfigure}~节所介绍的那样，
+如同第~\ref{sec:floatfigure} 节所介绍的那样，
 \LaTeX{} 允许“浮动”的图形和表格以增强排版效果。
 不过，偶尔也会希望一幅图形不要浮动，就放置在与它在 \LaTeX{} 源文件中相同的位置。
 虽然 \cmd{caption} 命令只能在 \env{figure} 和 \env{table} 环境中使用，
@@ -1962,7 +1963,7 @@ This is the text after the figure.
 \begin{itemize}
 	\item 需要使用 \env{minipage} 小页环境来防止在图形中出现分页的情况。
 	\item 图形前后的命令 \cmdO{\cmd{}}{\cmd{intextsep}} 作用是进行换行并加上垂直的间距。
-	\cmd{intextsep} 命令~（见第~\ref{ssec:vspace}~节）可以使用任意大小的空白，
+	\cmd{intextsep} 命令（见第~\ref{ssec:vspace} 节）可以使用任意大小的空白，
 	目的是使不浮动的图形具有与浮动图形相同的上下间距。
 	\item 正常情况下，浮动图形是按照它们在 \LaTeX{} 源文件中的顺序一一放置的。
 	而不浮动的图形是被立即放置到页面上，
@@ -1970,9 +1971,9 @@ This is the text after the figure.
 	如果出现这样情况，那么图形不会按照数字顺序编号\footnote{
 		在这种情况下，图形目录中图形的顺序是按照图形出现的顺序，而不是图形编号的顺序。}。
 	要避免这种顺序错乱，可在不浮动的图形前用 \cmd{clearpage} 或 \cmd{FloatBarrier} 命令
-	清除未处理的浮动图形（见第~\ref{ssec:unprocessfig}~节）。
+	清除未处理的浮动图形（见第~\ref{ssec:unprocessfig} 节）。
 	\item \cmd{captionof}　命令也可以用于生成边注图形
-	（见第~\ref{sec:marginfigure}~节）以及与图形并列的表格
+	（见第~\ref{sec:marginfigure} 节）以及与图形并列的表格
 	（见第~\ref{sec:figuretable} 节）。
 \end{itemize}
 
@@ -2046,9 +2047,9 @@ This is the text after the figure.
 那么 \LaTeX{} 会把后面的边注向下移动，但不会移到下一页。
 所以在最后完成排版前可能要调整一下边注的位置以防它离分页的地方太近。
 
-由于 \env{figure}~环境不能在边注中使用，
+由于 \env{figure} 环境不能在边注中使用，
 所以无法直接得到浮动的边注图形。
-这时，可以用第~\ref{sec:nonfloat}~节定义的 \cmd{captionof} 命令来构造非浮动的边注图形。
+这时，可以用第~\ref{sec:nonfloat} 节定义的 \cmd{captionof} 命令来构造非浮动的边注图形。
 \marginpar{\centering
 	\resizebox{\marginparwidth}{!}{\usebox{\boxgraphic}}%
 	\captionsetup{type=figure}
@@ -2081,7 +2082,7 @@ This is the text after the figure.
 	可以减小标题的字体。
 	关于 \pkg{caption} 的信息详见第~\ref{sec:caption-pkg} 节。
 	
-	\item 如同第~\ref{sec:nonfloat}~节所介绍的非浮动图形，
+	\item 如同第~\ref{sec:nonfloat} 节所介绍的非浮动图形，
 	边注图形会在未处理的浮动图形前排出。
 	因此，如果希望图形按顺序出现的话，
 	必须在边注之前使用 \cmd{clearpage} 或 \cmd{FloatBarrier} 命令。
@@ -2089,7 +2090,7 @@ This is the text after the figure.
 	\item 边注的处理机制和浮动图表的处理机制是一样的，
 	所以如果使用了太多的浮动图表和边注，
 	就可能超出 \LaTeX{} 所允许的未处理的浮动体的数目。
-	这时使用 \pkg{morefloat}~宏包是一种解决办法。
+	这时使用 \pkg{morefloat} 宏包是一种解决办法。
 	具体见第~\ref{ssec:toomanyfig} 节。
 \end{itemize}      
 
@@ -2098,7 +2099,7 @@ This is the text after the figure.
 排版的易读性原则限制了一行文本中的字符个数。
 如果不是使用大字体或双列版式，这样的易读性原则就会使得页面的页边距很大，
 特别当使用 $8.5\times 11 $ 英寸的 letter 页面时更是如此。
-在第~\ref{sec:marginfigure}~节中展示了边空可以用来放置边注图形。
+在第~\ref{sec:marginfigure} 节中展示了边空可以用来放置边注图形。
 另外一种方法则是创建一个常规的浮动图形，并且伸到一边或者两边的边空中。
 这可通过在浮动图形环境中嵌套一个很宽的列表环境来实现。
 例如，可以在导言区加入下列代码来定义一个 \env{narrow} 环境：
@@ -2191,7 +2192,7 @@ This is the text after the figure.
 	将纸张的左边界作为页面的顶部，使得在此环境中的文本，表格和图形都被横排。
 	\item \pkgi{rotating} 宏包提供了一个 \envi{sidewaysfigure} 环境，
 	与 \env{figure} 环境相似，只是其中的图形被横排。
-	\item \pkg{rotating} 宏包提供了一个 \cmdi{rotcaption}~命令，
+	\item \pkg{rotating} 宏包提供了一个 \cmdi{rotcaption} 命令，
 	与 \cmd{caption} 命令相似，只是标题被横排。
 \end{enumerate}
 
@@ -2208,7 +2209,7 @@ This is the text after the figure.
 	而方法1得到的图形是不能浮动的\footnote{
 		在 \env{landscape}环境中声明的浮动图形只能在该横排页内浮动。}。
 	\item 因为方法1和3使用 \env{figure} 环境，
-	所以它们可以和 \pkg{endfloat}~宏包（见第~\ref{ssec:endfloat}~节）一起使用。
+	所以它们可以和 \pkg{endfloat} 宏包（见第~\ref{ssec:endfloat} 节）一起使用。
 	\item 方法1和2特别适用于并列的横排图像（关于并列图形的方法见第~\ref{sec:sidebyside} 节）。
 \end{itemize}
 
@@ -2307,7 +2308,7 @@ This is the text after the figure.
 \end{lstlisting}
 会生成图~\ref{fig:rotcaption}。
 \cmd{rotcaption} 命令生成标题的底部总是面向页面的右边界。
-与第~\ref{ssec:landscape}~节和第~\ref{ssec:sidewaysfigure}~节不同的是，
+与第~\ref{ssec:landscape} 节和第~\ref{ssec:sidewaysfigure} 节不同的是，
 \cmd{rotcaption} 并不旋转图形。
 因此上例中的 \cmd{includegraphics} 命令需要使用 \opt{angle=90} 这一选项。
 
@@ -2372,7 +2373,7 @@ This is the text after the figure.
 	\item 第一个可选参数指定标题对于图形的相对宽度。
 	比较大的值（如100）会让标题使用最大可能的宽度。缺省为1。
 	\item 第二个可选参数指定图形的浮动位置选项，如 \opt{[htp]}或 \opt{[!ht]} 等，
-	详见第~\ref{ssec:figplacement}~节。
+	详见第~\ref{ssec:figplacement} 节。
 \end{itemize}
 
 \subsection{不使用 Sidecap 宏包时的一侧标题}
@@ -2424,7 +2425,7 @@ This is the text after the figure.
 
 \subsubsection{图形内侧标题}\label{sssec:bindcaption}
 
-上节图~\ref{fig:side:caption}~中将标题放在图形的左侧，
+上节图~\ref{fig:side:caption} 中将标题放在图形的左侧，
 而对于双面版式的文档，常常会希望将标题置于图形的内侧。
 这时可用 \pkg{ifthen} 宏包的 \cmd{ifthenelse} 命令来指定对奇数页和偶数页所使用的不同代码。例如：
 \begin{lstlisting}
@@ -2520,7 +2521,7 @@ This is the text after the figure.
 	\vspace*{\fill}\newpage}
 \end{lstlisting}
 
-	\item \cmd{afterpage} 命令在极少数情况下会造成~``lost float'' 的错误。
+	\item \cmd{afterpage} 命令在极少数情况下会造成 ``lost float'' 的错误。
 	这时将 \cmd{clearpage} 从 \cmd{ifthenelse} 前去掉可能会有所帮助。
 \begin{lstlisting}
 \afterpage{\ifthenelse{\isodd{\value{page}}}%
@@ -2677,7 +2678,7 @@ This is the text after the figure.
 
 \subsection{定制 fbox 的参数} \label{ssec:customizefbox}
 
-在图~\ref{fig:boxed_graphic}~和~\ref{fig:boxed_figure}~中，
+在图~\ref{fig:boxed_graphic} 和~\ref{fig:boxed_figure} 中，
 盒子的框线厚度为$0.4\pt$，在框线和图形之间有 3\pt 的空白。
 可以使用 \cmd{setlength} 命令设置 \LaTeX{} 长度变量 \cmd{fboxrule} 和 \cmd{fboxsep}，
 进而修改这些长度。例如命令：
@@ -2692,7 +2693,7 @@ This is the text after the figure.
 \end{figure}
 \end{lstlisting}
 使得盒子的边框线厚为 3\pt 且其与图形间的距离为1厘米。
-如图~\ref{fig:boxed_custom}~所示。
+如图~\ref{fig:boxed_custom} 所示。
 
 \begin{figure}
 	\centering
@@ -2706,7 +2707,7 @@ This is the text after the figure.
 
 \subsection{fancybox 宏包} \label{ssec:fancybox}
 
-在图~\ref{fig:boxed_graphic}、\ref{fig:boxed_figure}~和~\ref{fig:boxed_custom}~中，
+在图~\ref{fig:boxed_graphic}、\ref{fig:boxed_figure} 和~\ref{fig:boxed_custom} 中，
 使用 \cmd{fbox} 命令将图形包围在标准的长方形框盒子中。
 要想使用不同类型的盒子，可使用 \pkgi{fancybox} 宏包。
 它提供了 \cmdi{shadowbox}、\cmdi{doublebox}、\cmdi{ovalbox} 和 \cmdi{Ovalbox} 等命令来生成不同形状的盒子，如表~\ref{tab:fancyboxcmd} 所示。
@@ -2724,7 +2725,7 @@ This is the text after the figure.
 		\end{center}  &
 		\begin{itemize}
 			\item 盒子边框线厚度为 \cmd{fboxrule}
-			\item 盒子阴影厚度为 \cmd{shadowsize} （缺省为 $4\pt$ ）。
+			\item 盒子阴影厚度为 \cmd{shadowsize}（缺省为 $4\pt$ ）。
 		\end{itemize} \\
 		\midrule
 		\begin{center}
@@ -2732,9 +2733,9 @@ This is the text after the figure.
 			\doublebox{Example}
 		\end{center} &
 		\begin{itemize}
-			\item 内框线厚为 $.75 \text{\cmd{fboxrule}}$。 
-			\item 外框线厚为 $1.5 \text{\cmd{fboxrule}}$。
-			\item 内外框之间的距离为 $1.5 \text{\cmd{fboxrule}} + 0.5\pt$。
+			\item 内框线厚为 $.75 \,\text{\cmd{fboxrule}}$。 
+			\item 外框线厚为 $1.5 \,\text{\cmd{fboxrule}}$。
+			\item 内外框之间的距离为 $1.5 \,\text{\cmd{fboxrule}} + 0.5\pt$。
 		\end{itemize} \\
 		\midrule
 		\begin{center}
@@ -2745,8 +2746,8 @@ This is the text after the figure.
 			\item 盒子边框线厚度为 \cmd{thinlines}。
 			\item 使用 \cmdM{cornersize}{x} 四个角的直径设为 \opt{x} 乘以盒子宽和高
 			之间的较小值。\opt{x}缺省为 0.5。
-			\item 使用\cmdM{cornersize*}{x} 命令直接将四个角的直径设为 \texttt{x}。
-			如 \cmdM{cornersize*}{1cm} 将四个角的直径设为~1~厘米。
+			\item 使用 \cmdM{cornersize*}{x} 命令直接将四个角的直径设为 \texttt{x}。
+			如 \cmdM{cornersize*}{1cm} 将四个角的直径设为 1 厘米。
 		\end{itemize} \\
 		\midrule
 		\begin{center}
@@ -2775,7 +2776,7 @@ This is the text after the figure.
 	\end{minipage} }
 \end{figure}
 \end{lstlisting}
-用一个带阴影的盒子将图形与标题包围起来，如图~\ref{fig:boxed_fancy}~所示。
+用一个带阴影的盒子将图形与标题包围起来，如图~\ref{fig:boxed_fancy} 所示。
 
 \begin{figure}
 	\centering
